@@ -1,0 +1,317 @@
+/* Service.module.css */
+.service {
+  position: relative;
+  padding: 80px 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.serviceContent {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.animatedTitle {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 800;
+  text-align: center;
+  margin: 0 auto 60px;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  overflow: hidden;
+  padding: 0 20px;
+}
+
+.animatedTitle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: typewriter 1.5s ease-in-out forwards;
+}
+
+@keyframes typewriter {
+  from {
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  }
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+.tech {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  padding: 0 20px 80px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1400px;
+}
+
+.backBtn {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.backBtn ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.backBtn li {
+  display: inline-block;
+}
+
+.backBtn a {
+  display: inline-block;
+  padding: 16px 32px;
+
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.backBtn a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s;
+}
+
+.backBtn a:hover::before {
+  left: 100%;
+}
+
+.backBtn a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.backBtn a:active {
+  transform: translateY(-1px);
+}
+
+/* Анимация появления карточек */
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.tech > * {
+  animation: cardAppear 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.tech > *:nth-child(1) { animation-delay: 0.1s; }
+.tech > *:nth-child(2) { animation-delay: 0.2s; }
+.tech > *:nth-child(3) { animation-delay: 0.3s; }
+.tech > *:nth-child(4) { animation-delay: 0.4s; }
+.tech > *:nth-child(5) { animation-delay: 0.5s; }
+.tech > *:nth-child(6) { animation-delay: 0.6s; }
+.tech > *:nth-child(7) { animation-delay: 0.7s; }
+.tech > *:nth-child(8) { animation-delay: 0.8s; }
+.tech > *:nth-child(9) { animation-delay: 0.9s; }
+
+/* Адаптивность для планшетов */
+@media (max-width: 1024px) {
+  .service {
+    padding: 60px 16px;
+  }
+
+  .tech {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    padding-bottom: 60px;
+  }
+
+  .animatedTitle {
+    margin-bottom: 50px;
+  }
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .service {
+    padding: 40px 12px;
+  }
+
+  .tech {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0 12px 40px;
+    max-width: 500px;
+  }
+
+  .animatedTitle {
+    margin-bottom: 40px;
+    padding: 0 16px;
+  }
+
+  .animatedTitle::before {
+    animation: typewriter-mobile 1.2s ease-in-out forwards;
+  }
+
+  @keyframes typewriter-mobile {
+    from {
+      clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    }
+    to {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+  }
+
+  .backBtn {
+    margin-top: 30px;
+  }
+
+  .backBtn a {
+    padding: 14px 28px;
+    font-size: 15px;
+  }
+
+  .backBtn ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+/* Адаптивность для очень маленьких экранов */
+@media (max-width: 480px) {
+  .service {
+    padding: 30px 8px;
+  }
+
+  .tech {
+    gap: 16px;
+    padding: 0 8px 30px;
+  }
+
+  .animatedTitle {
+    margin-bottom: 30px;
+    font-size: 1.75rem;
+    padding: 0 12px;
+  }
+
+  .backBtn a {
+    padding: 12px 24px;
+    font-size: 14px;
+    width: 200px;
+    text-align: center;
+  }
+}
+
+/* Поддержка темной темы */
+@media (prefers-color-scheme: dark) {
+
+
+  .animatedTitle {
+    background: linear-gradient(135deg, #000000 0%, #002147 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .animatedTitle::before {
+    background: linear-gradient(135deg, #000000 0%, #002147 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* Улучшенная доступность */
+@media (prefers-reduced-motion: reduce) {
+  .animatedTitle::before,
+  .tech > *,
+  .backBtn a {
+    animation: none;
+    transition: none;
+  }
+
+  .backBtn a:hover {
+    transform: none;
+  }
+}
+
+/* Поддержка очень больших экранов */
+@media (min-width: 1920px) {
+  .service {
+    padding: 100px 40px;
+  }
+
+  .serviceContent {
+    max-width: 1800px;
+  }
+
+  .tech {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 40px;
+    padding-bottom: 100px;
+  }
+
+  .animatedTitle {
+    margin-bottom: 80px;
+    font-size: 4rem;
+  }
+}
+
+/* Портретная ориентация мобильных устройств */
+@media (max-width: 768px) and (orientation: portrait) {
+  .service {
+    min-height: calc(100vh - 60px);
+  }
+
+  .tech {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Ландшафтная ориентация мобильных устройств */
+@media (max-width: 900px) and (orientation: landscape) {
+  .service {
+    padding: 40px 16px;
+  }
+
+  .tech {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .animatedTitle {
+    margin-bottom: 30px;
+    font-size: 2rem;
+  }
+}

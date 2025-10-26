@@ -1,0 +1,259 @@
+/* Item.module.css */
+.item {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  border: 1px solid #f1f5f9;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.item:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+  border-color: #e2e8f0;
+}
+
+.itemImgBox {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  position: relative;
+  aspect-ratio: 1/1;
+  background: #f8fafc;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.itemImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.item:hover .itemImage {
+  transform: scale(1.05);
+}
+
+/* Бейдж скидки */
+.itemBadge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  background: linear-gradient(135deg, #C21E56, #f97316);
+  color: var(--background);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(239, 68, 68, 0.2);
+  z-index: 2;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.itemTitle {
+  color: var(--color-text);
+  margin-bottom: 1rem;
+  min-height: 3rem;
+  text-align: left;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.itemPrices {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.shopitemPrices {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #C21E56;
+  margin: 0;
+}
+
+.shopitemTags {
+  font-size: 0.8rem;
+  color: #4D4D4D;
+  background: #f1f5f9;
+  border-radius: 12px;
+  padding: 0.25rem 0.75rem;
+  display: inline-block;
+  max-width: fit-content;
+}
+
+.itemPriceOld {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  text-decoration: line-through;
+  margin: 0;
+}
+
+.itemPriceCol {
+  margin-left: 0;
+  color: #16a34a;
+  background: #f0fdf4;
+  border-radius: 8px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-block;
+  align-self: flex-start;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(10px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* Улучшенная доступность */
+.item:focus-within {
+  outline: 2px solid #002147;
+  outline-offset: 2px;
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+  .item {
+    padding: 1rem;
+  }
+  
+  .itemTitle {
+    font-size: 0.95rem;
+    min-height: 2.8rem;
+  }
+  
+  .shopitemPrices {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .item {
+    padding: 0.875rem;
+    border-radius: 12px;
+  }
+  
+  .itemImgBox {
+    margin-bottom: 0.75rem;
+  }
+  
+  .itemTitle {
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+    min-height: 2.6rem;
+  }
+  
+  .shopitemPrices {
+    font-size: 1.25rem;
+  }
+  
+  .itemBadge {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+    top: 0.5rem;
+    left: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .item {
+    padding: 0.75rem;
+  }
+  
+  .itemTitle {
+    font-size: 0.85rem;
+    min-height: 2.4rem;
+  }
+  
+  .shopitemPrices {
+    font-size: 1.15rem;
+  }
+  
+  .shopitemTags {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+  }
+  
+  .itemPriceCol {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.6rem;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .item,
+  .itemImage,
+  .itemBadge {
+    transition: none;
+  }
+  
+  .item:hover {
+    transform: none;
+  }
+  
+  .item:hover .itemImage {
+    transform: none;
+  }
+  
+  .item {
+    animation: none;
+  }
+}
+
+/* Темная тема */
+@media (prefers-color-scheme: dark) {
+  .item {
+    background: #ffffff;
+    border-color: #334155;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .item:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    border-color: #475569;
+  }
+  
+  .itemTitle {
+    color: var(--color-text);
+  }
+  
+  .itemImgBox {
+    background: #0f172a;
+  }
+  
+  .shopitemTags {
+    background: rgba(226, 229, 235, 0);
+    color: #84878a;
+  }
+}

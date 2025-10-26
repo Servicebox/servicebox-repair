@@ -1,0 +1,634 @@
+.editor {
+  max-width: 100%;
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #374151;
+}
+
+.titleInput {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1.125rem;
+  transition: border-color 0.2s;
+}
+
+.titleInput:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.fileInput {
+  width: 100%;
+  padding: 0.5rem;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  background: #f9fafb;
+}
+
+.imagePreview {
+  position: relative;
+  margin-top: 1rem;
+  max-width: 300px;
+}
+
+.previewImage {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.removeImageButton {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blocksSection {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: 8px;
+}
+
+.blocksHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.blockButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.addButton {
+  padding: 0.5rem 1rem;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.block {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.blockHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.blockType {
+  font-weight: 600;
+  color: #374151;
+}
+
+.blockActions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.moveButton,
+.removeButton {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #d1d5db;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.removeButton {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #dc2626;
+}
+
+.textArea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 120px;
+}
+
+.mediaBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mediaPreview {
+  position: relative;
+  max-width: 400px;
+}
+
+.mediaImage {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+}
+
+.mediaVideo {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+}
+
+.captionInput {
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.875rem;
+}
+
+.metaSection {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #f0f9ff;
+  border-radius: 8px;
+}
+
+.metaInput,
+.metaTextarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.metaTextarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.publishSection {
+  margin: 1.5rem 0;
+}
+
+.publishLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.publishCheckbox {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.saveButton {
+  padding: 0.75rem 2rem;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.saveButton:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.saveButton:hover:not(:disabled) {
+  background: #059669;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .editor {
+    padding: 1rem;
+  }
+
+  .blocksHeader {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .blockButtons {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .addButton {
+    flex: 1;
+    text-align: center;
+  }
+
+  .blockHeader {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .saveButton {
+    width: 100%;
+  }
+}
+/* Добавьте в NewsEditor.module.css */
+.progressBar {
+  width: 100%;
+  height: 20px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  margin-top: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: #0070f3;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+.progressText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  color: #333;
+  font-weight: bold;
+}
+.editor {
+  max-width: 100%;
+}
+
+.formGroup {
+  margin-bottom: 25px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+.titleInput {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.2s;
+}
+
+.titleInput:focus {
+  outline: none;
+  border-color: #0070f3;
+}
+
+.fileInput {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.progressBar {
+  width: 100%;
+  height: 20px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  margin-top: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: #0070f3;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+.progressText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  color: #333;
+  font-weight: bold;
+}
+
+.imagePreview {
+  position: relative;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.previewImage {
+  max-width: 300px;
+  max-height: 200px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.removeImageButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(220, 53, 69, 0.8);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.removeImageButton:hover {
+  background-color: #dc3545;
+}
+
+.blocksSection {
+  margin: 30px 0;
+}
+
+.blocksHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.blockButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.addButton {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.addButton:hover {
+  background-color: #545b62;
+}
+
+.emptyBlocks {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  color: #666;
+}
+
+.block {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  background-color: white;
+}
+
+.blockHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.blockType {
+  font-weight: 500;
+  color: #333;
+}
+
+.blockActions {
+  display: flex;
+  gap: 5px;
+}
+
+.moveButton, .removeButton {
+  background: none;
+  border: 1px solid #ddd;
+  padding: 4px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.moveButton:hover {
+  background-color: #e9ecef;
+}
+
+.removeButton {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+.removeButton:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+.moveButton:disabled, .removeButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.blockContent {
+  padding: 15px;
+}
+
+.textArea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 120px;
+}
+
+.textArea:focus {
+  outline: none;
+  border-color: #0070f3;
+}
+
+.mediaBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mediaPreview {
+  position: relative;
+  display: inline-block;
+}
+
+.mediaImage {
+  max-width: 300px;
+  max-height: 200px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.mediaVideo {
+  max-width: 400px;
+  max-height: 300px;
+  border-radius: 4px;
+}
+
+.captionInput {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.metaSection {
+  margin: 30px 0;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.metaSection h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.metaInput, .metaTextarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.metaTextarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.publishSection {
+  margin: 25px 0;
+  padding: 15px;
+  background-color: #fff3cd;
+  border-radius: 4px;
+  border: 1px solid #ffeaa7;
+}
+
+.publishLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  color: #856404;
+  cursor: pointer;
+}
+
+.publishCheckbox {
+  width: 18px;
+  height: 18px;
+}
+
+.actions {
+  text-align: right;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.saveButton {
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.saveButton:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.saveButton:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}

@@ -1,0 +1,71 @@
+/* components/PrivacyCheckbox.module.css */
+.checkboxContainer {
+  margin: 1.5rem 0;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: #374151;
+}
+
+.checkboxInput {
+  display: none;
+}
+
+.checkboxCustom {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid #d1d5db;
+  border-radius: 4px;
+  background: white;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.checkboxInput:checked + .checkboxCustom {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.checkboxInput:checked + .checkboxCustom::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0.5rem;
+  height: 0.25rem;
+  border: solid white;
+  border-width: 0 0 2px 2px;
+  transform: translate(-50%, -60%) rotate(-45deg);
+}
+
+.checkboxText {
+  flex: 1;
+}
+
+.link {
+  color: #2563eb;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: #1d4ed8;
+}
+
+.error {
+  color: #dc2626;
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 4px;
+}

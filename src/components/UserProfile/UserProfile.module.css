@@ -1,0 +1,140 @@
+/* components/UserProfile/UserProfile.module.css */
+.userprofContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.userprofContainer h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.userprofDetails {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 6px;
+    margin-bottom: 2rem;
+}
+
+.userprofDetails p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    color: #555;
+}
+
+.userprofVerified {
+    color: #28a745;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    background: #d4edda;
+    border-radius: 4px;
+}
+
+.userprofNotverif {
+    color: #dc3545;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    background: #f8d7da;
+    border-radius: 4px;
+}
+
+.userOrdersSection {
+    margin-top: 2rem;
+}
+
+.userOrdersSection h3 {
+    color: #333;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 0.5rem;
+}
+
+.userNoorders {
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.userOrdersList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.userOrder {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.userOrder:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.userOrder b {
+    color: #495057;
+}
+
+.userOrder ul {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.userOrder li {
+    margin: 0.25rem 0;
+    color: #6c757d;
+}
+
+.userprofLoader {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.1rem;
+    color: #007bff;
+}
+
+.userprofError {
+    text-align: center;
+    padding: 2rem;
+    color: #dc3545;
+    background: #f8d7da;
+    border-radius: 6px;
+    margin: 1rem;
+}
+
+.userprofNtfound {
+    text-align: center;
+    padding: 2rem;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .userprofContainer {
+        padding: 1rem;
+        margin: 0.5rem;
+    }
+    
+    .userprofDetails {
+        padding: 1rem;
+    }
+    
+    .userOrder {
+        padding: 0.75rem;
+    }
+}

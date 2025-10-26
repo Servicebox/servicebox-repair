@@ -1,0 +1,322 @@
+.burgerMenu {
+  position: relative;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+}
+
+/* Фиксированная кнопка бургера */
+.burgerToggle {
+  position: relative;
+  background: rgba(0, 51, 102, 0.9);
+  border: 2px solid #ffffff;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+  z-index: 1002;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  margin: 0;
+}
+
+.burgerToggle:hover {
+  background: rgba(0, 51, 102, 1);
+  transform: scale(1.05);
+}
+
+/* Иконки бургера и крестика */
+.burgerIcon,
+.closeIcon {
+  position: absolute;
+  color: white;
+  font-size: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.burgerIcon {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.closeIcon {
+  opacity: 0;
+  transform: scale(0.8) rotate(90deg);
+}
+
+.burgerToggle.open .burgerIcon {
+  opacity: 0;
+  transform: scale(0.8) rotate(-90deg);
+}
+
+.burgerToggle.open .closeIcon {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+/* Overlay */
+.menuOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+
+.burgerMenu.open .menuOverlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Содержимое меню */
+.menuContent {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 85%;
+  max-width: 380px;
+  height: 100vh;
+  background: #043878;
+  box-shadow: -2px 0 20px rgba(0, 0, 0, 0.3);
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 30px 25px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+.burgerMenu.open .menuContent {
+  right: 0;
+}
+
+.menuHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.menuLogo {
+  width: 100px;
+  height: 100px;
+  filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.1));
+}
+
+.menuList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 auto 0;
+  flex: 1;
+}
+
+.menuItem {
+  margin-bottom: 12px;
+  opacity: 0;
+  transform: translateX(30px);
+  animation: menuItemAppear 0.4s ease forwards;
+}
+
+.menuItem:nth-child(1) { animation-delay: 0.1s; }
+.menuItem:nth-child(2) { animation-delay: 0.15s; }
+.menuItem:nth-child(3) { animation-delay: 0.2s; }
+.menuItem:nth-child(4) { animation-delay: 0.25s; }
+.menuItem:nth-child(5) { animation-delay: 0.3s; }
+.menuItem:nth-child(6) { animation-delay: 0.35s; }
+.menuItem:nth-child(7) { animation-delay: 0.4s; }
+.menuItem:nth-child(8) { animation-delay: 0.45s; }
+
+@keyframes menuItemAppear {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.menuLink {
+  color: white;
+  text-decoration: none;
+  padding: 14px 20px;
+  border-radius: 10px;
+  display: block;
+  transition: var(--transition);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-weight: 500;
+}
+
+.menuLink:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(8px);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.menuFooter {
+  margin-top: auto;
+  padding-top: 25px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.statusCheck {
+  margin: 20px 0;
+}
+
+.statusButton {
+  display: block;
+  background: #002147;
+  color: white;
+  padding: 14px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  text-align: center;
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: 500;
+}
+
+.statusButton:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+.contactInfo {
+  color: white;
+  margin-bottom: 25px;
+}
+
+.addressBlock {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.addressBlock p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  cursor: pointer;
+  transition: var(--transition);
+  border-radius: 8px;
+  margin: 5px 0;
+}
+
+.contactItem:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.contactItem span {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.socialLinks {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.socialLink {
+  color: white;
+  font-size: 26px;
+  transition: var(--transition);
+  padding: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.socialLink:hover {
+  transform: translateY(-3px) scale(1.1);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.vk:hover { color: #4a76a8; background: rgba(74, 118, 168, 0.2); }
+.whatsapp:hover { color: #25d366; background: rgba(37, 211, 102, 0.2); }
+.telegram:hover { color: #0088cc; background: rgba(0, 136, 204, 0.2); }
+
+@media (min-width: 769px) {
+  .burgerMenu {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .burgerToggle {
+    width: 42px;
+    height: 42px;
+    padding: 9px;
+  }
+  
+  .burgerIcon,
+  .closeIcon {
+    font-size: 18px;
+  }
+  
+  .menuContent {
+    width: 90%;
+    max-width: none;
+    padding: 25px 10px;
+  }
+  
+  .menuHeader {
+    margin-bottom: 25px;
+  }
+  
+  .menuLogo {
+    width: 90px;
+    height: 90px;
+  }
+  
+  .menuLink {
+    padding: 12px 18px;
+    font-size: 0.95rem;
+  }
+  
+  .socialLink {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 360px) {
+  .menuContent {
+    width: 95%;
+    padding: 20px 5px;
+  }
+  
+  .menuLink {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+}

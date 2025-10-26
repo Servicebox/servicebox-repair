@@ -1,0 +1,252 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modalContent {
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 450px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modalHeader h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 4px;
+  line-height: 1;
+}
+
+.closeButton:hover {
+  color: #374151;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.submitButton {
+  width: 100%;
+  padding: 12px 24px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 8px;
+}
+
+.submitButton:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.loginsignupFields,
+.resetPassword,
+.forgotPassword {
+  padding: 24px;
+}
+
+.resetPassword h3,
+.forgotPassword h3 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  color: #1f2937;
+}
+
+.toggleState,
+.forgotPasswordLink {
+  padding: 0 24px 24px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.toggleState span,
+.forgotPasswordLink span {
+  color: #3b82f6;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.toggleState span:hover,
+.forgotPasswordLink span:hover {
+  color: #2563eb;
+}
+
+.errorMessage {
+  background: #fef2f2;
+  color: #dc2626;
+  padding: 12px 16px;
+  margin: 0 24px 16px;
+  border-radius: 8px;
+  border: 1px solid #fecaca;
+}
+
+.successMessage {
+  background: #f0fdf4;
+  color: #16a34a;
+  padding: 12px 16px;
+  margin: 0 24px 16px;
+  border-radius: 8px;
+  border: 1px solid #bbf7d0;
+}
+
+.wrongPasswordModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+}
+
+.modalContentInner {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+}
+
+.modalContentInner h3 {
+  margin: 0 0 16px 0;
+  color: #dc2626;
+}
+
+.modalContentInner p {
+  margin: 0 0 20px 0;
+  color: #6b7280;
+}
+
+.recoverLink {
+  color: #3b82f6;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.recoverLink:hover {
+  color: #2563eb;
+}
+
+.closeModalButton {
+  padding: 8px 20px;
+  background: #6b7280;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.closeModalButton:hover {
+  background: #4b5563;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .modalOverlay {
+    padding: 10px;
+    align-items: flex-end;
+  }
+  
+  .modalContent {
+    max-width: 100%;
+    border-radius: 16px 16px 0 0;
+    max-height: 85vh;
+  }
+  
+  .modalHeader {
+    padding: 20px;
+  }
+  
+  .modalHeader h2 {
+    font-size: 20px;
+  }
+  
+  .loginsignupFields,
+  .resetPassword,
+  .forgotPassword {
+    padding: 20px;
+  }
+  
+  .input {
+    padding: 14px 16px;
+    font-size: 16px; /* Предотвращает зум в iOS */
+  }
+}
+
+@media (max-width: 480px) {
+  .modalHeader {
+    padding: 16px;
+  }
+  
+  .loginsignupFields,
+  .resetPassword,
+  .forgotPassword {
+    padding: 16px;
+  }
+  
+  .toggleState,
+  .forgotPasswordLink {
+    padding: 0 16px 16px;
+  }
+  
+  .errorMessage,
+  .successMessage {
+    margin: 0 16px 16px;
+  }
+}

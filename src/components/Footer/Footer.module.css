@@ -1,0 +1,302 @@
+.footer {
+  padding: 30px;
+  padding-top: 70px;
+  position: relative;
+  z-index: 1;
+  background-color: #002147;
+  clip-path: polygon(0% -4%, 29% 5%, 58% 2%, 100% 12%, 101% 78%, 100% 100%, 12% 98%, 0% 100%);
+}
+
+.footerContent {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.footerInfo {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.companyInfo {
+  flex: 1 1 300px;
+}
+
+.infoTitle {
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.footerText {
+  color:#ffffff;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Стили для блока "Услуги" в футере */
+.footerLinks {
+  flex: 1 1 200px;
+  margin-top: 1rem;
+}
+
+.footerLinkTitle {
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.footerLinks ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footerLinks li {
+  margin-bottom: 0.6rem;
+}
+
+.footerLink {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.2s ease;
+  display: inline-block;
+  padding: 2px 0;
+  position: relative;
+  font-size: 0.95rem;
+}
+
+.footerLink::after {
+  content: "→";
+  position: absolute;
+  left: 100%;
+  opacity: 0;
+  transform: translateX(-5px);
+  transition: opacity 0.3s, transform 0.3s;
+  margin-left: 8px;
+  color: #f9a92c;
+}
+
+.footerLink:hover {
+  color: #f9a92c;
+  transform: translateX(4px);
+}
+
+.footerLink:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.privacyLink {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.privacyLink:hover {
+  color: #ffffff;
+}
+
+/* Секция оплаты */
+.paymentSection {
+  flex: 1 1 180px;
+}
+
+.paymentTitle {
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.paymentMethods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.paymentLogo {
+  height: 48px;
+  width: auto;
+  transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
+  filter: grayscale(100%) contrast(1);
+  opacity: 0.85;
+  image-rendering: -webkit-optimize-contrast;
+  user-select: none;
+  border-radius: 4px;
+}
+
+.paymentLogo:hover {
+  filter: grayscale(0%) contrast(1.1);
+  opacity: 1;
+  transform: translateY(-3px) scale(1.03);
+}
+
+/* Нижняя часть футера */
+.footerBottom {
+  border-top: 1px solid rgba(236, 240, 241, 0.3);
+  padding-top: 1rem;
+  text-align: center;
+}
+
+.footerAuthor {
+  color: #ffffff;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Яндекс отзывы */
+.footerYandexReviews {
+  padding: 12px 0 0 0;
+  margin-bottom: 24px;
+  width: 430px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.yandexReviewsWidget {
+  min-height: 310px;
+  width: 100%;
+}
+
+#RatingBadgeWidget {
+  width: 300px;
+  height: 120px;
+}
+
+/* Виджет такси */
+.taxiWidgetContainer {
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.taxiLoadButton {
+  padding: 24px 20px;
+  background: #007bff;
+  color: var(--color-text);
+  text-align: center;
+  border: none;
+  display: flex;
+  width: 65%;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 15px 0;
+  height: 27%;
+  align-items: center;
+  justify-content: center;
+}
+
+.geoError {
+  color: #dc3545;
+  padding: 10px;
+  background: #f8d7da;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.yaTaxiWidget {
+  min-height: 70px;
+}
+
+.footerContacts {
+  text-align: center;
+  grid-column: 1 / -1;
+}
+
+.goImg {
+  width: 200px;
+  transition: transform 0.3s ease;
+}
+
+.goImg:hover {
+  transform: scale(1.05);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .footer {
+    padding: 20px;
+    padding-top: 50px;
+  }
+
+  .footerContent {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .footerLinks {
+    align-items: center;
+  }
+
+  .paymentMethods {
+    justify-content: center;
+  }
+
+  .paymentLogo {
+    height: 44px;
+  }
+
+  .infoTitle {
+    font-size: 1.3rem;
+  }
+
+  .footerLinkTitle {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 15px;
+    padding-top: 40px;
+  }
+
+  .paymentLogo {
+    height: 40px;
+  }
+
+  .footerText {
+    font-size: 0.9rem;
+  }
+
+  .footerLink {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .paymentLogo {
+    height: 36px;
+  }
+
+  .paymentMethods {
+    gap: 1rem;
+  }
+
+  .infoTitle {
+    font-size: 1.2rem;
+  }
+
+  .footerLinkTitle {
+    font-size: 1rem;
+  }
+}

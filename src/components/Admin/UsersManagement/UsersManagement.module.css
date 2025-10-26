@@ -1,0 +1,236 @@
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.header p {
+  color: #666;
+  font-size: 16px;
+}
+
+.searchSection {
+  margin-bottom: 20px;
+}
+
+.searchForm {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.searchButton, .clearButton {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.searchButton {
+  background-color: #0070f3;
+  color: white;
+}
+
+.clearButton {
+  background-color: #666;
+  color: white;
+}
+
+.error, .success {
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.error {
+  background-color: #fee;
+  border: 1px solid #fcc;
+  color: #c33;
+}
+
+.success {
+  background-color: #efe;
+  border: 1px solid #cfc;
+  color: #363;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: inherit;
+}
+
+.tableContainer {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #333;
+}
+
+.userRow:hover {
+  background-color: #f8f9fa;
+}
+
+.input, .select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.role {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.role.user {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.role.admin {
+  background-color: #e8f5e8;
+  color: #2e7d32;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.editButton, .saveButton, .cancelButton, 
+.promoteButton, .demoteButton, .deleteButton {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.editButton {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.saveButton {
+  background-color: #28a745;
+  color: white;
+}
+
+.cancelButton {
+  background-color: #6c757d;
+  color: white;
+}
+
+.promoteButton {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.demoteButton {
+  background-color: #6f42c1;
+  color: white;
+}
+
+.deleteButton {
+  background-color: #dc3545;
+  color: white;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #0070f3;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  gap: 15px;
+}
+
+.pageButton {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pageButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pageInfo {
+  color: #666;
+  font-size: 14px;
+}

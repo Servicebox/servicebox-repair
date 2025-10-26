@@ -1,0 +1,177 @@
+/* ContactsRef.module.css */
+.contactsRef {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  margin: 10px auto;
+  clip-path: polygon(0% -4%, 29% 5%, 58% 2%, 100% 12%, 101% 78%, 100% 100%, 12% 98%, 0% 100%);
+  padding-bottom: 50px;
+  backdrop-filter: blur(1px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  color: rgb(255, 255, 255);
+}
+
+.contactsList {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.contactsListInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.contactsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: rgb(63, 63, 63);
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.contactsBlock:hover {
+  transform: translateY(-2px);
+}
+
+.contactText,
+.contactsText {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 1px solid #f9a92c;
+  margin: 0;
+  padding: 5px 0;
+  transition: color 0.3s ease;
+}
+
+.contactText:hover,
+.contactsText:hover {
+  color: var(--color-accent);
+}
+
+.icon {
+  margin-right: 8px;
+}
+
+.contactsSocial {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.contactsSubtitle {
+  color: white;
+  margin: 0 0 15px 0;
+  padding: 0;
+}
+
+.socialGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+  justify-content: center;
+}
+
+.socialLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.socialLink:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+  border-color: #f9a92c;
+}
+
+.socialLink span {
+  font-size: 0.9rem;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .contactsRef {
+    padding: 15px 10px;
+  }
+  
+  .contactsListInfo {
+    gap: 12px;
+  }
+  
+  .contactsBlock {
+    padding: 8px 12px;
+  }
+  
+  .socialGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 500px) {
+  .contactsListInfo {
+    flex-direction: column;
+  }
+  
+  .contactsBlock {
+    padding: 5px 0;
+  }
+  
+  .socialGrid {
+    grid-template-columns: 1fr;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+  
+  .socialLink {
+    flex-direction: row;
+    justify-content: center;
+    padding: 12px 15px;
+  }
+}
+
+/* Улучшения доступности */
+.socialLink:focus {
+  outline: 2px solid #F9A92C;
+  outline-offset: 2px;
+}
+
+.contactText:focus,
+.contactsText:focus {
+  outline: 2px solid #F9A92C;
+  outline-offset: 4px;
+}
+
+/* Улучшения для темной темы */
+@media (prefers-color-scheme: dark) {
+  .contactsBlock {
+    color: #e0e0e0;
+  }
+  
+  .socialLink {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  .socialLink:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}

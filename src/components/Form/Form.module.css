@@ -1,0 +1,164 @@
+.formOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 20, 34, 0.68);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.formContainer {
+  background: #fafcff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(50, 50, 90, 0.17);
+  max-width: 430px;
+  width: 94vw;
+  padding: 32px 24px 36px 24px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  animation: popIn 0.24s;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.97) translateY(-8px);}
+  to   { transform: scale(1) translateY(0);}
+}
+
+.besplatnaya {
+  background: linear-gradient(90deg, #fb2c5c, #f99f0e);
+  color: #ffffff;
+  border-radius: 3px;
+  padding: 0 6px;
+  font-weight: 600;
+}
+
+.formTitle {
+  margin-bottom: 13px;
+  color: #273046;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  margin-top: 7px;
+}
+
+.formLabel {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.formInput {
+  background: #f2f3f6;
+  border: 1.5px solid #e4e7ee;
+  padding: 10px 13px 12px 13px;
+  border-radius: 7px;
+  color: #1c2641;
+  outline: none;
+  transition: border-color 0.18s, background 0.21s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.formInput:focus {
+  border-color: #0676d9;
+  background: #eef6ff;
+}
+
+.formError {
+  border-color: #e01026;
+  background: #ffebed;
+}
+
+.formPlaceholder {
+  position: absolute;
+  left: 19px;
+  top: 10px;
+  color: #bfc9db;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.18s;
+}
+
+.formInput::placeholder {
+  color: #acb6cb;
+  opacity: 1;
+}
+
+.errorMsg {
+  color: #e01026;
+  font-size: 0.92em;
+  margin-top: -9px;
+  margin-bottom: 2px;
+  margin-left: 3px;
+  letter-spacing: 0.01em;
+}
+
+.successText {
+  color: #28ad32;
+  text-align: center;
+  margin: 14px 0;
+}
+
+.formOverlayBtn {
+  margin-top: 8px;
+  background: #dde4ea;
+  color: #6d7586;
+  border-radius: 7px;
+  border: none;
+  padding: 12px 14px;
+  cursor: not-allowed;
+  transition: background 0.18s, color 0.18s;
+  outline: none;
+}
+
+.active {
+  background: linear-gradient(90deg, #2884fa, #09decb);
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(19, 189, 199, 0.53);
+}
+
+.formOverlayBtn:disabled {
+  background: #dde4ea;
+  color: #8391a7;
+}
+
+.closeButton {
+  position: absolute;
+  background: #002147;
+  top: 13px;
+  right: 13px;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButtonImg {
+  opacity: 0.72;
+  transition: opacity 0.18s;
+}
+
+.closeButtonImg:hover {
+  opacity: 1;
+}
+
+@media screen and (max-width: 767px) {
+  .formContainer {
+    width: 90%;
+  }
+  
+  .closeButtonImg {
+    width: 15px;
+    height: 15px;
+  }
+}

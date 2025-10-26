@@ -1,0 +1,518 @@
+/* components/Header/Header.module.css */
+.headerTopBar {
+  background: #2c3e50;
+  color: white;
+  padding: 8px 0;
+  transition: all 0.3s ease;
+}
+
+.headerTopBar.scrolled {
+  padding: 4px 0;
+}
+
+.headerTopBarContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+.checkoutButton {
+  flex: 1;
+  background: #007bff;
+  color: white;
+  text-align: center;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.checkoutButton:hover {
+  background: #0056b3;
+}
+.headerContacts {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.headerContactLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.headerContactLink:hover {
+  color: #3498db;
+}
+
+.headerContactLink svg {
+  width: 14px;
+  height: 14px;
+}
+
+.headerWorkHours {
+  font-size: 0.9rem;
+  color: #bdc3c7;
+}
+
+.headerSocials {
+  display: flex;
+  gap: 12px;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.socialLink:hover {
+  transform: translateY(-2px);
+}
+
+.socialLink.vk {
+  background: #4a76a8;
+}
+
+.socialLink.vk:hover {
+  background: #3a6690;
+}
+
+.socialLink.whatsapp {
+  background: #25d366;
+}
+
+.socialLink.whatsapp:hover {
+  background: #1ea952;
+}
+
+.socialLink.telegram {
+  background: #0088cc;
+}
+
+.socialLink.telegram:hover {
+  background: #0077b3;
+}
+
+/* Main Header */
+.header {
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.header.scrolled {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.headerContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 70px;
+}
+
+.headerLogoLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.headerLogo {
+  width: 65px;
+  height: 45px;
+  object-fit: contain;
+}
+
+.headerLogoText {
+  display: flex;
+  flex-direction: column;
+}
+
+.headerLogoMain {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  line-height: 1;
+}
+
+.headerLogoSub {
+  font-size: 0.8rem;
+  color: #7f8c8d;
+  line-height: 1;
+}
+
+/* Navigation */
+.headerNav {
+  flex: 1;
+  margin: 0 40px;
+}
+
+.headerNavList {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 8px;
+}
+
+.headerNavItem {
+  position: relative;
+}
+
+.headerNavLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #2c3e50;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.headerNavLink:hover {
+  background: #f8f9fa;
+  color: #3498db;
+}
+
+.headerNavItem.active .headerNavLink {
+  background: #3498db;
+  color: white;
+}
+
+/* Dropdown Menu */
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  min-width: 200px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 8px 0;
+  list-style: none;
+  margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1001;
+}
+
+.headerNavItem.dropdown:hover .dropdownMenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdownItem {
+  display: block;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #2c3e50;
+  transition: all 0.3s ease;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.dropdownItem:hover {
+  background: #f8f9fa;
+  color: #3498db;
+}
+
+/* Header Actions */
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.navUserGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.userMenuWrapper {
+  position: relative;
+}
+
+.navUserIcon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #f8f9fa;
+  border: none;
+  border-radius: 6px;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.navUserIcon:hover {
+  background: #e9ecef;
+}
+
+.navUsername {
+  font-weight: 500;
+}
+
+.userMenuDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  min-width: 180px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 8px 0;
+  margin-top: 8px;
+  z-index: 1002;
+}
+
+.userMenuDropdown .dropdownItem {
+  font-size: 0.9rem;
+  padding: 10px 16px;
+}
+
+.userMenuLogout {
+  width: 100%;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  color: #e74c3c;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.userMenuLogout:hover {
+  background: #fdf2f2;
+}
+
+.adminPanelBtn {
+  padding: 8px 16px;
+  background: #e74c3c;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.adminPanelBtn:hover {
+  background: #c0392b;
+}
+
+.headerLoginBtn {
+  padding: 10px 20px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.headerLoginBtn:hover {
+  background: #2980b9;
+}
+
+.headerCartLink {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  color: #2c3e50;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.headerCartLink:hover {
+  background: #e9ecef;
+  color: #3498db;
+}
+
+.headerCartCount {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #e74c3c;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .headerNav {
+    margin: 0 20px;
+  }
+  
+  .headerNavList {
+    gap: 4px;
+  }
+  
+  .headerNavLink {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .headerTopBar {
+    display: none;
+  }
+  
+  .headerContainer {
+    height: 60px;
+    padding: 0 16px;
+  }
+  
+  .headerLogoText {
+    display: none;
+  }
+  
+  .headerNav {
+    display: none;
+  }
+  
+  .headerActions {
+    gap: 12px;
+  }
+  
+  .navUserGroup {
+    gap: 8px;
+  }
+  
+  .navUserIcon span {
+    display: none;
+  }
+  
+  .adminPanelBtn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .headerContainer {
+    padding: 0 12px;
+  }
+  
+  .headerLogo {
+    width: 50px;
+    height: 35px;
+  }
+  
+  .headerActions {
+    gap: 8px;
+  }
+  
+  .headerCartLink {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .header {
+    background: #002147;
+  }
+  
+  .headerLogoMain {
+    color: #ffffff;
+  }
+  
+  .headerLogoSub {
+    color: #b0b0b0;
+  }
+  
+  .headerNavLink {
+    color: #ffffff;
+  }
+  
+  .headerNavLink:hover {
+    background: #2a2a2a;
+  }
+  
+  .dropdownMenu {
+    background: #2a2a2a;
+    border: 1px solid #404040;
+  }
+  
+  .dropdownItem {
+    color: #ffffff;
+  }
+  
+  .dropdownItem:hover {
+    background: #3a3a3a;
+  }
+  
+  .navUserIcon {
+    background: #2a2a2a;
+    color: #ffffff;
+  }
+  
+  .navUserIcon:hover {
+    background: #3a3a3a;
+  }
+  
+  .headerCartLink {
+    background: #2a2a2a;
+    color: #ffffff;
+  }
+  
+  .headerCartLink:hover {
+    background: #3a3a3a;
+  }
+}

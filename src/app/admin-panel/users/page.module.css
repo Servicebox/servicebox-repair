@@ -1,0 +1,71 @@
+/* src/app/admin-panel/users/page.module.css */
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 30px;
+  gap: 10px;
+}
+
+.tab {
+  padding: 12px 24px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-size: 16px;
+  color: #666;
+  transition: all 0.3s ease;
+}
+
+.tab:hover {
+  color: #333;
+  background-color: #f5f5f5;
+}
+
+.tab.active {
+  color: #007bff;
+  border-bottom-color: #007bff;
+  font-weight: 500;
+}
+
+.tabContent {
+  min-height: 400px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .tabs {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .tab {
+    text-align: left;
+    border-radius: 4px;
+    margin-bottom: 5px;
+  }
+  
+  .tab.active {
+    border-bottom: 2px solid #007bff;
+    background-color: #e3f2fd;
+  }
+}

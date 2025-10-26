@@ -1,0 +1,223 @@
+.cardOne {
+  perspective: 1000px;
+  height: 300px;
+  cursor: pointer;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  position: relative;
+  outline: none;
+  width: 280px;
+}
+
+.cartSummary {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 2px solid #eaeaea;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.totalAmount {
+  color: #007bff;
+  font-size: 1.5rem;
+}
+
+.cartActions {
+  display: flex;
+  gap: 15px;
+}
+
+.continueShopping {
+  flex: 1;
+  background: #f8f9fa;
+  color: #333;
+  text-align: center;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  border: 1px solid #dee2e6;
+  transition: all 0.2s;
+}
+
+.continueShopping:hover {
+  background: #e9ecef;
+}
+
+.checkoutButton {
+  flex: 1;
+  background: #007bff;
+  color: white;
+  text-align: center;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.checkoutButton:hover {
+  background: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .cartActions {
+    flex-direction: column;
+  }
+}
+
+.cardOne:hover,
+.cardOne:focus {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.cardOne:focus {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.cards {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.cardOne.flipped .cards {
+  transform: rotateY(180deg);
+}
+
+.coverItem,
+.cardBack {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 15px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.coverItem {
+  background: linear-gradient(135deg, #fff 0%, #f0f9ff 100%);
+  text-align: center;
+}
+
+.cardBack {
+  background: white;
+  transform: rotateY(180deg);
+  text-align: center;
+}
+
+.cardCover {
+  max-width: 180px;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+  transition: all 0.5s ease;
+  background: transparent;
+}
+
+.cardOne:hover .cardCover {
+  transform: scale(1.1);
+}
+
+.cardTitleOne {
+  color: rgb(0, 0, 0);
+  margin-bottom: 10px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.cardSubtitleOne {
+  color: var(--primary-dark);
+  margin-bottom: 20px;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.linkCard {
+  display: inline-block;
+  padding: 12px 30px;
+  background: var(--blue-main);
+  color: var(--color-black);
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 4px 15px rgba(78, 115, 223, 0.3);
+  position: relative;
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  min-height: 44px;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.linkCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: 0.5s;
+}
+
+.linkCard:hover,
+.linkCard:focus {
+  background: #f9a92c;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(78, 115, 223, 0.4);
+  outline: 2px solid #1ad1ff;
+  outline-offset: 2px;
+}
+
+.linkCard:hover::before,
+.linkCard:focus::before {
+  left: 100%;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .cardOne {
+    height: 280px;
+    width: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cardOne {
+    height: 320px;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .coverItem,
+  .cardBack {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 360px) {
+  .cardOne {
+    height: 350px;
+  }
+}

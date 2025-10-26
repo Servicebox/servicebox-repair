@@ -1,0 +1,563 @@
+/* MainBanner.module.css */
+.mainBannerSection {
+  width: 100%;
+  min-height: 100vh;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.bannerContent {
+  max-width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Promo Slider Styles */
+.promoSlider {
+  width: 100%;
+
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.promoSliderViewport {
+  width: 100%;
+  height: 79%;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.promoSliderTrack {
+  display: flex;
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  height: 100%;
+  width: 100%;
+}
+
+.promoSliderSlide {
+  min-width: 100%;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageWrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.promoSliderImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.promoSliderArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(59, 130, 246, 0.2);
+  color: #002147;
+  border-radius: 50%;
+  width: clamp(48px, 5vw, 60px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.promoSliderArrow:hover {
+  background: #002147;
+  color: white;
+  border-color: #002147;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.3);
+}
+
+.promoSliderArrow.left {
+  left: clamp(16px, 3vw, 32px);
+}
+
+.promoSliderArrow.right {
+  right: clamp(16px, 3vw, 32px);
+}
+
+.promoSliderDots {
+  position: absolute;
+  bottom: clamp(20px, 4vh, 40px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: clamp(8px, 1.5vw, 12px);
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.promoSliderDots button {
+  width: clamp(10px, 2vw, 14px);
+  height: clamp(10px, 2vw, 14px);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+  backdrop-filter: blur(10px);
+}
+
+.promoSliderDots button.active {
+  background: #002147;
+  border-color: white;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+  transform: scale(1.3);
+}
+
+.promoSliderDots button:hover {
+  background: #002147;
+  transform: scale(1.4);
+}
+
+/* Main Banner Content */
+.mainBannerContent {
+  width: 95%;
+  max-width: 1400px;
+  margin: clamp(40px, 8vh, 80px) auto;
+  padding: 0 clamp(20px, 4vw, 40px);
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+}
+
+.mainBannerText {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.mainBannerPreTitle {
+  font-size: clamp(0.875rem, 1.5vw, 1.125rem);
+  color: #073774;
+  margin: 0 0 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.mainBannerTitle {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: #002147;
+  margin: 0 12px 24px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.titleAccent {
+  background: linear-gradient(135deg, #0F52BA 0%, #002147 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.mainBannerSubtitle {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  color: #4D4D4D;
+  margin: 0 0 40px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.mainBannerForm {
+  background: linear-gradient(135deg, #0F52BA 0%, #002147 100%);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: clamp(16px, 2.5vw, 20px) clamp(32px, 4vw, 48px);
+  font-size: clamp(1.125rem, 2vw, 1.25rem);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.mainBannerForm::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s;
+}
+
+.mainBannerForm:hover::before {
+  left: 100%;
+}
+
+.mainBannerForm:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.4);
+}
+
+.mainBannerForm:active {
+  transform: translateY(-1px);
+}
+
+/* Кнопка "Записаться" под каруселью */
+.btnForm {
+  text-align: center;
+  margin: clamp(30px, 6vh, 60px) auto;
+  padding: 0 clamp(20px, 4vw, 40px);
+}
+
+.btnForm button {
+  background: #0F52BA;
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: clamp(14px, 2.5vw, 18px) clamp(32px, 4vw, 48px);
+  font-size: clamp(1.125rem, 2vw, 1.25rem);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 32px #4D4D4D;
+  position: relative;
+  overflow: hidden;
+}
+
+.btnForm button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s;
+}
+
+.btnForm button:hover::before {
+  left: 100%;
+}
+
+.btnForm button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px #4D4D4D;
+}
+
+/* Flip Cards */
+.flipCardRow {
+  max-width: 1400px;
+  margin: clamp(40px, 8vh, 80px) auto;
+  padding: 0 clamp(20px, 4vw, 40px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 45px;
+  justify-content: center;
+  justify-items: center;
+}
+
+.flipCard {
+  height:350px;
+  perspective: 1200px;
+  cursor: pointer;
+  border-radius: 24px;
+  background: transparent;
+  outline: none;
+  width: 300px;
+
+  transition: transform 0.3s ease;
+}
+
+
+
+.flipCard:hover {
+  transform: translateY(-5px);
+}
+
+.flipCardInner {
+  width: 260px;
+  height: 260px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  border-radius: 24px;
+}
+
+.flipCard.flipped .flipCardInner {
+  transform: rotateY(180deg);
+}
+
+.flipCardFront,
+.flipCardBack {
+  position: absolute;
+  width: 250px;
+  height: 300px;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+  backface-visibility: hidden;
+  box-shadow: 0 8px 32px #4D4D4D;
+}
+
+.flipCardFront {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cardIcon {
+   
+  color: #002147;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.3));
+}
+
+.flipCardFront h2 {
+  font-size: clamp(1.375rem, 2vw, 1.5rem);
+  font-weight: 700;
+  color: #002147;
+  margin: 0 0 20px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.cardImage .img {
+  width: 100px;
+  height: 100px;
+
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  background: #f8fafc;
+}
+
+.flipCardHint {
+  color: #4D4D4D;
+  margin-top: auto;
+  border-top: 1px dashed #cbd5e1;
+  padding-top: 16px;
+  width: 100%;
+  text-align: center;
+  font-size: clamp(0.875rem, 1.5vw, 0.9375rem);
+  font-weight: 500;
+}
+
+.flipCardBack {
+
+  color: rgb(34, 34, 34);
+  transform: rotateY(180deg);
+  justify-content: center;
+  text-align: center;
+}
+
+.flipCardBackText {
+  text-align: center;
+  color: rgb(21, 21, 21);
+  font-size: clamp(1rem, 1.8vw, 1.125rem);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
+.flipCardBackBtn {
+  background: rgba(255, 255, 255, 0.2);
+  color: rgb(28, 28, 28);
+
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 12px 32px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.flipCardBackBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.seoContent,
+.seoText {
+  display: none;
+}
+
+/* Адаптивность для планшетов */
+@media (max-width: 1024px) {
+
+ 
+  
+  .flipCardRow {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+
+  
+  .promoSliderArrow {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .promoSliderArrow.left {
+    left: 12px;
+  }
+  
+  .promoSliderArrow.right {
+    right: 12px;
+  }
+  
+  .mainBannerContent {
+    margin: 40px auto;
+    padding: 0 16px;
+  }
+  
+
+  
+  .flipCard {
+    height: 350px;
+  }
+}
+
+/* Очень маленькие экраны */
+@media (max-width: 480px) {
+
+  
+  .mainBannerTitle {
+    font-size: 2rem;
+  }
+  
+  .mainBannerSubtitle {
+    font-size: 1.125rem;
+  }
+  
+  .mainBannerForm {
+    padding: 14px 18px;
+    font-size: 1.125rem;
+  }
+  
+  .btnForm button {
+    padding: 12px 24px;
+    font-size: 1.125rem;
+  }
+  
+  .flipCard {
+    height: 360px;
+  }
+  
+  .flipCardFront,
+  .flipCardBack {
+    padding: 20px;
+  }
+}
+
+/* Ландшафтная ориентация для мобильных */
+@media (max-width: 768px) and (orientation: landscape) {
+
+  
+  .mainBannerContent {
+    margin: 30px auto;
+  }
+}
+
+/* Поддержка темной темы */
+@media (prefers-color-scheme: dark) {
+  
+  .promoSliderArrow {
+
+
+    border-color: rgba(59, 130, 246, 0.3);
+  }
+  
+  .mainBannerTitle {
+    color: #043a79;
+  }
+  
+  .mainBannerSubtitle {
+    color: #2d2d2d;
+  }
+  
+  .flipCardFront {
+
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .flipCardFront h2 {
+    color: #2e2e2e;
+  }
+  
+  .flipCardHint {
+    color: #434343;
+    border-color: #374151;
+  }
+  
+
+}
+
+/* Улучшенная доступность */
+@media (prefers-reduced-motion: reduce) {
+  .promoSliderTrack,
+  .flipCardInner,
+  .mainBannerForm,
+  .btnForm button {
+    transition: none;
+  }
+  
+  .promoSliderArrow:hover,
+  .mainBannerForm:hover,
+  .btnForm button:hover,
+  .flipCard:hover {
+    transform: none;
+  }
+}
+
+/* Поддержка очень больших экранов */
+@media (min-width: 1920px) {
+  .bannerContent {
+    max-width: 1800px;
+  }
+  
+  .promoSlider {
+    height: 800px;
+  }
+  
+  .mainBannerContent {
+    max-width: 1600px;
+  }
+  
+  .flipCardRow {
+    max-width: 1600px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
