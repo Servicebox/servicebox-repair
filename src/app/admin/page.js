@@ -1,10 +1,10 @@
 // app/admin/page.js
 'use client';
-
+import styles from './Admin.module.css';
 import { useState } from 'react';
 import UsersManagement from '@/components/Admin/UsersManagement/UsersManagement';
 import OrdersManagement from '@/components/Admin/OrdersManagement/OrdersManagement';
-import styles from './admin.module.css';
+
 
 export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState('orders');

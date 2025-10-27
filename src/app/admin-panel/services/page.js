@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import './ServicesAdmin.css';
+
 
 const ServicesAdmin = () => {
   const [services, setServices] = useState([]);

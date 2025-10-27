@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
-import { sendEmail } from '@/lib/email';
+import { sendPasswordResetEmail } from '@/lib/email';
 import crypto from 'crypto';
 
 export async function POST(request) {
@@ -38,7 +38,7 @@ export async function POST(request) {
 
     // Отправляем email
     try {
-      await sendEmail(user.email, resetToken, user.username);
+      await sendPasswordResetEmail(user.email, resetToken, user.username);
       
       return NextResponse.json({
         message: 'Если email существует, ссылка для сброса пароля была отправлена'

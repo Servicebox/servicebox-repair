@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
-import Admin from '@/models/admin';
+
 import dbConnect from '@/lib/db';
-import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 
 
