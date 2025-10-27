@@ -5,7 +5,6 @@ import { useState } from 'react';
 import UsersManagement from '@/components/Admin/UsersManagement/UsersManagement';
 import OrdersManagement from '@/components/Admin/OrdersManagement/OrdersManagement';
 
-
 export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState('orders');
 
