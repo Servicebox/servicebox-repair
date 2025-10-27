@@ -6,7 +6,7 @@ import Image from "next/image";
 import styles from "./Form.module.css";
 import Modal from "../Modal/Modal";
 import PrivacyCheckbox from "../PrivacyCheckbox/PrivacyCheckbox";
-import CloseIcon from "../../../public/images/closes.svg";
+const CloseIcon = "/images/closes.svg";
 
 const initialState = { name: "", phone: "", description: "" };
 

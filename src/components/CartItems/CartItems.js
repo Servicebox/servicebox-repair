@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import { ShopContext } from '../ShopContext/ShopContext';
-import remove_icon from '../../../public/images/closes.svg';
+
 import TinkoffPayForm from '../TinkoffPayForm/TinkoffPayForm';
 import styles from './CartItems.module.css';
 

@@ -1,6 +1,6 @@
 /* components/Header/Header.module.css */
 .headerTopBar {
-  background: #2c3e50;
+  background: rgb(43, 43, 43);
   color: white;
   padding: 8px 0;
   transition: all 0.3s ease;
@@ -18,6 +18,7 @@
   align-items: center;
   padding: 0 20px;
 }
+
 .checkoutButton {
   flex: 1;
   background: #007bff;
@@ -33,6 +34,7 @@
 .checkoutButton:hover {
   background: #0056b3;
 }
+
 .headerContacts {
   display: flex;
   align-items: center;
@@ -131,6 +133,7 @@
   justify-content: space-between;
   padding: 0 20px;
   height: 70px;
+  gap: 15px;
 }
 
 .headerLogoLink {
@@ -139,12 +142,14 @@
   gap: 12px;
   text-decoration: none;
   color: inherit;
+  flex-shrink: 0;
 }
 
 .headerLogo {
   width: 65px;
   height: 45px;
   object-fit: contain;
+  flex-shrink: 0;
 }
 
 .headerLogoText {
@@ -168,7 +173,8 @@
 /* Navigation */
 .headerNav {
   flex: 1;
-  margin: 0 40px;
+  margin: 0 20px;
+  min-width: 0;
 }
 
 .headerNavList {
@@ -176,18 +182,21 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 8px;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .headerNavItem {
   position: relative;
+  flex-shrink: 1;
 }
 
 .headerNavLink {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 12px 16px;
+  gap: 4px;
+  padding: 10px 12px;
   text-decoration: none;
   color: #2c3e50;
   font-weight: 500;
@@ -196,7 +205,9 @@
   border: none;
   background: none;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  flex-shrink: 1;
 }
 
 .headerNavLink:hover {
@@ -214,11 +225,11 @@
   position: absolute;
   top: 100%;
   left: 0;
-  background: white;
-  min-width: 200px;
+  background: #f9a92c;
+  min-width: 180px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  padding: 8px 0;
+  padding: 6px 0;
   list-style: none;
   margin: 0;
   opacity: 0;
@@ -236,7 +247,7 @@
 
 .dropdownItem {
   display: block;
-  padding: 12px 16px;
+  padding: 10px 14px;
   text-decoration: none;
   color: #2c3e50;
   transition: all 0.3s ease;
@@ -245,7 +256,8 @@
   width: 100%;
   text-align: left;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
 }
 
 .dropdownItem:hover {
@@ -257,13 +269,15 @@
 .headerActions {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
+  flex-shrink: 0;
 }
 
 .navUserGroup {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .userMenuWrapper {
@@ -273,15 +287,16 @@
 .navUserIcon {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
+  gap: 6px;
+  padding: 6px 10px;
   background: #f8f9fa;
   border: none;
   border-radius: 6px;
   color: #2c3e50;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
 }
 
 .navUserIcon:hover {
@@ -296,30 +311,30 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background: white;
-  min-width: 180px;
+  background: #f9a92c;
+  min-width: 160px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  padding: 8px 0;
+  padding: 6px 0;
   margin-top: 8px;
   z-index: 1002;
 }
 
 .userMenuDropdown .dropdownItem {
-  font-size: 0.9rem;
-  padding: 10px 16px;
+  font-size: 0.85rem;
+  padding: 8px 12px;
 }
 
 .userMenuLogout {
   width: 100%;
-  padding: 10px 16px;
+  padding: 8px 12px;
   background: none;
   border: none;
   color: #e74c3c;
   text-align: left;
   cursor: pointer;
   transition: background 0.3s ease;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .userMenuLogout:hover {
@@ -327,22 +342,45 @@
 }
 
 .adminPanelBtn {
-  padding: 8px 16px;
+  padding: 6px 12px;
   background: #e74c3c;
   color: white;
   text-decoration: none;
   border-radius: 6px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 500;
   transition: background 0.3s ease;
+  white-space: nowrap;
 }
 
 .adminPanelBtn:hover {
   background: #c0392b;
 }
 
+.logoutBtn {
+  padding: 6px 12px;
+  background: #95a5a6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  white-space: nowrap;
+}
+
+.logoutBtn:hover {
+  background: #7f8c8d;
+}
+
+.logoutBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .headerLoginBtn {
-  padding: 10px 20px;
+  padding: 8px 16px;
   background: #3498db;
   color: white;
   border: none;
@@ -350,6 +388,8 @@
   font-weight: 500;
   cursor: pointer;
   transition: background 0.3s ease;
+  font-size: 0.9rem;
+  white-space: nowrap;
 }
 
 .headerLoginBtn:hover {
@@ -361,13 +401,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   background: #f8f9fa;
   border-radius: 6px;
   color: #2c3e50;
   text-decoration: none;
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .headerCartLink:hover {
@@ -382,28 +423,46 @@
   background: #e74c3c;
   color: white;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 600;
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
   .headerNav {
-    margin: 0 20px;
+    margin: 0 15px;
   }
   
   .headerNavList {
-    gap: 4px;
+    gap: 2px;
   }
   
   .headerNavLink {
-    padding: 10px 12px;
-    font-size: 0.9rem;
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+  
+  .headerLogoMain {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .headerNav {
+    display: none;
+  }
+  
+  .headerLogoText {
+    display: none;
+  }
+  
+  .headerContainer {
+    gap: 10px;
   }
 }
 
@@ -414,42 +473,12 @@
   
   .headerContainer {
     height: 60px;
-    padding: 0 16px;
-  }
-  
-  .headerLogoText {
-    display: none;
-  }
-  
-  .headerNav {
-    display: none;
-  }
-  
-  .headerActions {
-    gap: 12px;
-  }
-  
-  .navUserGroup {
+    padding: 0 15px;
     gap: 8px;
   }
   
-  .navUserIcon span {
-    display: none;
-  }
-  
-  .adminPanelBtn {
-    padding: 6px 12px;
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .headerContainer {
-    padding: 0 12px;
-  }
-  
   .headerLogo {
-    width: 50px;
+    width: 45px;
     height: 35px;
   }
   
@@ -457,10 +486,113 @@
     gap: 8px;
   }
   
-  .headerCartLink {
-    width: 40px;
-    height: 40px;
+  .navUserGroup {
+    gap: 6px;
   }
+  
+  .navUserIcon span {
+    display: none;
+  }
+  
+  .adminPanelBtn, .logoutBtn {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+  
+  .headerLoginBtn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .headerCartLink {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .headerContainer {
+    padding: 0 10px;
+    height: 55px;
+  }
+  
+  .headerLogo {
+    width: 40px;
+    height: 30px;
+  }
+  
+  .headerActions {
+    gap: 6px;
+  }
+  
+  /* На очень маленьких экранах скрываем текст кнопок, оставляем только иконки */
+  .navUserIcon {
+    padding: 6px;
+  }
+  
+  .adminPanelBtn, .logoutBtn, .headerLoginBtn {
+    min-width: auto;
+    padding: 6px 8px;
+  }
+  
+  .adminPanelBtn span, .logoutBtn span {
+    display: none;
+  }
+  
+  .adminPanelBtn::after {
+    content: "⚙";
+  }
+  
+  .logoutBtn::after {
+    content: "🚪";
+  }
+  
+  .headerCartLink {
+    width: 34px;
+    height: 34px;
+  }
+  
+  .headerCartCount {
+    width: 16px;
+    height: 16px;
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .headerContainer {
+    padding: 0 8px;
+  }
+  
+  .headerLogo {
+    width: 35px;
+    height: 25px;
+  }
+  
+  .headerActions {
+    gap: 4px;
+  }
+  
+  .navUserIcon, .headerCartLink {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .adminPanelBtn, .logoutBtn, .headerLoginBtn {
+    padding: 4px 6px;
+    font-size: 0.7rem;
+  }
+}
+
+/* Compact mode for very small screens */
+.headerContainer.compact {
+  height: 50px;
+  padding: 0 5px;
+}
+
+.headerContainer.compact .headerLogo {
+  width: 30px;
+  height: 22px;
 }
 
 /* Dark mode support */

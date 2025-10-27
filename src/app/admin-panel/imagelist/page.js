@@ -1,5 +1,4 @@
 // app/admin-panel/imagelist/page.js
-// app/admin/gallery/page.js
 'use client';
 import { useState, useEffect } from 'react';
 import './ImageGallery.css';

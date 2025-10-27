@@ -8,15 +8,15 @@ import styles from './ServicePricePage.module.css';
 import BookingForm from "../BookingForm/BookingForm";
 
 // Импорт иконок
-import Notebook from "../../../public/images/notebook.webp";
-import Monoblok from "../../../public/images/monoblok.webp";
-import Applefon from "../../../public/images/apple.webp";
-import Android from "../../../public/images/android.webp";
-import Tablet from "../../../public/images/tablet.webp";
-import Tv from "../../../public/images/tv.webp";
-import Glass from "../../../public/images/glass.webp";
-import Videocard from "../../../public/images/videocard.webp";
-import Devices from "../../../public/images/Devices.webp";
+const Notebook = "/images/notebook.webp";
+const Monoblok = "/images/monoblok.webp";
+const Applefon = "/images/apple.webp";
+const Android = "/images/android.webp";
+const Tablet = "/images/tablet.webp";
+const Tv = "/images/tv.webp";
+const Glass = "/images/glass.webp";
+const Videocard = "/images/videocard.webp";
+const Devices = "/images/Devices.webp";
 
 const ServicePricePage = () => {
     const router = useRouter();

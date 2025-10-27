@@ -6,15 +6,15 @@ import Image from "next/image";
 import styles from "./Card.module.css";
 
 // Import images
-import Tv from "../../../public/images/tv.webp";
-import Glass from "../../../public/images/glass.webp";
-import Applefon from "../../../public/images/apple.webp";
-import Android from "../../../public/images/android.webp";
-import Tablet from "../../../public/images/tablet.webp";
-import Notebook from "../../../public/images/notebook.webp";
-import Monoblok from "../../../public/images/monoblok.webp";
-import Devices from "../../../public/images/Devices.webp";
-import Videocard from "../../../public/images/videocard.webp";
+const Tv = "/images/tv.webp";
+const Glass = "/images/glass.webp";
+const Applefon ="/images/apple.webp";
+const Android = "/images/android.webp";
+const Tablet ="/images/tablet.webp";
+const Notebook ="/images/notebook.webp";
+const Monoblok ="/images/monoblok.webp";
+const Devices = "/images/Devices.webp";
+const Videocard = "/images/videocard.webp";
 
 const Card = ({ title, subtitle, image, linkTo }) => {
   const serviceRef = useRef(null);

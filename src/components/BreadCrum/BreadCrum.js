@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './BreadCrum.module.css';
-import arrow_icon from "../../../public/images/Down.svg";
+const arrow_icon ="/images/Down.svg";
 
 const getCategoryUrl = (category) => {
   switch (category) {

@@ -6,9 +6,9 @@ import Image from "next/image";
 import styles from "./Chat.module.css";
 
 // Импортируем изображения
-import userIcon from "../../../public/images/user.svg";
-import managerIcon from "../../../public/images/manager.webp";
-import sendIcon from "../../../public/images/Up.svg";
+const userIcon = "/images/user.svg";
+const managerIcon = "/images/manager.webp";
+const sendIcon = "/images/Up.svg";
 
 // Динамически импортируем emoji-mart для предотвращения SSR ошибок
 let Picker;

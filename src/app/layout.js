@@ -1,5 +1,4 @@
 // app/layout.js
-// app/layout.js
 'use client';
 import './globals.css'
 import  'tailwindcss';

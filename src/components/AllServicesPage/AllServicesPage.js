@@ -7,17 +7,6 @@ import Image from 'next/image';
 
 import BookingForm from "../../components/BookingForm/BookingForm";
 
-// Импорт изображений
-import Notebook from "../../../public/images/notebook.webp";
-import Monoblok from "../../../public/images/monoblok.webp";
-import Applefon from "../../../public/images/apple.webp";
-import Android from "../../../public/images/android.webp";
-import Tablet from "../../../public/images/tablet.webp";
-import Tv from "../../../public/images/tv.webp";
-import Glass from "../../../public/images/glass.webp";
-import Videocard from "../../../public/images/videocard.webp";
-import Devices from "../../public/images/Devices.webp";
-
 const AllServicesPage = () => {
     const [services, setServices] = useState([]);
     const [filteredServices, setFilteredServices] = useState([]);
@@ -29,18 +18,18 @@ const AllServicesPage = () => {
     const [isBookingFormOpen, setIsBookingFormOpen] = useState(false);
     const [selectedService, setSelectedService] = useState(null);
 
-    // Данные категорий
+    // Данные категорий с абсолютными путями
     const categoryData = {
-        'Ноутбук': { icon: Notebook, color: '#4e73df', name: 'Ноутбуки' },
-        'Моноблок': { icon: Monoblok, color: '#1cc88a', name: 'Компьютеры и моноблоки' },
-        'Аппл': { icon: Applefon, color: '#36b9cc', name: 'Apple техника' },
-        'Телефон': { icon: Android, color: '#f6c23e', name: 'Телефоны' },
-        'Планшеты': { icon: Tablet, color: '#e74a3b', name: 'Планшеты' },
-        'Телевизор': { icon: Tv, color: '#6f42c1', name: 'Телевизоры' },
-        'Замена стекла': { icon: Glass, color: '#fd7e14', name: 'Замена стекла' },
-        'Видеокарты': { icon: Videocard, color: '#20c997', name: 'Видеокарты' },
-        'Другие': { icon: Devices, color: '#6610f2', name: 'Другие устройства' },
-        'Замена переднего стекла на телефонах': { icon: Glass, color: '#e83e8c', name: 'Замена стекла' }
+        'Ноутбук': { icon: "/images/notebook.webp", color: '#4e73df', name: 'Ноутбуки' },
+        'Моноблок': { icon: "/images/monoblok.webp", color: '#1cc88a', name: 'Компьютеры и моноблоки' },
+        'Аппл': { icon: "/images/apple.webp", color: '#36b9cc', name: 'Apple техника' },
+        'Телефон': { icon: "/images/android.webp", color: '#f6c23e', name: 'Телефоны' },
+        'Планшеты': { icon: "/images/tablet.webp", color: '#e74a3b', name: 'Планшеты' },
+        'Телевизор': { icon: "/images/tv.webp", color: '#6f42c1', name: 'Телевизоры' },
+        'Замена стекла': { icon: "/images/glass.webp", color: '#fd7e14', name: 'Замена стекла' },
+        'Видеокарты': { icon: "/images/videocard.webp", color: '#20c997', name: 'Видеокарты' },
+        'Другие': { icon: "/images/Devices.webp", color: '#6610f2', name: 'Другие устройства' },
+        'Замена переднего стекла на телефонах': { icon: "/images/glass.webp", color: '#e83e8c', name: 'Замена стекла' }
     };
 
     // Группировка услуг по категориям
@@ -225,6 +214,7 @@ const AllServicesPage = () => {
                                                     className={styles.categoryImg}
                                                     width={20}
                                                     height={20}
+                                                    unoptimized // Добавляем для WebP
                                                 />
                                             ) : (
                                                 '📋'
@@ -274,6 +264,7 @@ const AllServicesPage = () => {
                                                     className={styles.categoryTitleImg}
                                                     width={32}
                                                     height={32}
+                                                    unoptimized // Добавляем для WebP
                                                 />
                                             ) : (
                                                 <span className={styles.categoryIcon}>📋</span>
@@ -327,6 +318,7 @@ const AllServicesPage = () => {
                                                                     className={styles.badgeIcon}
                                                                     width={16}
                                                                     height={16}
+                                                                    unoptimized // Добавляем для WebP
                                                                 />
                                                             ) : (
                                                                 '📋'

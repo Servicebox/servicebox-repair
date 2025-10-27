@@ -5,10 +5,10 @@ import Image from "next/image";
 import styles from "./Footer.module.css";
 
 // Импортируем изображения
-import Oplata from "../../../public/images/ruble.svg";
-import Sbp from "../../../public/images/MNP.svg";
-import Beznal from "../../../public/images/Payment methods.svg";
-import Dolyami from '../../../public/images/Dolyame.svg';
+const Oplata = "/images/ruble.svg";
+const Sbp = "/images/MNP.svg";
+const Beznal = "/images/Payment methods.svg";
+const Dolyami = '/images/Dolyame.svg';
 
 function Footer() {
   return (

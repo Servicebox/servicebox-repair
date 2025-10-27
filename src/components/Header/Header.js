@@ -194,40 +194,50 @@ function Header() {
           </nav>
 
           <div className={styles.headerActions}>
-            {user ? (
-              <div className={styles.navUserGroup}>
-                <Link 
-                  href="/profile" 
-                  className={styles.navUserIcon} 
-                  aria-label="Личный кабинет"
-                  onClick={() => setShowUserMenu(false)}
-                >
-                  <FontAwesomeIcon icon={faUser} />
-                  {!isMobile && <span className={styles.navUsername}>
-                    {user.username || (user.role === "admin" ? "Админ" : "Пользователь")}
-                  </span>}
-                </Link>
+           {user ? (
+    <div className={styles.navUserGroup} ref={userMenuRef}>
+      <button 
+        className={styles.navUserIcon} 
+        aria-label="Личный кабинет"
+        onClick={() => setShowUserMenu(!showUserMenu)}
+      >
+        <FontAwesomeIcon icon={faUser} />
+        {!isMobile && <span className={styles.navUsername}>
+          {user.username || (user.role === "admin" ? "Админ" : "Пользователь")}
+        </span>}
+      </button>
 
-                {user.role === "admin" && (
-                  <Link 
-                    href="/admin-panel" 
-                    className={styles.adminPanelBtn} 
-                    aria-label="Админ-панель"
-                    onClick={() => setShowUserMenu(false)}
-                  >
-                    Админка
-                  </Link>
-                )}
-
-                <button 
-                  className={styles.logoutBtn} 
-                  onClick={handleLogout} 
-                  aria-label="Выйти из системы"
-                  disabled={isLoggingOut}
-                >
-                  {isLoggingOut ? 'Выход...' : 'Выйти'}
-                </button>
-              </div>
+      {showUserMenu && (
+        <div className={styles.userMenuDropdown}>
+          <div className={styles.userMenuHeader}>
+            <span>Привет, {user.username || (user.role === "admin" ? "Админ" : "Пользователь")}</span>
+          </div>
+          <Link 
+            href="/profile" 
+            className={styles.dropdownItem} 
+            onClick={() => setShowUserMenu(false)}
+          >
+            Профиль
+          </Link>
+          {user.role === "admin" && (
+            <Link 
+              href="/admin-panel" 
+              className={styles.dropdownItem} 
+              onClick={() => setShowUserMenu(false)}
+            >
+              Админ-панель
+            </Link>
+          )}
+          <button 
+            className={`${styles.dropdownItem} ${styles.logoutBtn}`} 
+            onClick={handleLogout} 
+            disabled={isLoggingOut}
+          >
+            {isLoggingOut ? 'Выход...' : 'Выйти'}
+          </button>
+        </div>
+      )}
+    </div>
             ) : (
               <button 
                 className={styles.headerLoginBtn} 

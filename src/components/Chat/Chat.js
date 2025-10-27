@@ -8,9 +8,10 @@ import EmojiPicker from 'emoji-picker-react';
 import styles from './Chat.module.css';
 
 // Импортируем изображения с корректными путями
-import userIcon from '/public/images/user.svg';
-import managerIcon from '/public/images/manager.webp';
-import sendIcon from '/public/images/Up.svg';
+const userIcon = "/images/user.svg";
+const managerIcon = "/images/manager.webp";
+const sendIcon = "/images/Up.svg";
+
 
 // Генерация ID пользователя (только на клиенте)
 const getUserId = () => {
@@ -225,6 +226,7 @@ export default function Chat() {
                 alt="Поддержка" 
                 width={45} 
                 height={45}
+                unoptimized
                 onError={(e) => {
                   e.target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDUiIGhlaWdodD0iNDUiIHZpZXdCb3g9IjAgMCA0NSA0NSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ1IiBoZWlnaHQ9IjQ1IiBmaWxsPSIjRjFGOUZGIi8+Cjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOTk5IiBmb250LXNpemU9IjE0Ij7Qn9C+0LTQutC70Y7Rh9C10L3QuNGPPC90ZXh0Pgo8L3N2Zz4K"
                 }}
@@ -284,6 +286,7 @@ export default function Chat() {
                     alt="Поддержка" 
                     width={50} 
                     height={50}
+                    unoptimized
                     onError={(e) => {
                       e.target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCA1MCA1MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjUwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjRjFGOUZGIi8+Cjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOTk5IiBmb250LXNpemU9IjE0Ij7Qn9C+0LTQutC70Y7Rh9C10L3QuNGPPC90ZXh0Pgo8L3N2Zz4K"
                     }}
@@ -308,6 +311,7 @@ export default function Chat() {
                     alt={msg.author === 'manager' ? 'Поддержка' : 'Вы'}
                     width={38}
                     height={38}
+                    unoptimized
                     onError={(e) => {
                       e.target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzgiIGhlaWdodD0iMzgiIHZpZXdCb3g9IjAgMCAzOCAzOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjM4IiBoZWlnaHQ9IjM4IiBmaWxsPSIjRjFGOUZGIi8+Cjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOTk5IiBmb250LXNpemU9IjEyIj7QodC70L7QstCwPC90ZXh0Pgo8L3N2Zz4K"
                     }}
@@ -393,6 +397,7 @@ export default function Chat() {
                 alt="Отправить" 
                 width={22} 
                 height={22}
+                unoptimized
                 onError={(e) => {
                   e.target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIiIGhlaWdodD0iMjIiIHZpZXdCb3g9IjAgMCAyMiAyMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIgMjFMMjEgMTJMMiAzVjEwTDE3IDEyTDIgMTRWMjFaIiBmaWxsPSIjZmZmIi8+Cjwvc3ZnPgo="
                 }}

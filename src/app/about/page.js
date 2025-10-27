@@ -8,21 +8,9 @@ import styles from './About.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVk, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
-// Импортируем изображения
-import Clock from "../../../public/images/clock.svg";
-import Card from "../../../public/images/Card.svg";
-import Secure from "../../../public/images/secure.svg";
-import Photo0 from "../../../public/images/mestomastera1.webp";
-import Photo1 from "../../../public/images/ya.webp";
-import Photo2 from "../../../public/images/magistr.webp";
-import Photo3 from "../../../public/images/stend.webp";
-import Photo4 from "../../../public/images/resepshen.webp";
-import Photo5 from "../../../public/images/5060carta.webp";
-import Photo6 from "../../../public/images/mestomastera.webp";
-import Photo7 from "../../../public/images/PSXvideocard.webp";
-
 const About = forwardRef((_props, ref) => {
   const [currentPhoto, setCurrentPhoto] = useState(0);
+  
   const photoAlts = [
     "Ремонт ноутбуков, компьютеров, техники Apple в Вологде - ServiceBox",
     "Ремонт iPhone, iPad, MacBook в Вологде - ServiceBox",
@@ -33,7 +21,23 @@ const About = forwardRef((_props, ref) => {
     "Срочный ремонт электроники в Вологде - ServiceBox",
     "Ремонт видеокарт, материнских плат в Вологде - ServiceBox"
   ];
-  const photos = [Photo0, Photo1, Photo2, Photo3, Photo4, Photo5, Photo6, Photo7];
+
+  // Используем абсолютные пути вместо импортов
+  const photos = [
+    "/images/mestomastera1.webp",
+    "/images/ya.webp", 
+    "/images/magistr.webp",
+    "/images/stend.webp",
+    "/images/resepshen.webp",
+    "/images/5060carta.webp",
+    "/images/mestomastera.webp",
+    "/images/PSXvideocard.webp"
+  ];
+
+  // Абсолютные пути для иконок
+  const Clock = "/images/clock.svg";
+  const Card = "/images/Card.svg";
+  const Secure = "/images/secure.svg";
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -59,7 +63,7 @@ const About = forwardRef((_props, ref) => {
         </p>
         
         <p className={styles.subheading}>
-          Мы также понимаем важность разумного подхода к ценообразованию.
+          Мы также понимают важность разумного подхода к ценообразованию.
           В "ServiceBox" мы выбираем взвешенную ценовую политику,
           чтобы цены на ремонт телефонов, планшетов и ноутбуков
           были адекватны стоимости самих гаджетов.
@@ -98,6 +102,7 @@ const About = forwardRef((_props, ref) => {
                 width={500}
                 height={300}
                 priority
+                unoptimized // Добавляем для WebP изображений
               />
               <div className={styles.dots}>
                 {photos.map((_, index) => (
@@ -115,19 +120,40 @@ const About = forwardRef((_props, ref) => {
         
         <div className={styles.featuresGrid}>
           <div className={styles.featureCard}>
-            <Image src={Clock} className={styles.featureIcon} alt="Быстрый ремонт техники в Вологде" width={50} height={50} />
+            <Image 
+              src={Clock} 
+              className={styles.featureIcon} 
+              alt="Быстрый ремонт техники в Вологде" 
+              width={50} 
+              height={50} 
+              unoptimized // Для SVG
+            />
             <h3 className={styles.featureTitle}>Ремонт от 30 минут</h3>
             <p className={styles.featureText}>Срочный ремонт без очередей - большинство работ выполняем при вас</p>
           </div>
 
           <div className={styles.featureCard}>
-            <Image src={Secure} className={styles.featureIcon} alt="Гарантия на ремонт" width={50} height={50} />
+            <Image 
+              src={Secure} 
+              className={styles.featureIcon} 
+              alt="Гарантия на ремонт" 
+              width={50} 
+              height={50} 
+              unoptimized // Для SVG
+            />
             <h3 className={styles.featureTitle}>Гарантия до 12 месяцев</h3>
             <p className={styles.featureText}>Даём официальную гарантию на все виды работ и запчасти</p>
           </div>
 
           <div className={styles.featureCard}>
-            <Image src={Card} className={styles.featureIcon} alt="Удобная оплата ремонта" width={50} height={50} />
+            <Image 
+              src={Card} 
+              className={styles.featureIcon} 
+              alt="Удобная оплата ремонта" 
+              width={50} 
+              height={50} 
+              unoptimized // Для SVG
+            />
             <h3 className={styles.featureTitle}>Любые формы оплаты</h3>
             <p className={styles.featureText}>Наличные, карты, безнал для юрлиц - вам решать как платить</p>
           </div>

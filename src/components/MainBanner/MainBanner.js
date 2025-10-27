@@ -6,14 +6,14 @@ import Image from 'next/image';
 import styles from "./MainBanner.module.css";
 import Form from '../Form/Form';
 
-// Импорт изображений
-import Diagnostics from "../../../public/images/notorang.svg";
-import Cleane from "../../../public/images/cleane.svg";
-import Eplaceable from "../../../public/images/telpodmena.svg";
-import Example1 from '../../../public/images/1ak.webp';
-import Example2 from '../../../public/images/2ak.webp';
-import Example3 from '../../../public/images/3ak.webp';
-import Example4 from '../../../public/images/4ak.webp';
+// Абсолютные пути для изображений
+const Diagnostics = "/images/notorang.svg";
+const Cleane = "/images/cleane.svg";
+const Eplaceable = "/images/telpodmena.svg";
+const Example1 = '/images/1ak.webp';
+const Example2 = '/images/2ak.webp';
+const Example3 = '/images/3ak.webp';
+const Example4 = '/images/4ak.webp';
 
 const promoImages = [Example1, Example2, Example3, Example4];
 
@@ -81,10 +81,12 @@ function PromoImageSlider() {
                   alt={`Акция на ремонт техники в Вологде ${i + 1}`} 
                   className={styles.promoSliderImg}
                   itemProp="contentUrl"
+                  width={800}  // Добавлен явный width
+                  height={400} // Добавлен явный height
                   priority={i === 0}
                   quality={90}
-                  placeholder="blur"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+                  unoptimized // Для WebP изображений
                 />
               </div>
               <meta itemProp="name" content={`Акция ServiceBox Вологда ${i + 1}`} />
@@ -175,9 +177,10 @@ function FlipCard({ frontTitle, frontIcon, img, frontHint, backText, schemaType 
               src={img} 
               alt={frontTitle} 
               itemProp="image"
-              width={120}
-              height={120}
+              width={120}  // Явно указан width
+              height={120} // Явно указан height
               quality={85}
+              unoptimized // Для SVG изображений
             />
           </div>
           <div className={styles.flipCardHint}>{frontHint}</div>
