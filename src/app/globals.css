@@ -64,4 +64,1471 @@ input:focus-visible,
 textarea:focus-visible {
   outline: 2px solid #4299e1;
   outline-offset: 2px;
+}/* AboutMe.module.css - Modern & Responsive */
+.aboutMe {
+  position: relative;
+  overflow: hidden;
+  padding: 100px 0;
+  background: transparent;
+}
+
+.aboutMeContent {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.quoteContainer {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto 60px;
+  text-align: center;
+  border-radius: 24px;
+  padding: 80px 60px;
+  border: 2px solid #f9a92c;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 
+    0 10px 40px rgba(15, 82, 186, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+.quoteContainer:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 
+    0 20px 60px rgba(15, 82, 186, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.9);
+  border-color: #0F52BA;
+}
+
+.aboutMeTitle {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.5;
+  color: #002147;
+  margin: 0;
+  position: relative;
+  padding: 0;
+}
+
+.aboutMeQuote {
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+  font-style: italic;
+  background: linear-gradient(135deg, #002147 0%, #0F52BA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.quoteDecoration {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(135deg, #0F52BA 0%, #002147 100%);
+  border-radius: 4px;
+  transition: all 0.4s ease;
+}
+
+.quoteContainer:hover .quoteDecoration {
+  width: 120px;
+  background: linear-gradient(135deg, #f9a92c 0%, #0F52BA 100%);
+}
+
+/* Анимации для цитат */
+.fadeIn {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.fadeOut {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+/* Навигация по цитатам */
+.quoteNavigation {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 40px;
+  padding-bottom: 10px;
+}
+
+.quoteDot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #002147;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.quoteDot::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f9a92c 0%, #0F52BA 100%);
+  transition: left 0.3s ease;
+}
+
+.quoteDot:hover {
+  transform: scale(1.4);
+  border-color: #f9a92c;
+}
+
+.quoteDot:hover::before {
+  left: 0;
+}
+
+.quoteDot.active {
+  transform: scale(1.4);
+  border-color: #f9a92c;
+  box-shadow: 0 0 0 4px rgba(249, 169, 44, 0.2);
+}
+
+.quoteDot.active::before {
+  left: 0;
+}
+
+/* Анимации */
+@keyframes float {
+  0% { 
+    transform: translateY(0px) rotate(0deg); 
+  }
+  50% { 
+    transform: translateY(-12px) rotate(1deg); 
+  }
+  100% { 
+    transform: translateY(0px) rotate(0deg); 
+  }
+}
+
+.quoteContainer {
+  animation: float 8s ease-in-out infinite;
+}
+
+/* Эффекты появления */
+@keyframes slideUpFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.aboutMe {
+  animation: slideUpFadeIn 0.8s ease-out;
+}
+
+/* Адаптивность для больших экранов */
+@media (max-width: 1600px) {
+  .aboutMeContent {
+    max-width: 1200px;
+    padding: 0 32px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .aboutMe {
+    padding: 80px 0;
+  }
+  
+  .aboutMeContent {
+    max-width: 1000px;
+    padding: 0 28px;
+  }
+  
+  .quoteContainer {
+    padding: 60px 40px;
+    margin-bottom: 50px;
+  }
+}
+
+@media (max-width: 992px) {
+  .aboutMe {
+    padding: 70px 0;
+  }
+  
+  .aboutMeContent {
+    padding: 0 24px;
+  }
+  
+  .quoteContainer {
+    padding: 50px 32px;
+    margin-bottom: 40px;
+    border-radius: 20px;
+  }
+  
+  .quoteDecoration {
+    top: 30px;
+    width: 80px;
+  }
+  
+  .quoteContainer:hover .quoteDecoration {
+    width: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .aboutMe {
+    padding: 60px 0;
+  }
+  
+  .aboutMeContent {
+    padding: 0 20px;
+  }
+  
+  .quoteContainer {
+    padding: 40px 24px;
+    margin-bottom: 40px;
+    border-radius: 18px;
+    border-width: 1.5px;
+  }
+  
+  .quoteContainer:hover {
+    transform: translateY(-5px) scale(1.005);
+  }
+  
+  .aboutMeTitle {
+    line-height: 1.4;
+  }
+  
+  .quoteDecoration {
+    top: 25px;
+    width: 60px;
+    height: 3px;
+  }
+  
+  .quoteContainer:hover .quoteDecoration {
+    width: 80px;
+  }
+  
+  .quoteNavigation {
+    margin-top: 32px;
+    gap: 14px;
+  }
+  
+  .quoteDot {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .aboutMe {
+    padding: 50px 0;
+  }
+  
+  .aboutMeContent {
+    padding: 0 16px;
+  }
+  
+  .quoteContainer {
+    padding: 32px 20px;
+    margin-bottom: 32px;
+    border-radius: 16px;
+    backdrop-filter: none;
+    background: rgba(255, 255, 255, 0.98);
+  }
+  
+  .aboutMeTitle {
+    font-size: 1.4rem;
+    line-height: 1.4;
+  }
+  
+  .quoteDecoration {
+    top: 20px;
+    width: 50px;
+  }
+  
+  .quoteContainer:hover .quoteDecoration {
+    width: 60px;
+  }
+  
+  .quoteNavigation {
+    margin-top: 28px;
+    gap: 12px;
+  }
+  
+  .quoteDot {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .quoteDot:hover,
+  .quoteDot.active {
+    transform: scale(1.3);
+  }
+}
+
+@media (max-width: 480px) {
+  .aboutMe {
+    padding: 40px 0;
+  }
+  
+  .aboutMeContent {
+    padding: 0 12px;
+  }
+  
+  .quoteContainer {
+    padding: 28px 16px;
+    margin-bottom: 28px;
+    border-radius: 14px;
+  }
+  
+  .aboutMeTitle {
+    font-size: 1.2rem;
+    line-height: 1.4;
+  }
+  
+  .quoteDecoration {
+    top: 18px;
+    width: 40px;
+    height: 2px;
+  }
+  
+  .quoteContainer:hover .quoteDecoration {
+    width: 50px;
+  }
+  
+  .quoteNavigation {
+    margin-top: 24px;
+    gap: 10px;
+  }
+  
+  .quoteDot {
+    width: 10px;
+    height: 10px;
+    border-width: 1.5px;
+  }
+  
+  .quoteDot:hover,
+  .quoteDot.active {
+    transform: scale(1.2);
+  }
+}
+
+@media (max-width: 360px) {
+  .aboutMe {
+    padding: 32px 0;
+  }
+  
+  .quoteContainer {
+    padding: 24px 12px;
+    margin-bottom: 24px;
+  }
+  
+  .aboutMeTitle {
+    font-size: 1.1rem;
+  }
+  
+  .quoteDecoration {
+    top: 16px;
+    width: 35px;
+  }
+  
+  .quoteContainer:hover .quoteDecoration {
+    width: 45px;
+  }
+  
+  .quoteNavigation {
+    margin-top: 20px;
+    gap: 8px;
+  }
+}
+
+/* Улучшенная доступность */
+.quoteDot:focus {
+  outline: 2px solid #0F52BA;
+  outline-offset: 2px;
+}
+
+.quoteContainer:focus-within {
+  outline: 2px solid #0F52BA;
+  outline-offset: 4px;
+}
+
+/* Reduced motion для доступности */
+@media (prefers-reduced-motion: reduce) {
+  .quoteContainer,
+  .quoteDot,
+  .fadeIn,
+  .fadeOut {
+    animation: none;
+    transition: none;
+  }
+  
+  .quoteContainer:hover {
+    transform: none;
+  }
+}
+
+/* Поддержка высокой контрастности */
+@media (prefers-contrast: high) {
+  .quoteContainer {
+    border-width: 3px;
+    background: white;
+  }
+  
+  .quoteDot {
+    border-width: 2px;
+  }
+  
+  .quoteDot.active {
+    border-width: 3px;
+  }
+}
+/* AboutRef.module.css */
+.aboutRef {
+  padding: 60px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.aboutContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+}
+
+.animatedTitle {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: #002147;
+  margin-bottom: 30px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.aboutText {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 600;
+  color: #002147;
+  margin-bottom: 20px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.aboutSubtitle {
+  font-size: 1rem;
+  color: #4D4D4D;
+  margin-bottom: 25px;
+  line-height: 1.7;
+  text-align: center;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin: 50px 0;
+  padding: 0 10px;
+}
+
+.featureCard {
+  background: transparent;
+  padding: 30px 20px;
+  border-radius: 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 2px solid #e2e8f0;
+  position: relative;
+  overflow: hidden;
+}
+
+.featureCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(135deg, #0F52BA, #002147);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.featureCard:hover {
+  transform: translateY(-8px);
+  border-color: #f9a92c;
+  box-shadow: 0 10px 30px rgba(66, 153, 225, 0.15);
+}
+
+.featureCard:hover::before {
+  transform: scaleX(1);
+}
+
+.featureIcon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: #f9a92c;
+  transition: transform 0.3s ease;
+}
+
+.featureCard:hover .featureIcon {
+  transform: scale(1.1);
+}
+
+.featureCard h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #002147;
+  margin-bottom: 15px;
+}
+
+.featureCard p {
+  color: #4D4D4D;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.repairServices {
+  margin: 80px 0 40px;
+}
+
+.repairServices h2 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: #002147;
+  margin-bottom: 50px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  padding: 0 10px;
+}
+
+.serviceCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 30px 20px;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  border: 2px solid #e2e8f0;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.serviceCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(135deg, #0F52BA 0%, #002147);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.serviceCard:hover {
+  transform: translateY(-8px);
+  border-color: #f9a92c;
+  box-shadow: 0 10px 30px rgba(72, 187, 120, 0.15);
+}
+
+.serviceCard:hover::before {
+  transform: scaleX(1);
+}
+
+.serviceIcon {
+  font-size: 2.5rem;
+  color: #f9a92c;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+
+.serviceCard:hover .serviceIcon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.serviceInfo {
+  flex: 1;
+}
+
+.serviceTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #002147;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+}
+
+.serviceText {
+  font-size: 0.9rem;
+  color: #4D4D4D;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Анимации */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animatedTitle {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.featureCard, .serviceCard {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+  .featuresGrid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+  }
+  
+  .servicesGrid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .aboutRef {
+    padding: 40px 0;
+  }
+  
+  .aboutContent {
+    padding: 0 15px;
+  }
+  
+  .featuresGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin: 40px 0;
+    padding: 0;
+  }
+  
+  .featureCard {
+    padding: 25px 15px;
+  }
+  
+  .servicesGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0;
+  }
+  
+  .serviceCard {
+    padding: 25px 15px;
+  }
+  
+  .repairServices {
+    margin: 60px 0 30px;
+  }
+  
+  .aboutText, .aboutSubtitle {
+    text-align: left;
+  }
+  
+  .featureIcon {
+    font-size: 2.5rem;
+  }
+  
+  .serviceIcon {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .aboutRef {
+    padding: 30px 0;
+  }
+  
+  .aboutContent {
+    padding: 0 10px;
+  }
+  
+  .animatedTitle {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+  
+  .aboutText {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+  }
+  
+  .aboutSubtitle {
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+  }
+  
+  .featuresGrid {
+    margin: 30px 0;
+    gap: 15px;
+  }
+  
+  .featureCard {
+    padding: 20px 15px;
+    border-radius: 12px;
+  }
+  
+  .featureCard h3 {
+    font-size: 1.2rem;
+  }
+  
+  .featureCard p {
+    font-size: 0.9rem;
+  }
+  
+  .servicesGrid {
+    gap: 15px;
+  }
+  
+  .serviceCard {
+    padding: 20px 15px;
+    border-radius: 12px;
+  }
+  
+  .serviceTitle {
+    font-size: 1.1rem;
+  }
+  
+  .serviceText {
+    font-size: 0.85rem;
+  }
+  
+  .repairServices h2 {
+    margin-bottom: 30px;
+  }
+}
+
+/* Очень маленькие экраны */
+@media (max-width: 360px) {
+  .aboutRef {
+    padding: 20px 0;
+  }
+  
+  .featureCard, .serviceCard {
+    padding: 15px 10px;
+  }
+  
+  .featureIcon {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+  
+  .serviceIcon {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+  
+  .featureCard h3 {
+    font-size: 1.1rem;
+  }
+  
+  .serviceTitle {
+    font-size: 1rem;
+  }
+}
+
+/* Улучшенная читаемость для длинных текстов */
+.aboutSubtitle {
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* Фокус состояния для доступности */
+.featureCard:focus-within,
+.serviceCard:focus-within {
+  outline: 2px solid #0F52BA;
+  outline-offset: 2px;
+}
+
+/* Плавный скролл для якорных ссылок */
+.aboutRef {
+  scroll-margin-top: 80px;
+}
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.header p {
+  color: #666;
+  font-size: 16px;
+}
+
+.searchSection {
+  margin-bottom: 20px;
+}
+
+.searchForm {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.searchButton, .clearButton {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.searchButton {
+  background-color: #0070f3;
+  color: white;
+}
+
+.clearButton {
+  background-color: #666;
+  color: white;
+}
+
+.error, .success {
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.error {
+  background-color: #fee;
+  border: 1px solid #fcc;
+  color: #c33;
+}
+
+.success {
+  background-color: #efe;
+  border: 1px solid #cfc;
+  color: #363;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: inherit;
+}
+
+.tableContainer {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #333;
+}
+
+.userRow:hover {
+  background-color: #f8f9fa;
+}
+
+.input, .select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.role {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.role.user {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.role.admin {
+  background-color: #e8f5e8;
+  color: #2e7d32;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.editButton, .saveButton, .cancelButton, 
+.promoteButton, .demoteButton, .deleteButton {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.editButton {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.saveButton {
+  background-color: #28a745;
+  color: white;
+}
+
+.cancelButton {
+  background-color: #6c757d;
+  color: white;
+}
+
+.promoteButton {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.demoteButton {
+  background-color: #6f42c1;
+  color: white;
+}
+
+.deleteButton {
+  background-color: #dc3545;
+  color: white;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #0070f3;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  gap: 15px;
+}
+
+.pageButton {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pageButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pageInfo {
+  color: #666;
+  font-size: 14px;
+}
+/* ArronService.module.css */
+.arronService {
+  padding: 80px 0;
+  position: relative;
+}
+
+.arronServiceContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Заголовки */
+.arronServiceContent h2 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: #002147;
+  text-align: center;
+  margin-bottom: 60px;
+  line-height: 1.2;
+  position: relative;
+}
+
+.arronServiceContent h2::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(135deg, #0F52BA, #002147);
+  border-radius: 2px;
+}
+
+/* Список преимуществ */
+.arronServiceList {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 80px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
+}
+
+.arronServiceListItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 25px;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  border: 2px solid #e2e8f0;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.arronServiceListItem::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(135deg, #0F52BA, #002147);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.arronServiceListItem:hover {
+  transform: translateY(-5px);
+  border-color: #f9a92c;
+  box-shadow: 0 10px 30px rgba(66, 153, 225, 0.15);
+}
+
+.arronServiceListItem:hover::before {
+  transform: scaleX(1);
+}
+
+.arronServiceImg {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  color: #f9a92c;
+  /* Убраны фильтры - возвращаем оригинальные цвета */
+}
+
+.arronServiceListItem:hover .arronServiceImg {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.arronServiceText {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #002147;
+  line-height: 1.5;
+  margin: 0;
+  flex: 1;
+}
+
+/* Бренды секция */
+.arronServiceBrands {
+  margin-top: 80px;
+}
+
+.arronServiceBrands h2 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  margin-bottom: 30px;
+}
+
+.brandsSubtitle {
+  font-size: 1.1rem;
+  color: #4D4D4D;
+  line-height: 1.7;
+  text-align: center;
+  margin: 0 auto 40px;
+  max-width: 800px;
+}
+
+.brandGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 25px;
+  margin: 60px auto;
+  max-width: 1000px;
+}
+
+.brandItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 15px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  border: 2px solid #e2e8f0;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.brandItem::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(135deg, #0F52BA 0%, #002147);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.brandItem:hover {
+  transform: translateY(-5px);
+  border-color: #f9a92c;
+  box-shadow: 0 8px 25px rgba(72, 187, 120, 0.15);
+}
+
+.brandItem:hover::before {
+  transform: scaleX(1);
+}
+
+.brandImageContainer {
+  width: 80px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  transition: transform 0.3s ease;
+}
+
+.brandItem:hover .brandImageContainer {
+  transform: scale(1.1);
+}
+
+.brandLogo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* Убраны фильтры - возвращаем оригинальные цвета логотипов */
+  transition: transform 0.3s ease;
+}
+
+.brandItem:hover .brandLogo {
+  transform: scale(1.05);
+}
+
+.brandName {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #002147;
+  text-align: center;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.brandItem:hover .brandName {
+  color: #f9a92c;
+}
+
+/* Анимации */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.arronServiceListItem,
+.brandItem {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+  .arronServiceList {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+  }
+  
+  .brandGrid {
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .arronService {
+    padding: 60px 0;
+  }
+  
+  .arronServiceContent {
+    padding: 0 15px;
+  }
+  
+  .arronServiceList {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 60px;
+  }
+  
+  .arronServiceListItem {
+    padding: 20px;
+    gap: 15px;
+  }
+  
+  .arronServiceImg {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .arronServiceText {
+    font-size: 0.95rem;
+  }
+  
+  .arronServiceBrands {
+    margin-top: 60px;
+  }
+  
+  .brandsSubtitle {
+    font-size: 1rem;
+    margin-bottom: 30px;
+  }
+  
+  .brandGrid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 15px;
+    margin: 40px auto;
+  }
+  
+  .brandItem {
+    padding: 15px 10px;
+  }
+  
+  .brandImageContainer {
+    width: 70px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .arronService {
+    padding: 40px 0;
+  }
+  
+  .arronServiceContent h2 {
+    margin-bottom: 40px;
+  }
+  
+  .arronServiceList {
+    margin-bottom: 40px;
+  }
+  
+  .arronServiceListItem {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+    padding: 15px;
+  }
+  
+  .arronServiceImg {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .arronServiceText {
+    font-size: 0.9rem;
+  }
+  
+  .arronServiceBrands {
+    margin-top: 40px;
+  }
+  
+  .brandGrid {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 12px;
+  }
+  
+  .brandItem {
+    padding: 12px 8px;
+  }
+  
+  .brandImageContainer {
+    width: 60px;
+    height: 40px;
+    margin-bottom: 8px;
+  }
+  
+  .brandName {
+    font-size: 0.8rem;
+  }
+  
+  .brandsSubtitle {
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+  }
+}
+
+@media (max-width: 360px) {
+  .arronService {
+    padding: 30px 0;
+  }
+  
+  .arronServiceContent {
+    padding: 0 10px;
+  }
+  
+  .brandGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  
+  .brandItem {
+    padding: 10px 5px;
+  }
+  
+  .brandImageContainer {
+    width: 50px;
+    height: 35px;
+  }
+  
+  .brandName {
+    font-size: 0.75rem;
+  }
+}
+
+/* Эффекты для улучшения UX */
+.arronServiceListItem,
+.brandItem {
+  cursor: pointer;
+}
+
+/* Фокус-состояния для доступности */
+.arronServiceListItem:focus-within,
+.brandItem:focus-within {
+  outline: 2px solid #0F52BA;
+  outline-offset: 2px;
+}
+
+/* Плавное появление элементов при скролле */
+@media (prefers-reduced-motion: no-preference) {
+  .arronServiceListItem,
+  .brandItem {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+  
+  .arronServiceListItem:nth-child(odd) {
+    animation-delay: 0.1s;
+  }
+  
+  .arronServiceListItem:nth-child(even) {
+    animation-delay: 0.2s;
+  }
+  
+  .brandItem {
+    animation-delay: calc(0.1s * var(--index, 0));
+  }
+}
+
+/* Улучшенная читаемость длинных текстов */
+.brandsSubtitle {
+  text-align: justify;
+  hyphens: auto;
 }

@@ -28,85 +28,59 @@ export default function BookingForm({ service, onClose, onBookingSuccess }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!privacyAgreed) {
-      setError('Необходимо согласие на обработку персональных данных');
-      return;
-    }
-
     setIsSubmitting(true);
     setError('');
 
     try {
       // Отправка в Telegram
-      const telegramResponse = await fetch('/api/telegram', {
+      if (process.env.NEXT_PUBLIC_API_URL) {
+        await fetch('/api/telegram', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: formData.name, // исправлено с formData.userName
+            phone: formData.phone, // исправлено с formData.userPhone
+            description: `Запись на услугу: ${service.serviceName}`
+          })
+        });
+      }
+
+      // Сохранение в базу данных
+      const bookingResponse = await fetch('/api/bookings', {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          email: formData.email,
-          serviceName: service?.serviceName,
+          serviceId: service._id,
+          serviceName: service.serviceName,
+          userName: formData.name, // исправлено с formData.userName
+          userPhone: formData.phone, // исправлено с formData.userPhone
+          userEmail: formData.email, // исправлено с formData.userEmail
           deviceModel: formData.deviceModel,
-          notes: formData.notes,
-          source: 'BookingForm'
+          notes: formData.notes
         })
       });
 
-      const telegramResult = await telegramResponse.json();
+      const bookingData = await bookingResponse.json();
 
-      if (!telegramResponse.ok || !telegramResult.success) {
-        throw new Error(telegramResult.error || 'Ошибка при отправке заявки');
-      }
-
-      // Дополнительно сохраняем в базу данных (если нужно)
-      if (service?._id) {
-        const dbResponse = await fetch('/api/bookings', {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            serviceId: service._id,
-            serviceName: service.serviceName,
-            userName: formData.name,
-            userPhone: formData.phone,
-            userEmail: formData.email,
-            deviceModel: formData.deviceModel,
-            notes: formData.notes
-          })
-        });
-
-        if (!dbResponse.ok) {
-          console.warn('Не удалось сохранить в базу данных, но заявка отправлена в Telegram');
+      if (bookingResponse.ok) {
+        // Показываем трекер-код пользователю
+        alert(`✅ Запись создана! Ваш код отслеживания: ${bookingData.trackingCode}`);
+        setSuccess(true);
+        if (onBookingSuccess) {
+          onBookingSuccess(bookingData);
         }
+        // Автоматическое закрытие через 3 секунды
+        setTimeout(() => {
+          if (onClose) onClose();
+        }, 3000);
+      } else {
+        throw new Error(bookingData.message || 'Ошибка при сохранении в базу данных');
       }
 
-      setSuccess(true);
-      onBookingSuccess && onBookingSuccess({
-        name: formData.name,
-        phone: formData.phone,
-        service: service?.serviceName
-      });
-      
-      // Сбрасываем форму
-      setTimeout(() => {
-        setFormData({
-          name: '',
-          phone: '',
-          email: '',
-          deviceModel: '',
-          notes: ''
-        });
-        setPrivacyAgreed(false);
-        setSuccess(false);
-        onClose();
-      }, 2000);
-      
     } catch (err) {
-      setError(err.message || 'Ошибка при создании записи. Попробуйте позже.');
+      console.error('Booking error:', err);
+      setError(err.message);
+      alert('❌ Ошибка при создании записи: ' + err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -149,6 +123,9 @@ export default function BookingForm({ service, onClose, onBookingSuccess }) {
             <div className={styles.successIcon}>✓</div>
             <h4>Запись успешно создана!</h4>
             <p>Мы свяжемся с вами для подтверждения</p>
+            <p className={styles.trackingInfo}>
+              Код отслеживания: <strong>{bookingData?.trackingCode}</strong>
+            </p>
           </div>
         )}
 

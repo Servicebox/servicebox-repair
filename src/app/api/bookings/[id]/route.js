@@ -2,60 +2,45 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Booking from '@/models/Booking';
 
-export async function PATCH(request, { params }) {
-  await dbConnect();
-  
+export async function PUT(request, { params }) {
   try {
+    await dbConnect();
     const { id } = params;
     const { status } = await request.json();
-    
+
     const booking = await Booking.findById(id);
     if (!booking) {
       return NextResponse.json(
-        { message: 'Запись не найдена' },
+        { message: 'Бронирование не найдено' },
         { status: 404 }
       );
     }
-    
-    // Добавляем запись в историю статусов
-    booking.statusHistory.push({
-      status,
-      changedAt: new Date()
-    });
-    
+
+    // Обновляем статус и добавляем в историю
+    const oldStatus = booking.status;
     booking.status = status;
+    
+    if (!booking.statusHistory) {
+      booking.statusHistory = [];
+    }
+    
+    booking.statusHistory.push({
+      status: status,
+      changedAt: new Date(),
+      note: `Статус изменен с "${oldStatus}" на "${status}"`
+    });
+
     await booking.save();
     
-    return NextResponse.json(booking);
+    return NextResponse.json({ 
+      success: true, 
+      message: 'Статус обновлен',
+      booking 
+    });
   } catch (error) {
     console.error('Update booking error:', error);
     return NextResponse.json(
-      { message: error.message },
-      { status: 400 }
-    );
-  }
-}
-
-export async function GET(request, { params }) {
-  await dbConnect();
-  
-  try {
-    const { id } = params;
-    const booking = await Booking.findById(id)
-      .populate('serviceId');
-    
-    if (!booking) {
-      return NextResponse.json(
-        { message: 'Запись не найдена' },
-        { status: 404 }
-      );
-    }
-    
-    return NextResponse.json(booking);
-  } catch (error) {
-    console.error('Get booking error:', error);
-    return NextResponse.json(
-      { message: error.message },
+      { message: 'Ошибка при обновлении статуса' },
       { status: 500 }
     );
   }
