@@ -1,3 +1,4 @@
+// src/app/admin-panel/promotions/page.js
 'use client';
 
 import { useState, useEffect } from 'react';

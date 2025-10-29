@@ -632,3 +632,343 @@
   background-color: #6c757d;
   cursor: not-allowed;
 }
+/* src/components/NewsEditor/NewsEditor.module.css */
+.editor {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.formGroup {
+  margin-bottom: 24px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+.titleInput {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.fileInput {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.progressBar {
+  width: 100%;
+  height: 20px;
+  background: #f0f0f0;
+  border-radius: 10px;
+  margin-top: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progressFill {
+  height: 100%;
+  background: #007bff;
+  transition: width 0.3s ease;
+}
+
+.progressText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  color: #333;
+}
+
+.imagePreview {
+  position: relative;
+  margin-top: 10px;
+  max-width: 300px;
+}
+
+.previewImage {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.removeImageButton {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.blocksSection {
+  margin: 30px 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.blocksHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.blockButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.addButton {
+  padding: 8px 16px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background: #218838;
+}
+
+.addButton:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.youtubeSection {
+  margin: 20px 0;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+.youtubeInput {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.youtubeUrlInput {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.youtubeAddButton {
+  padding: 8px 16px;
+  background: #ff0000;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.youtubeAddButton:hover:not(:disabled) {
+  background: #cc0000;
+}
+
+.youtubeAddButton:disabled {
+  background: #999;
+  cursor: not-allowed;
+}
+
+.block {
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  padding: 15px;
+}
+
+.blockHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.blockType {
+  font-weight: 600;
+  color: #555;
+}
+
+.blockActions {
+  display: flex;
+  gap: 5px;
+}
+
+.moveButton, .removeButton {
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.moveButton:hover {
+  background: #f8f9fa;
+}
+
+.removeButton {
+  color: #ff4444;
+  border-color: #ff4444;
+}
+
+.removeButton:hover {
+  background: #ff4444;
+  color: white;
+}
+
+.textArea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 120px;
+}
+
+.mediaBlock, .youtubeBlock {
+  scale: y -3px
+}
+
+.mediaPreview {
+  position: relative;
+  max-width: 400px;
+  margin: 10px 0;
+}
+
+.mediaImage {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.mediaVideo {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 6px;
+}
+
+.youtubePreview {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 10px 0;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+.youtubeThumbnail {
+  width: 120px;
+  height: 90px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.youtubeInfo {
+  flex: 1;
+}
+
+.youtubeInfo p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.captionInput {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+.metaSection {
+  margin: 30px 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.metaInput, .metaTextarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+}
+
+.metaTextarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.publishSection {
+  margin: 20px 0;
+}
+
+.publishLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.publishCheckbox {
+  width: 18px;
+  height: 18px;
+}
+
+.actions {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.saveButton {
+  padding: 12px 30px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.saveButton:hover:not(:disabled) {
+  background: #0056b3;
+}
+
+.saveButton:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.emptyBlocks {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  background: #f8f9fa;
+  border-radius: 6px;
+}

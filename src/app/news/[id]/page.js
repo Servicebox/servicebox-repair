@@ -3,7 +3,7 @@ import NewsDetail from '../../../components/NewsDetail/NewsDetail';
 
 export async function generateMetadata({ params }) {
   try {
-    const response = await fetch(`https://service-box-35.ru/api/news/${params.id}`, {
+    const response = await fetch(`https://service-box-35.ruapi/news/${params.id}`, {
       next: { revalidate: 60 } // Кэшируем на 60 секунд
     });
     

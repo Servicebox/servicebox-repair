@@ -1,3 +1,4 @@
+// src/app/admin-panel/addnews/page.js
 'use client';
 
 import { useState } from 'react';

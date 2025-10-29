@@ -1,3 +1,4 @@
+// src/app/admin/news/edit/[id]/page.js
 'use client';
 
 import { useState, useEffect } from 'react';
