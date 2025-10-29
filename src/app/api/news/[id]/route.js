@@ -1,4 +1,4 @@
-///app/api/news/[id]/route.js
+// src/app/api/news/[id]/route.js
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import News from '@/models/News';
@@ -7,14 +7,23 @@ export async function GET(request, { params }) {
   try {
     await dbConnect();
     
-    // ✅ ФИКС: Ожидаем params в Next.js 15
-    const { id } = await params;
+    // ✅ ФИКС: УБРАТЬ await! В Next.js 15 params уже готов
+    const { id } = params;
 
-    console.log('Fetching news with ID:', id);
+    console.log('🔍 Fetching news with ID:', id);
 
-    if (!id) {
+    // ✅ ФИКС: Проверка на undefined
+    if (!id || id === 'undefined') {
       return NextResponse.json(
         { success: false, error: 'ID новости не указан' },
+        { status: 400 }
+      );
+    }
+
+    // ✅ ФИКС: Проверка валидности ObjectId
+    if (!/^[0-9a-fA-F]{24}$/.test(id)) {
+      return NextResponse.json(
+        { success: false, error: 'Неверный формат ID новости' },
         { status: 400 }
       );
     }
@@ -34,6 +43,14 @@ export async function GET(request, { params }) {
     });
   } catch (error) {
     console.error('Error fetching news item:', error);
+    
+    if (error.name === 'CastError') {
+      return NextResponse.json(
+        { success: false, error: 'Неверный формат ID новости' },
+        { status: 400 }
+      );
+    }
+    
     return NextResponse.json(
       { success: false, error: 'Ошибка при загрузке новости' },
       { status: 500 }
@@ -45,13 +62,11 @@ export async function PUT(request, { params }) {
   try {
     await dbConnect();
     
-    // ✅ ФИКС: Ожидаем params в Next.js 15
-    const { id } = await params;
+    // ✅ ФИКС: УБРАТЬ await!
+    const { id } = params;
     const updateData = await request.json();
 
-    console.log('Updating news with ID:', id, 'Data:', updateData);
-
-    if (!id) {
+    if (!id || id === 'undefined') {
       return NextResponse.json(
         { success: false, error: 'ID новости не указан' },
         { status: 400 }
@@ -78,14 +93,13 @@ export async function PUT(request, { params }) {
   } catch (error) {
     console.error('Error updating news:', error);
     
-    if (error.name === 'ValidationError') {
-      const errors = Object.values(error.errors).map(err => err.message);
+    if (error.name === 'CastError') {
       return NextResponse.json(
-        { success: false, error: 'Ошибка валидации', details: errors },
+        { success: false, error: 'Неверный формат ID новости' },
         { status: 400 }
       );
     }
-
+    
     return NextResponse.json(
       { success: false, error: 'Ошибка при обновлении новости' },
       { status: 500 }
@@ -97,12 +111,10 @@ export async function DELETE(request, { params }) {
   try {
     await dbConnect();
     
-    // ✅ ФИКС: Ожидаем params в Next.js 15
-    const { id } = await params;
+    // ✅ ФИКС: УБРАТЬ await!
+    const { id } = params;
 
-    console.log('Deleting news with ID:', id);
-
-    if (!id) {
+    if (!id || id === 'undefined') {
       return NextResponse.json(
         { success: false, error: 'ID новости не указан' },
         { status: 400 }
@@ -124,6 +136,14 @@ export async function DELETE(request, { params }) {
     });
   } catch (error) {
     console.error('Error deleting news:', error);
+    
+    if (error.name === 'CastError') {
+      return NextResponse.json(
+        { success: false, error: 'Неверный формат ID новости' },
+        { status: 400 }
+      );
+    }
+    
     return NextResponse.json(
       { success: false, error: 'Ошибка при удалении новости' },
       { status: 500 }

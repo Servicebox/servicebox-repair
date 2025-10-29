@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import styles from '../News.module.css';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://service-box-35.ru';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 export default function NewsAdmin() {
   const [news, setNews] = useState([]);

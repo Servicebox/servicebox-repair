@@ -100,7 +100,7 @@ const NewsList = () => {
                   {firstImage && (
                     <div className={styles.imageContainer}>
                       <Image
-                        src={block.media}
+                        src={firstImage} // ✅ ФИКС: было block.media, теперь firstImage
                         alt={item.title}
                         width={400}
                         height={250}

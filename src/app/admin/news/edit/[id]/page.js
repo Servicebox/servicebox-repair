@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import NewsEditor from '@/components/NewsEditor/NewsEditor';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://service-box-35.ru';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 export default function NewsEditPage() {
   const params = useParams();
@@ -16,7 +16,13 @@ export default function NewsEditPage() {
   useEffect(() => {
     const fetchNewsItem = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/news/${params.id}`);
+        // ✅ ФИКС: Проверка ID
+        const id = params?.id;
+        if (!id || id === 'undefined') {
+          throw new Error('ID новости не указан');
+        }
+
+        const response = await fetch(`${API_URL}/api/news/${id}`);
         const data = await response.json();
         
         if (data.success) {
@@ -33,13 +39,32 @@ export default function NewsEditPage() {
       }
     };
 
-    if (params.id) {
+    if (params?.id) {
       fetchNewsItem();
     }
-  }, [params.id, router]);
+  }, [params, router]);
 
   const handleSave = async (newsData) => {
-    // ... аналогично предыдущему примеру
+    try {
+      const response = await fetch(`${API_URL}/api/news/${params.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newsData)
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert('Новость успешно обновлена');
+        router.push('/admin/news');
+      } else {
+        alert(data.error || 'Ошибка при обновлении новости');
+      }
+    } catch (error) {
+      alert('Ошибка при обновлении новости');
+    }
   };
 
   if (loading) {

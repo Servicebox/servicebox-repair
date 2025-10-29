@@ -12,7 +12,7 @@ export async function GET(request) {
 
     if (!token) {
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_APP_URL || 'https://service-box-35.ru'}/auth/verification-error?message=Токен верификации отсутствует`
+        `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/auth/verification-error?message=Токен верификации отсутствует`
       );
     }
 
@@ -23,21 +23,21 @@ export async function GET(request) {
 
     if (!user) {
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_APP_URL || 'https://service-box-35.ru'}/auth/verification-error?message=Неверный или просроченный токен верификации`
+        `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/auth/verification-error?message=Неверный или просроченный токен верификации`
       );
     }
 
     // Проверяем срок действия токена
     if (user.verificationTokenExpires && user.verificationTokenExpires < new Date()) {
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_APP_URL || 'https://service-box-35.ru'}/auth/verification-error?message=Срок действия токена истек`
+        `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/auth/verification-error?message=Срок действия токена истек`
       );
     }
 
     // Проверяем, не подтвержден ли уже email
     if (user.emailVerified) {
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_APP_URL || 'https://service-box-35.ru'}/auth/verification-success?alreadyVerified=true`
+        `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/auth/verification-success?alreadyVerified=true`
       );
     }
 
@@ -49,13 +49,13 @@ export async function GET(request) {
 
     // Перенаправляем на страницу успеха
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_APP_URL || 'https://service-box-35.ru'}/auth/verification-success`
+      `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/auth/verification-success`
     );
 
   } catch (error) {
     console.error('Email verification error:', error);
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_APP_URL || 'https://service-box-35.ru'}/auth/verification-error?message=Ошибка при подтверждении email`
+      `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/auth/verification-error?message=Ошибка при подтверждении email`
     );
   }
 }

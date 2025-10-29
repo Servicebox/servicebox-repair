@@ -43,7 +43,7 @@ function getUserName() {
 export default function Chat() {
   const [isClient, setIsClient] = useState(false);
   const USER_ID = isClient ? getUserId() : 'user';
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://service-box-35.ruapi';
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
   
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);

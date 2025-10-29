@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const getBaseUrl = () => {
-  return process.env.NEXT_PUBLIC_APP_URL || 'https://service-box-35.ru';
+  return process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 };
 
 export const sendVerificationEmail = async (email, token, username) => {
