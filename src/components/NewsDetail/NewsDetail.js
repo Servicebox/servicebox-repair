@@ -29,7 +29,7 @@ const NewsDetail = () => {
           return;
         }
         
-        const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://service-box-35.ru';
         const response = await fetch(`${API_URL}/api/news/${params.id}`);
         
         if (!response.ok) {

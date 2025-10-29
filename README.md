@@ -14,7 +14,7 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [https://service-box-35.ru](https://service-box-35.ru) with your browser to see the result.
 
 You can start editing the page by modifying `app/route.ts`. The page auto-updates as you edit the file.
 

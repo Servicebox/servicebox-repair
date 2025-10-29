@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import styles from './NewsEditor.module.css';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://service-box-35.ru';
 
 export default function NewsEditor({ onSave, saving, initialData }) {
   const [formData, setFormData] = useState({

@@ -6,7 +6,7 @@ import { useParams, useRouter } from 'next/navigation';
 import PromotionForm from '@/components/PromotionForm/PromotionForm';
 import styles from '../../../../admin-panel/News.module.css';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://service-box-35.ru';
 
 export default function EditPromotionPage() {
   const params = useParams();

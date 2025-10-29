@@ -9,7 +9,7 @@ let io;
 export function initSocket(server) {
   io = new Server(server, {
     cors: {
-      origin: process.env.CLIENT_URL || 'http://localhost:3000',
+      origin: process.env.CLIENT_URL || 'https://service-box-35.ru',
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     }
   });

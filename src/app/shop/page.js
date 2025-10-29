@@ -7,7 +7,7 @@ const Shop = () => {
   
   return (
     <div className={styles.shop}>
-      <a href="http://localhost:3000parts" className={styles.link} />
+      <a href="https://service-box-35.ruparts" className={styles.link} />
     </div>
   );
 }
