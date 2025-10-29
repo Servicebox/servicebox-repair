@@ -1,7 +1,8 @@
+// src/app/api/route.js
 import { NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
-import sharp from 'sharp';
+import { writeFile, mkdir } from 'fs/promises'; // Использует Node.js API
+import path from 'path'; // Использует Node.js API
+import sharp from 'sharp'; // Зависит от Node.js
 
 const CONFIG = {
   maxFileSizes: {
@@ -104,8 +105,8 @@ export async function POST(request) {
 
       try {
         // Создаем директорию для категории
-        const uploadDir = path.join(process.cwd(), 'public', 'uploads', category);
-        await mkdir(uploadDir, { recursive: true });
+        const uploadDir = path.join(process.cwd(), 'public', 'uploads', category); // Использует Node.js API
+        await mkdir(uploadDir, { recursive: true }); // Использует Node.js API
 
         // Генерируем уникальное имя файла
         const timestamp = Date.now();
@@ -116,13 +117,13 @@ export async function POST(request) {
         if (isImage) {
           // Для изображений конвертируем в WebP
           filename = `${timestamp}-${randomString}.webp`;
-          filePath = path.join(uploadDir, filename);
+          filePath = path.join(uploadDir, filename); // Использует Node.js API
           
           // Обрабатываем изображение с sharp
           const arrayBuffer = await file.arrayBuffer();
-          const buffer = Buffer.from(arrayBuffer);
+          const buffer = Buffer.from(arrayBuffer); // Buffer - Node.js API
 
-          const processedImage = await sharp(buffer)
+          const processedImage = await sharp(buffer) // sharp использует Node.js
             .webp({ 
               quality: CONFIG.imageProcessing.quality,
               effort: 6
@@ -135,18 +136,18 @@ export async function POST(request) {
                 withoutEnlargement: true
               }
             )
-            .toBuffer();
+            .toBuffer(); // sharp возвращает Buffer (Node.js)
 
-          await writeFile(filePath, processedImage);
+          await writeFile(filePath, processedImage); // Использует Node.js API
         } else {
           // Для видео сохраняем оригинал
-          const originalExtension = path.extname(file.name);
+          const originalExtension = path.extname(file.name); // Использует Node.js API
           filename = `${timestamp}-${randomString}${originalExtension}`;
-          filePath = path.join(uploadDir, filename);
+          filePath = path.join(uploadDir, filename); // Использует Node.js API
           
           const arrayBuffer = await file.arrayBuffer();
-          const buffer = Buffer.from(arrayBuffer);
-          await writeFile(filePath, buffer);
+          const buffer = Buffer.from(arrayBuffer); // Buffer - Node.js API
+          await writeFile(filePath, buffer); // Использует Node.js API
         }
 
         publicUrl = `/uploads/${category}/${filename}`;
@@ -220,3 +221,7 @@ export async function GET() {
     }
   });
 }
+
+// Указываем, что этот маршрут должен использовать Node.js Runtime
+// Это важно, потому что код использует fs, path, sharp и Buffer
+export const runtime = 'nodejs';

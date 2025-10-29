@@ -2,13 +2,13 @@
 // src/components/NewsDetail/NewsDetail.js
 'use client';
 import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'; // useRouter все еще нужен для редиректа
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './NewsDetail.module.css';
 
-const NewsDetail = () => {
-  const params = useParams();
+// Принимаем newsId как пропс
+const NewsDetail = ({ newsId }) => {
   const router = useRouter();
   const [newsItem, setNewsItem] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -19,40 +19,6 @@ const NewsDetail = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const fetchNewsItem = async () => {
-      try {
-        if (!params.id || params.id === 'undefined') {
-          setError('ID новости не указан');
-          setLoading(false);
-          return;
-        }
-        
-        const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://service-box-35.ru';
-        const response = await fetch(`${API_URL}/api/news/${params.id}`);
-        
-        if (!response.ok) {
-          throw new Error('Новость не найдена');
-        }
-        
-        const data = await response.json();
-        
-        if (data?.success) {
-          setNewsItem(data.data);
-        } else {
-          throw new Error(data.error || 'Новость не найдена');
-        }
-      } catch (err) {
-        setError(err.message);
-        setTimeout(() => router.push('/news'), 3000);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchNewsItem();
-  }, [params.id, router]);
 
   const openFullscreen = (imageUrl, description) => {
     setCurrentImage({ url: imageUrl, description });
@@ -124,6 +90,45 @@ const NewsDetail = () => {
   const handleTouchEnd = () => {
     setIsDragging(false);
   };
+
+  useEffect(() => {
+    const fetchNewsItem = async () => {
+      try {
+        // Используем newsId, переданный как пропс, вместо params.id
+        if (!newsId || newsId === 'undefined') {
+          setError('ID новости не указан');
+          setLoading(false);
+          return;
+        }
+
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://service-box-35.ru'; // Убраны лишние пробелы
+        const response = await fetch(`${API_URL}/api/news/${newsId}`);
+
+        if (!response.ok) {
+          throw new Error('Новость не найдена');
+        }
+
+        const data = await response.json();
+
+        if (data?.success) {
+          setNewsItem(data.data);
+        } else {
+          throw new Error(data.error || 'Новость не найдена');
+        }
+      } catch (err) {
+        setError(err.message);
+        setTimeout(() => router.push('/news'), 3000); // Редирект через 3 секунды при ошибке
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    // Вызываем fetch только если newsId действительно изменился
+    // (например, если компонент был повторно использован с другим id)
+    if (newsId) {
+        fetchNewsItem();
+    }
+  }, [newsId, router]); // Зависимости: newsId и router
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -208,9 +213,9 @@ const NewsDetail = () => {
             <span className={styles.breadcrumbSeparator}>/</span>
             <span className={styles.breadcrumbCurrent}>{newsItem.title}</span>
           </nav>
-          
+
           <h1 className={styles.articleTitle}>{newsItem.title}</h1>
-          
+
           <div className={styles.articleMeta}>
             <time className={styles.articleDate}>
               {new Date(newsItem.createdAt).toLocaleDateString('ru-RU', {
@@ -232,7 +237,7 @@ const NewsDetail = () => {
                   ))}
                 </div>
               )}
-              
+
               {block.type === 'image' && block.media && (
                 <figure className={styles.imageBlock}>
                   <div className={styles.imageWrapper}>
@@ -253,7 +258,7 @@ const NewsDetail = () => {
                   )}
                 </figure>
               )}
-              
+
               {block.type === 'video' && block.media && (
                 <div className={styles.videoBlock}>
                   <video controls className={styles.articleVideo}>
@@ -265,12 +270,12 @@ const NewsDetail = () => {
                   )}
                 </div>
               )}
-              
+
               {block.type === 'youtube' && block.media && (
                 <div className={styles.videoBlock}>
                   <div className={styles.youtubeContainer}>
                     <iframe
-                      src={`https://www.youtube.com/embed/${block.media}`}
+                      src={`https://www.youtube.com/embed/${block.media}`} // Исправленный URL для iframe
                       title={`YouTube video: ${block.description || newsItem.title}`}
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
