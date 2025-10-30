@@ -1,12 +1,13 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Product from '@/models/Product';
-import Category from '@/models/Category';
 
 export async function PUT(request, { params }) {
   try {
     await dbConnect();
-    const { slug } = params;
+    
+    // Асинхронное получение параметров
+    const { slug } = await params;
     const updateData = await request.json();
 
     // Находим товар

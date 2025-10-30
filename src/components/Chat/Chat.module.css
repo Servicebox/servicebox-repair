@@ -734,7 +734,7 @@
   }
 
   .openChatBtn {
-    width: 90%;
+    width: 100%;
     justify-content: center;
     padding: 14px 24px;
   }
@@ -771,7 +771,7 @@
   }
 
   .welcomeBubble {
-    max-width: 90%;
+    max-width: 100%;
   }
 }
 
@@ -809,55 +809,5 @@
   .editNameInput {
     min-width: 100%;
     margin-bottom: 8px;
-  }
-}
-
-/* Темная тема (опционально) */
-@media (prefers-color-scheme: dark) {
-  .chatModal {
-    border: 1px solid rgba(71, 85, 105, 0.3);
-  }
-
-  .nameModalContent {
-    color: rgb(43, 43, 43);
-  }
-
-  .nameInput {
-
-    border-color: #475569;
-    color: rgb(43, 43, 43);
-  }
-
-
-  .headerInfo h3 {
-    color:rgb(43, 43, 43);
-  }
-
-  .headerInfo p {
-    color: rgb(43, 43, 43);
-  }
-
-
-  .managerMsg .messageText {
-
-    color: rgb(43, 43, 43);
-    border-color: #475569;
-  }
-
-  .chatInput {
-
-    border-color: #475569;
-    color: rgb(43, 43, 43);
-  }
-
-
-  .emojiBtn {
-    border-color: #475569;
-    color: rgb(43, 43, 43);
-  }
-
-  .userNameBadge {
-
-    color: rgb(43, 43, 43);
   }
 }

@@ -233,24 +233,6 @@
   }
 }
 
-/* Поддержка темной темы */
-@media (prefers-color-scheme: dark) {
-
-
-  .animatedTitle {
-    background: linear-gradient(135deg, #000000 0%, #002147 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .animatedTitle::before {
-    background: linear-gradient(135deg, #000000 0%, #002147 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-}
 
 /* Улучшенная доступность */
 @media (prefers-reduced-motion: reduce) {

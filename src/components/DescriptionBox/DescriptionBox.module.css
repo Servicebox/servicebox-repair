@@ -91,31 +91,3 @@
     font-size: 0.9rem;
   }
 }
-
-/* Улучшения для темной темы */
-@media (prefers-color-scheme: dark) {
-  .descriptionBoxNavBox {
-    background: #002147;
-    color: #e2e8f0;
-    border-color: #4D4D4D;
-  }
-  
-  .descriptionBoxNavBox:hover {
-    background: #4D4D4D;
-  }
-  
-  .descriptionBoxNavBox.fade {
-    background: #4D4D4D;
-    color: #a0aec0;
-  }
-  
-  .descriptionBoxContent {
-    background: #002147;
-    border-color: #4D4D4D;
-    color: #e2e8f0;
-  }
-  
-  .reviewsContent {
-    color: #a0aec0;
-  }
-}

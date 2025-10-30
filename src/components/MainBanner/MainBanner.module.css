@@ -276,8 +276,8 @@
   max-width: 1400px;
   margin: clamp(40px, 8vh, 80px) auto;
   padding: 0 clamp(20px, 4vw, 40px);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+display: flex;
+flex-wrap: wrap;
   gap: 45px;
   justify-content: center;
   justify-items: center;
@@ -479,9 +479,15 @@
   .flipCardFront,
   .flipCardBack {
     padding: 20px;
+    width: 230px;
   }
 }
-
+@media (max-width: 320px) {
+  .flipCardFront,
+  .flipCardBack {
+    width: 220px;
+  }
+}
 /* Ландшафтная ориентация для мобильных */
 @media (max-width: 768px) and (orientation: landscape) {
 
@@ -490,41 +496,6 @@
     margin: 30px auto;
   }
 }
-
-/* Поддержка темной темы */
-@media (prefers-color-scheme: dark) {
-  
-  .promoSliderArrow {
-
-
-    border-color: rgba(59, 130, 246, 0.3);
-  }
-  
-  .mainBannerTitle {
-    color: #043a79;
-  }
-  
-  .mainBannerSubtitle {
-    color: #2d2d2d;
-  }
-  
-  .flipCardFront {
-
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-  
-  .flipCardFront h2 {
-    color: #2e2e2e;
-  }
-  
-  .flipCardHint {
-    color: #434343;
-    border-color: #374151;
-  }
-  
-
-}
-
 /* Улучшенная доступность */
 @media (prefers-reduced-motion: reduce) {
   .promoSliderTrack,
@@ -557,7 +528,7 @@
   }
   
   .flipCardRow {
-    max-width: 1600px;
-    grid-template-columns: repeat(2, 1fr);
+ 
+    grid-template-columns: repeat(3, 1fr);
   }
 }

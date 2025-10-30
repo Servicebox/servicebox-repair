@@ -230,30 +230,3 @@
     animation: none;
   }
 }
-
-/* Темная тема */
-@media (prefers-color-scheme: dark) {
-  .item {
-    background: #ffffff;
-    border-color: #334155;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-  }
-  
-  .item:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    border-color: #475569;
-  }
-  
-  .itemTitle {
-    color: var(--color-text);
-  }
-  
-  .itemImgBox {
-    background: #0f172a;
-  }
-  
-  .shopitemTags {
-    background: rgba(226, 229, 235, 0);
-    color: #84878a;
-  }
-}

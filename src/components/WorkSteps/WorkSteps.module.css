@@ -580,49 +580,6 @@ background-color: #002147;
   }
 }
 
-/* Поддержка темной темы */
-@media (prefers-color-scheme: dark) {
-  .workStepsTitle,
-  .faqTitle {
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .workStepsSubtitle {
-    color: #94a3b8;
-  }
-
-  .workStepCard {
-  
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .stepTitle {
-    color: #1d1d1d;
-  }
-
-  .stepDescription {
-    color: #515151;
-  }
-
-  .stepFullText {
-    color: #292929;
-  }
-
-  .faqItem {
-    background: rgb(1 51 103);
-    border-color: rgba(55, 55, 55, 0.1);
-  }
-
-  .faqQuestion {
-    color: #f1f5f9;
-  }
-
-  .faqAnswer p {
-    color: #ffffff;
-  }
-}
 
 /* Улучшенная доступность */
 @media (prefers-reduced-motion: reduce) {

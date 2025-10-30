@@ -453,10 +453,7 @@
 }
 
 @media (max-width: 900px) {
-  .headerNav {
-    display: none;
-  }
-  
+
   .headerLogoText {
     display: none;
   }
@@ -468,6 +465,9 @@
 
 @media (max-width: 768px) {
   .headerTopBar {
+    display: none;
+  }
+    .headerNav {
     display: none;
   }
   
@@ -593,58 +593,4 @@
 .headerContainer.compact .headerLogo {
   width: 30px;
   height: 22px;
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  .header {
-    background: #002147;
-  }
-  
-  .headerLogoMain {
-    color: #ffffff;
-  }
-  
-  .headerLogoSub {
-    color: #b0b0b0;
-  }
-  
-  .headerNavLink {
-    color: #ffffff;
-  }
-  
-  .headerNavLink:hover {
-    background: #2a2a2a;
-  }
-  
-  .dropdownMenu {
-    background: #2a2a2a;
-    border: 1px solid #404040;
-  }
-  
-  .dropdownItem {
-    color: #ffffff;
-  }
-  
-  .dropdownItem:hover {
-    background: #3a3a3a;
-  }
-  
-  .navUserIcon {
-    background: #2a2a2a;
-    color: #ffffff;
-  }
-  
-  .navUserIcon:hover {
-    background: #3a3a3a;
-  }
-  
-  .headerCartLink {
-    background: #2a2a2a;
-    color: #ffffff;
-  }
-  
-  .headerCartLink:hover {
-    background: #3a3a3a;
-  }
 }

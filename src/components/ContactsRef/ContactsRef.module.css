@@ -160,18 +160,3 @@
   outline: 2px solid #F9A92C;
   outline-offset: 4px;
 }
-
-/* Улучшения для темной темы */
-@media (prefers-color-scheme: dark) {
-  .contactsBlock {
-    color: #e0e0e0;
-  }
-  
-  .socialLink {
-    background: rgba(255, 255, 255, 0.05);
-  }
-  
-  .socialLink:hover {
-    background: rgba(255, 255, 255, 0.1);
-  }
-}

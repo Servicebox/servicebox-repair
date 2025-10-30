@@ -1,4 +1,3 @@
-///src/app/promotions/[id]/route.js
 import { NextResponse } from 'next/server';
 import Promotion from '@/models/Promotion';
 import dbConnect from '@/lib/db';
@@ -6,7 +5,7 @@ import dbConnect from '@/lib/db';
 export async function GET(request, { params }) {
   try {
     await dbConnect();
-    const { id } = params;
+    const { id } = await params; // Добавлен await
     const promotion = await Promotion.findById(id);
 
     if (!promotion) {
@@ -32,7 +31,7 @@ export async function GET(request, { params }) {
 export async function PUT(request, { params }) {
   try {
     await dbConnect();
-    const { id } = params;
+    const { id } = await params; // Добавлен await
     const body = await request.json();
 
     const promotion = await Promotion.findById(id);
@@ -66,7 +65,7 @@ export async function PUT(request, { params }) {
 export async function DELETE(request, { params }) {
   try {
     await dbConnect();
-    const { id } = params;
+    const { id } = await params; // Добавлен await
     const promotion = await Promotion.findByIdAndDelete(id);
 
     if (!promotion) {

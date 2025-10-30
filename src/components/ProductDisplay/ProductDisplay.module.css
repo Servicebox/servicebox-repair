@@ -484,39 +484,3 @@ padding: 120px 30px;
   outline-offset: 2px;
   border-radius: 8px;
 }
-
-/* Улучшенный контраст для темной темы (опционально) */
-@media (prefers-color-scheme: dark) {
-  .productDisplay,
-  .modalContent {
-
-    color: #151515;
-  }
-
-
-
-  .productDisplayStockLabel,
-  .productDisplayCategoryLabel {
-    color: #4D4D4D;
-  }
-
-  .productDisplayStockValue,
-  .productDisplayCategoryValue,
-  .productDisplayTitle {
-    color: #1a1a1a;
-  }
-
-  .productDisplayDescriptionText {
-    color: #191919;
-  }
-
-  .productDisplayMainImageContainer {
-    background: #002147;
-    border-color: #374151;
-  }
-
-  .productDisplayThumbnailBtn {
-    background: #002147;
-    border-color: #374151;
-  }
-}
