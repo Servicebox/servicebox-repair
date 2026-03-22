@@ -183,7 +183,7 @@
 
 .linkCard:hover,
 .linkCard:focus {
-  background: #f9a92c;
+  background: #ff8c00;
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(78, 115, 223, 0.4);
   outline: 2px solid #1ad1ff;

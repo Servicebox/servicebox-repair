@@ -4,27 +4,27 @@
 @tailwind utilities;
 
 /* === Ваши глобальные стили ниже === */
-.root{
-    --product-breakpoint-xs: 480px;
+.root {
+  --product-breakpoint-xs: 480px;
   --product-breakpoint-sm: 768px;
   --product-breakpoint-md: 992px;
   --product-breakpoint-lg: 1200px;
   --product-breakpoint-xl: 1400px;
-  
+
   --product-spacing-xs: 4px;
   --product-spacing-sm: 8px;
   --product-spacing-md: 16px;
   --product-spacing-lg: 24px;
   --product-spacing-xl: 32px;
-  
+
   --product-radius-sm: 4px;
   --product-radius-md: 8px;
   --product-radius-lg: 12px;
-  
+
   --product-color-primary: #007bff;
   --product-color-success: #28a745;
   --product-color-danger: #dc3545;
-  --product-color-warning: #ffc107;
+  --product-color-warning: #ff8c00;
   --product-color-dark: #333;
   --product-color-gray: #6c757d;
   --product-color-light: #f8f9fa;
@@ -51,6 +51,7 @@
 
 
 }
+
 .reduceMotion * {
   animation-duration: 0.01ms !important;
   transition-duration: 0.01ms !important;
@@ -74,24 +75,41 @@ label {
   margin-bottom: 0.5rem;
 }
 
-p, span, div, li, td, th {
-  font-size: 1.125rem; /* 18px по умолчанию */
+p,
+span,
+div,
+li,
+td,
+th {
+  font-size: 1.125rem;
+  /* 18px по умолчанию */
   line-height: 1.7;
 
 }
-.description, .details, .subtitle, .caption, .label {
+
+.description,
+.details,
+.subtitle,
+.caption,
+.label {
   font-size: 1.125rem;
   line-height: 1.6;
 
 }
-label, .form-label, .input-label {
+
+label,
+.form-label,
+.input-label {
   font-size: 1.125rem;
   font-weight: 600;
   color: #1f2937;
   margin-bottom: 0.5rem;
   display: block;
 }
-input, textarea, select {
+
+input,
+textarea,
+select {
   font-size: 1.125rem;
   padding: 0.75rem 1rem;
   min-height: 48px;
@@ -102,6 +120,7 @@ input[type="email"] {
   width: 100%;
 
 }
+
 button,
 [role="button"],
 input[type="submit"],
@@ -111,6 +130,7 @@ a.button {
   min-height: 15px;
   min-width: 15px;
 }
+
 /* Особые случаи для иконок */
 .icon-button {
   position: relative;
@@ -134,6 +154,7 @@ a.button {
   height: 15px;
   z-index: 1;
 }
+
 button {
   background: linear-gradient(135deg, #0F52BA 0%, #002147 100%);
   color: white;
@@ -155,11 +176,11 @@ button:disabled {
   .responsive-table {
     display: block;
   }
-  
+
   .responsive-table thead {
     display: none;
   }
-  
+
   .responsive-table tbody tr {
     display: block;
     margin-bottom: 1rem;
@@ -167,14 +188,14 @@ button:disabled {
     border-radius: 0.5rem;
     padding: 1rem;
   }
-  
+
   .responsive-table tbody td {
     display: block;
     text-align: right;
     padding: 0.5rem 0;
     border-bottom: 1px solid #f3f4f6;
   }
-  
+
   .responsive-table tbody td::before {
     content: attr(data-label);
     float: left;
@@ -182,10 +203,11 @@ button:disabled {
     color: #6b7280;
   }
 }
+
 img {
   max-width: 100%;
   height: auto;
- 
+
 }
 
 html {
@@ -198,18 +220,29 @@ textarea:focus-visible {
   outline: 2px solid #4299e1;
   outline-offset: 2px;
 }
+
 @media (max-width: 768px) {
   body {
     font-size: 16px;
     line-height: 1.5;
   }
-  
-   p, span, div, li, td, th {
-    font-size: 1.0625rem; /* 17px */
+
+  p,
+  span,
+  div,
+  li,
+  td,
+  th {
+    font-size: 1.0625rem;
+    /* 17px */
     line-height: 1.6;
   }
-   input, textarea, select {
-    font-size: 16px !important; /* Обязательно для iOS */
+
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+    /* Обязательно для iOS */
   }
 }
 
@@ -224,7 +257,12 @@ a:hover {
 }
 
 /* Увеличение интерлиньяжа для заголовков */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   line-height: 1.3;
 }
 
@@ -233,35 +271,56 @@ h1, h2, h3, h4, h5, h6 {
   h1 {
     font-size: 1.75rem;
   }
-  
+
   h2 {
     font-size: 1.5rem;
   }
-  
+
   h3 {
     font-size: 1.25rem;
   }
-  
+
   /* Обеспечиваем минимальный размер 16px для всех текстовых элементов */
   input,
   textarea,
   select,
   button {
-    font-size: 16px !important; /* Предотвращает увеличение в iOS */
+    font-size: 16px !important;
+    /* Предотвращает увеличение в iOS */
   }
 }
+
 @media (max-width: 480px) {
-  p, span, div, li, td, th {
-    font-size: 1rem; /* Минимум 16px */
+
+  p,
+  span,
+  div,
+  li,
+  td,
+  th {
+    font-size: 1rem;
+    /* Минимум 16px */
     line-height: 1.6;
   }
 }
+
 @media (prefers-contrast: high) {
-  body, p, span, div, li, td, th, label, input, textarea, select {
+
+  body,
+  p,
+  span,
+  div,
+  li,
+  td,
+  th,
+  label,
+  input,
+  textarea,
+  select {
     color: #000000 !important;
     background-color: transparent !important;
   }
-  
+
   a {
     color: #0000ee !important;
     text-decoration: underline !important;

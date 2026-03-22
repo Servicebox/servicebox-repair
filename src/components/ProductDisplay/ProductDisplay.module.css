@@ -53,16 +53,16 @@
   .container {
     padding: 5px;
   }
-  
+
   .breadcrumbs {
     padding: 8px 0;
     font-size: 11px;
     margin-bottom: 10px;
   }
-  
+
   .productCard {
     border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -71,15 +71,15 @@
   .container {
     padding: 8px;
   }
-  
+
   .breadcrumbs {
     padding: 10px 0;
     font-size: 12px;
   }
-  
+
   .productCard {
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -88,16 +88,16 @@
   .container {
     padding: 15px;
   }
-  
+
   .breadcrumbs {
     padding: 12px 0;
     font-size: 13px;
     margin-bottom: 20px;
   }
-  
+
   .productCard {
     border-radius: 12px;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -107,21 +107,21 @@
     padding: 20px;
     max-width: 1200px;
   }
-  
+
   .productLayout {
     flex-direction: row;
     gap: 30px;
   }
-  
+
   .breadcrumbs {
     padding: 15px 0;
     font-size: 14px;
     margin-bottom: 25px;
   }
-  
+
   .productCard {
     border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -131,21 +131,21 @@
     padding: 25px;
     max-width: 1300px;
   }
-  
+
   .productLayout {
     flex-direction: row;
     gap: 40px;
   }
-  
+
   .breadcrumbs {
     padding: 15px 0;
     font-size: 14px;
     margin-bottom: 30px;
   }
-  
+
   .productCard {
     border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -225,7 +225,8 @@
   border-bottom: 1px solid #eee;
 }
 
-.brand, .vendorCode {
+.brand,
+.vendorCode {
   display: flex;
   flex-direction: column;
   gap: 3px;
@@ -316,7 +317,7 @@
   width: 36px;
   height: 36px;
   border: 1px solid #002147;
-  background: #f9a92c;
+  background: #ff8c00;
   border-radius: 6px;
   font-size: 16px;
   cursor: pointer;
@@ -365,7 +366,7 @@
 }
 
 .addToCartBtn:hover:not(.disabled) {
-  background: #f9a92c;
+  background: #ff8c00;
 }
 
 .addToCartBtn.disabled {
@@ -375,7 +376,7 @@
 }
 
 .buyNowBtn {
-  background: #f9a92c;
+  background: #ff8c00;
   color: white;
 }
 
@@ -442,39 +443,39 @@
   .infoSection {
     padding: 10px;
   }
-  
+
   .infoSection h1 {
     font-size: 18px;
     margin-bottom: 12px;
   }
-  
+
   .currentPrice {
     font-size: 24px;
   }
-  
+
   .oldPrice {
     font-size: 16px;
   }
-  
+
   .status {
     font-size: 12px;
   }
-  
+
   .addToCartBtn,
   .buyNowBtn {
     padding: 10px 15px;
     font-size: 14px;
   }
-  
+
   .specKey {
     flex: 0 0 120px;
     font-size: 13px;
   }
-  
+
   .specValue {
     font-size: 13px;
   }
-  
+
   .thumbnail {
     width: 50px;
     height: 50px;
@@ -486,15 +487,15 @@
   .infoSection {
     padding: 12px;
   }
-  
+
   .infoSection h1 {
     font-size: 20px;
   }
-  
+
   .currentPrice {
     font-size: 26px;
   }
-  
+
   .specKey {
     flex: 0 0 140px;
   }
@@ -505,46 +506,46 @@
   .infoSection {
     padding: 20px;
   }
-  
+
   .infoSection h1 {
     font-size: 24px;
   }
-  
+
   .currentPrice {
     font-size: 30px;
   }
-  
+
   .oldPrice {
     font-size: 20px;
   }
-  
+
   .actionButtons {
     flex-direction: row;
   }
-  
+
   .addToCartBtn,
   .buyNowBtn {
     flex: 1;
     padding: 14px 20px;
   }
-  
+
   .gallerySection {
     width: 50%;
     float: left;
     padding-right: 20px;
   }
-  
+
   .infoSection {
     width: 50%;
     float: left;
   }
-  
+
   .productLayout:after {
     content: "";
     display: table;
     clear: both;
   }
-  
+
   .thumbnail {
     width: 70px;
     height: 70px;
@@ -556,40 +557,40 @@
   .gallerySection {
     width: 45%;
   }
-  
+
   .infoSection {
     width: 55%;
     padding: 20px;
   }
-  
+
   .infoSection h1 {
     font-size: 26px;
   }
-  
+
   .currentPrice {
     font-size: 32px;
   }
-  
+
   .oldPrice {
     font-size: 22px;
   }
-  
+
   .actionButtons {
     flex-direction: row;
   }
-  
+
   .addToCartBtn,
   .buyNowBtn {
     flex: 1;
     padding: 15px 25px;
     font-size: 16px;
   }
-  
+
   .thumbnail {
     width: 80px;
     height: 80px;
   }
-  
+
   .specKey {
     flex: 0 0 180px;
   }
@@ -600,63 +601,63 @@
   .gallerySection {
     width: 50%;
   }
-  
+
   .infoSection {
     width: 50%;
     padding: 30px;
   }
-  
+
   .infoSection h1 {
     font-size: 28px;
     margin-bottom: 20px;
   }
-  
+
   .currentPrice {
     font-size: 36px;
   }
-  
+
   .oldPrice {
     font-size: 24px;
   }
-  
+
   .actionButtons {
     flex-direction: row;
     gap: 15px;
   }
-  
+
   .addToCartBtn,
   .buyNowBtn {
     flex: 1;
     padding: 16px 30px;
     font-size: 16px;
   }
-  
+
   .quantitySelector {
     max-width: 200px;
   }
-  
+
   .quantityBtn {
     width: 40px;
     height: 40px;
     font-size: 18px;
   }
-  
+
   .quantityInput {
     width: 60px;
     height: 40px;
     font-size: 16px;
   }
-  
+
   .thumbnail {
     width: 90px;
     height: 90px;
   }
-  
+
   .specKey {
     flex: 0 0 200px;
     font-size: 15px;
   }
-  
+
   .specValue {
     font-size: 15px;
   }
@@ -667,15 +668,15 @@
   .container {
     max-width: 1500px;
   }
-  
+
   .productLayout {
     gap: 60px;
   }
-  
+
   .infoSection h1 {
     font-size: 32px;
   }
-  
+
   .currentPrice {
     font-size: 40px;
   }
@@ -686,27 +687,28 @@
   .productLayout {
     flex-direction: row;
   }
-  
+
   .gallerySection {
     width: 50%;
   }
-  
+
   .infoSection {
     width: 50%;
     padding: 15px;
   }
-  
+
   .actionButtons {
     flex-direction: row;
   }
 }
 
 /* Высокий DPI экраны (Retina) */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
   .productCard {
     border-width: 0.5px;
   }
-  
+
   .breadcrumbs {
     border-bottom-width: 0.5px;
   }
@@ -718,13 +720,13 @@
     box-shadow: none;
     border: 1px solid #000;
   }
-  
+
   .addToCartBtn,
   .buyNowBtn,
   .quantityControls {
     display: none !important;
   }
-  
+
   .container {
     padding: 0;
   }

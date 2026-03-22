@@ -50,7 +50,7 @@
   display: inline-flex;
   align-items: center;
   cursor: pointer;
-  border-bottom: 1px solid #f9a92c;
+  border-bottom: 1px solid #ff8c00;
   margin: 0;
   padding: 5px 0;
   transition: color 0.3s ease;
@@ -100,7 +100,7 @@
 .socialLink:hover {
   background: rgba(255, 255, 255, 0.2);
   transform: translateY(-3px);
-  border-color: #f9a92c;
+  border-color: #ff8c00;
 }
 
 .socialLink span {
@@ -112,15 +112,15 @@
   .contactsRef {
     padding: 15px 10px;
   }
-  
+
   .contactsListInfo {
     gap: 12px;
   }
-  
+
   .contactsBlock {
     padding: 8px 12px;
   }
-  
+
   .socialGrid {
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
@@ -131,17 +131,17 @@
   .contactsListInfo {
     flex-direction: column;
   }
-  
+
   .contactsBlock {
     padding: 5px 0;
   }
-  
+
   .socialGrid {
     grid-template-columns: 1fr;
     max-width: 200px;
     margin: 0 auto;
   }
-  
+
   .socialLink {
     flex-direction: row;
     justify-content: center;
@@ -151,12 +151,12 @@
 
 /* Улучшения доступности */
 .socialLink:focus {
-  outline: 2px solid #F9A92C;
+  outline: 2px solid #ff8c00;
   outline-offset: 2px;
 }
 
 .contactText:focus,
 .contactsText:focus {
-  outline: 2px solid #F9A92C;
+  outline: 2px solid #ff8c00;
   outline-offset: 4px;
 }

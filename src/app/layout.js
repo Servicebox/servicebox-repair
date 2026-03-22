@@ -25,14 +25,14 @@ const structuredData = {
   "@graph": [
     {
       "@type": "LocalBusiness",
-      "@id": `${SITE_URL}#business-lenina`,
-      "name": "ServiceBox - Сервисный центр на Ленина",
-      "description": "Сервисный центр по ремонту ноутбуков, телефонов, компьютеров и другой техники в Вологде",
+      "@id": `${SITE_URL}#business-severnaya`,
+      "name": "ServiceBox - Сервисный центр на Северной",
+      "description": "Сервисный центр по ремонту ноутбуков, телефонов, компьютеров и другой техники в Вологде. Ежедневно с 10:00 до 20:00.",
       "url": SITE_URL,
-      "telephone": "+7-911-501-06-96",
+      "telephone": "+7-911-501-88-28",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "ул. Ленина, д. 6",
+        "streetAddress": "ул. Северная, д. 7А, 1 этаж",
         "addressLocality": "Вологда",
         "postalCode": "160000",
         "addressCountry": "RU",
@@ -40,10 +40,10 @@ const structuredData = {
       },
       "geo": {
         "@type": "GeoCoordinates",
-        "latitude": 59.218183,
-        "longitude": 39.888497
+        "latitude": 59.229445,
+        "longitude": 39.878542
       },
-      "openingHours": ["Mo-Fr 10:00-18:00"],
+      "openingHours": ["Mo-Su 10:00-20:00"],
       "priceRange": "₽₽",
       "serviceType": [
         "Ремонт ноутбуков",
@@ -61,10 +61,9 @@ const structuredData = {
         "Ремонт планшетов",
         "Ремонт стационарных компьютеров",
         "Ремонт материнских плат",
-        "BGA- пайка",
+        "BGA-пайка",
         "Ребол процессоров",
         "Замена подсветки на телевизоре"
-
       ],
       "areaServed": {
         "@type": "City",
@@ -77,52 +76,13 @@ const structuredData = {
       }
     },
     {
-      "@type": "LocalBusiness",
-      "@id": `${SITE_URL}#business-severnaya`,
-      "name": "ServiceBox - Сервисный центр на Северной",
-      "description": "Сервисный центр по ремонту цифровой и компьютерной техники в Вологде",
-      "url": SITE_URL,
-      "telephone": "+7-911-501-88-28",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "ул. Северная, д. 7А, офис 405",
-        "addressLocality": "Вологда",
-        "postalCode": "160000",
-        "addressCountry": "RU",
-        "addressRegion": "Вологодская область"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 59.229445,
-        "longitude": 39.878542
-      },
-      "openingHours": ["Mo-Fr 10:00-19:00"],
-      "priceRange": "₽₽",
-      "serviceType": [
-        "Ремонт ноутбуков",
-        "Чистка ноутбуков",
-        "Ремонт видеокарт",
-        "Ремонт телефонов",
-        "Ремонт телевизоров",
-        "Ремонт Apple техники",
-        "Переклейка стекла дисплея",
-        "Ремонт игровых приставок",
-        "Замена дисплея на телефоне",
-        "Замена аккумулятора на телефоне"
-      ],
-      "areaServed": {
-        "@type": "City",
-        "name": "Вологда"
-      }
-    },
-    {
       "@type": "WebSite",
       "@id": `${SITE_URL}#website`,
       "url": SITE_URL,
       "name": "ServiceBox Вологда",
-      "description": "Сервисный центр по ремонту техники в Вологде",
+      "description": "Сервисный центр по ремонту техники в Вологде. Ежедневно с 10:00 до 20:00.",
       "publisher": {
-        "@id": `${SITE_URL}#business-lenina`
+        "@id": `${SITE_URL}#business-severnaya`
       },
       "potentialAction": {
         "@type": "SearchAction",
@@ -140,12 +100,20 @@ const structuredData = {
         "https://vk.com/servicebox35",
         "https://t.me/Tomkka"
       ],
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+7-911-501-88-28",
-        "contactType": "customer service",
-        "availableLanguage": "Russian"
-      }
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+7-911-501-88-28",
+          "contactType": "customer service",
+          "availableLanguage": "Russian"
+        },
+        {
+          "@type": "ContactPoint",
+          "telephone": "+7-911-501-06-96",
+          "contactType": "customer service",
+          "availableLanguage": "Russian"
+        }
+      ]
     }
   ]
 };
@@ -155,8 +123,8 @@ export const metadata = {
     default: 'Ремонт ноутбуков и телефонов в Вологде | ServiceBox',
     template: '%s | ServiceBox Вологда'
   },
-  description: 'Ремонт ноутбуков, ремонт видеокарт, ремонт телефонов, телевизоров, Apple техники, переклейка стекол. Два сервисных центра в Вологде.',
-  keywords: 'ремонт ноутбуков Вологде, ремонт телефонов, сервисный центр, ремонт видеокарт, ремонт техники, Apple ремонт, чистка ноутбуков, переклейка стекол, ServiceBox',
+  description: 'Ремонт ноутбуков, ремонт видеокарт, ремонт телефонов, телевизоров, Apple техники, переклейка стекол. Сервисный центр в Вологде на Северной, 7А. Ежедневно с 10:00 до 20:00.',
+  keywords: 'ремонт ноутбуков Вологда, ремонт телефонов, сервисный центр, ремонт видеокарт, ремонт техники, Apple ремонт, чистка ноутбуков, переклейка стекол, ServiceBox',
   authors: [{ name: 'ServiceBox Вологда' }],
   metadataBase: new URL(SITE_URL),
   alternates: {
@@ -164,7 +132,7 @@ export const metadata = {
   },
   openGraph: {
     title: 'Ремонт ноутбуков и телефонов в Вологде | ServiceBox',
-    description: 'Профессиональный ремонт техники в Вологде. Два сервисных центра. Гарантия качества.',
+    description: 'Профессиональный ремонт техники в Вологде. Сервисный центр на Северной, 7А. Ежедневно с 10:00 до 20:00. Гарантия качества.',
     url: SITE_URL,
     siteName: 'ServiceBox',
     locale: 'ru_RU',
@@ -196,7 +164,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Ремонт ноутбуков и телефонов в Вологде | Сервис Бокс | ServiceBox',
-    description: 'Профессиональный ремонт техники в Вологде',
+    description: 'Профессиональный ремонт техники в Вологде. Ежедневно с 10:00 до 20:00.',
     images: ['/og-image.jpg'],
   },
 };
@@ -239,7 +207,7 @@ export default function RootLayout({ children }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Ремонт ноутбуков, ремонт видеокарт, ремонт телефонов, телевизоров, Apple техники, переклейка стекол. Два сервисных центра в Вологде." />
+        <meta name="description" content="Ремонт ноутбуков, ремонт видеокарт, ремонт телефонов, телевизоров, Apple техники, переклейка стекол. Сервисный центр в Вологде на Северной, 7А. Ежедневно с 10:00 до 20:00." />
 
         <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />
 
@@ -265,8 +233,8 @@ export default function RootLayout({ children }) {
         {/* ✅ GEO метатеги для локального SEO */}
         <meta name="geo.region" content="RU-VLG" />
         <meta name="geo.placename" content="Вологда" />
-        <meta name="geo.position" content="59.218183;39.888497" />
-        <meta name="ICBM" content="59.218183, 39.888497" />
+        <meta name="geo.position" content="59.229445;39.878542" />
+        <meta name="ICBM" content="59.229445, 39.878542" />
 
         {/* ✅ Фавиконы */}
         <link rel="icon" href="/favicon.ico" sizes="any" />

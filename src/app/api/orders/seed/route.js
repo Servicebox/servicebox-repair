@@ -5,10 +5,10 @@ import Order from '@/models/Order';
 export async function GET() {
   try {
     await dbConnect();
-    
+
     // Проверяем, есть ли уже заказы
     const count = await Order.countDocuments();
-    
+
     if (count === 0) {
       // Создаем тестовые заказы
       const testOrders = [
@@ -39,7 +39,7 @@ export async function GET() {
           },
           shippingMethod: 'pickup',
           shippingAddress: {
-            address: 'ул. Ленина, 6',
+            address: 'г. Вологда, ул. Северная, 7А, 1 этаж',
             city: 'Вологда'
           },
           paymentMethod: 'cash',
@@ -82,7 +82,7 @@ export async function GET() {
           },
           shippingMethod: 'courier',
           shippingAddress: {
-            address: 'ул. Северная, 7А, офис 405',
+            address: 'г. Вологда, ул. Северная, 7А, 1 этаж',
             city: 'Вологда',
             postalCode: '160000'
           },
@@ -91,22 +91,22 @@ export async function GET() {
           paymentStatus: 'paid'
         }
       ];
-      
+
       await Order.insertMany(testOrders);
-      
+
       return NextResponse.json({
         success: true,
         message: 'Тестовые заказы созданы',
         count: testOrders.length
       });
     }
-    
+
     return NextResponse.json({
       success: true,
       message: 'Заказы уже существуют',
       count
     });
-    
+
   } catch (error) {
     console.error('Seed error:', error);
     return NextResponse.json(

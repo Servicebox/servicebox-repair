@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMobilePhone, faMailBulk, faMapLocation, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { faVk, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { faVk } from '@fortawesome/free-brands-svg-icons';
 
 import styles from "./BurgerMenu.module.css";
 import logoImage from "../../../public/favicon.webp";
@@ -58,9 +58,9 @@ function BurgerMenu() {
 
       <nav className={styles.menuContent} aria-label="Мобильное меню">
         <div className={styles.menuHeader}>
-          <Image 
-            className={styles.menuLogo} 
-            src={logoImage} 
+          <Image
+            className={styles.menuLogo}
+            src={logoImage}
             alt="ServiceBox Logo"
             width={100}
             height={100}
@@ -80,6 +80,9 @@ function BurgerMenu() {
           </li>
           <li className={styles.menuItem}>
             <Link href="/parts" className={styles.menuLink} onClick={toggleMenu}>Каталог товаров</Link>
+          </li>
+          <li className={styles.menuItem}>
+            <Link href="/price" className={styles.menuLink} onClick={toggleMenu}>Прайс-лист</Link>
           </li>
           <li className={styles.menuItem}>
             <Link href="/news" className={styles.menuLink} onClick={toggleMenu}>Новости</Link>
@@ -113,19 +116,12 @@ function BurgerMenu() {
             <div className={styles.addressBlock}>
               <p>
                 <FontAwesomeIcon icon={faMapLocation} />
-                г. Вологда, ул. Северная, 7А, офис 405
+                г. Вологда, ул. Северная, 7А, 1 этаж
               </p>
               <div className={styles.contactItem} onClick={() => handleContactAction('tel')}>
                 <FontAwesomeIcon icon={faMobilePhone} />
                 <span>+7 911 501 88 28</span>
               </div>
-            </div>
-
-            <div className={styles.addressBlock}>
-              <p>
-                <FontAwesomeIcon icon={faMapLocation} />
-                г. Вологда, ул. Ленина д.6, этаж 1
-              </p>
               <div className={styles.contactItem} onClick={() => handleContactAction('tel')}>
                 <FontAwesomeIcon icon={faMobilePhone} />
                 <span>+7 911 501 06 96</span>
@@ -134,32 +130,14 @@ function BurgerMenu() {
           </div>
 
           <div className={styles.socialLinks}>
-            <a 
-              href="https://vk.com/servicebox35" 
-              className={`${styles.socialLink} ${styles.vk}`} 
-              target="_blank" 
+            <a
+              href="https://vk.com/servicebox35"
+              className={`${styles.socialLink} ${styles.vk}`}
+              target="_blank"
               rel="noopener noreferrer"
               aria-label="Написать нам в ВКонтакте"
             >
               <FontAwesomeIcon icon={faVk} />
-            </a>
-            <a 
-              href="https://wa.me/79062960353" 
-              className={`${styles.socialLink} ${styles.whatsapp}`} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              aria-label="Написать нам в WhatsApp"
-            >
-              <FontAwesomeIcon icon={faWhatsapp} />
-            </a>
-            <a 
-              href="https://t.me/Tomkka" 
-              className={`${styles.socialLink} ${styles.telegram}`} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              aria-label="Написать нам в Telegram"
-            >
-              <FontAwesomeIcon icon={faTelegram} />
             </a>
           </div>
         </div>

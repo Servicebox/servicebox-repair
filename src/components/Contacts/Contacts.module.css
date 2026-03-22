@@ -42,7 +42,8 @@
   margin-top: 40px;
 }
 
-.contactsInfo, .contactsLocations {
+.contactsInfo,
+.contactsLocations {
   background: rgba(255, 255, 255, 0.95);
   padding: 30px 10px;
   border-radius: 20px;
@@ -70,7 +71,7 @@
   left: 0;
   width: 50px;
   height: 2px;
-  background: #f9a92c;
+  background: #ff8c00;
 }
 
 .contactsBlock {
@@ -134,7 +135,7 @@
 }
 
 .contactsLink:hover {
-  color: #f9a92c;
+  color: #ff8c00;
   transform: translateX(5px);
 }
 
@@ -170,7 +171,7 @@
 }
 
 .socialLink:hover {
-  background: #f9a92c;
+  background: #ff8c00;
   transform: translateY(-7px) scale(1.05);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
@@ -270,7 +271,7 @@
 }
 
 .locationMapBtn:hover {
-  background: #f9a92c;
+  background: #ff8c00;
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(139, 123, 47, 0.4);
 }
@@ -354,7 +355,7 @@
 }
 
 .navLink:hover {
-  background: #f9a92c;
+  background: #ff8c00;
   transform: translateY(-5px) scale(1.05);
   box-shadow: 0 8px 25px rgba(249, 169, 41, 0.5);
 }
@@ -397,45 +398,45 @@
   .contactsGrid {
     grid-template-columns: 1fr;
   }
-  
+
   .socialGrid {
     grid-template-columns: 1fr;
   }
-  
+
   .contactsBlock {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .contactsIconWrapper {
     margin-right: 0;
     margin-bottom: 15px;
   }
-  
+
   .locationAddress {
     padding-left: 0;
   }
-  
+
   .locationAddress:before {
     position: static;
     margin-right: 8px;
   }
-  
+
   .contactsNavigation {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .navLink {
     width: 70%;
     max-width: 300px;
   }
-  
+
   .contacts {
     padding: 40px 15px;
     clip-path: polygon(0% 0%, 100% 2%, 100% 98%, 0% 100%);
   }
-  
+
   .animatedTitle {
     font-size: 2rem;
   }
@@ -445,20 +446,20 @@
   .contactsBlock {
     display: flex;
   }
-  
+
   .contactsIntro {
     padding: 0 10px;
     font-size: 1rem;
   }
-  
+
   .contactsSubtitle {
     font-size: 1.3rem;
   }
-  
+
   .locationCard {
     padding: 20px;
   }
-  
+
   .socialLink {
     padding: 12px;
   }

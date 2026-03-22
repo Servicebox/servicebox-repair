@@ -82,7 +82,7 @@
   align-items: center;
   padding: 0 10%;
   opacity: 0;
-  
+
   transform: translateY(30px);
   transition: all 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
@@ -119,16 +119,16 @@
   font-size: 4rem;
   font-weight: bold;
   line-height: 0.9;
-    font-weight: 800;
-    line-height: 0.9;
-    margin-bottom: 70px;
-    text-shadow: 2px 4px 5px #1e1e1e;
-    background: #000000ba;
-    -webkit-text-fill-color: #f9a92c;
-    background-clip: text;
-    backdrop-filter: blur(3px);
-    padding: 5px 1px;
-    border-radius: 20px;
+  font-weight: 800;
+  line-height: 0.9;
+  margin-bottom: 70px;
+  text-shadow: 2px 4px 5px #1e1e1e;
+  background: #000000ba;
+  -webkit-text-fill-color: #ff8c00;
+  background-clip: text;
+  backdrop-filter: blur(3px);
+  padding: 5px 1px;
+  border-radius: 20px;
 }
 
 .slideDescription {
@@ -138,9 +138,9 @@
   max-width: 450px;
   color: rgba(29, 29, 29, 0.9);
   font-weight: bold;
-    backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   padding: 1px 1px;
-  border-radius:20px ;
+  border-radius: 20px;
 }
 
 /* Кнопки на слайдере */
@@ -511,7 +511,7 @@
   line-height: 1.6;
   margin-bottom: 35px;
   font-weight: 500;
-  
+
 }
 
 .flipCardBackBtn {
@@ -546,37 +546,37 @@
     height: 60vh;
     min-height: 600px;
   }
-  
+
   .slideContent {
     padding: 0 5%;
   }
-  
+
   .slideTitle {
     font-size: 3rem;
   }
-  
+
   .slideDescription {
     font-size: 1.2rem;
   }
-  
+
   .mainBannerTitle {
     font-size: 2.8rem;
   }
-  
+
   .mainBannerSubtitle {
     font-size: 1.2rem;
   }
-  
 
-  
+
+
   .promoSliderArrow.left {
     left: 20px;
   }
-  
+
   .promoSliderArrow.right {
     right: 20px;
   }
-  
+
   .slideCounter {
     bottom: 70px;
     right: 20px;
@@ -589,118 +589,120 @@
     height: 50vh;
     min-height: 500px;
   }
-  
+
   .slideContent {
     padding: 0 20px;
     justify-content: center;
     text-align: center;
   }
-  .promoSliderImg {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-  display: block;
 
-}
+  .promoSliderImg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+
+  }
+
   .contentInner {
     max-width: 100%;
   }
-  
+
   .slideSubtitle {
     font-size: 0.9rem;
     padding: 6px 15px;
 
   }
-  
+
   .slideTitle {
     font-size: 2.2rem;
   }
-  
+
   .slideDescription {
     font-size: 1rem;
 
   }
-  
+
   .ctaWrapper {
     flex-direction: column;
     align-items: center;
     gap: 15px;
   }
-  
+
   .primaryCta,
   .secondaryCta {
     min-width: 250px;
     padding: 16px 30px;
     font-size: 1rem;
   }
-  
+
   .promoSliderArrow {
     width: 50px;
     height: 50px;
   }
-  
+
   .promoSliderArrow.left {
     left: 10px;
   }
-  
+
   .promoSliderArrow.right {
     right: 10px;
   }
-  
+
   .promoSliderDots {
     bottom: 20px;
   }
-  
+
   .dot {
     width: 30px;
     height: 4px;
   }
-  
+
   .slideCounter {
     bottom: 60px;
     right: 15px;
     font-size: 1rem;
   }
-  
+
   .currentSlide {
     font-size: 1.5rem;
   }
-  
+
   .mainBannerContent {
     padding: 0 20px;
     margin: 60px auto;
   }
-  
+
   .mainBannerPreTitle {
     font-size: 0.9rem;
   }
-  
+
   .mainBannerTitle {
     font-size: 2.2rem;
   }
-  
+
   .mainBannerSubtitle {
     font-size: 1.1rem;
   }
-  
+
   .ctaButtons {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .mainBannerForm {
     min-width: 250px;
     padding: 16px 30px;
     font-size: 1rem;
   }
-  
+
   .flipCardRow {
     padding: 0 20px;
     margin: 60px auto;
     gap: 30px;
   }
-  
+
   .flipCard {
     width: 100%;
     max-width: 300px;
@@ -714,30 +716,30 @@
     height: 60vh;
     min-height: 400px;
   }
-  
+
   .slideTitle {
     font-size: 1.8rem;
   }
-  
+
   .primaryCta,
   .secondaryCta {
     min-width: 65%;
     border: 1px solid gray;
     padding: 10px 15px;
   }
-  
+
   .mainBannerTitle {
     font-size: 1.8rem;
   }
-  
+
   .mainBannerSubtitle {
     font-size: 1rem;
   }
-  
+
   .flipCard {
     height: 360px;
   }
-  
+
   .cardImage {
     width: 120px;
     height: 120px;
@@ -749,19 +751,19 @@
   .promoSliderViewport {
     max-height: 1200px;
   }
-  
+
   .slideTitle {
     font-size: 5rem;
   }
-  
+
   .mainBannerTitle {
     font-size: 4.5rem;
   }
-  
+
   .mainBannerSubtitle {
     font-size: 1.6rem;
   }
-  
+
   .flipCard {
     width: 350px;
     height: 420px;
@@ -773,20 +775,20 @@
   .promoSliderViewport {
     height: 85vh;
   }
-  
+
   .slideContent {
     padding: 0 10%;
   }
-  
+
   .slideTitle {
     font-size: 2.5rem;
   }
-  
+
   .ctaWrapper {
     flex-direction: row;
     flex-wrap: wrap;
   }
-  
+
   .primaryCta,
   .secondaryCta {
     min-width: 200px;
@@ -799,6 +801,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -809,9 +812,11 @@
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.05);
   }
+
   100% {
     transform: scale(1);
   }
@@ -830,12 +835,21 @@
   animation-fill-mode: both;
 }
 
-.flipCard:nth-child(1) { animation-delay: 0.1s; }
-.flipCard:nth-child(2) { animation-delay: 0.2s; }
-.flipCard:nth-child(3) { animation-delay: 0.3s; }
+.flipCard:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.flipCard:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.flipCard:nth-child(3) {
+  animation-delay: 0.3s;
+}
 
 /* Улучшенная доступность */
 @media (prefers-reduced-motion: reduce) {
+
   .promoSliderTrack,
   .flipCardInner,
   .mainBannerForm,
@@ -844,11 +858,11 @@
   .promoSliderArrow {
     transition: none;
   }
-  
+
   .primaryCta {
     animation: none;
   }
-  
+
   .slideContent,
   .mainBannerContent,
   .flipCard {

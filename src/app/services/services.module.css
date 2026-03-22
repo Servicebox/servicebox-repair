@@ -14,7 +14,7 @@
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .animatedTitle p {
@@ -238,7 +238,7 @@
 }
 
 .priceTag {
-    background: #f9a92c;
+    background: #ff8c00;
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 10px;
@@ -279,7 +279,7 @@
 }
 
 .bookButton {
-    background:#002147;
+    background: #002147;
     color: white;
     border: none;
     padding: 0.5rem 1.5rem;
@@ -315,8 +315,13 @@
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .noResults {
@@ -352,52 +357,52 @@
     .servicesPage {
         padding: 1rem 0.5rem;
     }
-    
+
     .animatedTitle h1 {
         font-size: 2rem;
     }
-    
+
     .controlsContainer {
         flex-direction: column;
         align-items: stretch;
     }
-    
+
     .breadcrumbs {
         justify-content: center;
     }
-    
+
     .searchContainer {
         max-width: none;
     }
-    
+
     .categoriesGrid {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
-    
+
     .itemsGrid {
         grid-template-columns: 1fr;
     }
-    
+
     .categoryCard {
         padding: 1.5rem;
     }
-    
+
     .itemCard {
         padding: 1rem;
     }
-    
+
     .itemHeader {
         flex-direction: column;
         gap: 0.5rem;
     }
-    
+
     .itemFooter {
         flex-direction: column;
         gap: 1rem;
         align-items: stretch;
     }
-    
+
     .bookButton {
         width: 100%;
     }

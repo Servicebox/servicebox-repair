@@ -225,7 +225,7 @@
   position: absolute;
   top: 100%;
   left: 0;
-  background: #f9a92c;
+  background: #ff8c00;
   min-width: 180px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -311,7 +311,7 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background: #f9a92c;
+  background: #ff8c00;
   min-width: 160px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -437,16 +437,16 @@
   .headerNav {
     margin: 0 15px;
   }
-  
+
   .headerNavList {
     gap: 2px;
   }
-  
+
   .headerNavLink {
     padding: 8px 10px;
     font-size: 0.85rem;
   }
-  
+
   .headerLogoMain {
     font-size: 1.3rem;
   }
@@ -457,7 +457,7 @@
   .headerLogoText {
     display: none;
   }
-  
+
   .headerContainer {
     gap: 10px;
   }
@@ -467,43 +467,45 @@
   .headerTopBar {
     display: none;
   }
-    .headerNav {
+
+  .headerNav {
     display: none;
   }
-  
+
   .headerContainer {
     height: 60px;
     padding: 0 15px;
     gap: 8px;
   }
-  
+
   .headerLogo {
     width: 45px;
     height: 35px;
   }
-  
+
   .headerActions {
     gap: 8px;
   }
-  
+
   .navUserGroup {
     gap: 6px;
   }
-  
+
   .navUserIcon span {
     display: none;
   }
-  
-  .adminPanelBtn, .logoutBtn {
+
+  .adminPanelBtn,
+  .logoutBtn {
     padding: 4px 8px;
     font-size: 0.75rem;
   }
-  
+
   .headerLoginBtn {
     padding: 6px 12px;
     font-size: 0.8rem;
   }
-  
+
   .headerCartLink {
     width: 36px;
     height: 36px;
@@ -515,43 +517,46 @@
     padding: 0 10px;
     height: 55px;
   }
-  
+
   .headerLogo {
     width: 40px;
     height: 30px;
   }
-  
+
   .headerActions {
     gap: 6px;
   }
-  
+
   /* На очень маленьких экранах скрываем текст кнопок, оставляем только иконки */
   .navUserIcon {
     padding: 6px;
   }
-  
-  .adminPanelBtn, .logoutBtn, .headerLoginBtn {
+
+  .adminPanelBtn,
+  .logoutBtn,
+  .headerLoginBtn {
     min-width: auto;
     padding: 6px 8px;
   }
-  
-  .adminPanelBtn span, .logoutBtn span {
+
+  .adminPanelBtn span,
+  .logoutBtn span {
     display: none;
   }
-  
+
   .adminPanelBtn::after {
     content: "⚙";
   }
-  
+
   .logoutBtn::after {
     content: "🚪";
   }
-  
+
   .headerCartLink {
     width: 34px;
     height: 34px;
   }
-  
+
   .headerCartCount {
     width: 16px;
     height: 16px;
@@ -563,22 +568,25 @@
   .headerContainer {
     padding: 0 8px;
   }
-  
+
   .headerLogo {
     width: 35px;
     height: 25px;
   }
-  
+
   .headerActions {
     gap: 4px;
   }
-  
-  .navUserIcon, .headerCartLink {
+
+  .navUserIcon,
+  .headerCartLink {
     width: 32px;
     height: 32px;
   }
-  
-  .adminPanelBtn, .logoutBtn, .headerLoginBtn {
+
+  .adminPanelBtn,
+  .logoutBtn,
+  .headerLoginBtn {
     padding: 4px 6px;
     font-size: 0.7rem;
   }

@@ -11,11 +11,11 @@ export default function manifest() {
     orientation: 'portrait-primary',
     icons: [
       {
-        src: '/favicon.svg',
+        src: '/favicon.webp',
         sizes: "192x192",
         type: 'image/png',
       },
-     
+
     ],
     categories: ['technology', 'business'],
     lang: 'ru',

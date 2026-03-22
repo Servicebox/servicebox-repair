@@ -35,7 +35,7 @@
 }
 
 .footerText {
-  color:#ffffff;
+  color: #ffffff;
   line-height: 1.6;
   font-size: 0.95rem;
 }
@@ -82,11 +82,11 @@
   transform: translateX(-5px);
   transition: opacity 0.3s, transform 0.3s;
   margin-left: 8px;
-  color: #f9a92c;
+  color: #ff8c00;
 }
 
 .footerLink:hover {
-  color: #f9a92c;
+  color: #ff8c00;
   transform: translateX(4px);
 }
 
@@ -181,7 +181,7 @@
 /* Виджет такси */
 .taxiWidgetContainer {
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   height: fit-content;
   display: flex;
   flex-direction: column;

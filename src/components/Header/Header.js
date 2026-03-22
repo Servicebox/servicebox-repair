@@ -7,7 +7,7 @@ import headerLogo from "../../../public/favicon.webp";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
 import LoginSignup from "../LoginSignup/LoginSignup";
 import GlobalSearch from '../GlobalSearch/GlobalSearch';
-import HeaderTracking from "../HeaderTracking/HeaderTracking"; // Добавьте этот импорт
+import HeaderTracking from "../HeaderTracking/HeaderTracking";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBasketShopping,
@@ -15,13 +15,13 @@ import {
   faUser,
   faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
-import { faVk, faTelegram, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { faVk } from "@fortawesome/free-brands-svg-icons";
 import styles from "./Header.module.css";
 
 function Header() {
   const pathname = usePathname();
   const { user, logout } = useAuth();
-  
+
   const [menu, setMenu] = useState("shop");
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -41,11 +41,11 @@ function Header() {
         setShowUserMenu(false);
       }
     };
-    
+
     if (showUserMenu) {
       document.addEventListener('mousedown', handleClickOutside);
     }
-    
+
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [showUserMenu]);
 
@@ -53,7 +53,7 @@ function Header() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -78,10 +78,10 @@ function Header() {
 
   const handleLogout = async () => {
     if (isLoggingOut) return;
-    
+
     setIsLoggingOut(true);
     setShowUserMenu(false);
-    
+
     try {
       await logout();
     } catch (error) {
@@ -106,36 +106,18 @@ function Header() {
               <FontAwesomeIcon icon={faMobilePhone} />
               <span>+7 (911) 501-06-96</span>
             </a>
-            <span className={styles.headerWorkHours}>Пн-Пт: 10:00 - 19:00</span>
+            <span className={styles.headerWorkHours}>Ежедневно: 10:00 - 20:00</span>
           </div>
 
           <div className={styles.headerSocials}>
-            <a 
-              href="https://vk.com/servicebox35" 
-              className={`${styles.socialLink} ${styles.vk}`} 
-              target="_blank" 
+            <a
+              href="https://vk.com/servicebox35"
+              className={`${styles.socialLink} ${styles.vk}`}
+              target="_blank"
               rel="noopener noreferrer"
               aria-label="Написать нам в ВКонтакте"
             >
               <FontAwesomeIcon icon={faVk} />
-            </a>
-            <a 
-              href="https://wa.me/79062960353" 
-              className={`${styles.socialLink} ${styles.whatsapp}`} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              aria-label="Написать нам в WhatsApp"
-            >
-              <FontAwesomeIcon icon={faWhatsapp} />
-            </a>
-            <a 
-              href="https://t.me/Tomkka" 
-              className={`${styles.socialLink} ${styles.telegram}`} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              aria-label="Написать нам в Telegram"
-            >
-              <FontAwesomeIcon icon={faTelegram} />
             </a>
           </div>
         </div>
@@ -144,12 +126,12 @@ function Header() {
       <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
         <div className={styles.headerContainer}>
           <Link href="/" className={styles.headerLogoLink} aria-label="На главную страницу ServiceBox">
-            <img 
-              src={headerLogo.src} 
-              alt="Логотип ServiceBox - ремонт техники в Вологде" 
-              className={styles.headerLogo} 
-              width="65" 
-              height="45" 
+            <img
+              src={headerLogo.src}
+              alt="Логотип ServiceBox - ремонт техники в Вологде"
+              className={styles.headerLogo}
+              width="65"
+              height="45"
             />
             <span className={styles.headerLogoText}>
               <span className={styles.headerLogoMain}>Сервис Бокс</span>
@@ -178,12 +160,13 @@ function Header() {
                 <ul className={styles.dropdownMenu}>
                   <li><Link href="/news" className={styles.dropdownItem}>Блог</Link></li>
                   <li><Link href="/promotions-page" className={styles.dropdownItem}>Акции</Link></li>
+                  <li><Link href="/price" className={styles.dropdownItem}>Прайс-лист</Link></li>
                   <li><Link href="/depository-public" className={styles.dropdownItem}>Схемы/Bios</Link></li>
                   <li>
-                    <a 
-                      href="https://pm-31768.promaster.app/index_cl" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
+                    <a
+                      href="https://pm-31768.promaster.app/index_cl"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className={styles.dropdownItem}
                     >
                       Статус ремонта
@@ -195,13 +178,12 @@ function Header() {
           </nav>
 
           <div className={styles.headerActions}>
-            {/* Добавьте компонент отслеживания здесь */}
             <HeaderTracking />
-           
+
             {user ? (
               <div className={styles.navUserGroup} ref={userMenuRef}>
-                <button 
-                  className={styles.navUserIcon} 
+                <button
+                  className={styles.navUserIcon}
                   aria-label="Личный кабинет"
                   onClick={() => setShowUserMenu(!showUserMenu)}
                 >
@@ -216,25 +198,25 @@ function Header() {
                     <div className={styles.userMenuHeader}>
                       <span>Привет, {user.username || (user.role === "admin" ? "Админ" : "Пользователь")}</span>
                     </div>
-                    <Link 
-                      href="/profile" 
-                      className={styles.dropdownItem} 
+                    <Link
+                      href="/profile"
+                      className={styles.dropdownItem}
                       onClick={() => setShowUserMenu(false)}
                     >
                       Профиль
                     </Link>
                     {user.role === "admin" && (
-                      <Link 
-                        href="/admin-panel" 
-                        className={styles.dropdownItem} 
+                      <Link
+                        href="/admin-panel"
+                        className={styles.dropdownItem}
                         onClick={() => setShowUserMenu(false)}
                       >
                         Админ-панель
                       </Link>
                     )}
-                    <button 
-                      className={`${styles.dropdownItem} ${styles.logoutBtn}`} 
-                      onClick={handleLogout} 
+                    <button
+                      className={`${styles.dropdownItem} ${styles.logoutBtn}`}
+                      onClick={handleLogout}
                       disabled={isLoggingOut}
                     >
                       {isLoggingOut ? 'Выход...' : 'Выйти'}
@@ -243,8 +225,8 @@ function Header() {
                 )}
               </div>
             ) : (
-              <button 
-                className={styles.headerLoginBtn} 
+              <button
+                className={styles.headerLoginBtn}
                 onClick={() => setIsLoginOpen(true)}
                 aria-label="Войти в аккаунт"
               >
@@ -258,7 +240,7 @@ function Header() {
                 <span className={styles.headerCartCount}>{getTotalCartItems()}</span>
               )}
             </Link>
-               
+
             <BurgerMenu />
           </div>
         </div>

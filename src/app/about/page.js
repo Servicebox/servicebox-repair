@@ -6,11 +6,13 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from './About.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faVk, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import {
+  faServicestack
+} from '@fortawesome/free-brands-svg-icons';
 
 const About = forwardRef((_props, ref) => {
   const [currentPhoto, setCurrentPhoto] = useState(0);
-  
+
   const photoAlts = [
     "Ремонт ноутбуков, компьютеров, техники Apple в Вологде - Сервис Бокс, ServiceBox",
     "Ремонт iPhone, iPad, MacBook в Вологде - Сервис Бокс, ServiceBox",
@@ -25,7 +27,7 @@ const About = forwardRef((_props, ref) => {
   // Используем абсолютные пути вместо импортов
   const photos = [
     "/images/mestomastera1.webp",
-    "/images/ya.webp", 
+    "/images/ya.webp",
     "/images/magistr.webp",
     "/images/stend.webp",
     "/images/resepshen.webp",
@@ -61,7 +63,7 @@ const About = forwardRef((_props, ref) => {
           Сервисный центр "Сервис Бокс" выполняет разный спектр услуг по ремонту и обслуживанию видеокарт и ноутбуков. Как самые простые работы по замене bga (это замена видеочипов, хабов-чипсетов, видеопамяти, процессоров), так и сложные: устранение прогаров, плавающих дефектов, залития, ремонт ударников (ноутбуков и видеокарт после механического воздействия или удара).
           Наша главная цель - обеспечить удобство для наших клиентов.
         </p>
-        
+
         <p className={styles.subheading}>
           Мы также понимают важность разумного подхода к ценообразованию.
           В "Сервис Бокс" мы выбираем взвешенную ценовую политику,
@@ -80,18 +82,18 @@ const About = forwardRef((_props, ref) => {
           в режиме онлайн.
           Доверьте свои гаджеты "Сервис Бокс" - Ваша техника будет в надежных руках.
         </p>
-        
+
         <h3 className={styles.heading}>
           <span className={styles.quote}>
             Если у вас есть замечания или пожелания по работе сервиса, или идеи, которыми вы хотите поделиться, можете написать в
             <a href="tg://resolve?domain=@Tomkka" className={styles.quoteLink}>
-              <FontAwesomeIcon icon={faTelegram} />
-              <span> - Telegram</span>
+              <FontAwesomeIcon icon={faServicestack} />
+              <span>сюда</span>
             </a>.
             Мы всегда обращаем внимание на комментарии наших клиентов и подписчиков и стараемся улучшать работу сервиса.
           </span>
         </h3>
-        
+
         <div>
           <div className={styles.galleryContainer}>
             <div className={styles.gallery}>
@@ -117,15 +119,15 @@ const About = forwardRef((_props, ref) => {
             </div>
           </div>
         </div>
-        
+
         <div className={styles.featuresGrid}>
           <div className={styles.featureCard}>
-            <Image 
-              src={Clock} 
-              className={styles.featureIcon} 
-              alt="Быстрый ремонт техники в Вологде" 
-              width={50} 
-              height={50} 
+            <Image
+              src={Clock}
+              className={styles.featureIcon}
+              alt="Быстрый ремонт техники в Вологде"
+              width={50}
+              height={50}
               priority
               unoptimized // Для SVG
             />
@@ -134,12 +136,12 @@ const About = forwardRef((_props, ref) => {
           </div>
 
           <div className={styles.featureCard}>
-            <Image 
-              src={Secure} 
-              className={styles.featureIcon} 
-              alt="Гарантия на ремонт" 
-              width={50} 
-              height={50} 
+            <Image
+              src={Secure}
+              className={styles.featureIcon}
+              alt="Гарантия на ремонт"
+              width={50}
+              height={50}
               priority
               unoptimized // Для SVG
             />
@@ -148,13 +150,13 @@ const About = forwardRef((_props, ref) => {
           </div>
 
           <div className={styles.featureCard}>
-            <Image 
-              src={Card} 
-              className={styles.featureIcon} 
-              alt="Удобная оплата ремонта" 
-              width={50} 
+            <Image
+              src={Card}
+              className={styles.featureIcon}
+              alt="Удобная оплата ремонта"
+              width={50}
               priority
-              height={50} 
+              height={50}
               unoptimized // Для SVG
             />
             <h3 className={styles.featureTitle}>Любые формы оплаты</h3>
@@ -162,7 +164,7 @@ const About = forwardRef((_props, ref) => {
           </div>
         </div>
       </div>
-      
+
       <div className={styles.backButton}>
         <ul className={styles.backList}>
           <li className={styles.backItem}><Link href="/" className={styles.backLink}>На главную</Link></li>

@@ -1,8 +1,7 @@
-// components/AboutMe/AboutMe.js
 'use client';
 
 import { useState, useEffect, useRef } from "react";
-import styles from "./AboutMe.module.css"; // Импорт стилей как объекта
+import styles from "./AboutMe.module.css";
 
 function AboutMe() {
   const [currentQuote, setCurrentQuote] = useState(0);
@@ -29,34 +28,34 @@ function AboutMe() {
   }, [quotes.length]);
 
   return (
-    <section 
-      className={styles.aboutMe} // Использование объекта стилей
+    <section
+      className={styles.aboutMe}
       id="about-company"
       ref={sectionRef}
-      itemScope 
+      itemScope
       itemType="https://schema.org/AboutPage"
       aria-labelledby="about-heading"
     >
       <meta itemProp="name" content="О компании ServiceBox" />
       <meta itemProp="description" content="Профессиональный ремонт техники в Вологде с гарантией качества. Опытные специалисты, оригинальные запчасти, современное оборудование." />
-      
+
       <div className={styles.aboutMeContent}>
         <div className={styles.quoteContainer} itemScope itemType="https://schema.org/Quotation">
           <h2 id="about-heading" className={styles.aboutMeTitle}>
-            <span 
-              className={`${styles.aboutMeQuote} ${transition ? styles.fadeIn : styles.fadeOut}`} // Использование объекта для условных классов
+            <span
+              className={`${styles.aboutMeQuote} ${transition ? styles.fadeIn : styles.fadeOut}`}
               itemProp="text"
             >
               {quotes[currentQuote]}
             </span>
           </h2>
           <div className={styles.quoteDecoration} aria-hidden="true"></div>
-          <div className={styles.seoContent} aria-hidden="true" style={{display: 'none'}}>
+          <div className={styles.seoContent} aria-hidden="true" style={{ display: 'none' }}>
             <h3>профессиональный ремонт техники</h3>
             <p>Наша компания Сервис Бокс уже более 10 лет предоставляет качественные услуги по ремонту электронной техники в городе Вологда. Мы специализируемся на ремонте smartphones, ноутбуков, планшетов и другой цифровой техники.</p>
             <p>Наши мастера имеют сертификаты и регулярно проходят обучение новым технологиям ремонта. Мы используем только оригинальные запчасти и современное диагностическое оборудование.</p>
-            <p>Наш сервисный центр находится по адресу: г. Вологда, ул. Северная 7А, 405. Также мы работаем по второму адресу: г. Вологда, ул. Ленина 6.</p>
-            <p>График работы: Понедельник-Пятница с 10:00 до 19:00. Контактные телефоны: +7 911 501 88 28, +7 911 501 06 96.</p>
+            <p>Наш сервисный центр находится по адресу: г. Вологда, ул. Северная 7А, 1 этаж.</p>
+            <p>График работы: Ежедневно с 10:00 до 20:00. Контактные телефоны: +7 911 501 88 28, +7 911 501 06 96.</p>
           </div>
         </div>
         <div className={styles.quoteNavigation}>

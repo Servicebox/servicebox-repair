@@ -55,56 +55,23 @@ export async function GET() {
         "ремонт Apple Watch SE",
         "ремонт Apple Watch Ultra",
         "ремонт Apple Watch Nike",
-        "сложный ремнот матринских плат",
+        "сложный ремонт материнских плат",
         "ремонт материнских плат на ноутбуках",
         "ремонт материнских плат на компьютерах",
-
-        "BGA - пайка",
+        "BGA - пайка"
       ],
       "locations": [
         {
           "type": "service_center",
-          "name": "ServiceBox - Сервис на Ленина",
-          "short_name": "Ленина, 6",
-          "address": {
-            "street": "ул. Ленина, д. 6",
-            "city": "Вологда",
-            "region": "Вологодская область",
-            "country": "Россия",
-            "postal_code": "160000",
-            "landmark": "вход рядом с K&B"
-          },
-          "coordinates": {
-            "latitude": 59.218183,
-            "longitude": 39.888497,
-            "accuracy": "5 метров"
-          },
-          "hours": {
-            "monday_friday": "10:00-18:00",
-            "saturday": "по предварительной записи",
-            "sunday": "выходной"
-          },
-          "phone": "+7 (911) 501-06-96",
-          "features": [
-            "основной сервис",
-            "сложный ремонт",
-            "диагностика",
-            "ремонт BGA компонентов",
-            "микроэлектроника"
-          ],
-          "specialization": "сложный ремонт, замена чипов, восстановление после воды"
-        },
-        {
-          "type": "service_center",
-          "name": "ServiceBox - Сервис на Северной",
+          "name": "ServiceBox - Сервисный центр на Северной",
           "short_name": "Северная, 7А",
           "address": {
-            "street": "ул. Северная, д. 7А, офис 405",
+            "street": "ул. Северная, д. 7А, 1 этаж",
             "city": "Вологда",
             "region": "Вологодская область",
             "country": "Россия",
             "postal_code": "160000",
-            "landmark": "ТЦ 'КИТ', 4 этаж"
+            "landmark": "ТЦ 'КИТ', 1 этаж"
           },
           "coordinates": {
             "latitude": 59.229445,
@@ -112,9 +79,7 @@ export async function GET() {
             "accuracy": "5 метров"
           },
           "hours": {
-            "monday_friday": "10:00-19:00",
-            "saturday": "по предварительной записи",
-            "sunday": "выходной"
+            "daily": "10:00-20:00"
           },
           "phone": "+7 (911) 501-88-28",
           "features": [
@@ -124,7 +89,7 @@ export async function GET() {
             "консультации",
             "выдача техники"
           ],
-          "specialization": "срочный ремонт, замена экранов, чистка"
+          "specialization": "срочный ремонт, замена экранов, чистка, сложный ремонт"
         }
       ],
       "services": {
@@ -143,7 +108,7 @@ export async function GET() {
               "BGA - пайка процессора и памяти",
               "BGA - пайка материнской платы",
               "BGA - пайка видеокарты",
-              "BGA - пайка чипов",
+              "BGA - пайка чипов"
             ],
             "services": [
               "Замена экрана/матрицы ноутбука",
@@ -182,8 +147,7 @@ export async function GET() {
               "не работает камера телефона",
               "телефон не включается",
               "телефон тормозит",
-              "BGA - пайка процессора и памяти",
-
+              "BGA - пайка процессора и памяти"
             ],
             "services": [
               "Замена дисплея (экрана) телефона",
@@ -257,8 +221,7 @@ export async function GET() {
               "Ремонт цепи питания",
               "Прошивка BIOS видеокарты",
               "Устранение артефактов на экране",
-              "Ремонт разъемов HDMI, DisplayPort",
-
+              "Ремонт разъемов HDMI, DisplayPort"
             ],
             "brands": ["NVIDIA", "AMD", "ASUS", "MSI", "Gigabyte", "Palit", "ZOTAC", "Sapphire"],
             "average_price": "3000-15000 рублей",
@@ -283,7 +246,6 @@ export async function GET() {
               "ремонт Toshiba TV",
               "ремонт Sharp TV",
               "ремонт Xiaomi TV"
-
             ],
             "services": [
               "Замена подсветки LED телевизора",
@@ -297,7 +259,7 @@ export async function GET() {
               "Замена кнопок управления",
               "Ремонт пульта ДУ",
               "Настройка и калибровка изображения",
-              "Ремонт разъемов (HDMI, USB, антенны)",
+              "Ремонт разъемов (HDMI, USB, антенны)"
             ],
             "brands": ["Samsung", "LG", "Sony", "Philips", "Panasonic", "Toshiba", "Sharp", "Xiaomi"],
             "average_price": "1500-20000 рублей",
@@ -319,8 +281,7 @@ export async function GET() {
               "ремонт Apple Watch Series 6",
               "ремонт Apple Watch Series 5",
               "ремонт Apple Watch Series 4",
-              "ремонт Apple Watch Series 3",
-
+              "ремонт Apple Watch Series 3"
             ],
             "services": [
               "Ремонт iPhone (все модели)",
@@ -359,7 +320,6 @@ export async function GET() {
               "ремонт Nintendo Switch Mini",
               "ремонт Nintendo Switch Online",
               "ремонт Nintendo Switch Joy-Con"
-
             ],
             "services": [
               "Ремонт PlayStation (PS4, PS5)",
@@ -374,8 +334,7 @@ export async function GET() {
               "Ремонт материнской платы консоли",
               "Ремонт геймпадов (джойстиков)",
               "Восстановление после перегрева",
-              "Апгрейд консолей",
-
+              "Апгрейд консолей"
             ],
             "brands": ["Sony PlayStation", "Microsoft Xbox", "Nintendo"],
             "average_price": "2000-10000 рублей",
@@ -417,8 +376,7 @@ export async function GET() {
               "замена термопасты",
               "профилактика компьютера",
               "обслуживание техники",
-              "устранение перегрева",
-              
+              "устранение перегрева"
             ],
             "services": [
               "Комплексная чистка ноутбуков от пыли",
@@ -476,7 +434,7 @@ export async function GET() {
           {
             "service": "Ремонт видеокарты (замена чипа)",
             "price_range": "3000-12000 рублей"
-          },
+          }
         ],
         "payment_methods": ["наличные", "банковские карты", "безналичный расчет"],
         "deposit": "не требуется, оплата после ремонта"
@@ -530,19 +488,10 @@ export async function GET() {
           "vk": {
             "url": "https://vk.com/servicebox35",
             "purpose": "основные новости, акции"
-          },
-          "telegram": {
-            "url": "https://t.me/Tomkka",
-            "purpose": "быстрая связь, консультации"
-          },
-          "whatsapp": {
-            "url": "https://wa.me/79062960353",
-            "purpose": "консультации, отправка фото неисправностей"
           }
         },
         "working_hours": {
-          "weekdays": "Понедельник-Пятница: 10:00-19:00",
-          "weekends": "Суббота: по предварительной записи, Воскресенье: выходной",
+          "daily": "Ежедневно с 10:00 до 20:00",
           "emergency": "экстренные случаи по договоренности"
         },
         "response_time": {
@@ -557,7 +506,7 @@ export async function GET() {
           "description": "При согласии на ремонт в нашем сервисе"
         },
         {
-          "name": "Гарантия до 12 месяцев",
+          "name": "Гарантия до 24 месяцев",
           "description": "Одна из самых длительных гарантий в Вологде"
         },
         {
@@ -659,7 +608,7 @@ export async function GET() {
         "Где починить ноутбук в Вологде?",
         "Сколько стоит замена экрана телефона?",
         "Куда отдать в ремонт сломанный телевизор?",
-        "Какой сервисный центр работает в субботу?",
+        "Какой сервисный центр работает ежедневно?",
         "Есть ли срочный ремонт компьютеров?"
       ]
     },

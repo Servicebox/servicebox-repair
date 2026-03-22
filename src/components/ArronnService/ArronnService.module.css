@@ -71,7 +71,7 @@
 
 .arronServiceListItem:hover {
   transform: translateY(-5px);
-  border-color: #f9a92c;
+  border-color: #ff8c00;
   box-shadow: 0 10px 30px rgba(66, 153, 225, 0.15);
 }
 
@@ -84,7 +84,7 @@
   height: 60px;
   flex-shrink: 0;
   transition: transform 0.3s ease;
-  color: #f9a92c;
+  color: #ff8c00;
   /* Убраны фильтры - возвращаем оригинальные цвета */
 }
 
@@ -155,7 +155,7 @@
 
 .brandItem:hover {
   transform: translateY(-5px);
-  border-color: #f9a92c;
+  border-color: #ff8c00;
   box-shadow: 0 8px 25px rgba(72, 187, 120, 0.15);
 }
 
@@ -199,7 +199,7 @@
 }
 
 .brandItem:hover .brandName {
-  color: #f9a92c;
+  color: #ff8c00;
 }
 
 /* Анимации */
@@ -208,6 +208,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -225,7 +226,7 @@
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 25px;
   }
-  
+
   .brandGrid {
     grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
     gap: 20px;
@@ -236,50 +237,50 @@
   .arronService {
     padding: 60px 0;
   }
-  
+
   .arronServiceContent {
     padding: 0 15px;
   }
-  
+
   .arronServiceList {
     grid-template-columns: 1fr;
     gap: 20px;
     margin-bottom: 60px;
   }
-  
+
   .arronServiceListItem {
     padding: 20px;
     gap: 15px;
   }
-  
+
   .arronServiceImg {
     width: 50px;
     height: 50px;
   }
-  
+
   .arronServiceText {
     font-size: 0.95rem;
   }
-  
+
   .arronServiceBrands {
     margin-top: 60px;
   }
-  
+
   .brandsSubtitle {
     font-size: 1rem;
     margin-bottom: 30px;
   }
-  
+
   .brandGrid {
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 15px;
     margin: 40px auto;
   }
-  
+
   .brandItem {
     padding: 15px 10px;
   }
-  
+
   .brandImageContainer {
     width: 70px;
     height: 50px;
@@ -290,54 +291,54 @@
   .arronService {
     padding: 40px 0;
   }
-  
+
   .arronServiceContent h2 {
     margin-bottom: 40px;
   }
-  
+
   .arronServiceList {
     margin-bottom: 40px;
   }
-  
+
   .arronServiceListItem {
     flex-direction: column;
     text-align: center;
     gap: 12px;
     padding: 15px;
   }
-  
+
   .arronServiceImg {
     width: 45px;
     height: 45px;
   }
-  
+
   .arronServiceText {
     font-size: 0.9rem;
   }
-  
+
   .arronServiceBrands {
     margin-top: 40px;
   }
-  
+
   .brandGrid {
     grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
     gap: 12px;
   }
-  
+
   .brandItem {
     padding: 12px 8px;
   }
-  
+
   .brandImageContainer {
     width: 60px;
     height: 40px;
     margin-bottom: 8px;
   }
-  
+
   .brandName {
     font-size: 0.8rem;
   }
-  
+
   .brandsSubtitle {
     font-size: 0.9rem;
     margin-bottom: 25px;
@@ -348,25 +349,25 @@
   .arronService {
     padding: 30px 0;
   }
-  
+
   .arronServiceContent {
     padding: 0 10px;
   }
-  
+
   .brandGrid {
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
   }
-  
+
   .brandItem {
     padding: 10px 5px;
   }
-  
+
   .brandImageContainer {
     width: 50px;
     height: 35px;
   }
-  
+
   .brandName {
     font-size: 0.75rem;
   }
@@ -387,20 +388,21 @@
 
 /* Плавное появление элементов при скролле */
 @media (prefers-reduced-motion: no-preference) {
+
   .arronServiceListItem,
   .brandItem {
     opacity: 0;
     animation: fadeInUp 0.6s ease-out forwards;
   }
-  
+
   .arronServiceListItem:nth-child(odd) {
     animation-delay: 0.1s;
   }
-  
+
   .arronServiceListItem:nth-child(even) {
     animation-delay: 0.2s;
   }
-  
+
   .brandItem {
     animation-delay: calc(0.1s * var(--index, 0));
   }

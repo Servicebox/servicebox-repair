@@ -17,7 +17,7 @@
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(102, 126, 234, 0.4),
     0 2px 8px rgba(0, 0, 0, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -46,21 +46,21 @@
 
 .openChatBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 
+  box-shadow:
     0 12px 40px rgba(102, 126, 234, 0.5),
     0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .pulseDot {
 
-    display: inline-block;
-    width: 40px;
-    color: white;
-    height: 40px;
-    background: linear-gradient(135deg, #f9a92c 0%, #fffb00 100%);
-    border-radius: 50%;
-    position: relative;
-    box-shadow: 0 0 20px #f9a92c;
+  display: inline-block;
+  width: 40px;
+  color: white;
+  height: 40px;
+  background: linear-gradient(135deg, #ff8c000%, #fffb00 100%);
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 0 20px #ff8c00;
 }
 
 .pulseDot::before {
@@ -77,9 +77,20 @@
 }
 
 @keyframes pulse {
-  0% { transform: scale(0.8); opacity: 0.7; }
-  70% { transform: scale(2); opacity: 0; }
-  100% { transform: scale(0.8); opacity: 0; }
+  0% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+
+  70% {
+    transform: scale(2);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
 }
 
 /* Модальное окно чата */
@@ -89,7 +100,7 @@
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   border-radius: 24px;
-  box-shadow: 
+  box-shadow:
     0 25px 50px rgba(0, 0, 0, 0.15),
     0 8px 24px rgba(0, 0, 0, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
@@ -106,6 +117,7 @@
     opacity: 0;
     transform: translateY(20px) scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -146,6 +158,7 @@
     opacity: 0;
     transform: scale(0.9) translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -359,7 +372,8 @@
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-.saveNameBtn, .cancelNameBtn {
+.saveNameBtn,
+.cancelNameBtn {
   padding: 10px 16px;
   border: none;
   border-radius: 12px;
@@ -455,6 +469,7 @@
     opacity: 0;
     transform: scale(0.8) translateY(10px);
   }
+
   100% {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -488,6 +503,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -517,7 +533,7 @@
   background: white;
   padding: 16px 20px;
   border-radius: 20px;
-  box-shadow: 
+  box-shadow:
     0 2px 12px rgba(0, 0, 0, 0.08),
     0 1px 2px rgba(0, 0, 0, 0.04);
   line-height: 1.5;
@@ -549,8 +565,13 @@
   font-weight: 600;
 }
 
-.sent { color: #cbd5e1; }
-.delivered { color: #002147; }
+.sent {
+  color: #cbd5e1;
+}
+
+.delivered {
+  color: #002147;
+}
 
 /* Сообщения пользователя */
 .userMsg {
@@ -564,7 +585,7 @@
 .userMsg .messageText {
   color: rgb(24, 24, 24);
   border-radius: 20px 20px 8px 20px;
-  box-shadow: 
+  box-shadow:
     0 4px 20px rgba(102, 126, 234, 0.3),
     0 2px 8px rgba(102, 126, 234, 0.2);
 }
@@ -627,7 +648,7 @@
   bottom: 80px;
   right: 20px;
   z-index: 1001;
-  box-shadow: 
+  box-shadow:
     0 25px 50px rgba(0, 0, 0, 0.15),
     0 8px 24px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
@@ -641,6 +662,7 @@
     opacity: 0;
     transform: scale(0.9) translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -693,7 +715,7 @@
 
 .chatInput:disabled {
   background: #f8fafc;
-  color:rgb(43, 43, 43);
+  color: rgb(43, 43, 43);
 }
 
 .chatSendBtn {

@@ -136,7 +136,7 @@
 
 .ctaButton:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .ctaIcon {
@@ -181,7 +181,7 @@
 .workStepsTitle {
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 800;
-background-color: #002147;
+  background-color: #002147;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -237,8 +237,13 @@ background-color: #002147;
 }
 
 @keyframes shimmer {
-  0% { left: -100%; }
-  100% { left: 100%; }
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 100%;
+  }
 }
 
 .stepsIndicator {
@@ -264,14 +269,14 @@ background-color: #002147;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 2px solid transparent;
-  box-shadow: 
+  box-shadow:
     0 4px 12px rgba(0, 0, 0, 0.05),
     0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .stepIndicator:hover {
   transform: translateY(-2px);
-  box-shadow: 
+  box-shadow:
     0 8px 20px rgba(0, 0, 0, 0.1),
     0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -280,7 +285,7 @@ background-color: #002147;
   background: linear-gradient(135deg, #0F52BA 0%, #002147 100%);
   color: white;
   transform: scale(1.15);
-  box-shadow: 
+  box-shadow:
     0 8px 25px rgba(59, 130, 246, 0.4),
     0 2px 8px rgba(59, 130, 246, 0.2);
   border-color: rgba(255, 255, 255, 0.3);
@@ -309,7 +314,7 @@ background-color: #002147;
   cursor: pointer;
   z-index: 20;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 
+  box-shadow:
     0 8px 25px rgba(0, 0, 0, 0.1),
     0 2px 8px rgba(0, 0, 0, 0.08);
   color: #475569;
@@ -320,7 +325,7 @@ background-color: #002147;
   color: white;
   border-color: transparent;
   transform: translateY(-50%) scale(1.1);
-  box-shadow: 
+  box-shadow:
     0 12px 35px rgba(59, 130, 246, 0.3),
     0 4px 12px rgba(59, 130, 246, 0.2);
 }
@@ -363,11 +368,11 @@ background-color: #002147;
   border-radius: 24px;
   padding: clamp(1.5rem, 3vw, 2.5rem);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  width:600px;
+  width: 600px;
   flex-shrink: 0;
   cursor: pointer;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.08),
     0 2px 8px rgba(0, 0, 0, 0.05),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
@@ -382,14 +387,14 @@ background-color: #002147;
   left: 0;
   right: 0;
   height: 1px;
-  
+
 }
 
 .workStepCard:hover,
 .workStepCard.active {
   transform: translateY(-8px);
   background: rgba(255, 255, 255, 0.9);
-  box-shadow: 
+  box-shadow:
     0 20px 50px rgba(0, 0, 0, 0.12),
     0 4px 16px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
@@ -406,7 +411,7 @@ background-color: #002147;
   justify-content: center;
   margin-bottom: 1.5rem;
   color: white;
-  box-shadow: 
+  box-shadow:
     0 8px 20px rgba(59, 130, 246, 0.3),
     0 2px 8px rgba(59, 130, 246, 0.2);
   transition: all 0.3s ease;
@@ -431,7 +436,7 @@ background-color: #002147;
 }
 
 .stepDescription {
-  color: #f9a92c;
+  color: #ff8c00;
   line-height: 1.6;
   margin-bottom: 1rem;
   font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
@@ -509,14 +514,14 @@ background-color: #002147;
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 
+  box-shadow:
     0 4px 20px rgba(0, 0, 0, 0.06),
     0 1px 4px rgba(0, 0, 0, 0.04);
   transition: all 0.3s ease;
 }
 
 .faqItem:hover {
-  box-shadow: 
+  box-shadow:
     0 8px 30px rgba(0, 0, 0, 0.1),
     0 2px 8px rgba(0, 0, 0, 0.06);
 }
@@ -553,7 +558,7 @@ background-color: #002147;
   min-width: 24px;
   text-align: center;
   transition: transform 0.3s ease;
-  color: #f9a92c;
+  color: #ff8c00;
 }
 
 .faqQuestion.active .faqToggle {
@@ -636,7 +641,7 @@ background-color: #002147;
   }
 
   .workStepCard {
-   width: 300px;
+    width: 300px;
     padding: 1.5rem;
   }
 
@@ -736,6 +741,7 @@ background-color: #002147;
 
 /* Улучшенная доступность */
 @media (prefers-reduced-motion: reduce) {
+
   .progressFill::after,
   .workStepCard .stepIcon,
   .faqToggle {

@@ -23,7 +23,8 @@ export default function AdminLayout({ children }) {
     { href: '/admin-panel/orders', label: 'Заказы', icon: '📋' },
     { href: '/admin-panel/bookings', label: 'Бронирования', icon: '📅' },
     { href: '/admin-panel/tracking', label: 'Отслеживание', icon: '📍' },
-    { href: '/admin-panel/depository', label: 'Файлы', icon: '📁' }
+    { href: '/admin-panel/depository', label: 'Файлы', icon: '📁' },
+    { href: '/admin-panel/price', label: 'Прайс-лист', icon: '📊' }
   ];
 
   // Проверка доступа
@@ -72,7 +73,7 @@ export default function AdminLayout({ children }) {
     <div className={styles.adminContainer}>
       {/* Кнопка открытия меню (плавающая, только на мобильных) */}
       <div className={styles.mainNavMenu}>
-        <button 
+        <button
           className={styles.menuToggleButton}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Открыть меню"
@@ -85,7 +86,7 @@ export default function AdminLayout({ children }) {
       </div>
 
       {/* Сайдбар */}
-      <aside 
+      <aside
         className={`${styles.sidebar} ${isMobileMenuOpen ? styles.sidebarOpen : ''}`}
         aria-hidden={!isMobileMenuOpen}
       >
@@ -96,7 +97,7 @@ export default function AdminLayout({ children }) {
               ServiceBox
             </p>
           </div>
-          <button 
+          <button
             className={styles.closeSidebar}
             onClick={() => setIsMobileMenuOpen(false)}
             aria-label="Закрыть меню"
@@ -104,7 +105,7 @@ export default function AdminLayout({ children }) {
             ×
           </button>
         </div>
-        
+
         <div className={styles.sidebarContent}>
           <nav className={styles.sidebarNav}>
             {navItems.map((item) => (
@@ -120,7 +121,7 @@ export default function AdminLayout({ children }) {
             ))}
           </nav>
         </div>
-        
+
         <div className={styles.sidebarFooter}>
           <p style={{ fontWeight: '500', color: '#111827' }}>
             👤 {user.username || 'Администратор'}
@@ -133,7 +134,7 @@ export default function AdminLayout({ children }) {
 
       {/* Оверлей для мобильных */}
       {isMobileMenuOpen && (
-        <div 
+        <div
           className={styles.overlay}
           onClick={() => setIsMobileMenuOpen(false)}
           aria-hidden="true"

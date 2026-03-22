@@ -1,9 +1,8 @@
-// components/WorkSteps/WorkSteps.js
 'use client';
 import Script from 'next/script';
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { 
-  Phone, Search, FileText, Wrench, CheckCircle, Shield, 
+import {
+  Phone, Search, FileText, Wrench, CheckCircle, Shield,
   ChevronLeft, ChevronRight, MapPin, Clock, Users
 } from 'lucide-react';
 import styles from './WorkSteps.module.css';
@@ -33,7 +32,7 @@ const WorkSteps = () => {
       title: "А где Андрей?",
       description: "Свяжитесь с ним по номеру",
       details: "+7 (911) 501-06-96",
-      fullText: "Андрей - наш директор и опытный специалист  в Вологде, работает в сервисном центре на Ленина, 6. Ориентир - вход рядом с K&B. Более 10 лет опыта в восстановлении цифровой техники."
+      fullText: "Андрей - наш директор и опытный специалист в Вологде. Более 10 лет опыта в восстановлении цифровой техники."
     },
     {
       id: 2,
@@ -88,7 +87,7 @@ const WorkSteps = () => {
   const faqs = [
     {
       question: "Как быстро можно получить консультацию по ремонту?",
-      answer: "Наши консультанты готовы ответить на ваши вопросы ежедневно с 10:00 до 19:00. В большинстве случаев мы можем предварительно оценить ситуацию по телефону и предложить оптимальное решение для восстановления вашего устройства."
+      answer: "Наши консультанты готовы ответить на ваши вопросы ежедневно с 10:00 до 20:00. В большинстве случаев мы можем предварительно оценить ситуацию по телефону и предложить оптимальное решение для восстановления вашего устройства."
     },
     {
       question: "Сколько времени занимает диагностика оборудования?",
@@ -104,7 +103,7 @@ const WorkSteps = () => {
     },
     {
       question: "Какие формы оплаты принимаются в вашем сервисе?",
-      answer: "В сервисных центрах Вологды мы принимаем наличные средства и безналичные платежи через банковские терминалы. Оплата производится только после успешного завершения работ и вашего одобрения результата."
+      answer: "В сервисном центре Вологды мы принимаем наличные средства и безналичные платежи через банковские терминалы. Оплата производится только после успешного завершения работ и вашего одобрения результата."
     },
     {
       question: "На какие виды работ предоставляется гарантия?",
@@ -115,7 +114,7 @@ const WorkSteps = () => {
       answer: "В случае возникновения проблем в течение гарантийного периода, просто свяжитесь с нами по телефону. Наши специалисты в Вологде оперативно устранят любые выявленные недостатки абсолютно бесплатно."
     },
     {
-      question: "Работаете ли вы с корпоративными клиентами ?",
+      question: "Работаете ли вы с корпоративными клиентами?",
       answer: "Да, мы предлагаем специальные условия для бизнес-клиентов в Вологодской области. Предоставляем скидки на объемные заказы, оформляем все необходимые бухгалтерские документы и обеспечиваем приоритетное обслуживание."
     }
   ];
@@ -178,11 +177,11 @@ const WorkSteps = () => {
   // Автопрокрутка
   useEffect(() => {
     if (!isAutoScrolling || isMobile) return;
-    
+
     autoScrollInterval.current = setInterval(() => {
       setCurrentStepIndex(prev => (prev + 1) % steps.length);
     }, 8000);
-    
+
     return () => {
       if (autoScrollInterval.current) {
         clearInterval(autoScrollInterval.current);
@@ -193,9 +192,9 @@ const WorkSteps = () => {
   useEffect(() => {
     if (scrollContainerRef.current && !isMobile) {
       const cardWidth = scrollContainerRef.current.scrollWidth / steps.length;
-      scrollContainerRef.current.scrollTo({ 
-        left: currentStepIndex * cardWidth, 
-        behavior: 'smooth' 
+      scrollContainerRef.current.scrollTo({
+        left: currentStepIndex * cardWidth,
+        behavior: 'smooth'
       });
     }
   }, [currentStepIndex, steps.length, isMobile]);
@@ -218,24 +217,16 @@ const WorkSteps = () => {
         <div className={styles.locationCard}>
           <MapPin className={styles.locationIcon} />
           <div className={styles.locationDetails}>
-            <h3>Сервисный центр на Ленина</h3>
-            <p>ул. Ленина, д. 6, Вологда</p>
-            <span>Ориентир: вход рядом с K&B</span>
-          </div>
-        </div>
-        <div className={styles.locationCard}>
-          <MapPin className={styles.locationIcon} />
-          <div className={styles.locationDetails}>
             <h3>Сервисный центр на Северной</h3>
-            <p>ул. Северная, д. 7А, офис 405, Вологда</p>
-            <span>ТЦ "КИТ"</span>
+            <p>ул. Северная, д. 7А, 1 этаж, Вологда</p>
+            <span>Ориентир: ТЦ "КИТ"</span>
           </div>
         </div>
       </div>
 
       <div className={styles.workStepsProgress}>
         <div className={styles.progressLine}>
-          <div 
+          <div
             className={styles.progressFill}
             style={{ width: `${((currentStepIndex + 1) / steps.length) * 100}%` }}
           ></div>
@@ -266,7 +257,7 @@ const WorkSteps = () => {
           </>
         )}
 
-        <div 
+        <div
           className={styles.workStepsScrollContainer}
           ref={scrollContainerRef}
           onMouseEnter={() => setIsAutoScrolling(false)}
@@ -344,161 +335,142 @@ const WorkSteps = () => {
         </div>
       </div>
 
-
       <div itemScope itemType="https://schema.org/LocalBusiness" className={styles.hidden}>
         <meta itemProp="name" content="ServiceBox - профессиональный ремонт техники в Вологде" />
         <meta itemProp="description" content="Сервисный центр по восстановлению ноутбуков, смартфонов, планшетов и другой цифровой техники в Вологде. Качественный ремонт с гарантией." />
         <div itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
-          <meta itemProp="streetAddress" content="ул. Ленина, д. 6" />
-          <meta itemProp="addressLocality" content="Вологда" />
-          <meta itemProp="addressRegion" content="Вологодская область" />
-          <meta itemProp="postalCode" content="160000" />
-          <meta itemProp="addressCountry" content="RU" />
-        </div>
-        <div itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
-          <meta itemProp="streetAddress" content="ул. Северная, д. 7А, офис 405" />
+          <meta itemProp="streetAddress" content="ул. Северная, д. 7А, 1 этаж" />
           <meta itemProp="addressLocality" content="Вологда" />
           <meta itemProp="addressRegion" content="Вологодская область" />
           <meta itemProp="postalCode" content="160000" />
           <meta itemProp="addressCountry" content="RU" />
         </div>
         <meta itemProp="telephone" content="+7 (911) 501-88-28" />
-        <meta itemProp="openingHours" content="Mo-Fr 10:00-19:00" />
-        <div itemProp="geo" itemScope itemType="https://schema.org/GeoCoordinates">
-          <meta itemProp="latitude" content="59.218183" />
-          <meta itemProp="longitude" content="39.888497" />
-        </div>
+        <meta itemProp="openingHours" content="Mo-Su 10:00-20:00" />
         <div itemProp="geo" itemScope itemType="https://schema.org/GeoCoordinates">
           <meta itemProp="latitude" content="59.229445" />
           <meta itemProp="longitude" content="39.878542" />
-        </div>      </div>
-      
-
-{/* Скрытые данные для AI ассистентов */}
-<div className="ai-structured-data" style={{ display: 'none' }} aria-hidden="true">
-  {/* Основная информация для AI */}
-  <h2>Сервис Бокс - Ремонт техники в Вологде</h2>
-  
-  <section className="ai-business-info">
-    <h3>Информация о сервисном центре</h3>
-    <p><strong>Название:</strong> Сервис Бокс</p>
-    <p><strong>Специализация:</strong> Ремонт цифровой и компьютерной техники</p>
-    <p><strong>Город:</strong> Вологда, Вологодская область, Россия</p>
-    <p><strong>Опыт работы:</strong> Более 10 лет</p>
-  </section>
-
-  <section className="ai-locations">
-    <h3>Адреса сервисных центров</h3>
-    <ul>
-      <li>
-        <strong>Сервис на Ленина:</strong> ул. Ленина, д. 6, Вологда<br/>
-        <em>Ориентир:</em> вход рядом с K&B<br/>
-        <em>Часы работы:</em> Пн-Пт: 10:00-18:00<br/>
-        <em>Телефон:</em> +7 (911) 501-06-96
-      </li>
-      <li>
-        <strong>Сервис на Северной:</strong> ул. Северная, д. 7А, офис 405, Вологда<br/>
-        <em>Ориентир:</em> ТЦ "КИТ"<br/>
-        <em>Часы работы:</em> Пн-Пт: 10:00-19:00<br/>
-        <em>Телефон:</em> +7 (911) 501-88-28
-      </li>
-    </ul>
-  </section>
-
-  <section className="ai-services">
-    <h3>Услуги по ремонту</h3>
-    <ul>
-      <li>Ремонт ноутбуков (замена экранов, чистка, ремонт материнских плат)</li>
-      <li>Ремонт телефонов (замена дисплеев, аккумуляторов, разъемов)</li>
-      <li>Ремонт компьютеров (сборка, замена комплектующих)</li>
-      <li>Ремонт видеокарт (замена чипов, восстановление)</li>
-      <li>Ремонт телевизоров</li>
-      <li>Ремонт игровых приставок</li>
-      <li>Ремонт Apple техники (iPhone, iPad, MacBook)</li>
-      <li>Восстановление данных</li>
-      <li>Чистка от пыли и замена термопасты</li>
-    </ul>
-  </section>
-
-  <section className="ai-pricing">
-    <h3>Примерные цены на услуги</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Услуга</th>
-          <th>Стоимость</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Диагностика</td><td>Бесплатно (при согласии на ремонт)</td></tr>
-        <tr><td>Замена экрана ноутбука</td><td>от 1500 рублей</td></tr>
-        <tr><td>Чистка ноутбука от пыли</td><td>от 1000 рублей</td></tr>
-        <tr><td>Замена дисплея телефона</td><td>от 2000 рублей</td></tr>
-        <tr><td>Замена аккумулятора телефона</td><td>от 1500 рублей</td></tr>
-        <tr><td>Ремонт материнской платы</td><td>от 2500 рублей</td></tr>
-        <tr><td>Замена термопасты</td><td>от 500 рублей</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section className="ai-process">
-    <h3>Процесс работы</h3>
-    <ol>
-      {steps.map((step, index) => (
-        <li key={index}>
-          <strong>{step.title}:</strong> {step.fullText}
-        </li>
-      ))}
-    </ol>
-  </section>
-
-  <section className="ai-faq">
-    <h3>Частые вопросы и ответы</h3>
-    {faqs.map((faq, index) => (
-      <div key={index} className="ai-faq-item">
-        <h4>Вопрос: {faq.question}</h4>
-        <p>Ответ: {faq.answer}</p>
+        </div>
       </div>
-    ))}
-  </section>
 
-  <section className="ai-features">
-    <h3>Преимущества нашего сервиса</h3>
-    <ul>
-      <li>Бесплатная диагностика при согласии на ремонт</li>
-      <li>Гарантия до 2 лет на выполненные работы</li>
-      <li>Срочный ремонт от 30 минут до 3 дней</li>
-      <li>Оригинальные и качественные запчасти</li>
-      <li>Опытные мастера с сертификатами</li>
-      <li>Прозрачное ценообразование без скрытых платежей</li>
-      <li>Возможность выезда мастера</li>
-      <li>Онлайн-запись и отслеживание статуса ремонта</li>
-    </ul>
-  </section>
+      {/* Скрытые данные для AI ассистентов */}
+      <div className="ai-structured-data" style={{ display: 'none' }} aria-hidden="true">
+        {/* Основная информация для AI */}
+        <h2>Сервис Бокс - Ремонт техники в Вологде</h2>
 
-  <section className="ai-contact">
-    <h3>Как связаться</h3>
-    <p><strong>Основной телефон:</strong> +7 (911) 501-88-28</p>
-    <p><strong>Второй телефон:</strong> +7 (911) 501-06-96</p>
-    <p><strong>Email:</strong> servicebox35@gmail.com</p>
-    <p><strong>Telegram:</strong> @Tomkka</p>
-    <p><strong>WhatsApp:</strong> +7 (906) 296-03-53</p>
-    <p><strong>ВКонтакте:</strong> vk.com/servicebox35</p>
-    <p><strong>Режим работы:</strong> Понедельник-Пятница с 10:00 до 19:00</p>
-  </section>
-</div>
+        <section className="ai-business-info">
+          <h3>Информация о сервисном центре</h3>
+          <p><strong>Название:</strong> Сервис Бокс</p>
+          <p><strong>Специализация:</strong> Ремонт цифровой и компьютерной техники</p>
+          <p><strong>Город:</strong> Вологда, Вологодская область, Россия</p>
+          <p><strong>Опыт работы:</strong> Более 10 лет</p>
+          <p><strong>Режим работы:</strong> Ежедневно с 10:00 до 20:00</p>
+        </section>
 
-{/* ✅ JSON-LD структурированные данные */}
-{structuredData && (
-  <Script
-    id="structured-data-worksteps"
-    type="application/ld+json"
-    dangerouslySetInnerHTML={{
-      __html: JSON.stringify(structuredData)
-    }}
-    strategy="afterInteractive"
-  />
-)}
+        <section className="ai-locations">
+          <h3>Адрес сервисного центра</h3>
+          <ul>
+            <li>
+              <strong>Сервис на Северной:</strong> ул. Северная, д. 7А, 1 этаж, Вологда<br />
+              <em>Ориентир:</em> ТЦ "КИТ"<br />
+              <em>Часы работы:</em> Ежедневно с 10:00 до 20:00<br />
+              <em>Телефон:</em> +7 (911) 501-88-28
+            </li>
+          </ul>
+        </section>
+
+        <section className="ai-services">
+          <h3>Услуги по ремонту</h3>
+          <ul>
+            <li>Ремонт ноутбуков (замена экранов, чистка, ремонт материнских плат)</li>
+            <li>Ремонт телефонов (замена дисплеев, аккумуляторов, разъемов)</li>
+            <li>Ремонт компьютеров (сборка, замена комплектующих)</li>
+            <li>Ремонт видеокарт (замена чипов, восстановление)</li>
+            <li>Ремонт телевизоров</li>
+            <li>Ремонт игровых приставок</li>
+            <li>Ремонт Apple техники (iPhone, iPad, MacBook)</li>
+            <li>Восстановление данных</li>
+            <li>Чистка от пыли и замена термопасты</li>
+          </ul>
+        </section>
+
+        <section className="ai-pricing">
+          <h3>Примерные цены на услуги</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Услуга</th>
+                <th>Стоимость</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Диагностика</td><td>Бесплатно (при согласии на ремонт)</td></tr>
+              <tr><td>Замена экрана ноутбука</td><td>от 1500 рублей</td></tr>
+              <tr><td>Чистка ноутбука от пыли</td><td>от 1000 рублей</td></tr>
+              <tr><td>Замена дисплея телефона</td><td>от 2000 рублей</td></tr>
+              <tr><td>Замена аккумулятора телефона</td><td>от 1500 рублей</td></tr>
+              <tr><td>Ремонт материнской платы</td><td>от 2500 рублей</td></tr>
+              <tr><td>Замена термопасты</td><td>от 500 рублей</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section className="ai-process">
+          <h3>Процесс работы</h3>
+          <ol>
+            {steps.map((step, index) => (
+              <li key={index}>
+                <strong>{step.title}:</strong> {step.fullText}
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section className="ai-faq">
+          <h3>Частые вопросы и ответы</h3>
+          {faqs.map((faq, index) => (
+            <div key={index} className="ai-faq-item">
+              <h4>Вопрос: {faq.question}</h4>
+              <p>Ответ: {faq.answer}</p>
+            </div>
+          ))}
+        </section>
+
+        <section className="ai-features">
+          <h3>Преимущества нашего сервиса</h3>
+          <ul>
+            <li>Бесплатная диагностика при согласии на ремонт</li>
+            <li>Гарантия до 2 лет на выполненные работы</li>
+            <li>Срочный ремонт от 30 минут до 3 дней</li>
+            <li>Оригинальные и качественные запчасти</li>
+            <li>Опытные мастера с сертификатами</li>
+            <li>Прозрачное ценообразование без скрытых платежей</li>
+            <li>Возможность выезда мастера</li>
+            <li>Онлайн-запись и отслеживание статуса ремонта</li>
+          </ul>
+        </section>
+
+        <section className="ai-contact">
+          <h3>Как связаться</h3>
+          <p><strong>Основной телефон:</strong> +7 (911) 501-88-28</p>
+          <p><strong>Второй телефон:</strong> +7 (911) 501-06-96</p>
+          <p><strong>Email:</strong> servicebox35@gmail.com</p>
+          <p><strong>ВКонтакте:</strong> vk.com/servicebox35</p>
+          <p><strong>Режим работы:</strong> Ежедневно с 10:00 до 20:00</p>
+        </section>
+      </div>
+
+      {/* ✅ JSON-LD структурированные данные */}
+      {structuredData && (
+        <Script
+          id="structured-data-worksteps"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData)
+          }}
+          strategy="afterInteractive"
+        />
+      )}
     </div>
   );
 };

@@ -74,7 +74,7 @@
 
 .featureCard:hover {
   transform: translateY(-8px);
-  border-color: #f9a92c;
+  border-color: #ff8c00;
   box-shadow: 0 10px 30px rgba(66, 153, 225, 0.15);
 }
 
@@ -85,7 +85,7 @@
 .featureIcon {
   font-size: 3rem;
   margin-bottom: 20px;
-  color: #f9a92c;
+  color: #ff8c00;
   transition: transform 0.3s ease;
 }
 
@@ -155,7 +155,7 @@
 
 .serviceCard:hover {
   transform: translateY(-8px);
-  border-color: #f9a92c;
+  border-color: #ff8c00;
   box-shadow: 0 10px 30px rgba(72, 187, 120, 0.15);
 }
 
@@ -165,7 +165,7 @@
 
 .serviceIcon {
   font-size: 2.5rem;
-  color: #f9a92c;
+  color: #ff8c00;
   margin-bottom: 20px;
   transition: transform 0.3s ease;
 }
@@ -199,6 +199,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -209,7 +210,8 @@
   animation: fadeInUp 0.6s ease-out;
 }
 
-.featureCard, .serviceCard {
+.featureCard,
+.serviceCard {
   animation: fadeInUp 0.6s ease-out;
 }
 
@@ -219,7 +221,7 @@
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 25px;
   }
-  
+
   .servicesGrid {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
@@ -230,44 +232,45 @@
   .aboutRef {
     padding: 40px 0;
   }
-  
+
   .aboutContent {
     padding: 0 15px;
   }
-  
+
   .featuresGrid {
     grid-template-columns: 1fr;
     gap: 20px;
     margin: 40px 0;
     padding: 0;
   }
-  
+
   .featureCard {
     padding: 25px 15px;
   }
-  
+
   .servicesGrid {
     grid-template-columns: 1fr;
     gap: 20px;
     padding: 0;
   }
-  
+
   .serviceCard {
     padding: 25px 15px;
   }
-  
+
   .repairServices {
     margin: 60px 0 30px;
   }
-  
-  .aboutText, .aboutSubtitle {
+
+  .aboutText,
+  .aboutSubtitle {
     text-align: left;
   }
-  
+
   .featureIcon {
     font-size: 2.5rem;
   }
-  
+
   .serviceIcon {
     font-size: 2rem;
   }
@@ -277,61 +280,61 @@
   .aboutRef {
     padding: 30px 0;
   }
-  
+
   .aboutContent {
     padding: 0 10px;
   }
-  
+
   .animatedTitle {
     font-size: 1.8rem;
     margin-bottom: 20px;
   }
-  
+
   .aboutText {
     font-size: 1.1rem;
     margin-bottom: 15px;
   }
-  
+
   .aboutSubtitle {
     font-size: 0.95rem;
     margin-bottom: 20px;
   }
-  
+
   .featuresGrid {
     margin: 30px 0;
     gap: 15px;
   }
-  
+
   .featureCard {
     padding: 20px 15px;
     border-radius: 12px;
   }
-  
+
   .featureCard h3 {
     font-size: 1.2rem;
   }
-  
+
   .featureCard p {
     font-size: 0.9rem;
   }
-  
+
   .servicesGrid {
     gap: 15px;
   }
-  
+
   .serviceCard {
     padding: 20px 15px;
     border-radius: 12px;
   }
-  
+
   .serviceTitle {
     font-size: 1.1rem;
   }
-  
+
   .serviceText {
     font-size: 0.85rem;
   }
-  
+
   .repairServices h2 {
     margin-bottom: 30px;
   }
@@ -342,25 +345,26 @@
   .aboutRef {
     padding: 20px 0;
   }
-  
-  .featureCard, .serviceCard {
+
+  .featureCard,
+  .serviceCard {
     padding: 15px 10px;
   }
-  
+
   .featureIcon {
     font-size: 2rem;
     margin-bottom: 15px;
   }
-  
+
   .serviceIcon {
     font-size: 1.8rem;
     margin-bottom: 15px;
   }
-  
+
   .featureCard h3 {
     font-size: 1.1rem;
   }
-  
+
   .serviceTitle {
     font-size: 1rem;
   }

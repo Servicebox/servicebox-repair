@@ -269,40 +269,148 @@ export default async function sitemap() {
     }
 
     // Получаем все новости
-    let newsPages = [];
+    // === 5. 🎯 Динамические страницы: НОВОСТИ (по слагам) ===
+    let newsEntries = [];
+
     try {
-      const newsResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL || baseUrl}/api/news?limit=1000`, {
-        next: { revalidate: 3600 },
-        headers: {
-          'Content-Type': 'application/json',
-          'User-Agent': 'ServiceBox-Sitemap-Generator/1.0'
+      console.log('📰 Fetching news for sitemap...');
+
+      // Запрос к API с нужными полями и параметрами
+      const newsResponse = await fetch(
+        `${API_URL}/api/news?all=1&fields=slug,title,excerpt,isPublished,publishedAt,updatedAt,keywords,featuredImage&limit=1000`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'User-Agent': 'ServiceBox-Sitemap-Generator/2.0',
+            'Cache-Control': 'no-cache',
+          },
+          next: { revalidate: 3600 }, // Кэш на 1 час
         }
-      });
+      );
 
-      if (newsResponse.ok) {
-        const newsData = await newsResponse.json();
+      // Обработка ответа
+      if (!newsResponse.ok) {
+        throw new Error(`HTTP ${newsResponse.status}: ${newsResponse.statusText}`);
+      }
 
-        if (newsData.news) {
-          newsPages = newsData.news.map(newsItem => ({
-            url: `${baseUrl}/news/${encodeURIComponent(newsItem.slug)}`,
-            lastModified: new Date(newsItem.updatedAt || currentDate),
+      const newsData = await newsResponse.json();
+
+      // Проверка структуры ответа
+      if (newsData?.success && Array.isArray(newsData.data)) {
+        console.log(`📊 Found ${newsData.data.length} news items, filtering published...`);
+
+        // 🔥 Фильтрация: только опубликованные новости с валидным слагом
+        const publishedNews = newsData.data.filter(news => {
+          // Проверка публикации
+          if (news.isPublished !== true) {
+            return false;
+          }
+
+          // Проверка слага
+          if (!news.slug || typeof news.slug !== 'string' || news.slug.trim().length === 0) {
+            console.warn(`⚠️ News "${news.title}" has invalid slug, skipping`);
+            return false;
+          }
+
+          // Проверка даты публикации (опционально: не старше 5 лет)
+          const publishedDate = new Date(news.publishedAt || news.createdAt);
+          const fiveYearsAgo = new Date();
+          fiveYearsAgo.setFullYear(fiveYearsAgo.getFullYear() - 5);
+
+          if (publishedDate < fiveYearsAgo) {
+            console.log(`ℹ️ News "${news.title}" is older than 5 years, including anyway`);
+          }
+
+          return true;
+        });
+
+        console.log(`✅ ${publishedNews.length} published news with valid slugs`);
+
+        // 🔄 Преобразование в entries для sitemap
+        newsEntries = publishedNews.map(news => {
+          // === Валидация и нормализация слага ===
+          let validSlug = news.slug.trim().toLowerCase();
+
+          // Проверка формата: только латиница, цифры, дефисы
+          const slugPattern = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+
+          if (!slugPattern.test(validSlug)) {
+            // Fallback: генерируем слаг из заголовка
+            validSlug = validSlug
+              .replace(/[^\w\s-]/g, '')           // Удаляем спецсимволы
+              .replace(/[\s_-]+/g, '-')           // Пробелы и подчёркивания → дефис
+              .replace(/^-+|-+$/g, '')            // Удаляем дефисы по краям
+              .substring(0, 100);                 // Ограничение длины
+          }
+
+          // === Формирование даты последнего изменения ===
+          const lastModified = news.updatedAt
+            ? new Date(news.updatedAt)
+            : news.publishedAt
+              ? new Date(news.publishedAt)
+              : new Date(news.createdAt) || new Date();
+
+          // === Формирование ключевых слов для AI ===
+          const baseKeywords = [
+            news.title,
+            'ремонт техники Вологда',
+            'сервисный центр статьи',
+          ];
+          const extraKeywords = Array.isArray(news.keywords)
+            ? news.keywords.slice(0, 3)
+            : [];
+          const allKeywords = [...baseKeywords, ...extraKeywords].filter(Boolean);
+
+          // === Формирование краткого описания ===
+          const summary = news.excerpt
+            ? news.excerpt.substring(0, 200).trim()
+            : `Статья: ${news.title} от сервисного центра ServiceBox в Вологде`;
+
+          // === Создание entry для sitemap ===
+          return createSitemapEntry({
+            url: `${BASE_URL}/news/${validSlug}`,
+            lastModified,
             changeFrequency: 'monthly',
             priority: 0.7,
             aiMetadata: {
-              pageType: 'article',
-              contentFocus: 'news_detail',
-              primaryKeywords: [
-                `${newsItem.title}`,
-                `статья о ремонте`,
-                `технический блог`
-              ],
-              contentSummary: newsItem.excerpt || `Статья: ${newsItem.title} от сервисного центра ServiceBox`
-            }
-          }));
-        }
+              pageType: 'news_article',
+              contentFocus: 'expert_advice',
+              primaryKeywords: allKeywords,
+              contentSummary: summary,
+              // Дополнительные метаданные для расширенной аналитики
+              article: {
+                title: news.title,
+                publishedAt: news.publishedAt ? new Date(news.publishedAt).toISOString() : null,
+                updatedAt: news.updatedAt ? new Date(news.updatedAt).toISOString() : null,
+                hasImage: !!news.featuredImage,
+                keywordsCount: allKeywords.length,
+              }
+            },
+          });
+        })
+          .filter(Boolean) // Удаляем возможные null-значения
+          .slice(0, 500); // Лимит: максимум 500 новостей в sitemap (для производительности)
+
+        console.log(`🎯 Generated ${newsEntries.length} news entries for sitemap`);
+
+      } else {
+        console.warn('⚠️ News API returned unexpected format:', {
+          success: newsData?.success,
+          isArray: Array.isArray(newsData?.data),
+          keys: newsData ? Object.keys(newsData) : 'no data'
+        });
       }
+
     } catch (error) {
-      console.warn('Error fetching news for sitemap:', error.message);
+      console.error('❌ Error fetching news for sitemap:', {
+        message: error.message,
+        name: error.name,
+        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      });
+
+      // Fallback: пустой массив, чтобы не ломать всю генерацию
+      newsEntries = [];
     }
 
     // Получаем страницы услуг по категориям (для AI-оптимизации)
@@ -455,3 +563,64 @@ export async function getServerSideProps() {
     props: {},
   };
 }
+/**
+ * Создание валидного entry для sitemap с дополнительными метаданными
+ */
+const createSitemapEntry = ({ url, lastModified, changeFrequency, priority, aiMetadata = {} }) => {
+  // === Валидация обязательных полей ===
+  if (!url || typeof url !== 'string' || !url.startsWith('http')) {
+    console.warn('⚠️ Invalid URL in sitemap entry:', url);
+    return null;
+  }
+
+  // === Безопасное форматирование даты ===
+  const formatDate = (date) => {
+    if (!date) return new Date().toISOString();
+    const d = new Date(date);
+    return isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
+  };
+
+  // === Нормализация приоритета (0.0 - 1.0) ===
+  const normalizedPriority = typeof priority === 'number'
+    ? Math.max(0, Math.min(1, priority))
+    : 0.5;
+
+  // === Формирование базового entry (стандарт sitemap.org) ===
+  const entry = {
+    loc: url,
+    lastmod: formatDate(lastModified),
+    changefreq: changeFrequency || 'monthly',
+    priority: normalizedPriority,
+  };
+
+  // === Добавление кастомных метаданных (x- префикс) ===
+  // Эти поля игнорируются поисковиками, но полезны для внутренней аналитики и ИИ
+  if (aiMetadata.pageType) {
+    entry['x-ai:type'] = aiMetadata.pageType;
+  }
+  if (aiMetadata.contentFocus) {
+    entry['x-ai:focus'] = aiMetadata.contentFocus;
+  }
+  if (Array.isArray(aiMetadata.primaryKeywords) && aiMetadata.primaryKeywords.length > 0) {
+    entry['x-ai:keywords'] = aiMetadata.primaryKeywords.slice(0, 5).join(', ');
+  }
+  if (aiMetadata.contentSummary) {
+    entry['x-ai:summary'] = aiMetadata.contentSummary.substring(0, 200);
+  }
+
+  // === Бизнес-метаданные (для локального SEO) ===
+  entry['x-business:city'] = 'Вологда';
+  entry['x-business:region'] = 'Вологодская область';
+  entry['x-business:category'] = 'electronics_repair_service';
+  entry['x-business:language'] = 'ru';
+
+  // === Дополнительные метаданные статьи (если есть) ===
+  if (aiMetadata.article) {
+    entry['x-article:title'] = aiMetadata.article.title?.substring(0, 100);
+    entry['x-article:published'] = aiMetadata.article.publishedAt;
+    entry['x-article:updated'] = aiMetadata.article.updatedAt;
+    entry['x-article:has-image'] = aiMetadata.article.hasImage ? 'true' : 'false';
+  }
+
+  return entry;
+};

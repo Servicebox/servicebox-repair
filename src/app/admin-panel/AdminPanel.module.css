@@ -4,6 +4,7 @@
   min-height: 100vh;
   background-color: #f5f5f5;
 }
+
 /* Дополнительные стили для Яндекс.Маркета */
 .required {
   color: #ff4444;
@@ -174,15 +175,16 @@
   .formGrid {
     grid-template-columns: 1fr;
   }
-  
+
   .paramsInput {
     flex-direction: column;
   }
-  
+
   .dimensionsEdit {
     flex-direction: column;
   }
 }
+
 /* AdminPanel.module.css */
 .tabs {
   display: flex;
@@ -263,7 +265,7 @@
   padding: 8px;
   background: #fff3cd;
   border-radius: 4px;
-  border-left: 4px solid #ffc107;
+  border-left: 4px solid #ff8c00;
 }
 
 .paramsSection {
@@ -384,7 +386,7 @@
 }
 
 .statusDisabled {
-  background: #ffc107;
+  background: #ff8c00;
   color: #212529;
 }
 
@@ -455,6 +457,7 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
 /* Sidebar */
 .sidebar {
   width: 180px;
@@ -608,8 +611,13 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .accessDenied {
@@ -652,24 +660,24 @@
   .sidebar {
     transform: translateX(-100%);
   }
-  
+
   .sidebarOpen {
     transform: translateX(0);
   }
-  
+
   .mainContent {
     margin-left: 0;
     padding: 1rem;
   }
-  
+
   .mobileHeader {
     display: flex;
   }
-  
+
   .closeSidebar {
     display: block;
   }
-  
+
   .overlay {
     display: block;
   }
@@ -974,8 +982,13 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Products Section */
@@ -1474,29 +1487,30 @@
   .adminContainer {
     background: white;
   }
-  
+
   .sidebar,
   .mobileHeader,
   .actionButtons {
     display: none;
   }
-  
+
   .mainContent {
     margin-left: 0;
     padding: 0;
   }
-  
+
   .formSection {
     break-inside: avoid;
     box-shadow: none;
     border: 1px solid #ccc;
   }
-  
+
   .productsSection {
     box-shadow: none;
     border: 1px solid #ccc;
   }
 }
+
 /* src/app/admin-panel/AdminPanel.module.css */
 .adminContainer {
 
@@ -1696,11 +1710,13 @@
     transform: translateX(0);
     position: relative;
   }
-.menuToggleButton svg {
-width: 20px;
-height: 20px;
-color: #ffffff;
-}
+
+  .menuToggleButton svg {
+    width: 20px;
+    height: 20px;
+    color: #ffffff;
+  }
+
   .closeSidebar {
     display: block;
   }

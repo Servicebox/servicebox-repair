@@ -24,7 +24,7 @@ function Footer() {
               ОГРН: 1213800018522
             </p>
           </div>
-          
+
           <div className={styles.footerLinks}>
             <h3 className={styles.footerLinkTitle}>
               Дубль по всем услугам, ценам, фото. Пишите в чат, если есть вопросы
@@ -36,6 +36,7 @@ function Footer() {
               <li><Link href="/news" className={styles.footerLink}>Блог / новости</Link></li>
               <li><Link href="/promotions-page" className={styles.footerLink}>Акции</Link></li>
               <li><Link href="/parts" className={styles.footerLink}>Каталог товаров</Link></li>
+              <li><Link href="/price" className={styles.footerLink}>Прайс-лист</Link></li>
               <li><Link href="/depository-public" className={styles.footerLink}>Схемы / Bios</Link></li>
             </ul>
           </div>
@@ -48,30 +49,30 @@ function Footer() {
         <div className={styles.paymentSection}>
           <h3 className={styles.paymentTitle}>Удобные способы оплаты</h3>
           <div className={styles.paymentMethods}>
-            <Image 
+            <Image
               className={styles.paymentLogo}
-              src={Beznal} 
+              src={Beznal}
               alt="Безналичный расчет"
               width={80}
               height={48}
             />
-            <Image 
+            <Image
               className={styles.paymentLogo}
-              src={Sbp} 
+              src={Sbp}
               alt="оплата по СБП"
               width={80}
               height={48}
             />
-            <Image 
+            <Image
               className={styles.paymentLogo}
-              src={Dolyami} 
+              src={Dolyami}
               alt="Оплата Долями"
               width={80}
               height={48}
             />
-            <Image 
+            <Image
               className={styles.paymentLogo}
-              src={Oplata} 
+              src={Oplata}
               alt="оплата Наличные"
               width={80}
               height={48}
