@@ -15,12 +15,13 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ 
+
+const upload = multer({
   storage: storage,
   fileFilter: function (req, file, cb) {
     // Разрешаем только определенные типы файлов
-    if (file.mimetype.startsWith('image/') || 
-        file.mimetype === 'application/octet-stream') { // BIOS файлы
+    if (file.mimetype.startsWith('image/') ||
+      file.mimetype === 'application/octet-stream') { // BIOS файлы
       cb(null, true);
     } else {
       cb(new Error('Неверный тип файла'), false);
