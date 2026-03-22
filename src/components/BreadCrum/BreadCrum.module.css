@@ -1,0 +1,60 @@
+.breadcrum {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    margin: 0px 0px 40px 0px;
+    text-decoration: capitalize;
+    position: relative;
+    padding: 0 10px;
+    flex-wrap: wrap;
+}
+
+.breadcrumLink {
+    color: #292929;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.breadcrumLink:hover {
+    color: #0F52BA;
+    text-decoration: underline;
+}
+
+.breadcrumImg {
+    width: 5px;
+    height: 10px;
+    object-fit: contain;
+}
+
+.currentPage {
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Адаптивность */
+@media (max-width: 500px) {
+    .breadcrum {
+        margin: 0 0 30px 0;
+        gap: 6px;
+    }
+    
+    .breadcrumLink,
+    .currentPage {
+        font-size: 0.8rem;
+    }
+}
+
+@media (min-width: 501px) and (max-width: 768px) {
+    .breadcrum {
+        margin: 0 0 50px 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .breadcrum {
+        padding: 0 5px;
+    }
+}

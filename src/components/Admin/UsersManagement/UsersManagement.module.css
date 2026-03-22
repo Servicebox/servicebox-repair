@@ -1,0 +1,763 @@
+/* components/Admin/UsersManagement/UsersManagement.module.css */
+
+.container {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+/* Заголовок */
+.header {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.header h1 {
+  color: #1e293b;
+  margin-bottom: 8px;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+}
+
+.header p {
+  color: #64748b;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+}
+
+/* Поиск */
+.searchSection {
+  margin-bottom: 24px;
+}
+
+.searchForm {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 250px;
+  padding: 12px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #f8fafc;
+  transition: all 0.3s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  background: white;
+}
+
+.searchButton, .clearButton {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.searchButton {
+  background: #3b82f6;
+  color: white;
+}
+
+.searchButton:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.clearButton {
+  background: #64748b;
+  color: white;
+}
+
+.clearButton:hover {
+  background: #475569;
+  transform: translateY(-1px);
+}
+
+/* Уведомления */
+.notification {
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: slideIn 0.3s ease;
+  border-left: 4px solid transparent;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.error {
+  background: #fef2f2;
+  border-color: #dc2626;
+  color: #dc2626;
+}
+
+.success {
+  background: #f0fdf4;
+  border-color: #16a34a;
+  color: #16a34a;
+}
+
+.closeButton {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: inherit;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.closeButton:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Таблица */
+.tableContainer {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1000px;
+}
+
+.table th {
+  background: #f8fafc;
+  padding: 16px 20px;
+  text-align: left;
+  font-weight: 600;
+  color: #475569;
+  font-size: 14px;
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.table td {
+  padding: 20px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+  font-size: 14px;
+}
+
+.userRow:hover {
+  background: #f8fafc;
+  transition: background 0.2s ease;
+}
+
+/* Форма редактирования */
+.input, .select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.input:focus, .select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Роль пользователя */
+.role {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.role.user {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.role.admin {
+  background: #dcfce7;
+  color: #166534;
+}
+
+/* Кнопки действий */
+.actionButtons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.editButton, .saveButton, .cancelButton, 
+.promoteButton, .demoteButton, .deleteButton {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.editButton {
+  background: #fbbf24;
+  color: #78350f;
+}
+
+.editButton:hover {
+  background: #f59e0b;
+  transform: translateY(-1px);
+}
+
+.saveButton {
+  background: #10b981;
+  color: white;
+}
+
+.saveButton:hover {
+  background: #059669;
+  transform: translateY(-1px);
+}
+
+.cancelButton {
+  background: #64748b;
+  color: white;
+}
+
+.cancelButton:hover {
+  background: #475569;
+  transform: translateY(-1px);
+}
+
+.promoteButton {
+  background: #0ea5e9;
+  color: white;
+}
+
+.promoteButton:hover {
+  background: #0284c7;
+  transform: translateY(-1px);
+}
+
+.demoteButton {
+  background: #8b5cf6;
+  color: white;
+}
+
+.demoteButton:hover {
+  background: #7c3aed;
+  transform: translateY(-1px);
+}
+
+.deleteButton {
+  background: #ef4444;
+  color: white;
+}
+
+.deleteButton:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+}
+
+/* Состояния загрузки */
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 12px;
+}
+
+.spinner {
+  border: 4px solid #f1f5f9;
+  border-top: 4px solid #3b82f6;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #64748b;
+  font-size: 16px;
+  background: white;
+}
+
+/* Пагинация */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 20px;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+.pageButton {
+  padding: 10px 20px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #475569;
+  transition: all 0.3s ease;
+  min-width: 100px;
+}
+
+.pageButton:hover:not(:disabled) {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+  transform: translateY(-1px);
+}
+
+.pageButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.pageInfo {
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+/* Адаптивность */
+
+/* Планшеты (768px - 1024px) */
+@media (max-width: 1024px) {
+  .container {
+    padding: 16px;
+  }
+  
+  .header {
+    padding: 16px;
+  }
+  
+  .searchForm {
+    padding: 16px;
+  }
+  
+  .table {
+    min-width: 900px;
+  }
+  
+  .table th,
+  .table td {
+    padding: 14px 16px;
+  }
+  
+  .actionButtons {
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .editButton, .saveButton, .cancelButton, 
+  .promoteButton, .demoteButton, .deleteButton {
+    width: 100%;
+    justify-content: center;
+    padding: 10px;
+  }
+}
+
+/* Мобильные (576px - 767px) */
+@media (max-width: 767px) {
+  .container {
+    padding: 12px;
+  }
+  
+  .header {
+    padding: 16px 12px;
+    margin-bottom: 20px;
+  }
+  
+  .searchForm {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 12px;
+  }
+  
+  .searchInput {
+    min-width: 100%;
+  }
+  
+  .searchButton, .clearButton {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .tableContainer {
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-bottom: 20px;
+  }
+  
+  .table {
+    min-width: 800px;
+  }
+  
+  .table th {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+  
+  .table td {
+    padding: 14px;
+    font-size: 13px;
+  }
+  
+  .role {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+  
+  .input, .select {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+  
+  .notification {
+    padding: 14px 16px;
+    margin-bottom: 16px;
+  }
+  
+  .pagination {
+    padding: 20px 12px;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .pageButton {
+    width: 100%;
+    max-width: 200px;
+  }
+}
+
+/* Маленькие мобильные (до 575px) */
+@media (max-width: 575px) {
+  .container {
+    padding: 8px;
+  }
+  
+  .header {
+    padding: 14px 10px;
+    margin-bottom: 16px;
+  }
+  
+  .header h1 {
+    font-size: 1.3rem;
+  }
+  
+  .header p {
+    font-size: 0.9rem;
+  }
+  
+  .searchForm {
+    padding: 14px 10px;
+  }
+  
+  .table th {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  
+  .table td {
+    padding: 12px;
+    font-size: 12px;
+  }
+  
+  .actionButtons {
+    gap: 4px;
+  }
+  
+  .editButton, .saveButton, .cancelButton, 
+  .promoteButton, .demoteButton, .deleteButton {
+    font-size: 11px;
+    padding: 8px 10px;
+    min-height: 36px;
+  }
+  
+  .input, .select {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  
+  .loading, .empty {
+    padding: 40px 16px;
+  }
+  
+  .spinner {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .notification {
+    padding: 12px;
+    font-size: 14px;
+  }
+  
+  .pagination {
+    padding: 16px 8px;
+  }
+}
+
+/* Очень маленькие экраны (до 375px) */
+@media (max-width: 375px) {
+  .container {
+    padding: 4px;
+  }
+  
+  .header {
+    padding: 12px 8px;
+  }
+  
+  .header h1 {
+    font-size: 1.2rem;
+  }
+  
+  .searchForm {
+    padding: 12px 8px;
+    gap: 8px;
+  }
+  
+  .searchInput {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  
+  .searchButton, .clearButton {
+    padding: 10px;
+    font-size: 13px;
+  }
+  
+  .table th {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+  
+  .table td {
+    padding: 10px;
+    font-size: 11px;
+  }
+  
+  .actionButtons {
+    gap: 3px;
+  }
+  
+  .editButton, .saveButton, .cancelButton, 
+  .promoteButton, .demoteButton, .deleteButton {
+    font-size: 10px;
+    padding: 6px 8px;
+    min-height: 32px;
+  }
+  
+  .role {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+}
+
+/* Большие экраны (1440px+) */
+@media (min-width: 1440px) {
+  .container {
+    padding: 32px;
+  }
+  
+  .header {
+    padding: 24px;
+    margin-bottom: 32px;
+  }
+  
+  .searchForm {
+    padding: 24px;
+  }
+  
+  .table th,
+  .table td {
+    padding: 20px 24px;
+    font-size: 15px;
+  }
+  
+  .actionButtons {
+    gap: 10px;
+  }
+  
+  .editButton, .saveButton, .cancelButton, 
+  .promoteButton, .demoteButton, .deleteButton {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+}
+
+/* Портретная ориентация */
+@media (max-width: 767px) and (orientation: portrait) {
+  .container {
+    padding-bottom: 80px;
+  }
+  
+  .tableContainer {
+    margin-bottom: 16px;
+  }
+}
+
+/* Ландшафтная ориентация на мобильных */
+@media (max-width: 900px) and (orientation: landscape) {
+  .container {
+    padding: 12px;
+  }
+  
+  .searchForm {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .searchInput {
+    min-width: 200px;
+    flex: 1;
+  }
+  
+  .actionButtons {
+    flex-direction: row;
+  }
+  
+  .editButton, .saveButton, .cancelButton, 
+  .promoteButton, .demoteButton, .deleteButton {
+    width: auto;
+    flex: 1;
+  }
+}
+
+/* Высокий контраст для доступности */
+@media (prefers-contrast: high) {
+  .table th {
+    background: #000;
+    color: #fff;
+  }
+  
+  .table td {
+    border-color: #000;
+  }
+  
+  .role.user {
+    background: #000;
+    color: #fff;
+    border: 2px solid #0369a1;
+  }
+  
+  .role.admin {
+    background: #000;
+    color: #fff;
+    border: 2px solid #166534;
+  }
+}
+
+/* Уменьшенное движение */
+@media (prefers-reduced-motion: reduce) {
+  .notification,
+  .searchButton,
+  .clearButton,
+  .editButton,
+  .saveButton,
+  .cancelButton,
+  .promoteButton,
+  .demoteButton,
+  .deleteButton,
+  .pageButton {
+    transition: none;
+    animation: none;
+  }
+  
+  .spinner {
+    animation-duration: 2s;
+  }
+}
+
+/* Улучшенная доступность для фокуса */
+.button:focus-visible,
+.input:focus-visible,
+.select:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Полоса прокрутки */
+.tableContainer::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.tableContainer::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.tableContainer::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.tableContainer::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

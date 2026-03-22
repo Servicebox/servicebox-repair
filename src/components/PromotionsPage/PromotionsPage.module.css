@@ -1,0 +1,278 @@
+/* components/PromotionsPage/PromotionsPage.module.css */
+.promotionsPage {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.promotionsHeader {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.animatedTitle {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 10px;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.promotionsSubtitle {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #0070f3;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+.errorContainer {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.retryButton {
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.emptyIcon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+.promoList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.promotionCard {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.promotionCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.promotionCard.expired {
+  opacity: 0.7;
+  background-color: #f8f9fa;
+}
+
+.promotionImageContainer {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.promoImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.promotionCard:hover .promoImage {
+  transform: scale(1.05);
+}
+
+.expiredBadge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #dc3545;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.promotionContent {
+  padding: 20px;
+}
+
+.promotionTitle {
+  font-size: 1.4rem;
+  color: #333;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.promotionDescription {
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.promotionMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eaeaea;
+}
+
+.promotionDate {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.ctaButton {
+  background: linear-gradient(135deg, #0070f3, #0051a8);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.ctaButton:hover {
+  background: linear-gradient(135deg, #0051a8, #003d7a);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 112, 243, 0.3);
+}
+
+/* Модальное окно */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modalContent {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalAppear 0.3s ease-out;
+}
+
+.closeButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  color: #333;
+  z-index: 10;
+  transition: background-color 0.3s ease;
+}
+
+.closeButton:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Анимации */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes modalAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .promotionsPage {
+    padding: 15px;
+  }
+  
+  .animatedTitle {
+    font-size: 2rem;
+  }
+  
+  .promoList {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .promotionMeta {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  
+  .modalContent {
+    margin: 10px;
+    max-height: 95vh;
+  }
+}

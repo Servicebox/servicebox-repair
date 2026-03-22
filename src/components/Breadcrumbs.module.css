@@ -1,0 +1,99 @@
+/* components/Breadcrumbs.module.css */
+.breadcrumbs {
+  padding: 1rem 0;
+  background: linear-gradient(to right, #f8f9fa, #ffffff);
+  border-bottom: 1px solid #e9ecef;
+}
+
+.breadcrumbsList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.breadcrumbItem {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.separator {
+  margin: 0 0.5rem;
+  color: #6c757d;
+  font-size: 0.75rem;
+}
+
+.breadcrumbLink {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: #6c757d;
+  text-decoration: none;
+  transition: color 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.breadcrumbLink:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.currentPage {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: #495057;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+}
+
+.currentPage svg {
+  color: #007bff;
+}
+
+/* Для мобильных устройств */
+@media (max-width: 768px) {
+  .breadcrumbs {
+    padding: 0.75rem 0;
+  }
+  
+  .breadcrumbsList {
+    padding: 0 0.75rem;
+  }
+  
+  .breadcrumbItem {
+    font-size: 0.8125rem;
+  }
+  
+  .breadcrumbLink,
+  .currentPage {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .breadcrumbsList {
+    font-size: 0.75rem;
+  }
+  
+  .breadcrumbLink,
+  .currentPage {
+    max-width: 120px;
+  }
+  
+  .separator {
+    margin: 0 0.375rem;
+  }
+}

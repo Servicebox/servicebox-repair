@@ -1,0 +1,193 @@
+.fileCard {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fileCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.fileHeader {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.fileIcon {
+  font-size: 2rem;
+  margin-right: 15px;
+}
+
+.fileInfo {
+  flex: 1;
+}
+
+.fileName {
+  margin: 0 0 5px 0;
+  color: #212529;
+  font-size: 1.1rem;
+  word-break: break-word;
+}
+
+.fileMeta {
+  color: #6c757d;
+  font-size: 13px;
+}
+
+.fileMeta span {
+  margin: 0 5px;
+}
+
+.fileDetails {
+  margin-bottom: 15px;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.detailRow strong {
+  color: #495057;
+}
+
+.editingSection {
+  margin-bottom: 15px;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #495057;
+}
+
+.formGroup textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  resize: vertical;
+  min-height: 80px;
+}
+
+.editActions {
+  display: flex;
+  gap: 10px;
+}
+
+.saveButton {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.saveButton:hover {
+  background: #1e7e34;
+}
+
+.cancelButton {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cancelButton:hover {
+  background: #545b62;
+}
+
+.contentSection {
+  margin-bottom: 15px;
+}
+
+.description {
+  font-size: 14px;
+}
+
+.description strong {
+  color: #495057;
+}
+
+.description p {
+  margin: 5px 0 0 0;
+  color: #6c757d;
+  line-height: 1.4;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.downloadButton {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.downloadButton:hover {
+  background: #0056b3;
+}
+
+.editButton {
+  background: #ffc107;
+  color: #212529;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.editButton:hover {
+  background: #e0a800;
+}
+
+.deleteButton {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  background: #bd2130;
+}
+
+@media (max-width: 480px) {
+  .fileHeader {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .fileIcon {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  
+  .actions {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,177 @@
+/* components/SuccessBookingModal/SuccessBookingModal.module.css */
+.successModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  backdrop-filter: blur(5px);
+}
+
+.modalContent {
+  background: white;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 100%;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header {
+  background: linear-gradient(135deg, #0F52BA, #002147);
+  color: white;
+  padding: 24px;
+  border-radius: 16px 16px 0 0;
+  text-align: center;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.body {
+  padding: 24px;
+}
+
+.trackingCode {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.codeLabel {
+  display: block;
+  font-size: 0.875rem;
+  color: #4a5568;
+  margin-bottom: 8px;
+}
+
+.codeValue {
+  font-family: 'Courier New', monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #002147;
+  letter-spacing: 1px;
+  margin: 0 0 16px 0;
+}
+
+.copyButton {
+  background: #0F52BA;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.3s;
+}
+
+.copyButton:hover {
+  background: #002147;
+}
+
+.copyButton.copied {
+  background: #10b981;
+}
+
+.details {
+  margin-bottom: 20px;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.detailRow:last-child {
+  border-bottom: none;
+}
+
+.detailLabel {
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.detailValue {
+  color: #002147;
+  font-weight: 600;
+}
+
+.footer {
+  padding: 20px 24px 24px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  gap: 12px;
+}
+
+.secondaryButton {
+  flex: 1;
+  background: white;
+  color: #4a5568;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.secondaryButton:hover {
+  border-color: #4a5568;
+}
+
+.primaryButton {
+  flex: 1;
+  background: #0F52BA;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.primaryButton:hover {
+  background: #002147;
+}
+
+@media (max-width: 768px) {
+  .successModal {
+    padding: 10px;
+  }
+  
+  .footer {
+    flex-direction: column;
+  }
+}

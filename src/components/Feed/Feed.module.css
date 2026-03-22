@@ -1,0 +1,64 @@
+/* Feed.module.css */
+.feed {
+    display: grid;
+    justify-content: center;
+}
+
+.feedIframeContainer {
+    display: grid;
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
+}
+
+.feedTitle {
+    color: #13171D;
+    text-align: center;
+}
+
+.feedIframeMap {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px 0px;
+    filter: drop-shadow(0px 8px 10px rgb(38, 0, 255)) drop-shadow(0px 50px 60px rgba(17, 0, 255, 0.125));
+}
+
+.feedMap {
+    width: 700px;
+    height: 1000px;
+    outline: none;
+    border: none;
+    border-radius: 20px;
+}
+
+.feedLink {
+    display: none; /* Скрываем текстовую ссылку для доступности */
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .feedIframeMap {
+        margin: 20px 0px;
+    }
+    
+    .feedMap {
+        width: 100%;
+        max-width: 500px;
+        height: 800px;
+    }
+}
+
+@media (max-width: 480px) {
+    .feedIframeMap {
+        margin: 15px 0px;
+    }
+    
+    .feedMap {
+        width: 100%;
+        max-width: 350px;
+        height: 600px;
+        border-radius: 15px;
+    }
+}

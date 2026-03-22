@@ -1,0 +1,857 @@
+/* MainBanner.module.css */
+.mainBannerSection {
+  width: 100%;
+  min-height: 100vh;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.bannerContent {
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  backdrop-filter: blur(5px);
+}
+
+/* ===== ПРОМО СЛАЙДЕР ===== */
+.promoSlider {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.promoSliderViewport {
+  width: 100%;
+  height: 90vh;
+  min-height: 700px;
+  max-height: 1000px;
+  overflow: hidden;
+  position: relative;
+}
+
+.promoSliderTrack {
+  display: flex;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  height: 90%;
+  width: 100%;
+}
+
+.promoSliderSlide {
+  min-width: 100%;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.imageWrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.promoSliderImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+
+}
+
+.imageOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+/* Контент поверх изображения */
+.slideContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  padding: 0 10%;
+  opacity: 0;
+  
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.slideContent.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.contentInner {
+  max-width: 700px;
+  color: rgb(42, 42, 42);
+}
+
+.titleWrapper {
+  margin-bottom: 100px;
+}
+
+.slideSubtitle {
+  display: inline-block;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 8px 2px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+}
+
+.slideTitle {
+  font-size: 4rem;
+  font-weight: bold;
+  line-height: 0.9;
+    font-weight: 800;
+    line-height: 0.9;
+    margin-bottom: 70px;
+    text-shadow: 2px 4px 5px #1e1e1e;
+    background: #000000ba;
+    -webkit-text-fill-color: #f9a92c;
+    background-clip: text;
+    backdrop-filter: blur(3px);
+    padding: 5px 1px;
+    border-radius: 20px;
+}
+
+.slideDescription {
+  font-size: 1.4rem;
+  line-height: 1;
+  margin-bottom: 40px;
+  max-width: 450px;
+  color: rgba(29, 29, 29, 0.9);
+  font-weight: bold;
+    backdrop-filter: blur(20px);
+  padding: 1px 1px;
+  border-radius:20px ;
+}
+
+/* Кнопки на слайдере */
+.ctaWrapper {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.primaryCta {
+  background: linear-gradient(135deg, #0F52BA 0%, #002147 100%);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 20px 40px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 280px;
+}
+
+.primaryCta:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 50px rgba(15, 82, 186, 0.6);
+}
+
+.secondaryCta {
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(5px);
+  color: rgb(60, 60, 60);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  padding: 18px 38px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 110px;
+}
+
+.secondaryCta:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-3px);
+  border-color: rgba(21, 0, 86, 0.5);
+}
+
+/* Стрелки навигации */
+.promoSliderArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(5px);
+  border: 1px solid #002147;
+  color: rgb(55, 55, 55);
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.promoSliderArrow:hover {
+  background: rgba(218, 138, 9, 0.699);
+  transform: translateY(-50%) scale(1.1);
+  border-color: #002147;
+  box-shadow: 0 10px 40px rgba(255, 255, 255, 0.2);
+}
+
+.promoSliderArrow.left {
+  left: 40px;
+}
+
+.promoSliderArrow.right {
+  right: 40px;
+}
+
+/* Точки навигации */
+.promoSliderDots {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+
+.dot {
+  width: 50px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.dotInner {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: white;
+  transition: left 0.3s ease;
+}
+
+.dot.active {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.dot.active .dotInner {
+  left: 0;
+  background: linear-gradient(90deg, #0F52BA, #002147);
+}
+
+.dot:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1);
+}
+
+/* Счетчик слайдов */
+.slideCounter {
+  position: absolute;
+  bottom: 80px;
+  right: 40px;
+  z-index: 10;
+  color: rgb(38, 38, 38);
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.currentSlide {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.totalSlides {
+  opacity: 0.7;
+}
+
+.slideDivider {
+  opacity: 0.5;
+}
+
+/* ===== ОСНОВНОЙ КОНТЕНТ ===== */
+.mainBannerContent {
+  width: 100%;
+  max-width: 1400px;
+  margin: 80px auto;
+  padding: 0 40px;
+}
+
+.mainBannerText {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.mainBannerPreTitle {
+  font-size: 1.1rem;
+  color: #073774;
+  margin: 0 0 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.mainBannerTitle {
+  font-size: 3.5rem;
+  color: #002147;
+  margin: 0 0 30px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.titleAccent {
+  background: linear-gradient(135deg, #0F52BA 0%, #002147 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.mainBannerSubtitle {
+  font-size: 1.4rem;
+  color: #2a2a2a;
+  margin: 0 0 50px;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+/* Кнопки основного контента */
+.ctaButtons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.mainBannerForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 16px;
+  padding: 20px 45px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 280px;
+}
+
+.mainBannerForm.primary {
+  background: linear-gradient(135deg, #0F52BA 0%, #002147 100%);
+  color: white;
+  box-shadow: 0 10px 40px rgba(15, 82, 186, 0.3);
+}
+
+.mainBannerForm.primary:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 50px rgba(15, 82, 186, 0.5);
+}
+
+.mainBannerForm.secondary {
+  background: white;
+  color: #002147;
+  border: 2px solid #0F52BA;
+  box-shadow: 0 8px 30px rgba(15, 82, 186, 0.1);
+}
+
+.mainBannerForm.secondary:hover {
+  background: #f8fafc;
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(15, 82, 186, 0.2);
+}
+
+/* ===== ФЛИП-КАРТОЧКИ ===== */
+.flipCardRow {
+  max-width: 1400px;
+  margin: 100px auto;
+  padding: 0 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+}
+
+.flipCard {
+  width: 320px;
+  height: 400px;
+  perspective: 1200px;
+  cursor: pointer;
+  border-radius: 24px;
+  background: transparent;
+  transition: transform 0.3s ease;
+}
+
+.flipCard:hover {
+  transform: translateY(-10px);
+}
+
+.flipCardInner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  border-radius: 24px;
+}
+
+.flipCard.flipped .flipCardInner {
+  transform: rotateY(180deg);
+}
+
+.flipCardFront,
+.flipCardBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 30px;
+  backface-visibility: hidden;
+  box-shadow: 0 20px 60px rgba(0, 33, 71, 0.1);
+}
+
+.flipCardFront {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cardIcon {
+  color: #002147;
+  margin-bottom: 25px;
+  filter: drop-shadow(0 4px 8px rgba(15, 82, 186, 0.3));
+}
+
+.flipCardFront h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #002147;
+  margin: 0 0 25px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.cardImage {
+  width: 140px;
+  height: 140px;
+  border-radius: 20px;
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  background: #f8fafc;
+  margin: 0 auto 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flipCardHint {
+  color: #292929;
+  margin-top: auto;
+  border-top: 1px dashed #cbd5e1;
+  padding-top: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.flipCardBack {
+  background: linear-gradient(135deg, #0F52BA 0%, #002147 100%);
+  color: rgb(49, 49, 49);
+  transform: rotateY(180deg);
+  text-align: center;
+  padding: 50px 30px;
+}
+
+.flipCardBackText {
+  text-align: center;
+  color: white;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 35px;
+  font-weight: 500;
+  
+}
+
+.flipCardBackBtn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 36px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  margin-top: auto;
+}
+
+.flipCardBackBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.seoContent,
+.seoText {
+  display: none;
+}
+
+/* ===== АДАПТИВНОСТЬ ===== */
+
+/* Планшеты */
+@media (max-width: 1024px) {
+  .promoSliderViewport {
+    height: 60vh;
+    min-height: 600px;
+  }
+  
+  .slideContent {
+    padding: 0 5%;
+  }
+  
+  .slideTitle {
+    font-size: 3rem;
+  }
+  
+  .slideDescription {
+    font-size: 1.2rem;
+  }
+  
+  .mainBannerTitle {
+    font-size: 2.8rem;
+  }
+  
+  .mainBannerSubtitle {
+    font-size: 1.2rem;
+  }
+  
+
+  
+  .promoSliderArrow.left {
+    left: 20px;
+  }
+  
+  .promoSliderArrow.right {
+    right: 20px;
+  }
+  
+  .slideCounter {
+    bottom: 70px;
+    right: 20px;
+  }
+}
+
+/* Мобильные устройства */
+@media (max-width: 768px) {
+  .promoSliderViewport {
+    height: 50vh;
+    min-height: 500px;
+  }
+  
+  .slideContent {
+    padding: 0 20px;
+    justify-content: center;
+    text-align: center;
+  }
+  .promoSliderImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+
+}
+  .contentInner {
+    max-width: 100%;
+  }
+  
+  .slideSubtitle {
+    font-size: 0.9rem;
+    padding: 6px 15px;
+
+  }
+  
+  .slideTitle {
+    font-size: 2.2rem;
+  }
+  
+  .slideDescription {
+    font-size: 1rem;
+
+  }
+  
+  .ctaWrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .primaryCta,
+  .secondaryCta {
+    min-width: 250px;
+    padding: 16px 30px;
+    font-size: 1rem;
+  }
+  
+  .promoSliderArrow {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .promoSliderArrow.left {
+    left: 10px;
+  }
+  
+  .promoSliderArrow.right {
+    right: 10px;
+  }
+  
+  .promoSliderDots {
+    bottom: 20px;
+  }
+  
+  .dot {
+    width: 30px;
+    height: 4px;
+  }
+  
+  .slideCounter {
+    bottom: 60px;
+    right: 15px;
+    font-size: 1rem;
+  }
+  
+  .currentSlide {
+    font-size: 1.5rem;
+  }
+  
+  .mainBannerContent {
+    padding: 0 20px;
+    margin: 60px auto;
+  }
+  
+  .mainBannerPreTitle {
+    font-size: 0.9rem;
+  }
+  
+  .mainBannerTitle {
+    font-size: 2.2rem;
+  }
+  
+  .mainBannerSubtitle {
+    font-size: 1.1rem;
+  }
+  
+  .ctaButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .mainBannerForm {
+    min-width: 250px;
+    padding: 16px 30px;
+    font-size: 1rem;
+  }
+  
+  .flipCardRow {
+    padding: 0 20px;
+    margin: 60px auto;
+    gap: 30px;
+  }
+  
+  .flipCard {
+    width: 100%;
+    max-width: 300px;
+    height: 380px;
+  }
+}
+
+/* Очень маленькие экраны */
+@media (max-width: 480px) {
+  .promoSliderViewport {
+    height: 60vh;
+    min-height: 400px;
+  }
+  
+  .slideTitle {
+    font-size: 1.8rem;
+  }
+  
+  .primaryCta,
+  .secondaryCta {
+    min-width: 65%;
+    border: 1px solid gray;
+    padding: 10px 15px;
+  }
+  
+  .mainBannerTitle {
+    font-size: 1.8rem;
+  }
+  
+  .mainBannerSubtitle {
+    font-size: 1rem;
+  }
+  
+  .flipCard {
+    height: 360px;
+  }
+  
+  .cardImage {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* Большие экраны (4K) */
+@media (min-width: 1920px) {
+  .promoSliderViewport {
+    max-height: 1200px;
+  }
+  
+  .slideTitle {
+    font-size: 5rem;
+  }
+  
+  .mainBannerTitle {
+    font-size: 4.5rem;
+  }
+  
+  .mainBannerSubtitle {
+    font-size: 1.6rem;
+  }
+  
+  .flipCard {
+    width: 350px;
+    height: 420px;
+  }
+}
+
+/* Ландшафтная ориентация */
+@media (max-width: 768px) and (orientation: landscape) {
+  .promoSliderViewport {
+    height: 85vh;
+  }
+  
+  .slideContent {
+    padding: 0 10%;
+  }
+  
+  .slideTitle {
+    font-size: 2.5rem;
+  }
+  
+  .ctaWrapper {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .primaryCta,
+  .secondaryCta {
+    min-width: 200px;
+  }
+}
+
+/* Анимации */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.primaryCta {
+  animation: pulse 2s infinite;
+}
+
+.mainBannerContent {
+  animation: fadeInUp 1s ease-out;
+}
+
+.flipCard {
+  animation: fadeInUp 0.8s ease-out;
+  animation-fill-mode: both;
+}
+
+.flipCard:nth-child(1) { animation-delay: 0.1s; }
+.flipCard:nth-child(2) { animation-delay: 0.2s; }
+.flipCard:nth-child(3) { animation-delay: 0.3s; }
+
+/* Улучшенная доступность */
+@media (prefers-reduced-motion: reduce) {
+  .promoSliderTrack,
+  .flipCardInner,
+  .mainBannerForm,
+  .primaryCta,
+  .secondaryCta,
+  .promoSliderArrow {
+    transition: none;
+  }
+  
+  .primaryCta {
+    animation: none;
+  }
+  
+  .slideContent,
+  .mainBannerContent,
+  .flipCard {
+    animation: none;
+  }
+}

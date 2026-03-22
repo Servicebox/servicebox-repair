@@ -1,0 +1,287 @@
+.checkoutContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.checkoutLayout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .checkoutLayout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* Order Summary */
+.orderSummary {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid #dee2e6;
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.orderSummary h2 {
+  margin-top: 0;
+  color: #333;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.orderItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e9ecef;
+  gap: 1rem;
+}
+
+.orderItem:last-child {
+  border-bottom: none;
+}
+
+.productName {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.productName strong {
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.productName small {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.productPrice {
+  flex: 1;
+  text-align: right;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.itemTotal {
+  font-weight: 600;
+  color: #28a745;
+  font-size: 1.1rem;
+}
+
+.priceBreakdown {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid #dee2e6;
+}
+
+.priceRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.totalRow {
+  font-size: 1.3rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed #dee2e6;
+  margin-top: 0.75rem;
+}
+
+/* Order Form */
+.orderForm {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.orderForm h2 {
+  margin-top: 0;
+  color: #333;
+  border-bottom: 2px solid #28a745;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.formSection {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.formSection h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: #495057;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #495057;
+}
+
+.formGroup input,
+.formGroup textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.15);
+}
+
+/* Radio Buttons */
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.radioLabel:hover {
+  border-color: #007bff;
+  background: #f8f9fa;
+}
+
+.radioLabel input[type="radio"] {
+  margin-top: 0.25rem;
+  cursor: pointer;
+}
+
+.radioText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.radioText strong {
+  font-size: 1rem;
+  color: #212529;
+}
+
+.radioText small {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.radioLabel input[type="radio"]:checked + .radioText {
+  color: #28a745;
+}
+
+/* Submit Button */
+.submitButton {
+  width: 100%;
+  padding: 1rem;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.submitButton:hover:not(:disabled) {
+  background: #218838;
+}
+
+.submitButton:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.securityNote {
+  margin-top: 1rem;
+  text-align: center;
+  color: #6c757d;
+  font-size: 0.85rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e9ecef;
+}
+
+/* Empty Cart */
+.emptyCart {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+.emptyCart h1 {
+  color: #dc3545;
+  margin-bottom: 1rem;
+}
+
+.emptyCart p {
+  color: #6c757d;
+  margin-bottom: 2rem;
+}
+
+.emptyCart button {
+  padding: 0.75rem 2rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.emptyCart button:hover {
+  background: #0056b3;
+}

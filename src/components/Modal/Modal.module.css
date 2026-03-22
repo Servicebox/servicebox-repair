@@ -1,0 +1,22 @@
+.modalOverlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(20, 28, 47, 0.31);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1010;
+}
+
+.modalContent {
+  background: #fff;
+  border-radius: 10px;
+  padding: 23px 18px 20px;
+  min-width: 240px;
+  max-width: 320px;
+  box-shadow: 0 8px 26px rgba(50, 50, 90, 0.16);
+  position: relative;
+}

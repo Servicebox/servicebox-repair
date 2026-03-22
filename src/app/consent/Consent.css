@@ -1,0 +1,337 @@
+/* app/consent/Consent.css */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.content {
+  background: #fff;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Кнопки действий */
+.headerActions {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 15px 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eaeaea;
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.actions {
+  display: flex;
+  gap: 15px;
+}
+
+.downloadBtn, .printBtn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.downloadBtn {
+  background: #3498db;
+  color: white;
+}
+
+.downloadBtn:hover {
+  background: #2980b9;
+}
+
+.downloadBtn.disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+}
+
+.printBtn {
+  background: #2ecc71;
+  color: white;
+}
+
+.printBtn:hover {
+  background: #27ae60;
+}
+
+.icon {
+  vertical-align: middle;
+}
+
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.bottomActions {
+  display: none;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eaeaea;
+  justify-content: center;
+  gap: 15px;
+}
+
+.title {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 15px;
+}
+
+.companyInfo {
+  background: #f8f9fa;
+  border-left: 4px solid #3498db;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 4px;
+}
+
+.companyTitle {
+  color: #2c3e50;
+  margin-top: 0;
+  font-size: 22px;
+}
+
+.companyDetails p {
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+.companyDetails strong {
+  color: #2c3e50;
+  min-width: 200px;
+  display: inline-block;
+}
+
+.contactInfo {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #dee2e6;
+}
+
+.contactInfo h3 {
+  color: #2c3e50;
+  margin-top: 0;
+  font-size: 18px;
+}
+
+.intro {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #495057;
+  margin-bottom: 30px;
+  padding: 15px;
+  background: #e8f4fc;
+  border-radius: 4px;
+}
+
+.section {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.section h2 {
+  color: #2c3e50;
+  font-size: 20px;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.section p {
+  line-height: 1.6;
+  color: #495057;
+  margin-bottom: 15px;
+}
+
+.list {
+  padding-left: 20px;
+  margin: 15px 0;
+}
+
+.list li {
+  margin-bottom: 10px;
+  line-height: 1.5;
+  color: #495057;
+}
+
+.signatureBlock {
+  background: #f8f9fa;
+  padding: 30px;
+  border-radius: 8px;
+  margin: 40px 0;
+  border: 1px solid #dee2e6;
+}
+
+.signatureField {
+  margin-bottom: 25px;
+}
+
+.signatureField:last-child {
+  margin-bottom: 0;
+}
+
+.signatureField p {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.signatureLine {
+  padding: 12px 0;
+  border-bottom: 2px solid #333;
+  min-width: 300px;
+  font-size: 18px;
+  letter-spacing: 3px;
+}
+
+.acknowledgment {
+  background: #fff8e1;
+  padding: 20px;
+  border-radius: 4px;
+  margin: 30px 0;
+  border-left: 4px solid #ffc107;
+}
+
+.revisionInfo {
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid #dee2e6;
+  color: #6c757d;
+  font-size: 14px;
+  text-align: center;
+}
+
+.revisionInfo strong {
+  color: #495057;
+}
+
+/* Стили для печати */
+@media print {
+  .container {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+  
+  .content {
+    box-shadow: none;
+    padding: 0;
+  }
+  
+  .headerActions,
+  .bottomActions {
+    display: none !important;
+  }
+  
+  .title {
+    font-size: 24px;
+    margin-top: 20px;
+  }
+  
+  .companyDetails strong {
+    min-width: 180px;
+  }
+  
+  .signatureBlock {
+    background: white;
+    border: 2px solid #333;
+    margin-top: 100px;
+    page-break-inside: avoid;
+  }
+  
+  .signatureLine {
+    border-bottom: 3px solid #333;
+  }
+  
+  /* Добавляем водяной знак при печати */
+  .content::after {
+    content: "servicebox35.ru";
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 12px;
+    color: rgba(0,0,0,0.2);
+    opacity: 0.5;
+  }
+  
+  /* Убираем ненужные элементы */
+  .actions,
+  .downloadBtn,
+  .printBtn {
+    display: none;
+  }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .content {
+    padding: 15px;
+  }
+  
+  .title {
+    font-size: 24px;
+  }
+  
+  .companyDetails strong {
+    min-width: 150px;
+    display: block;
+  }
+  
+  .section h2 {
+    font-size: 18px;
+  }
+  
+  .actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .downloadBtn, .printBtn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .headerActions {
+    position: static;
+    margin-bottom: 15px;
+  }
+  
+  .bottomActions {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .signatureLine {
+    min-width: 100%;
+  }
+}

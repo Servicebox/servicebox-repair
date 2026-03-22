@@ -1,0 +1,58 @@
+/* Gifts.module.css */
+.gifts {
+    padding: 60px 20px;
+    text-align: center;
+    color: white;
+    border-radius: var(--border-radius);
+    margin: 60px auto;
+    max-width: 1200px;
+}
+
+.animatedTitle {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    color: #002147;
+    text-align: center;
+    margin-bottom: 60px;
+    line-height: 1.2;
+    position: relative;
+    background: linear-gradient(135deg, #0F52BA 0%, #002147 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Improved styles for the deepshadow effect */
+.deepShadow {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    color: #002147;
+    text-align: center;
+    margin-bottom: 60px;
+    line-height: 1.2;
+    position: relative;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .gifts {
+        padding: 40px 15px;
+        margin: 40px auto;
+    }
+
+    .deepShadow {
+        padding: 60px 5px;
+        clip-path: polygon(0% 0%, 15% 2%, 85% 2%, 100% 0%, 100% 100%, 85% 98%, 15% 98%, 0% 100%);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .gifts {
+        padding: 30px 10px;
+    }
+
+    .deepShadow {
+        padding: 40px 5px;
+        font-size: clamp(1.2rem, 5vw, 2rem);
+    }
+}
