@@ -2,17 +2,10 @@
   "name": "servicebox-app",
   "type": "module",
   "scripts": {
-    "dev": "NODE_ENV=development node src/server.js",
+    "dev": "node server.js",
     "build": "next build",
-    "start": "NODE_ENV=production node src/server.js",
-    "start:pm2": "pm2 start ecosystem.config.js",
-    "stop:pm2": "pm2 stop ecosystem.config.js",
-    "restart:pm2": "pm2 restart ecosystem.config.js",
-    "logs:pm2": "pm2 logs servicebox-repair",
-    "monit:pm2": "pm2 monit",
-    "status:pm2": "pm2 status",
-    "clean": "rm -rf .next && rm -rf node_modules/.cache",
-    "postbuild": "echo 'Build completed successfully'"
+    "start": "node server.js",
+    "lint": "next lint"
   },
   "engines": {
     "node": ">=18.17.0",
