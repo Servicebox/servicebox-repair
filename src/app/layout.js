@@ -16,7 +16,7 @@ import { BreadcrumbProvider } from '@/components/contexts/BreadcrumbContext';
 
 config.autoAddCss = false;
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://servicebox35.ru';
+const SITE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 // ✅ Структурированные данные для SEO и AI

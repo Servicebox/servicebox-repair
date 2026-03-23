@@ -33,7 +33,7 @@ export async function generateMetadata({ params }) {
     }
 
     const service = data.data;
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://servicebox35.ru';
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
     return {
       title: service.metaTitle || `${service.name} в Вологде | ServiceBox`,

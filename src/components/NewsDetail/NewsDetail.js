@@ -1,305 +1,365 @@
-
 // src/components/NewsDetail/NewsDetail.js
 'use client';
+
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import Link from 'next/link';
 import styles from './NewsDetail.module.css';
 
-// Принимаем newsId как пропс
-const NewsDetail = ({ newsId }) => {
-  const router = useRouter();
-  const [newsItem, setNewsItem] = useState(null);
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
+
+// Компонент JSON-LD для структурированных данных
+const NewsJsonLd = ({ news, slug }) => {
+  if (!news) return null;
+
+  const textContent = news.contentBlocks
+    ?.filter(b => b.type === 'text')
+    .map(b => b.content)
+    .join(' ') || '';
+
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: news.title,
+    description: news.excerpt,
+    image: news.featuredImage ? [news.featuredImage] : undefined,
+    datePublished: news.publishedAt || news.createdAt,
+    dateModified: news.updatedAt,
+    author: {
+      '@type': 'Organization',
+      name: news.author || 'ServiceBox',
+      url: `${API_URL}`,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'ServiceBox',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${API_URL}/logo.png`,
+        width: 600,
+        height: 60,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${API_URL}/news/${slug}`,
+    },
+    articleBody: textContent.substring(0, 5000),
+    wordCount: textContent.split(/\s+/).filter(Boolean).length,
+    inLanguage: 'ru-RU',
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+    />
+  );
+};
+
+// Компонент рендеринга блоков контента
+const ContentBlockRenderer = ({ blocks }) => {
+  if (!Array.isArray(blocks)) return null;
+
+  return (
+    <div className={styles.contentBlocks}>
+      {blocks.map((block, index) => {
+        switch (block.type) {
+          case 'heading':
+            return (
+              <h2 key={index} className={styles.heading}>
+                {block.content}
+              </h2>
+            );
+
+          case 'text':
+            return (
+              <div
+                key={index}
+                className={styles.textBlock}
+                dangerouslySetInnerHTML={{ __html: block.content?.replace(/\n/g, '<br>') }}
+              />
+            );
+
+          case 'image':
+            return block.media ? (
+              <figure key={index} className={styles.imageBlock}>
+                <Image
+                  src={block.media}
+                  alt={block.alt || block.description || 'Изображение новости'}
+                  width={800}
+                  height={500}
+                  className={styles.contentImage}
+                  loading="lazy"
+                />
+                {block.description && (
+                  <figcaption className={styles.imageCaption}>
+                    {block.description}
+                  </figcaption>
+                )}
+              </figure>
+            ) : null;
+
+          case 'youtube':
+            return block.videoUrl ? (
+              <div key={index} className={styles.videoBlock}>
+                <div className={styles.videoContainer}>
+                  <iframe
+                    src={`https://www.youtube.com/embed/${block.videoUrl}?rel=0`}
+                    title="YouTube video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    loading="lazy"
+                  />
+                </div>
+                {block.description && (
+                  <p className={styles.videoCaption}>{block.description}</p>
+                )}
+              </div>
+            ) : null;
+
+          case 'list':
+            return block.content ? (
+              <ul key={index} className={styles.listBlock}>
+                {block.content.split('\n').filter(Boolean).map((item, i) => (
+                  <li key={i}>{item}</li>
+                ))}
+              </ul>
+            ) : null;
+
+          default:
+            return null;
+        }
+      })}
+    </div>
+  );
+};
+
+export default function NewsDetail({ newsSlug }) {
+  const [news, setNews] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [currentImage, setCurrentImage] = useState(null);
-  const [zoomLevel, setZoomLevel] = useState(1);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-
-  const openFullscreen = (imageUrl, description) => {
-    setCurrentImage({ url: imageUrl, description });
-    setIsFullscreen(true);
-    setZoomLevel(1);
-    setPosition({ x: 0, y: 0 });
-  };
-
-  const closeFullscreen = () => {
-    setIsFullscreen(false);
-    setCurrentImage(null);
-  };
-
-  const handleZoomIn = () => {
-    setZoomLevel(prev => Math.min(prev + 0.25, 3));
-  };
-
-  const handleZoomOut = () => {
-    setZoomLevel(prev => Math.max(prev - 0.25, 1));
-  };
-
-  const handleResetZoom = () => {
-    setZoomLevel(1);
-    setPosition({ x: 0, y: 0 });
-  };
-
-  const handleMouseDown = (e) => {
-    if (zoomLevel > 1) {
-      setIsDragging(true);
-      setDragStart({
-        x: e.clientX - position.x,
-        y: e.clientY - position.y
-      });
-    }
-  };
-
-  const handleMouseMove = (e) => {
-    if (isDragging) {
-      setPosition({
-        x: e.clientX - dragStart.x,
-        y: e.clientY - dragStart.y
-      });
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const handleTouchStart = (e) => {
-    if (zoomLevel > 1) {
-      setIsDragging(true);
-      setDragStart({
-        x: e.touches[0].clientX - position.x,
-        y: e.touches[0].clientY - position.y
-      });
-    }
-  };
-
-  const handleTouchMove = (e) => {
-    if (isDragging) {
-      setPosition({
-        x: e.touches[0].clientX - dragStart.x,
-        y: e.touches[0].clientY - dragStart.y
-      });
-    }
-  };
-
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-  };
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchNewsItem = async () => {
-      try {
-        // Используем newsId, переданный как пропс, вместо params.id
-        if (!newsId || newsId === 'undefined') {
-          setError('ID новости не указан');
-          setLoading(false);
-          return;
-        }
+    if (!newsSlug) {
+      setError('Не указан слаг новости');
+      setLoading(false);
+      return;
+    }
 
-        const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
-        const response = await fetch(`${API_URL}/api/news/${newsId}`);
+    let isMounted = true;
+
+    const fetchNews = async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/news/slug/${newsSlug}`);
 
         if (!response.ok) {
-          throw new Error('Новость не найдена');
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
 
         const data = await response.json();
 
-        if (data?.success) {
-          setNewsItem(data.data);
+        if (!isMounted) return;
+
+        if (data.success) {
+          setNews(data.data);
+          setError(null);
+
+          // Обновление заголовка страницы для доступности
+          if (data.data?.title) {
+            document.title = `${data.data.title} | ServiceBox Вологда`;
+          }
         } else {
           throw new Error(data.error || 'Новость не найдена');
         }
       } catch (err) {
-        setError(err.message);
-        setTimeout(() => router.push('/news'), 3000); // Редирект через 3 секунды при ошибке
+        if (isMounted) {
+          console.error('Error fetching news:', err);
+          setError(err.message);
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
 
-    // Вызываем fetch только если newsId действительно изменился
-    // (например, если компонент был повторно использован с другим id)
-    if (newsId) {
-      fetchNewsItem();
-    }
-  }, [newsId, router]); // Зависимости: newsId и router
+    fetchNews();
+    return () => { isMounted = false; };
+  }, [newsSlug]);
 
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape' && isFullscreen) {
-        closeFullscreen();
-      }
-    };
+  // Форматирование даты
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    return new Date(dateString).toLocaleDateString('ru-RU', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isFullscreen]);
-
+  // Состояние загрузки
   if (loading) {
     return (
-      <div className={styles.loadingContainer}>
-        <div className={styles.spinner}></div>
-        <p>Загрузка новости...</p>
+      <div className={styles.container}>
+        <div className={styles.loadingContainer}>
+          <div className={styles.spinner}></div>
+          <p>Загрузка новости...</p>
+        </div>
       </div>
     );
   }
 
-  if (error) {
+  // Состояние ошибки
+  if (error || !news) {
     return (
-      <div className={styles.errorContainer}>
-        <div className={styles.errorIcon}>⚠️</div>
-        <h3>Произошла ошибка</h3>
-        <p>{error}</p>
-        <p className={styles.redirectText}>Вы будете перенаправлены на страницу новостей...</p>
-        <Link href="/news" className={styles.backLink}>
-          ← Вернуться к новостям
-        </Link>
-      </div>
-    );
-  }
-
-  if (!newsItem) {
-    return (
-      <div className={styles.errorContainer}>
-        <div className={styles.errorIcon}>📰</div>
-        <h3>Новость не найдена</h3>
-        <p>Запрошенная новость не существует или была удалена</p>
-        <Link href="/news" className={styles.backLink}>
-          ← Вернуться к новостям
-        </Link>
+      <div className={styles.container}>
+        <div className={styles.errorContainer}>
+          <div className={styles.errorIcon}>⚠️</div>
+          <h2>Новость не найдена</h2>
+          <p>{error || 'Запрошенная новость не существует или снята с публикации'}</p>
+          <a href="/news" className={styles.backLink}>
+            ← Вернуться к списку новостей
+          </a>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className={styles.container}>
-      {isFullscreen && currentImage && (
-        <div className={styles.fullscreenOverlay} onClick={closeFullscreen}>
-          <div className={styles.fullscreenContent} onClick={(e) => e.stopPropagation()}>
-            <div className={styles.fullscreenControls}>
-              <button className={styles.controlBtn} onClick={handleZoomIn}>+</button>
-              <button className={styles.controlBtn} onClick={handleZoomOut}>-</button>
-              <button className={styles.controlBtn} onClick={handleResetZoom}>⟳</button>
-              <button className={styles.controlBtn} onClick={closeFullscreen}>×</button>
-            </div>
-            <div className={styles.imageContainer}>
-              <img
-                src={currentImage.url}
-                alt={currentImage.description || 'Изображение новости'}
-                style={{
-                  transform: `scale(${zoomLevel}) translate(${position.x}px, ${position.y}px)`,
-                  cursor: zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default'
-                }}
-                className={styles.zoomedImage}
-              />
-            </div>
-            {currentImage.description && (
-              <div className={styles.imageCaption}>{currentImage.description}</div>
-            )}
-          </div>
+    <article className={styles.container} itemScope itemType="https://schema.org/NewsArticle">
+      {/* JSON-LD для поисковиков и ИИ */}
+      <NewsJsonLd news={news} slug={newsSlug} />
+
+      {/* Хлебные крошки */}
+      <nav className={styles.breadcrumbs} aria-label="Хлебные крошки">
+        <ol itemScope itemType="https://schema.org/BreadcrumbList">
+          <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+            <a href="/" itemProp="item">
+              <span itemProp="name">Главная</span>
+            </a>
+            <meta itemProp="position" content="1" />
+          </li>
+          <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+            <a href="/news" itemProp="item">
+              <span itemProp="name">Новости</span>
+            </a>
+            <meta itemProp="position" content="2" />
+          </li>
+          <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+            <span itemProp="name">{news.title}</span>
+            <meta itemProp="position" content="3" />
+          </li>
+        </ol>
+      </nav>
+
+      {/* Заголовок и мета-информация */}
+      <header className={styles.header}>
+        <h1 className={styles.title} itemProp="headline">
+          {news.title}
+        </h1>
+
+        <div className={styles.meta}>
+          {news.publishedAt && (
+            <time
+              className={styles.date}
+              dateTime={news.publishedAt}
+              itemProp="datePublished"
+            >
+              Опубликовано: {formatDate(news.publishedAt)}
+            </time>
+          )}
+          {news.updatedAt && news.updatedAt !== news.publishedAt && (
+            <time
+              className={styles.date}
+              dateTime={news.updatedAt}
+              itemProp="dateModified"
+            >
+              Обновлено: {formatDate(news.updatedAt)}
+            </time>
+          )}
+          {news.author && (
+            <span className={styles.author} itemProp="author" itemScope itemType="https://schema.org/Organization">
+              <span itemProp="name">{news.author}</span>
+            </span>
+          )}
+          {news.views > 0 && (
+            <span className={styles.views} aria-label={`${news.views} просмотров`}>
+              👁️ {news.views}
+            </span>
+          )}
         </div>
+
+        {/* Главное изображение */}
+        {news.featuredImage && (
+          <figure className={styles.featuredImage}>
+            <Image
+              src={news.featuredImage}
+              alt={news.title}
+              width={1200}
+              height={630}
+              className={styles.mainImage}
+              priority
+              itemProp="image"
+            />
+          </figure>
+        )}
+
+        {/* Анонс */}
+        {news.excerpt && (
+          <p className={styles.excerpt} itemProp="description">
+            {news.excerpt}
+          </p>
+        )}
+      </header>
+
+      {/* Основной контент */}
+      <ContentBlockRenderer blocks={news.contentBlocks} />
+
+      {/* Теги/ключевые слова */}
+      {news.keywords?.length > 0 && (
+        <footer className={styles.footer}>
+          <div className={styles.tags}>
+            <strong>Теги:</strong>
+            {news.keywords.map((keyword, index) => (
+              <span key={index} className={styles.tag}>
+                {keyword}
+              </span>
+            ))}
+          </div>
+
+          {/* Кнопки поделиться */}
+          <div className={styles.share}>
+            <strong>Поделиться:</strong>
+            <div className={styles.shareButtons}>
+              <a
+                href={`https://vk.com/share.php?url=${encodeURIComponent(news.seo?.url || window.location.href)}&title=${encodeURIComponent(news.title)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.shareButton}
+                aria-label="Поделиться ВКонтакте"
+              >
+                ВКонтакте
+              </a>
+              <a
+                href={`https://t.me/share/url?url=${encodeURIComponent(news.seo?.url || window.location.href)}&text=${encodeURIComponent(news.title)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.shareButton}
+                aria-label="Поделиться в Telegram"
+              >
+                Telegram
+              </a>
+            </div>
+          </div>
+        </footer>
       )}
 
-      <article className={styles.newsArticle}>
-        <header className={styles.articleHeader}>
-          <nav className={styles.breadcrumb}>
-            <Link href="/news" className={styles.breadcrumbLink}>Новости</Link>
-            <span className={styles.breadcrumbSeparator}>/</span>
-            <span className={styles.breadcrumbCurrent}>{newsItem.title}</span>
-          </nav>
-
-          <h1 className={styles.articleTitle}>{newsItem.title}</h1>
-
-          <div className={styles.articleMeta}>
-            <time className={styles.articleDate}>
-              {new Date(newsItem.createdAt).toLocaleDateString('ru-RU', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-              })}
-            </time>
-          </div>
-        </header>
-
-        <div className={styles.articleContent}>
-          {newsItem.contentBlocks && newsItem.contentBlocks.map((block, index) => (
-            <div key={index} className={styles.contentBlock}>
-              {block.type === 'text' && (
-                <div className={styles.textContent}>
-                  {block.content.split('\n').map((paragraph, i) => (
-                    paragraph.trim() && <p key={i}>{paragraph}</p>
-                  ))}
-                </div>
-              )}
-
-              {block.type === 'image' && block.media && (
-                <figure className={styles.imageBlock}>
-                  <div className={styles.imageWrapper}>
-                    <Image
-                      src={block.media}
-                      alt={block.description || newsItem.title}
-                      width={800}
-                      height={500}
-                      className={styles.articleImage}
-                      onClick={() => openFullscreen(block.media, block.description)}
-                    />
-                    <div className={styles.imageOverlay}>
-                      <span>🔍</span>
-                    </div>
-                  </div>
-                  {block.description && (
-                    <figcaption className={styles.imageCaption}>{block.description}</figcaption>
-                  )}
-                </figure>
-              )}
-
-              {block.type === 'video' && block.media && (
-                <div className={styles.videoBlock}>
-                  <video controls className={styles.articleVideo}>
-                    <source src={block.media} type={block.mediaType || 'video/mp4'} />
-                    Ваш браузер не поддерживает видео тег.
-                  </video>
-                  {block.description && (
-                    <p className={styles.videoDescription}>{block.description}</p>
-                  )}
-                </div>
-              )}
-
-              {block.type === 'youtube' && block.media && (
-                <div className={styles.videoBlock}>
-                  <div className={styles.youtubeContainer}>
-                    <iframe
-                      src={`https://www.youtube.com/embed/${block.media}`} // Исправленный URL для iframe
-                      title={`YouTube video: ${block.description || newsItem.title}`}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className={styles.youtubeVideo}
-                    ></iframe>
-                  </div>
-                  {block.description && (
-                    <p className={styles.videoDescription}>{block.description}</p>
-                  )}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-
-        <footer className={styles.articleFooter}>
-          <Link href="/news" className={styles.backButton}>
-            ← Назад к списку новостей
-          </Link>
-        </footer>
-      </article>
-    </div>
+      {/* Навигация */}
+      <nav className={styles.navigation}>
+        <a href="/news" className={styles.backLink}>
+          ← Все новости
+        </a>
+      </nav>
+    </article>
   );
-};
-
-export default NewsDetail;
+}

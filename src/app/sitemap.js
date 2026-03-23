@@ -1,591 +1,24 @@
 // app/sitemap.js
-export default async function sitemap() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://servicebox35.ru';
-  const currentDate = new Date();
 
-  // Все статические страницы с AI-оптимизированными приоритетами
-  const staticPages = [
-    {
-      url: baseUrl,
-      lastModified: currentDate,
-      changeFrequency: 'daily',
-      priority: 1.0,
-      // AI-метаданные
-      aiMetadata: {
-        pageType: 'home',
-        contentFocus: 'services_overview',
-        primaryKeywords: ['ремонт техники Вологда', 'сервисный центр Вологда'],
-        contentSummary: 'Главная страница сервисного центра ServiceBox в Вологде - ремонт ноутбуков, телефонов, видеокарт и другой техники'
-      }
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-      aiMetadata: {
-        pageType: 'about',
-        contentFocus: 'company_info',
-        primaryKeywords: ['о компании ServiceBox', 'наша история', 'опыт работы'],
-        contentSummary: 'Информация о компании ServiceBox - сервисном центре в Вологде с опытом работы с 2016 года'
-      }
-    },
-    {
-      url: `${baseUrl}/contacts`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.9,
-      aiMetadata: {
-        pageType: 'contacts',
-        contentFocus: 'contact_info',
-        primaryKeywords: ['контакты сервиса', 'адрес ремонта техники Вологда', 'телефон сервисного центра'],
-        contentSummary: 'Контакты сервисных центров ServiceBox в Вологде: адреса, телефоны, часы работы'
-      }
-    },
-    {
-      url: `${baseUrl}/parts`,
-      lastModified: currentDate,
-      changeFrequency: 'daily',
-      priority: 0.9,
-      aiMetadata: {
-        pageType: 'products',
-        contentFocus: 'spare_parts',
-        primaryKeywords: ['запчасти для ремонта', 'оригинальные комплектующие', 'аксессуары'],
-        contentSummary: 'Запчасти и комплектующие для ремонта техники в Вологде - экраны, аккумуляторы, детали'
-      }
-    },
-    {
-      url: `${baseUrl}/services`,
-      lastModified: currentDate,
-      changeFrequency: 'daily',
-      priority: 0.95,
-      aiMetadata: {
-        pageType: 'services_list',
-        contentFocus: 'services_overview',
-        primaryKeywords: ['услуги ремонта', 'виды ремонта техники', 'ремонтные услуги'],
-        contentSummary: 'Полный список услуг по ремонту техники в сервисном центре ServiceBox в Вологде'
-      }
-    },
-    {
-      url: `${baseUrl}/prices`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.9,
-      aiMetadata: {
-        pageType: 'pricing',
-        contentFocus: 'price_list',
-        primaryKeywords: ['цены на ремонт', 'стоимость услуг', 'прайс-лист'],
-        contentSummary: 'Прайс-лист на услуги ремонта техники в Вологде - прозрачное ценообразование'
-      }
-    },
-    {
-      url: `${baseUrl}/gallery`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-      aiMetadata: {
-        pageType: 'gallery',
-        contentFocus: 'portfolio',
-        primaryKeywords: ['фото работ', 'примеры ремонта', 'галерея работ'],
-        contentSummary: 'Фотогалерея выполненных работ сервисного центра ServiceBox в Вологде'
-      }
-    },
-    {
-      url: `${baseUrl}/news`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-      aiMetadata: {
-        pageType: 'blog',
-        contentFocus: 'news_articles',
-        primaryKeywords: ['новости сервиса', 'статьи о ремонте', 'технические статьи'],
-        contentSummary: 'Новости и статьи о ремонте техники от сервисного центра ServiceBox в Вологде'
-      }
-    },
-    {
-      url: `${baseUrl}/promotions-page`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.85,
-      aiMetadata: {
-        pageType: 'promotions',
-        contentFocus: 'discounts_specials',
-        primaryKeywords: ['акции на ремонт', 'скидки сервиса', 'специальные предложения'],
-        contentSummary: 'Акции и специальные предложения на ремонт техники в сервисном центре ServiceBox'
-      }
-    },
-    {
-      url: `${baseUrl}/depository-public`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.6,
-      aiMetadata: {
-        pageType: 'depository',
-        contentFocus: 'storage_info',
-        primaryKeywords: ['хранение техники', 'депозитарий', 'временное хранение'],
-        contentSummary: 'Услуги хранения техники в сервисном центре ServiceBox в Вологде'
-      }
-    },
-    {
-      url: `${baseUrl}/tracking`,
-      lastModified: currentDate,
-      changeFrequency: 'daily',
-      priority: 0.7,
-      aiMetadata: {
-        pageType: 'tracking',
-        contentFocus: 'order_status',
-        primaryKeywords: ['отслеживание ремонта', 'статус заказа', 'статус ремонта'],
-        contentSummary: 'Отслеживание статуса ремонта техники в сервисном центре ServiceBox'
-      }
-    },
-    {
-      url: `${baseUrl}/worksteps`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.85,
-      aiMetadata: {
-        pageType: 'process',
-        contentFocus: 'workflow_steps',
-        primaryKeywords: ['схема работы', 'процесс ремонта', 'этапы работы'],
-        contentSummary: 'Пошаговая схема работы сервисного центра ServiceBox - от приема техники до выдачи'
-      }
-    },
-
-  ];
-
-  // AI API эндпоинты для AI-ассистентов
-  const apiPages = [
-    {
-      url: `${baseUrl}/api/ai/v1/business`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-      aiMetadata: {
-        pageType: 'api',
-        contentFocus: 'structured_data',
-        primaryKeywords: ['AI данные', 'структурированная информация', 'бизнес информация'],
-        contentSummary: 'Структурированные данные о бизнесе ServiceBox для AI-ассистентов и поисковых систем'
-      }
-    },
-    {
-      url: `${baseUrl}/api/ai/v1/prices`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.7,
-      aiMetadata: {
-        pageType: 'api',
-        contentFocus: 'pricing_data',
-        primaryKeywords: ['цены API', 'стоимость услуг API', 'прайс API'],
-        contentSummary: 'API с информацией о ценах на услуги ремонта для AI-ассистентов'
-      }
-    },
-    {
-      url: `${baseUrl}/api/ai/v1/emergency`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.6,
-      aiMetadata: {
-        pageType: 'api',
-        contentFocus: 'emergency_instructions',
-        primaryKeywords: ['экстренные инструкции', 'первая помощь технике', 'аварийные ситуации'],
-        contentSummary: 'Инструкции по экстренным ситуациям с техникой для AI-ассистентов'
-      }
-    }
-  ];
-
-  try {
-    // Получаем все услуги
-    let servicePages = [];
-    try {
-      const servicesResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL || baseUrl}/api/services/all`, {
-        next: { revalidate: 3600 },
-        headers: {
-          'Content-Type': 'application/json',
-          'User-Agent': 'ServiceBox-Sitemap-Generator/1.0'
-        }
-      });
-
-      if (servicesResponse.ok) {
-        const servicesData = await servicesResponse.json();
-
-        if (servicesData.success && servicesData.data) {
-          servicePages = servicesData.data.map(service => ({
-            url: `${baseUrl}/services/${encodeURIComponent(service.slug)}`,
-            lastModified: new Date(service.updatedAt || currentDate),
-            changeFrequency: service.isCategory ? 'weekly' : 'monthly',
-            priority: service.level === 0 ? 0.9 : service.level === 1 ? 0.8 : 0.7,
-            aiMetadata: {
-              pageType: 'service_detail',
-              contentFocus: 'specific_service',
-              primaryKeywords: [
-                `ремонт ${service.name.toLowerCase()} Вологда`,
-                `${service.name.toLowerCase()} сервис`,
-                `починить ${service.name.toLowerCase()}`
-              ],
-              contentSummary: `Ремонт ${service.name} в сервисном центре ServiceBox в Вологде`
-            }
-          }));
-        }
-      }
-    } catch (error) {
-      console.warn('Error fetching services for sitemap:', error.message);
-    }
-
-    // Получаем все товары
-    let productPages = [];
-    try {
-      const productsResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL || baseUrl}/api/products?limit=1000`, {
-        next: { revalidate: 3600 },
-        headers: {
-          'Content-Type': 'application/json',
-          'User-Agent': 'ServiceBox-Sitemap-Generator/1.0'
-        }
-      });
-
-      if (productsResponse.ok) {
-        const productsData = await productsResponse.json();
-
-        if (productsData.products) {
-          productPages = productsData.products.map(product => ({
-            url: `${baseUrl}/product/${encodeURIComponent(product.slug)}`,
-            lastModified: new Date(product.updatedAt || currentDate),
-            changeFrequency: 'weekly',
-            priority: 0.8,
-            aiMetadata: {
-              pageType: 'product_detail',
-              contentFocus: 'product_info',
-              primaryKeywords: [
-                `${product.name} купить Вологда`,
-                `запчасть ${product.name}`,
-                `${product.name} цена`
-              ],
-              contentSummary: `Купить ${product.name} для ремонта техники в Вологде`
-            }
-          }));
-        }
-      }
-    } catch (error) {
-      console.warn('Error fetching products for sitemap:', error.message);
-    }
-
-    // Получаем все новости
-    // === 5. 🎯 Динамические страницы: НОВОСТИ (по слагам) ===
-    let newsEntries = [];
-
-    try {
-      console.log('📰 Fetching news for sitemap...');
-
-      // Запрос к API с нужными полями и параметрами
-      const newsResponse = await fetch(
-        `${API_URL}/api/news?all=1&fields=slug,title,excerpt,isPublished,publishedAt,updatedAt,keywords,featuredImage&limit=1000`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'User-Agent': 'ServiceBox-Sitemap-Generator/2.0',
-            'Cache-Control': 'no-cache',
-          },
-          next: { revalidate: 3600 }, // Кэш на 1 час
-        }
-      );
-
-      // Обработка ответа
-      if (!newsResponse.ok) {
-        throw new Error(`HTTP ${newsResponse.status}: ${newsResponse.statusText}`);
-      }
-
-      const newsData = await newsResponse.json();
-
-      // Проверка структуры ответа
-      if (newsData?.success && Array.isArray(newsData.data)) {
-        console.log(`📊 Found ${newsData.data.length} news items, filtering published...`);
-
-        // 🔥 Фильтрация: только опубликованные новости с валидным слагом
-        const publishedNews = newsData.data.filter(news => {
-          // Проверка публикации
-          if (news.isPublished !== true) {
-            return false;
-          }
-
-          // Проверка слага
-          if (!news.slug || typeof news.slug !== 'string' || news.slug.trim().length === 0) {
-            console.warn(`⚠️ News "${news.title}" has invalid slug, skipping`);
-            return false;
-          }
-
-          // Проверка даты публикации (опционально: не старше 5 лет)
-          const publishedDate = new Date(news.publishedAt || news.createdAt);
-          const fiveYearsAgo = new Date();
-          fiveYearsAgo.setFullYear(fiveYearsAgo.getFullYear() - 5);
-
-          if (publishedDate < fiveYearsAgo) {
-            console.log(`ℹ️ News "${news.title}" is older than 5 years, including anyway`);
-          }
-
-          return true;
-        });
-
-        console.log(`✅ ${publishedNews.length} published news with valid slugs`);
-
-        // 🔄 Преобразование в entries для sitemap
-        newsEntries = publishedNews.map(news => {
-          // === Валидация и нормализация слага ===
-          let validSlug = news.slug.trim().toLowerCase();
-
-          // Проверка формата: только латиница, цифры, дефисы
-          const slugPattern = /^[a-z0-9]+(-[a-z0-9]+)*$/;
-
-          if (!slugPattern.test(validSlug)) {
-            // Fallback: генерируем слаг из заголовка
-            validSlug = validSlug
-              .replace(/[^\w\s-]/g, '')           // Удаляем спецсимволы
-              .replace(/[\s_-]+/g, '-')           // Пробелы и подчёркивания → дефис
-              .replace(/^-+|-+$/g, '')            // Удаляем дефисы по краям
-              .substring(0, 100);                 // Ограничение длины
-          }
-
-          // === Формирование даты последнего изменения ===
-          const lastModified = news.updatedAt
-            ? new Date(news.updatedAt)
-            : news.publishedAt
-              ? new Date(news.publishedAt)
-              : new Date(news.createdAt) || new Date();
-
-          // === Формирование ключевых слов для AI ===
-          const baseKeywords = [
-            news.title,
-            'ремонт техники Вологда',
-            'сервисный центр статьи',
-          ];
-          const extraKeywords = Array.isArray(news.keywords)
-            ? news.keywords.slice(0, 3)
-            : [];
-          const allKeywords = [...baseKeywords, ...extraKeywords].filter(Boolean);
-
-          // === Формирование краткого описания ===
-          const summary = news.excerpt
-            ? news.excerpt.substring(0, 200).trim()
-            : `Статья: ${news.title} от сервисного центра ServiceBox в Вологде`;
-
-          // === Создание entry для sitemap ===
-          return createSitemapEntry({
-            url: `${BASE_URL}/news/${validSlug}`,
-            lastModified,
-            changeFrequency: 'monthly',
-            priority: 0.7,
-            aiMetadata: {
-              pageType: 'news_article',
-              contentFocus: 'expert_advice',
-              primaryKeywords: allKeywords,
-              contentSummary: summary,
-              // Дополнительные метаданные для расширенной аналитики
-              article: {
-                title: news.title,
-                publishedAt: news.publishedAt ? new Date(news.publishedAt).toISOString() : null,
-                updatedAt: news.updatedAt ? new Date(news.updatedAt).toISOString() : null,
-                hasImage: !!news.featuredImage,
-                keywordsCount: allKeywords.length,
-              }
-            },
-          });
-        })
-          .filter(Boolean) // Удаляем возможные null-значения
-          .slice(0, 500); // Лимит: максимум 500 новостей в sitemap (для производительности)
-
-        console.log(`🎯 Generated ${newsEntries.length} news entries for sitemap`);
-
-      } else {
-        console.warn('⚠️ News API returned unexpected format:', {
-          success: newsData?.success,
-          isArray: Array.isArray(newsData?.data),
-          keys: newsData ? Object.keys(newsData) : 'no data'
-        });
-      }
-
-    } catch (error) {
-      console.error('❌ Error fetching news for sitemap:', {
-        message: error.message,
-        name: error.name,
-        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
-      });
-
-      // Fallback: пустой массив, чтобы не ломать всю генерацию
-      newsEntries = [];
-    }
-
-    // Получаем страницы услуг по категориям (для AI-оптимизации)
-    const serviceCategoryPages = [
-      {
-        url: `${baseUrl}/services/notebooks`,
-        lastModified: currentDate,
-        changeFrequency: 'weekly',
-        priority: 0.9,
-        aiMetadata: {
-          pageType: 'service_category',
-          contentFocus: 'notebook_repair',
-          primaryKeywords: ['ремонт ноутбуков Вологда', 'починить ноутбук', 'сервис ноутбуков'],
-          contentSummary: 'Ремонт ноутбуков всех брендов в Вологде - замена экранов, ремонт материнских плат, чистка'
-        }
-      },
-      {
-        url: `${baseUrl}/services/phones`,
-        lastModified: currentDate,
-        changeFrequency: 'weekly',
-        priority: 0.9,
-        aiMetadata: {
-          pageType: 'service_category',
-          contentFocus: 'phone_repair',
-          primaryKeywords: ['ремонт телефонов Вологда', 'починить телефон', 'сервис телефонов'],
-          contentSummary: 'Ремонт телефонов и смартфонов в Вологде - замена дисплеев, аккумуляторов, ремонт после воды'
-        }
-      },
-      {
-        url: `${baseUrl}/services/computers`,
-        lastModified: currentDate,
-        changeFrequency: 'weekly',
-        priority: 0.8,
-        aiMetadata: {
-          pageType: 'service_category',
-          contentFocus: 'computer_repair',
-          primaryKeywords: ['ремонт компьютеров Вологда', 'ремонт ПК', 'починить компьютер'],
-          contentSummary: 'Ремонт компьютеров и системных блоков в Вологде - диагностика, замена комплектующих'
-        }
-      },
-      {
-        url: `${baseUrl}/services/videocards`,
-        lastModified: currentDate,
-        changeFrequency: 'weekly',
-        priority: 0.8,
-        aiMetadata: {
-          pageType: 'service_category',
-          contentFocus: 'videocard_repair',
-          primaryKeywords: ['ремонт видеокарт Вологда', 'починить видеокарту', 'видеокарта ремонт'],
-          contentSummary: 'Ремонт видеокарт в Вологде - замена видеочипов, ремонт системы питания, чистка'
-        }
-      },
-      {
-        url: `${baseUrl}/services/tv`,
-        lastModified: currentDate,
-        changeFrequency: 'weekly',
-        priority: 0.7,
-        aiMetadata: {
-          pageType: 'service_category',
-          contentFocus: 'tv_repair',
-          primaryKeywords: ['ремонт телевизоров Вологда', 'починить телевизор', 'сервис телевизоров'],
-          contentSummary: 'Ремонт телевизоров в Вологде - замена подсветки, ремонт блоков питания, настройка'
-        }
-      },
-      {
-        url: `${baseUrl}/services/apple`,
-        lastModified: currentDate,
-        changeFrequency: 'weekly',
-        priority: 0.85,
-        aiMetadata: {
-          pageType: 'service_category',
-          contentFocus: 'apple_repair',
-          primaryKeywords: ['ремонт Apple Вологда', 'починить iPhone', 'сервис MacBook'],
-          contentSummary: 'Ремонт техники Apple в Вологде - iPhone, iPad, MacBook, iMac, Apple Watch'
-        }
-      },
-      {
-        url: `${baseUrl}/services/consoles`,
-        lastModified: currentDate,
-        changeFrequency: 'weekly',
-        priority: 0.7,
-        aiMetadata: {
-          pageType: 'service_category',
-          contentFocus: 'console_repair',
-          primaryKeywords: ['ремонт приставок Вологда', 'починить PlayStation', 'сервис Xbox'],
-          contentSummary: 'Ремонт игровых приставок в Вологде - PlayStation, Xbox, Nintendo Switch'
-        }
-      }
-    ];
-
-
-    const allPages = [
-      ...staticPages,
-      ...apiPages,
-      ...serviceCategoryPages,
-      ...servicePages,
-      ...productPages,
-      ...newsPages,
-    ].map(page => ({
-      ...page,
-
-      _ai_optimized: true,
-      _content_language: 'ru',
-      _country: 'RU',
-      _business_type: 'electronics_repair_service',
-      _business_city: 'Вологда',
-      _business_region: 'Вологодская область',
-    }));
-
-
-    const urlSet = new Set();
-    const uniquePages = [];
-
-    for (const page of allPages) {
-      if (!urlSet.has(page.url)) {
-        urlSet.add(page.url);
-        uniquePages.push(page);
-      }
-    }
-
-
-    uniquePages.sort((a, b) => b.priority - a.priority);
-
-
-    const maxPages = 10000;
-    const finalPages = uniquePages.slice(0, maxPages);
-
-
-    console.log(`Generated sitemap with ${finalPages.length} pages, ${servicePages.length} services, ${productPages.length} products, ${newsPages.length} news`);
-
-    return finalPages;
-
-  } catch (error) {
-    console.error('Error generating sitemap:', error);
-
-    return [...staticPages, ...apiPages];
-  }
-}
-
-
-export async function generateSitemaps() {
-
-  return [{ id: 0 }];
-}
-
-
-export async function getServerSideProps() {
-
-  return {
-    props: {},
-  };
-}
 /**
  * Создание валидного entry для sitemap с дополнительными метаданными
  */
 const createSitemapEntry = ({ url, lastModified, changeFrequency, priority, aiMetadata = {} }) => {
-  // === Валидация обязательных полей ===
   if (!url || typeof url !== 'string' || !url.startsWith('http')) {
     console.warn('⚠️ Invalid URL in sitemap entry:', url);
     return null;
   }
 
-  // === Безопасное форматирование даты ===
   const formatDate = (date) => {
     if (!date) return new Date().toISOString();
     const d = new Date(date);
     return isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
   };
 
-  // === Нормализация приоритета (0.0 - 1.0) ===
   const normalizedPriority = typeof priority === 'number'
     ? Math.max(0, Math.min(1, priority))
     : 0.5;
 
-  // === Формирование базового entry (стандарт sitemap.org) ===
   const entry = {
     loc: url,
     lastmod: formatDate(lastModified),
@@ -593,8 +26,6 @@ const createSitemapEntry = ({ url, lastModified, changeFrequency, priority, aiMe
     priority: normalizedPriority,
   };
 
-  // === Добавление кастомных метаданных (x- префикс) ===
-  // Эти поля игнорируются поисковиками, но полезны для внутренней аналитики и ИИ
   if (aiMetadata.pageType) {
     entry['x-ai:type'] = aiMetadata.pageType;
   }
@@ -608,13 +39,11 @@ const createSitemapEntry = ({ url, lastModified, changeFrequency, priority, aiMe
     entry['x-ai:summary'] = aiMetadata.contentSummary.substring(0, 200);
   }
 
-  // === Бизнес-метаданные (для локального SEO) ===
   entry['x-business:city'] = 'Вологда';
   entry['x-business:region'] = 'Вологодская область';
   entry['x-business:category'] = 'electronics_repair_service';
   entry['x-business:language'] = 'ru';
 
-  // === Дополнительные метаданные статьи (если есть) ===
   if (aiMetadata.article) {
     entry['x-article:title'] = aiMetadata.article.title?.substring(0, 100);
     entry['x-article:published'] = aiMetadata.article.publishedAt;
@@ -624,3 +53,434 @@ const createSitemapEntry = ({ url, lastModified, changeFrequency, priority, aiMe
 
   return entry;
 };
+
+export default async function sitemap() {
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
+  const currentDate = new Date();
+
+  // Все статические страницы
+  const staticPages = [
+    {
+      url: baseUrl,
+      lastModified: currentDate,
+      changeFrequency: 'daily',
+      priority: 1.0,
+      aiMetadata: {
+        pageType: 'home',
+        contentFocus: 'services_overview',
+        primaryKeywords: ['ремонт техники Вологда', 'сервисный центр Вологда'],
+        contentSummary: 'Главная страница сервисного центра ServiceBox в Вологде'
+      }
+    },
+    {
+      url: `${baseUrl}/about`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+      aiMetadata: {
+        pageType: 'about',
+        contentFocus: 'company_info',
+        primaryKeywords: ['о компании ServiceBox', 'наша история'],
+        contentSummary: 'Информация о компании ServiceBox'
+      }
+    },
+    {
+      url: `${baseUrl}/contacts`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+      aiMetadata: {
+        pageType: 'contacts',
+        contentFocus: 'contact_info',
+        primaryKeywords: ['контакты сервиса', 'адрес ремонта техники Вологда'],
+        contentSummary: 'Контакты сервисных центров ServiceBox в Вологде'
+      }
+    },
+    {
+      url: `${baseUrl}/parts`,
+      lastModified: currentDate,
+      changeFrequency: 'daily',
+      priority: 0.9,
+      aiMetadata: {
+        pageType: 'products',
+        contentFocus: 'spare_parts',
+        primaryKeywords: ['запчасти для ремонта', 'оригинальные комплектующие'],
+        contentSummary: 'Запчасти и комплектующие для ремонта техники'
+      }
+    },
+    {
+      url: `${baseUrl}/services`,
+      lastModified: currentDate,
+      changeFrequency: 'daily',
+      priority: 0.95,
+      aiMetadata: {
+        pageType: 'services_list',
+        contentFocus: 'services_overview',
+        primaryKeywords: ['услуги ремонта', 'виды ремонта техники'],
+        contentSummary: 'Полный список услуг по ремонту техники'
+      }
+    },
+    {
+      url: `${baseUrl}/prices`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+      aiMetadata: {
+        pageType: 'pricing',
+        contentFocus: 'price_list',
+        primaryKeywords: ['цены на ремонт', 'стоимость услуг'],
+        contentSummary: 'Прайс-лист на услуги ремонта техники'
+      }
+    },
+    {
+      url: `${baseUrl}/gallery`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+      aiMetadata: {
+        pageType: 'gallery',
+        contentFocus: 'portfolio',
+        primaryKeywords: ['фото работ', 'примеры ремонта'],
+        contentSummary: 'Фотогалерея выполненных работ'
+      }
+    },
+    {
+      url: `${baseUrl}/news`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+      aiMetadata: {
+        pageType: 'blog',
+        contentFocus: 'news_articles',
+        primaryKeywords: ['новости сервиса', 'статьи о ремонте'],
+        contentSummary: 'Новости и статьи о ремонте техники'
+      }
+    },
+    {
+      url: `${baseUrl}/promotions-page`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+      aiMetadata: {
+        pageType: 'promotions',
+        contentFocus: 'discounts_specials',
+        primaryKeywords: ['акции на ремонт', 'скидки сервиса'],
+        contentSummary: 'Акции и специальные предложения'
+      }
+    },
+    {
+      url: `${baseUrl}/depository-public`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.6,
+      aiMetadata: {
+        pageType: 'depository',
+        contentFocus: 'storage_info',
+        primaryKeywords: ['хранение техники', 'депозитарий'],
+        contentSummary: 'Услуги хранения техники'
+      }
+    },
+    {
+      url: `${baseUrl}/tracking`,
+      lastModified: currentDate,
+      changeFrequency: 'daily',
+      priority: 0.7,
+      aiMetadata: {
+        pageType: 'tracking',
+        contentFocus: 'order_status',
+        primaryKeywords: ['отслеживание ремонта', 'статус заказа'],
+        contentSummary: 'Отслеживание статуса ремонта техники'
+      }
+    },
+    {
+      url: `${baseUrl}/worksteps`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+      aiMetadata: {
+        pageType: 'process',
+        contentFocus: 'workflow_steps',
+        primaryKeywords: ['схема работы', 'процесс ремонта'],
+        contentSummary: 'Пошаговая схема работы сервисного центра'
+      }
+    },
+  ];
+
+  // AI API эндпоинты
+  const apiPages = [
+    {
+      url: `${baseUrl}/api/ai/v1/business`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+      aiMetadata: {
+        pageType: 'api',
+        contentFocus: 'structured_data',
+        primaryKeywords: ['AI данные', 'структурированная информация'],
+        contentSummary: 'Структурированные данные о бизнесе ServiceBox для AI-ассистентов'
+      }
+    },
+    {
+      url: `${baseUrl}/api/ai/v1/prices`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.7,
+      aiMetadata: {
+        pageType: 'api',
+        contentFocus: 'pricing_data',
+        primaryKeywords: ['цены API', 'стоимость услуг API'],
+        contentSummary: 'API с информацией о ценах на услуги ремонта'
+      }
+    },
+    {
+      url: `${baseUrl}/api/ai/v1/emergency`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.6,
+      aiMetadata: {
+        pageType: 'api',
+        contentFocus: 'emergency_instructions',
+        primaryKeywords: ['экстренные инструкции', 'первая помощь технике'],
+        contentSummary: 'Инструкции по экстренным ситуациям с техникой'
+      }
+    }
+  ];
+
+  // Страницы услуг по категориям
+  const serviceCategoryPages = [
+    {
+      url: `${baseUrl}/services/notebooks`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+      aiMetadata: {
+        pageType: 'service_category',
+        contentFocus: 'notebook_repair',
+        primaryKeywords: ['ремонт ноутбуков Вологда', 'починить ноутбук'],
+        contentSummary: 'Ремонт ноутбуков всех брендов в Вологде'
+      }
+    },
+    {
+      url: `${baseUrl}/services/phones`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+      aiMetadata: {
+        pageType: 'service_category',
+        contentFocus: 'phone_repair',
+        primaryKeywords: ['ремонт телефонов Вологда', 'починить телефон'],
+        contentSummary: 'Ремонт телефонов и смартфонов в Вологде'
+      }
+    },
+    {
+      url: `${baseUrl}/services/computers`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+      aiMetadata: {
+        pageType: 'service_category',
+        contentFocus: 'computer_repair',
+        primaryKeywords: ['ремонт компьютеров Вологда', 'ремонт ПК'],
+        contentSummary: 'Ремонт компьютеров и системных блоков'
+      }
+    },
+    {
+      url: `${baseUrl}/services/videocards`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+      aiMetadata: {
+        pageType: 'service_category',
+        contentFocus: 'videocard_repair',
+        primaryKeywords: ['ремонт видеокарт Вологда', 'починить видеокарту'],
+        contentSummary: 'Ремонт видеокарт в Вологде'
+      }
+    },
+    {
+      url: `${baseUrl}/services/tv`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.7,
+      aiMetadata: {
+        pageType: 'service_category',
+        contentFocus: 'tv_repair',
+        primaryKeywords: ['ремонт телевизоров Вологда', 'починить телевизор'],
+        contentSummary: 'Ремонт телевизоров в Вологде'
+      }
+    },
+    {
+      url: `${baseUrl}/services/apple`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+      aiMetadata: {
+        pageType: 'service_category',
+        contentFocus: 'apple_repair',
+        primaryKeywords: ['ремонт Apple Вологда', 'починить iPhone'],
+        contentSummary: 'Ремонт техники Apple в Вологде'
+      }
+    },
+    {
+      url: `${baseUrl}/services/consoles`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.7,
+      aiMetadata: {
+        pageType: 'service_category',
+        contentFocus: 'console_repair',
+        primaryKeywords: ['ремонт приставок Вологда', 'починить PlayStation'],
+        contentSummary: 'Ремонт игровых приставок в Вологде'
+      }
+    }
+  ];
+
+  // Получаем динамические данные
+  let servicePages = [];
+  let productPages = [];
+  let newsEntries = [];
+
+  // 1. Услуги
+  try {
+    const servicesResponse = await fetch(`${baseUrl}/api/services/all`, {
+      next: { revalidate: 3600 },
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    if (servicesResponse.ok) {
+      const servicesData = await servicesResponse.json();
+      if (servicesData.success && servicesData.data) {
+        servicePages = servicesData.data.map(service => ({
+          url: `${baseUrl}/services/${encodeURIComponent(service.slug)}`,
+          lastModified: new Date(service.updatedAt || currentDate),
+          changeFrequency: service.isCategory ? 'weekly' : 'monthly',
+          priority: service.level === 0 ? 0.9 : service.level === 1 ? 0.8 : 0.7,
+          aiMetadata: {
+            pageType: 'service_detail',
+            contentFocus: 'specific_service',
+            primaryKeywords: [`ремонт ${service.name?.toLowerCase() || ''} Вологда`],
+            contentSummary: `Ремонт ${service.name} в сервисном центре ServiceBox в Вологде`
+          }
+        }));
+      }
+    }
+  } catch (error) {
+    console.warn('Error fetching services for sitemap:', error.message);
+  }
+
+  // 2. Товары
+  try {
+    const productsResponse = await fetch(`${baseUrl}/api/products?limit=1000`, {
+      next: { revalidate: 3600 }
+    });
+
+    if (productsResponse.ok) {
+      const productsData = await productsResponse.json();
+      if (productsData.products) {
+        productPages = productsData.products.map(product => ({
+          url: `${baseUrl}/product/${encodeURIComponent(product.slug)}`,
+          lastModified: new Date(product.updatedAt || currentDate),
+          changeFrequency: 'weekly',
+          priority: 0.8,
+          aiMetadata: {
+            pageType: 'product_detail',
+            contentFocus: 'product_info',
+            primaryKeywords: [`${product.name} купить Вологда`],
+            contentSummary: `Купить ${product.name} для ремонта техники в Вологде`
+          }
+        }));
+      }
+    }
+  } catch (error) {
+    console.warn('Error fetching products for sitemap:', error.message);
+  }
+
+  // 3. Новости (исправлено: используем baseUrl, а не API_URL)
+  try {
+    console.log('📰 Fetching news for sitemap...');
+    const newsResponse = await fetch(`${baseUrl}/api/news?all=1&limit=500`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      next: { revalidate: 3600 }
+    });
+
+    if (newsResponse.ok) {
+      const newsData = await newsResponse.json();
+      if (newsData?.success && Array.isArray(newsData.data)) {
+        const publishedNews = newsData.data.filter(news => news.isPublished === true && news.slug);
+
+        newsEntries = publishedNews.map(news => {
+          let validSlug = news.slug.trim().toLowerCase();
+          const lastModified = news.updatedAt ? new Date(news.updatedAt) :
+            news.publishedAt ? new Date(news.publishedAt) : currentDate;
+
+          const allKeywords = [news.title, 'ремонт техники Вологда', 'сервисный центр статьи'];
+          const summary = news.excerpt ? news.excerpt.substring(0, 200) : `Статья: ${news.title}`;
+
+          return createSitemapEntry({
+            url: `${baseUrl}/news/${validSlug}`, // исправлено: baseUrl вместо BASE_URL
+            lastModified,
+            changeFrequency: 'monthly',
+            priority: 0.7,
+            aiMetadata: {
+              pageType: 'news_article',
+              contentFocus: 'expert_advice',
+              primaryKeywords: allKeywords,
+              contentSummary: summary,
+              article: {
+                title: news.title,
+                publishedAt: news.publishedAt ? new Date(news.publishedAt).toISOString() : null,
+                updatedAt: news.updatedAt ? new Date(news.updatedAt).toISOString() : null,
+                hasImage: !!news.featuredImage,
+              }
+            }
+          });
+        }).filter(Boolean).slice(0, 500);
+
+        console.log(`✅ Generated ${newsEntries.length} news entries for sitemap`);
+      }
+    }
+  } catch (error) {
+    console.warn('Error fetching news for sitemap:', error.message);
+    newsEntries = [];
+  }
+
+  // Объединяем все страницы (исправлено: newsEntries вместо newsPages)
+  const allPages = [
+    ...staticPages,
+    ...apiPages,
+    ...serviceCategoryPages,
+    ...servicePages,
+    ...productPages,
+    ...newsEntries,
+  ].map(page => ({
+    ...page,
+    _ai_optimized: true,
+    _content_language: 'ru',
+    _country: 'RU',
+    _business_type: 'electronics_repair_service',
+    _business_city: 'Вологда',
+    _business_region: 'Вологодская область',
+  }));
+
+  // Убираем дубликаты
+  const urlSet = new Set();
+  const uniquePages = [];
+  for (const page of allPages) {
+    if (!urlSet.has(page.url)) {
+      urlSet.add(page.url);
+      uniquePages.push(page);
+    }
+  }
+
+  uniquePages.sort((a, b) => (b.priority || 0) - (a.priority || 0));
+
+  // Исправлено: используем newsEntries вместо newsPages
+  console.log(`Generated sitemap with ${uniquePages.length} pages, ${servicePages.length} services, ${productPages.length} products, ${newsEntries.length} news`);
+
+  return uniquePages.slice(0, 10000);
+}
+
+// Экспорт для больших sitemap (если страниц > 50000)
+export async function generateSitemaps() {
+  return [{ id: 0 }];
+}

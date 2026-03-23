@@ -4,6 +4,11 @@ cat > .gitignore << EOF
 node_modules/
 .npm
 .yarn
+.env.local
+.env.production
+.env.*.local
+.env.development
+.env.test
 
 # Production builds
 .next/

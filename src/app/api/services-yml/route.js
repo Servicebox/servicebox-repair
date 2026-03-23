@@ -109,7 +109,7 @@ const findRootCategory = (service, categories) => {
 
 // Генерация YML фида
 const generateYmlFeed = (services, categories) => {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://servicebox35.ru';
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
   const dateStr = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;

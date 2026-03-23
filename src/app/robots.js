@@ -1,6 +1,6 @@
 // app/robots.js
 export default function robots() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://servicebox35.ru';
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
   return {
     rules: {
       userAgent: '*', // Правило для всех ботов

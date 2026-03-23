@@ -2,33 +2,22 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import News from '@/models/News';
+import { isValidObjectId } from '@/lib/slugify';
 
+// GET /api/news/[id] — получение новости по ID
 export async function GET(request, { params }) {
   try {
     await dbConnect();
-
-    // ✅ ФИКС: await params перед деструктуризацией
     const { id } = await params;
 
-    console.log('🔍 Fetching news with ID:', id);
-
-    // ✅ ФИКС: Проверка на undefined
-    if (!id || id === 'undefined') {
-      return NextResponse.json(
-        { success: false, error: 'ID новости не указан' },
-        { status: 400 }
-      );
-    }
-
-    // ✅ ФИКС: Проверка валидности ObjectId
-    if (!/^[0-9a-fA-F]{24}$/.test(id)) {
+    if (!id || !isValidObjectId(id)) {
       return NextResponse.json(
         { success: false, error: 'Неверный формат ID новости' },
         { status: 400 }
       );
     }
 
-    const news = await News.findById(id);
+    const news = await News.findById(id).lean();
 
     if (!news) {
       return NextResponse.json(
@@ -37,47 +26,53 @@ export async function GET(request, { params }) {
       );
     }
 
-    return NextResponse.json({
-      success: true,
-      data: news
-    });
+    return NextResponse.json({ success: true, data: news });
   } catch (error) {
-    console.error('Error fetching news item:', error);
-
-    if (error.name === 'CastError') {
-      return NextResponse.json(
-        { success: false, error: 'Неверный формат ID новости' },
-        { status: 400 }
-      );
-    }
-
+    console.error('Error fetching news by ID:', error);
     return NextResponse.json(
-      { success: false, error: 'Ошибка при загрузке новости' },
+      { success: false, error: 'Ошибка сервера' },
       { status: 500 }
     );
   }
 }
 
+// PUT /api/news/[id] — обновление новости
 export async function PUT(request, { params }) {
   try {
     await dbConnect();
-
-    // ✅ ФИКС: await params перед деструктуризацией
     const { id } = await params;
     const updateData = await request.json();
 
-    if (!id || id === 'undefined') {
+    if (!id || !isValidObjectId(id)) {
       return NextResponse.json(
-        { success: false, error: 'ID новости не указан' },
+        { success: false, error: 'Неверный формат ID новости' },
         { status: 400 }
       );
     }
 
+    // Очистка обновляемых данных
+    const cleanUpdate = {
+      ...updateData,
+      title: updateData.title?.trim(),
+      excerpt: updateData.excerpt?.trim(),
+      metaTitle: updateData.metaTitle?.trim(),
+      metaDescription: updateData.metaDescription?.trim(),
+      keywords: Array.isArray(updateData.keywords) 
+        ? updateData.keywords.map(k => k.trim()).filter(Boolean) 
+        : undefined,
+    };
+
+    // Если меняем заголовок и slug не задан явно — перегенерируем
+    if (cleanUpdate.title && !cleanUpdate.slug) {
+      const { generateUniqueSlug } = await import('@/lib/slugify');
+      cleanUpdate.slug = await generateUniqueSlug(News, cleanUpdate.title, id);
+    }
+
     const news = await News.findByIdAndUpdate(
       id,
-      updateData,
-      { new: true, runValidators: true }
-    );
+      { $set: cleanUpdate },
+      { new: true, runValidators: true, context: 'query' }
+    ).lean();
 
     if (!news) {
       return NextResponse.json(
@@ -86,17 +81,22 @@ export async function PUT(request, { params }) {
       );
     }
 
-    return NextResponse.json({
-      success: true,
-      data: news
-    });
+    return NextResponse.json({ success: true, data: news });
   } catch (error) {
     console.error('Error updating news:', error);
-
-    if (error.name === 'CastError') {
+    
+    if (error.name === 'ValidationError') {
+      const errors = Object.values(error.errors).map(err => err.message);
       return NextResponse.json(
-        { success: false, error: 'Неверный формат ID новости' },
+        { success: false, error: 'Ошибка валидации', details: errors },
         { status: 400 }
+      );
+    }
+    
+    if (error.code === 11000) {
+      return NextResponse.json(
+        { success: false, error: 'Новость с таким слагом уже существует' },
+        { status: 409 }
       );
     }
 
@@ -107,16 +107,15 @@ export async function PUT(request, { params }) {
   }
 }
 
+// DELETE /api/news/[id] — удаление новости
 export async function DELETE(request, { params }) {
   try {
     await dbConnect();
-
-    // ✅ ФИКС: await params перед деструктуризацией
     const { id } = await params;
 
-    if (!id || id === 'undefined') {
+    if (!id || !isValidObjectId(id)) {
       return NextResponse.json(
-        { success: false, error: 'ID новости не указан' },
+        { success: false, error: 'Неверный формат ID новости' },
         { status: 400 }
       );
     }
@@ -132,18 +131,11 @@ export async function DELETE(request, { params }) {
 
     return NextResponse.json({
       success: true,
-      message: 'Новость успешно удалена'
+      message: 'Новость успешно удалена',
+      data: { id: news._id, slug: news.slug }
     });
   } catch (error) {
     console.error('Error deleting news:', error);
-
-    if (error.name === 'CastError') {
-      return NextResponse.json(
-        { success: false, error: 'Неверный формат ID новости' },
-        { status: 400 }
-      );
-    }
-
     return NextResponse.json(
       { success: false, error: 'Ошибка при удалении новости' },
       { status: 500 }

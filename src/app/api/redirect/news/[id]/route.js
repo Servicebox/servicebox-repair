@@ -4,7 +4,7 @@ import dbConnect from '@/lib/db';
 import News from '@/models/News';
 import { isValidObjectId } from '@/lib/slugify';
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://servicebox35.ru';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
 export async function GET(request, { params }) {
   try {
