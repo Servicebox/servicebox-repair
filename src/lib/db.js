@@ -1,44 +1,57 @@
-// lib/db.js
+// src/lib/db.js
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/serviceboxdb';
+const MONGODB_URI = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-  throw new Error('Пожалуйста, определите переменную окружения MONGODB_URI в .env.local');
-}
-
+// Кэш подключения
 let cached = global.mongoose;
-
 if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
 
-async function connectDB() {
-  if (cached.conn) {
-    return cached.conn;
+export default async function dbConnect() {
+  // Если БД не настроена — не падаем при билде
+  if (!MONGODB_URI) {
+    if (process.env.NEXT_PHASE === 'phase-production-build') {
+      console.warn('⚠️ MONGODB_URI not set during build - skipping DB');
+      return null;
+    }
+    throw new Error('MONGODB_URI is required in .env.local');
   }
 
-  if (!cached.promise) {
-    const opts = {
-      bufferCommands: false,
-      maxPoolSize: 10
-    };
+  // Возвращаем кэш, если есть
+  if (cached.conn) return cached.conn;
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-      console.log('✅ Подключено к MongoDB');
-      return mongoose;
-    });
+  // Создаём промис подключения, если нет
+  if (!cached.promise) {
+    cached.promise = mongoose
+      .connect(MONGODB_URI, {
+        bufferCommands: false,
+        maxPoolSize: 10,
+        minPoolSize: 2,
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 45000,
+        family: 4,
+      })
+      .then((mongoose) => {
+        console.log('✅ MongoDB connected');
+        return mongoose;
+      })
+      .catch((err) => {
+        if (process.env.NEXT_PHASE === 'phase-production-build') {
+          console.warn('⚠️ MongoDB unavailable during build:', err.message);
+          return null;
+        }
+        throw err;
+      });
   }
 
   try {
     cached.conn = await cached.promise;
   } catch (e) {
     cached.promise = null;
-    console.error('❌ Ошибка подключения к MongoDB:', e);
     throw e;
   }
 
   return cached.conn;
 }
-
-export default connectDB;
