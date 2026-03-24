@@ -1,7 +1,7 @@
 /* components/GlobalSearch/GlobalSearch.module.css */
 .searchContainer {
   position: relative;
-  z-index: 1000;
+  z-index: 99;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   justify-content: center;

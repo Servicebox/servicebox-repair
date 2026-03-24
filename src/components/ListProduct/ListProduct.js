@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './ListProduct.module.css';
 
-const API_URL = '';
+const API_URL = 'https://servicebox35.ru';
 
 const emptyProduct = {
   name: "",
@@ -57,9 +57,9 @@ const ListProduct = () => {
   };
 
   // Загрузка изображений для нового товара
-// В компоненте ListProduct исправьте функции загрузки:
+  // В компоненте ListProduct исправьте функции загрузки:
 
-// Upload images for new product
+  // Upload images for new product
   // Upload images for new product
   const handleNewImages = async (e) => {
     const files = Array.from(e.target.files);
@@ -73,7 +73,7 @@ const ListProduct = () => {
 
     try {
       setUploadProgress(30);
-      
+
       const res = await fetch(`${API_URL}/api/uploads/`, {
         method: 'POST',
         body: formData
@@ -87,14 +87,14 @@ const ListProduct = () => {
       }
 
       const data = await res.json();
-      
+
       if (data.success) {
-        setNewProduct(prev => ({ 
-          ...prev, 
-          images: [...prev.images, ...(data.image_urls || [])] 
+        setNewProduct(prev => ({
+          ...prev,
+          images: [...prev.images, ...(data.image_urls || [])]
         }));
         setUploadProgress(100);
-        
+
         setTimeout(() => setUploadProgress(0), 1000);
       } else {
         throw new Error(data.error || 'Unknown error');
@@ -110,23 +110,23 @@ const ListProduct = () => {
   const handleEditImages = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length < 1) return;
-    
+
     const formData = new FormData();
     files.forEach(file => formData.append('files', file)); // исправлено на 'files'
     formData.append('category', 'products');
-    
+
     try {
-      const res = await fetch(`${API_URL}/api/uploads/`, { 
-        method: 'POST', 
-        body: formData 
+      const res = await fetch(`${API_URL}/api/uploads/`, {
+        method: 'POST',
+        body: formData
       });
-      
+
       if (!res.ok) throw new Error('Ошибка загрузки файлов');
-      
+
       const data = await res.json();
-      setEditingProduct(prev => ({ 
-        ...prev, 
-        images: [...prev.images, ...(data.image_urls || [])] 
+      setEditingProduct(prev => ({
+        ...prev,
+        images: [...prev.images, ...(data.image_urls || [])]
       }));
     } catch (error) {
       console.error('Error uploading images:', error);
@@ -153,10 +153,10 @@ const ListProduct = () => {
     setAdding(true);
 
     try {
-      const cat = newProduct.category === "__new__" 
-        ? newProduct.category_typed 
+      const cat = newProduct.category === "__new__"
+        ? newProduct.category_typed
         : newProduct.category;
-        
+
       const subcat = newProduct.subcategory === "__new__"
         ? newProduct.subcategory_typed
         : newProduct.subcategory;
@@ -175,9 +175,9 @@ const ListProduct = () => {
           images: newProduct.images
         }),
       });
-      
+
       const data = await response.json();
-      
+
       if (data.success) {
         setNewProduct({ ...emptyProduct, images: [] });
         setNewProductPreview([]);
@@ -198,13 +198,13 @@ const ListProduct = () => {
   const fetchInfo = async () => {
     try {
       const response = await fetch(`${API_URL}/api/allproducts`);
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const data = await response.json();
-      
+
       if (data.success && Array.isArray(data.products)) {
         setAllProducts(data.products);
       } else if (Array.isArray(data)) {
@@ -228,17 +228,17 @@ const ListProduct = () => {
       alert('Неверный идентификатор товара');
       return;
     }
-    
+
     if (!window.confirm('Удалить этот товар?')) return;
-    
+
     try {
       const response = await fetch(`${API_URL}/api/removeproduct/${slug}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
       });
-      
+
       const data = await response.json();
-      
+
       if (data.success) {
         alert('Товар успешно удален');
         await fetchInfo();
@@ -295,7 +295,7 @@ const ListProduct = () => {
   // Сохранение изменений
   const saveEdit = async () => {
     if (!editingProduct) return;
-    
+
     const cat = editingProduct.category === "__new__"
       ? editingProduct.category_typed
       : editingProduct.category;
@@ -347,7 +347,7 @@ const ListProduct = () => {
   return (
     <div className={styles.listProduct}>
       <h2>Добавить новый товар</h2>
-      
+
       <input
         type="text"
         placeholder="Поиск..."
@@ -358,11 +358,11 @@ const ListProduct = () => {
 
       <form className={styles.createForm} onSubmit={handleNewSubmit}>
         <div className={styles.imageUpload}>
-          <input 
-            type="file" 
-            multiple 
-            accept="image/*" 
-            onChange={handleNewImages} 
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={handleNewImages}
             className={styles.fileInput}
           />
           <div className={styles.imagePreviews}>
@@ -380,22 +380,22 @@ const ListProduct = () => {
           </div>
         </div>
 
-        <input 
-          name="name" 
-          placeholder="Название" 
-          value={newProduct.name} 
-          onChange={handleNewChange} 
-          required 
+        <input
+          name="name"
+          placeholder="Название"
+          value={newProduct.name}
+          onChange={handleNewChange}
+          required
           className={styles.formInput}
         />
-        
-        <textarea 
-          name="description" 
-          placeholder="Описание" 
-          value={newProduct.description} 
-          onChange={handleNewChange} 
-          rows={3} 
-          required 
+
+        <textarea
+          name="description"
+          placeholder="Описание"
+          value={newProduct.description}
+          onChange={handleNewChange}
+          rows={3}
+          required
           className={styles.formTextarea}
         />
 
@@ -465,7 +465,7 @@ const ListProduct = () => {
                 <option value="__new__">+ Новая подкатегория</option>
               </select>
             )}
-            
+
             {newProduct.category !== "__new__" && newProduct.subcategory === "__new__" && (
               <input
                 name="subcategory_typed"
@@ -482,37 +482,37 @@ const ListProduct = () => {
           </div>
         )}
 
-        <input 
-          name="old_price" 
-          placeholder="Старая цена" 
-          value={newProduct.old_price} 
-          onChange={handleNewChange} 
-          type="number" 
+        <input
+          name="old_price"
+          placeholder="Старая цена"
+          value={newProduct.old_price}
+          onChange={handleNewChange}
+          type="number"
           className={styles.formInput}
         />
-        
-        <input 
-          name="new_price" 
-          placeholder="Новая цена" 
-          value={newProduct.new_price} 
-          onChange={handleNewChange} 
-          type="number" 
-          required 
+
+        <input
+          name="new_price"
+          placeholder="Новая цена"
+          value={newProduct.new_price}
+          onChange={handleNewChange}
+          type="number"
+          required
           className={styles.formInput}
         />
-        
-        <input 
-          name="quantity" 
-          placeholder="Количество" 
-          value={newProduct.quantity} 
-          onChange={handleNewChange} 
-          type="number" 
-          required 
+
+        <input
+          name="quantity"
+          placeholder="Количество"
+          value={newProduct.quantity}
+          onChange={handleNewChange}
+          type="number"
+          required
           className={styles.formInput}
         />
-        
-        <button 
-          disabled={adding} 
+
+        <button
+          disabled={adding}
           className={`${styles.submitButton} ${adding ? styles.loading : ''}`}
         >
           {adding ? "Добавление..." : "Добавить товар"}
@@ -520,7 +520,7 @@ const ListProduct = () => {
       </form>
 
       <h2>Все товары ({filteredProducts.length})</h2>
-      
+
       <div className={styles.productsHeader}>
         <div className={styles.headerCell}>Фото</div>
         <div className={styles.headerCell}>Название</div>
@@ -540,11 +540,11 @@ const ListProduct = () => {
               // Режим редактирования
               <div className={styles.editForm}>
                 <div className={styles.editImageSection}>
-                  <input 
-                    type="file" 
-                    multiple 
-                    accept="image/*" 
-                    onChange={handleEditImages} 
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={handleEditImages}
                     className={styles.fileInput}
                   />
                   <div className={styles.editImagePreviews}>
@@ -562,18 +562,18 @@ const ListProduct = () => {
                   </div>
                 </div>
 
-                <input 
-                  name="name" 
-                  value={editingProduct.name} 
-                  onChange={handleEditChange} 
+                <input
+                  name="name"
+                  value={editingProduct.name}
+                  onChange={handleEditChange}
                   className={styles.formInput}
                 />
-                
-                <textarea 
-                  name="description" 
-                  value={editingProduct.description} 
-                  onChange={handleEditChange} 
-                  rows={2} 
+
+                <textarea
+                  name="description"
+                  value={editingProduct.description}
+                  onChange={handleEditChange}
+                  rows={2}
                   className={styles.formTextarea}
                 />
 
@@ -632,7 +632,7 @@ const ListProduct = () => {
                         <option value="__new__">+ Новая подкатегория</option>
                       </select>
                     )}
-                    
+
                     {editingProduct.category !== "__new__" && editingProduct.subcategory === "__new__" && (
                       <input
                         name="subcategory_typed"
@@ -649,41 +649,41 @@ const ListProduct = () => {
                   </>
                 )}
 
-                <input 
-                  name="old_price" 
-                  value={editingProduct.old_price} 
-                  onChange={handleEditChange} 
-                  type="number" 
+                <input
+                  name="old_price"
+                  value={editingProduct.old_price}
+                  onChange={handleEditChange}
+                  type="number"
                   className={styles.formInput}
                 />
-                
-                <input 
-                  name="new_price" 
-                  value={editingProduct.new_price} 
-                  onChange={handleEditChange} 
-                  type="number" 
+
+                <input
+                  name="new_price"
+                  value={editingProduct.new_price}
+                  onChange={handleEditChange}
+                  type="number"
                   className={styles.formInput}
                 />
-                
-                <input 
-                  name="quantity" 
-                  value={editingProduct.quantity} 
-                  onChange={handleEditChange} 
-                  type="number" 
+
+                <input
+                  name="quantity"
+                  value={editingProduct.quantity}
+                  onChange={handleEditChange}
+                  type="number"
                   className={styles.formInput}
                 />
 
                 <div className={styles.editActions}>
-                  <button 
-                    type="button" 
-                    onClick={saveEdit} 
+                  <button
+                    type="button"
+                    onClick={saveEdit}
                     className={styles.saveButton}
                   >
                     Сохранить
                   </button>
-                  <button 
-                    type="button" 
-                    onClick={() => setEditingProduct(null)} 
+                  <button
+                    type="button"
+                    onClick={() => setEditingProduct(null)}
                     className={styles.cancelButton}
                   >
                     Отмена
@@ -694,22 +694,22 @@ const ListProduct = () => {
               // Режим просмотра
               <>
                 <div className={styles.productImages}>
-                  {(Array.isArray(product.images) ? product.images : 
-                   product.image ? [product.image] : []).slice(0, 3).map((img) =>
-                    img && (
-                      <Image
-                        key={`prod-img-${img}`}
-                        src={imageErrors[img] ? '/images/placeholder.jpg' : img}
-                        alt={product.name}
-                        width={45}
-                        height={45}
-                        className={styles.productImage}
-                        onError={handleImageError(img)}
-                      />
-                    )
-                  )}
+                  {(Array.isArray(product.images) ? product.images :
+                    product.image ? [product.image] : []).slice(0, 3).map((img) =>
+                      img && (
+                        <Image
+                          key={`prod-img-${img}`}
+                          src={imageErrors[img] ? '/images/placeholder.jpg' : img}
+                          alt={product.name}
+                          width={45}
+                          height={45}
+                          className={styles.productImage}
+                          onError={handleImageError(img)}
+                        />
+                      )
+                    )}
                 </div>
-                
+
                 <div className={styles.productCell}>{product.name}</div>
                 <div className={styles.productCell}>{product.description}</div>
                 <div className={styles.productCell}>{product.category}</div>
@@ -717,16 +717,16 @@ const ListProduct = () => {
                 <div className={styles.productCell}>{product.old_price}₽</div>
                 <div className={styles.productCell}>{product.new_price}₽</div>
                 <div className={styles.productCell}>{product.quantity}</div>
-                
+
                 <div className={styles.productActions}>
-                  <button 
-                    onClick={() => startEditing(product)} 
+                  <button
+                    onClick={() => startEditing(product)}
                     className={styles.editButton}
                   >
                     Редактировать
                   </button>
-                  <button 
-                    onClick={() => remove_product(product.slug)} 
+                  <button
+                    onClick={() => remove_product(product.slug)}
                     className={styles.deleteButton}
                   >
                     Удалить

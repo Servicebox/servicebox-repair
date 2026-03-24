@@ -1,12 +1,11 @@
-// next.config.mjs
 import withBundleAnalyzer from '@next/bundle-analyzer';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // === Сборка и отладка ===
+  // Оптимизация для продакшена
+  reactStrictMode: true,
   productionBrowserSourceMaps: false,
 
-  // === Экспериментальные функции ===
   experimental: {
     optimizePackageImports: [
       'react-icons',
@@ -16,18 +15,16 @@ const nextConfig = {
       'gsap',
       'axios',
       'lodash',
-      'date-fns',
+      'date-fns'
     ],
-    optimizeCss: true,
     scrollRestoration: true,
   },
 
-  // === Оптимизация изображений ===
   images: {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [320, 640, 750, 780, 828, 1040, 1080, 1200],
     imageSizes: [25, 50, 75, 85, 90, 100, 150, 200, 250, 300, 350, 400, 450, 500],
-    qualities: [85, 90],
+    qualities: [65, 70, 75, 80, 85, 90, 95, 100],
     remotePatterns: [
       {
         protocol: 'https',
@@ -44,81 +41,23 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24,
   },
 
-  // === Компилятор ===
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn'], // Оставляем ошибки и предупреждения
+    } : false,
   },
 
-  // === Производительность ===
   compress: true,
   poweredByHeader: false,
   staticPageGenerationTimeout: 120,
 
-  // === PWA: Заголовки для Service Worker и манифеста ===
-  async headers() {
-    return [
-      {
-        // Service Worker: не кэшировать, всегда проверять обновления
-        source: '/sw.js',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=0, must-revalidate',
-          },
-          {
-            key: 'Service-Worker-Allowed',
-            value: '/',
-          },
-        ],
-      },
-      {
-        // Манифест: правильный Content-Type
-        source: '/manifest.json',
-        headers: [
-          {
-            key: 'Content-Type',
-            value: 'application/manifest+json',
-          },
-        ],
-      },
-      {
-        // Иконки: долгий кэш
-        source: '/icons/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-    ];
-  },
-
-  // === Редиректы (опционально) ===
-  async redirects() {
-    return [
-      // Пример: редирект со старого чата на новый
-      // {
-      //   source: '/old-chat',
-      //   destination: '/chat-admin',
-      //   permanent: true,
-      // },
-    ];
-  },
-
-  // === Rewrites (опционально) ===
-  async rewrites() {
-    return [
-      // Пример: проксирование внешних API
-      {
-        source: '/api/socketio/:path*',
-        destination: 'https://servicebox35.ru/api/socketio/:path*',
-      },
-    ];
+  // Улучшенное кэширование
+  httpAgentOptions: {
+    keepAlive: true,
   },
 };
 
-// === Интеграция с @next/bundle-analyzer ===
+// Анализ бандла (опционально, запускается через ANALYZE=true npm run build)
 const configWithAnalyzer = process.env.ANALYZE === 'true'
   ? withBundleAnalyzer({
     enabled: true,

@@ -20,7 +20,19 @@
   --product-radius-sm: 4px;
   --product-radius-md: 8px;
   --product-radius-lg: 12px;
-
+  --sidebar-width: 280px;
+    --sidebar-width-mobile: 100%;
+    --header-height: 60px;
+    --color-primary: #3182ce;
+    --color-primary-dark: #2c5aa0;
+    --color-danger: #e53e3e;
+    --color-success: #38a169;
+    --color-warning: #ed8936;
+    --color-gray-50: #f9fafb;
+    --color-gray-100: #f7fafc;
+    --color-gray-200: #edf2f7;
+    --color-gray-600: #718096;
+    --color-gray-800: #2d3748;
   --product-color-primary: #007bff;
   --product-color-success: #28a745;
   --product-color-danger: #dc3545;
