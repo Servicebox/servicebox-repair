@@ -1,5 +1,5 @@
 'use client';
-
+import EmojiPicker from 'emoji-picker-react';
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
