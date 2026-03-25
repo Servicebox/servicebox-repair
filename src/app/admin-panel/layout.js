@@ -25,7 +25,7 @@ export default function AdminLayout({ children }) {
     { href: '/admin-panel/bookings', label: 'Бронирования', icon: '📅' },
     { href: '/admin-panel/tracking', label: 'Отслеживание', icon: '📍' },
     { href: '/admin-panel/depository', label: 'Файлы', icon: '📁' },
-    { href: '/admin-panel/price', label: 'Прайс-лист', icon: '📊' }
+    { href: '/admin-panel/price', label: 'Прайс-лист', icon: '📊' },
   ];
 
   useEffect(() => {
@@ -38,6 +38,15 @@ export default function AdminLayout({ children }) {
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
+
+  // Закрытие по Escape
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') setIsMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, []);
 
   if (loading) {
     return (
@@ -53,7 +62,9 @@ export default function AdminLayout({ children }) {
       <div className={styles.accessDenied}>
         <h1>Доступ запрещен</h1>
         <p>Требуются права администратора</p>
-        <Link href="/" className={styles.homeLink}>На главную</Link>
+        <Link href="/" className={styles.homeLink}>
+          На главную
+        </Link>
       </div>
     );
   }
@@ -74,7 +85,10 @@ export default function AdminLayout({ children }) {
       </div>
 
       {/* Сайдбар */}
-      <aside className={`${styles.sidebar} ${isMobileMenuOpen ? styles.sidebarOpen : ''}`}>
+      <aside
+        className={`${styles.sidebar} ${isMobileMenuOpen ? styles.sidebarOpen : ''}`}
+        aria-label="Боковое меню администратора"
+      >
         <div className={styles.sidebarHeader}>
           <div>
             <div className={styles.sidebarTitle}>Админ-панель</div>
@@ -95,6 +109,7 @@ export default function AdminLayout({ children }) {
               key={item.href}
               href={item.href}
               className={`${styles.navLink} ${pathname === item.href ? styles.navLinkActive : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
             >
               <span className={styles.navIcon}>{item.icon}</span>
               <span className={styles.navLabel}>{item.label}</span>
@@ -110,13 +125,15 @@ export default function AdminLayout({ children }) {
 
       {/* Оверлей для мобильных */}
       {isMobileMenuOpen && (
-        <div className={styles.overlay} onClick={() => setIsMobileMenuOpen(false)} />
+        <div
+          className={styles.overlay}
+          onClick={() => setIsMobileMenuOpen(false)}
+          aria-hidden="true"
+        />
       )}
 
       {/* Основной контент */}
-      <main className={styles.mainContent}>
-        {children}
-      </main>
+      <main className={styles.mainContent}>{children}</main>
     </div>
   );
 }

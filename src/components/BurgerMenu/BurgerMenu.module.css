@@ -87,7 +87,7 @@
   width: 85%;
   max-width: 380px;
   height: 100vh;
-  background: #043878;
+background: #ff8c00;
   box-shadow: -2px 0 20px rgba(0, 0, 0, 0.3);
   transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 30px 25px;
