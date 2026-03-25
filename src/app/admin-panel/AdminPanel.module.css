@@ -3,26 +3,26 @@
 /* Контейнер всей админки */
 .adminContainer {
   min-height: 100vh;
-  background: var(--color-gray-50);
+  background: #f9fafb;
   display: flex;
   flex-direction: column;
 }
 
-/* ========== МОБИЛЬНЫЙ ХЕДЕР (виден только на мобильных) ========== */
+/* ========== МОБИЛЬНЫЙ ХЕДЕР ========== */
 .mobileHeader {
   display: none;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: var(--header-height);
+  height: 60px;
   background: white;
   align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
   z-index: 1009;
-  border-bottom: 1px solid var(--color-gray-200);
-  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid #edf2f7;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .mobileMenuButton {
@@ -31,19 +31,19 @@
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0.5rem;
-  border-radius: var(--radius-sm);
-  color: var(--color-gray-600);
-  transition: var(--transition);
+  border-radius: 0.375rem;
+  color: #718096;
+  transition: all 0.2s ease;
 }
 
 .mobileMenuButton:hover {
-  background: var(--color-gray-100);
+  background: #f7fafc;
 }
 
 .mobileTitle {
   font-size: 1.2rem;
   font-weight: 600;
-  color: var(--color-gray-800);
+  color: #2d3748;
   margin: 0;
 }
 
@@ -52,22 +52,21 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: var(--sidebar-width);
+  width: 280px;
   height: 100vh;
   background: white;
-  border-right: 1px solid var(--color-gray-200);
+  border-right: 1px solid #edf2f7;
   display: flex;
   flex-direction: column;
   transition: transform 0.3s ease;
   z-index: 1003;
   transform: translateX(0);
-  /* на десктопе видим */
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .sidebarHeader {
   padding: 1.5rem;
-  border-bottom: 1px solid var(--color-gray-200);
+  border-bottom: 1px solid #edf2f7;
   background: white;
   display: flex;
   justify-content: space-between;
@@ -78,12 +77,12 @@
   font-size: 1.25rem;
   font-weight: 700;
   margin: 0 0 0.25rem 0;
-  color: var(--color-gray-800);
+  color: #2d3748;
 }
 
 .adminWelcome {
   font-size: 0.8rem;
-  color: var(--color-gray-600);
+  color: #718096;
   margin: 0;
 }
 
@@ -93,15 +92,15 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: var(--color-gray-600);
+  color: #718096;
   padding: 0.5rem;
   margin: -0.5rem;
-  border-radius: var(--radius-sm);
-  transition: var(--transition);
+  border-radius: 0.375rem;
+  transition: all 0.2s ease;
 }
 
 .closeSidebar:hover {
-  background: var(--color-gray-100);
+  background: #f7fafc;
 }
 
 .sidebarNav {
@@ -115,23 +114,23 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem 1.5rem;
-  color: var(--color-gray-600);
+  color: #718096;
   text-decoration: none;
   font-weight: 500;
-  transition: var(--transition);
+  transition: all 0.2s ease;
   border-left: 3px solid transparent;
 }
 
 .navLink:hover {
-  background: var(--color-gray-100);
-  color: var(--color-gray-800);
-  border-left-color: var(--color-gray-300);
+  background: #f7fafc;
+  color: #2d3748;
+  border-left-color: #edf2f7;
 }
 
 .navLinkActive {
   background: #ebf8ff;
-  color: var(--color-primary);
-  border-left-color: var(--color-primary);
+  color: #3182ce;
+  border-left-color: #3182ce;
 }
 
 .navIcon {
@@ -146,20 +145,20 @@
 
 .sidebarFooter {
   padding: 1rem 1.5rem;
-  border-top: 1px solid var(--color-gray-200);
+  border-top: 1px solid #edf2f7;
   font-size: 0.8rem;
-  color: var(--color-gray-600);
+  color: #718096;
 }
 
 /* ========== ОСНОВНОЙ КОНТЕНТ ========== */
 .mainContent {
-  margin-left: var(--sidebar-width);
+  margin-left: 280px;
   padding: 2rem;
   min-height: 100vh;
   transition: margin-left 0.3s ease;
 }
 
-/* ========== АДАПТИВНОСТЬ (мобильные) ========== */
+/* ========== АДАПТИВНОСТЬ ========== */
 @media (max-width: 1023px) {
   .sidebar {
     transform: translateX(-100%);
@@ -175,7 +174,7 @@
 
   .mainContent {
     margin-left: 0;
-    padding-top: calc(var(--header-height) + 1rem);
+    padding-top: calc(60px + 1rem);
   }
 
   .mobileHeader {
@@ -186,11 +185,11 @@
 @media (max-width: 768px) {
   .mainContent {
     padding: 1rem;
-    padding-top: calc(var(--header-height) + 1rem);
+    padding-top: calc(60px + 1rem);
   }
 }
 
-/* ========== ОБЩИЕ СТИЛИ ДЛЯ СТРАНИЦ (новости, акции, товары) ========== */
+/* ========== ОБЩИЕ СТИЛИ ДЛЯ СТРАНИЦ ========== */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -208,12 +207,12 @@
 .header h1 {
   font-size: 1.75rem;
   font-weight: 700;
-  color: var(--color-gray-800);
+  color: #2d3748;
   margin: 0;
 }
 
 .createButton {
-  background: var(--color-primary);
+  background: #3182ce;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 6px;
@@ -228,7 +227,7 @@
 }
 
 .createButton:hover {
-  background: var(--color-primary-dark);
+  background: #2c5aa0;
 }
 
 .newsList {
@@ -239,14 +238,14 @@
 
 .newsItem {
   background: white;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   overflow: hidden;
   transition: box-shadow 0.2s;
 }
 
 .newsItem:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .newsContent {
@@ -266,7 +265,7 @@
   font-size: 1.2rem;
   font-weight: 600;
   margin: 0;
-  color: var(--color-gray-800);
+  color: #2d3748;
 }
 
 .statusBadges {
@@ -303,13 +302,13 @@
   display: flex;
   gap: 1rem;
   font-size: 0.8rem;
-  color: var(--color-gray-600);
+  color: #718096;
   margin-bottom: 0.75rem;
   flex-wrap: wrap;
 }
 
 .excerpt {
-  color: var(--color-gray-600);
+  color: #718096;
   line-height: 1.5;
   margin-bottom: 1rem;
 }
@@ -318,16 +317,16 @@
   max-width: 100%;
   max-height: 150px;
   object-fit: contain;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--color-gray-200);
+  border-radius: 0.375rem;
+  border: 1px solid #edf2f7;
 }
 
 .actions {
   display: flex;
   gap: 0.75rem;
   padding: 1rem 1.5rem;
-  background: var(--color-gray-100);
-  border-top: 1px solid var(--color-gray-200);
+  background: #f7fafc;
+  border-top: 1px solid #edf2f7;
   flex-wrap: wrap;
 }
 
@@ -342,8 +341,8 @@
   text-decoration: none;
   display: inline-block;
   background: white;
-  color: var(--color-gray-800);
-  border: 1px solid var(--color-gray-300);
+  color: #2d3748;
+  border: 1px solid #edf2f7;
 }
 
 .button:hover {
@@ -351,17 +350,17 @@
 }
 
 .edit {
-  background: var(--color-primary);
+  background: #3182ce;
   color: white;
   border: none;
 }
 
 .edit:hover {
-  background: var(--color-primary-dark);
+  background: #2c5aa0;
 }
 
 .delete {
-  background: var(--color-danger);
+  background: #e53e3e;
   color: white;
   border: none;
 }
@@ -371,13 +370,13 @@
 }
 
 .publish {
-  background: var(--color-success);
+  background: #38a169;
   color: white;
   border: none;
 }
 
 .unpublish {
-  background: var(--color-warning);
+  background: #ed8936;
   color: white;
   border: none;
 }
@@ -406,18 +405,17 @@
 .loading {
   text-align: center;
   padding: 3rem;
-  color: var(--color-gray-600);
+  color: #718096;
 }
 
 .empty {
   text-align: center;
   padding: 3rem;
   background: white;
-  border-radius: var(--radius-lg);
-  color: var(--color-gray-600);
+  border-radius: 0.75rem;
+  color: #718096;
 }
 
-/* Адаптация для мобильных (страницы) */
 @media (max-width: 768px) {
   .header {
     flex-direction: column;
@@ -445,31 +443,31 @@
 .productsTable {
   width: 100%;
   background: white;
-  border-radius: var(--radius-lg);
+  border-radius: 0.75rem;
   overflow-x: auto;
-  border: 1px solid var(--color-gray-200);
+  border: 1px solid #edf2f7;
 }
 
 .tableHeader {
   display: grid;
-  background: var(--color-gray-100);
+  background: #f7fafc;
   padding: 0.75rem 1rem;
   font-weight: 600;
-  color: var(--color-gray-700);
-  border-bottom: 1px solid var(--color-gray-200);
+  color: #4a5568;
+  border-bottom: 1px solid #edf2f7;
   font-size: 0.85rem;
 }
 
 .tableRow {
   display: grid;
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--color-gray-200);
+  border-bottom: 1px solid #edf2f7;
   align-items: center;
-  transition: var(--transition);
+  transition: all 0.2s ease;
 }
 
 .tableRow:hover {
-  background: var(--color-gray-50);
+  background: #f9fafb;
 }
 
 .tableRow:last-child {
@@ -492,9 +490,9 @@
 .productImageContainer {
   width: 50px;
   height: 50px;
-  border-radius: var(--radius-sm);
+  border-radius: 0.375rem;
   overflow: hidden;
-  background: var(--color-gray-100);
+  background: #f7fafc;
   flex-shrink: 0;
 }
 
@@ -505,8 +503,8 @@
 }
 
 .moreImages {
-  background: var(--color-gray-200);
-  color: var(--color-gray-700);
+  background: #edf2f7;
+  color: #4a5568;
   font-size: 0.7rem;
   padding: 0.25rem 0.5rem;
   border-radius: 20px;
@@ -515,13 +513,13 @@
 
 .productName {
   font-weight: 600;
-  color: var(--color-gray-800);
+  color: #2d3748;
   margin-bottom: 0.25rem;
 }
 
 .productDescription {
   font-size: 0.8rem;
-  color: var(--color-gray-600);
+  color: #718096;
   line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -530,11 +528,11 @@
 }
 
 .productSlug code {
-  background: var(--color-gray-100);
+  background: #f7fafc;
   padding: 0.125rem 0.25rem;
   border-radius: 3px;
   font-size: 0.7rem;
-  color: var(--color-gray-600);
+  color: #718096;
 }
 
 .productCategory {
@@ -543,8 +541,8 @@
 
 .productSubcategory {
   font-size: 0.8rem;
-  color: var(--color-gray-600);
-  background: var(--color-gray-100);
+  color: #718096;
+  background: #f7fafc;
   display: inline-block;
   padding: 0.125rem 0.5rem;
   border-radius: 12px;
@@ -553,7 +551,7 @@
 
 .noSubcategory {
   font-size: 0.7rem;
-  color: var(--color-gray-500);
+  color: #a0aec0;
   font-style: italic;
 }
 
@@ -565,16 +563,16 @@
 .oldPrice {
   text-decoration: line-through;
   font-size: 0.75rem;
-  color: var(--color-gray-500);
+  color: #a0aec0;
 }
 
 .newPrice {
   font-weight: 700;
-  color: var(--color-gray-800);
+  color: #2d3748;
 }
 
 .inStock {
-  color: var(--color-success);
+  color: #38a169;
   font-weight: 600;
   background: #e6fffa;
   padding: 0.25rem 0.5rem;
@@ -584,7 +582,7 @@
 }
 
 .outOfStock {
-  color: var(--color-danger);
+  color: #e53e3e;
   font-weight: 600;
   background: #fff5f5;
   padding: 0.25rem 0.5rem;
@@ -605,24 +603,24 @@
 .cancelButton {
   padding: 0.4rem 0.8rem;
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: 0.375rem;
   font-size: 0.75rem;
   font-weight: 500;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.2s ease;
 }
 
 .editButton {
-  background: var(--color-primary);
+  background: #3182ce;
   color: white;
 }
 
 .editButton:hover {
-  background: var(--color-primary-dark);
+  background: #2c5aa0;
 }
 
 .deleteButton {
-  background: var(--color-danger);
+  background: #e53e3e;
   color: white;
 }
 
@@ -631,7 +629,7 @@
 }
 
 .saveButton {
-  background: var(--color-success);
+  background: #38a169;
   color: white;
 }
 
@@ -640,12 +638,12 @@
 }
 
 .cancelButton {
-  background: var(--color-gray-200);
-  color: var(--color-gray-700);
+  background: #edf2f7;
+  color: #4a5568;
 }
 
 .cancelButton:hover {
-  background: var(--color-gray-300);
+  background: #e2e8f0;
 }
 
 /* Режим редактирования */
@@ -654,8 +652,8 @@
 .editSelect {
   width: 100%;
   padding: 0.4rem 0.5rem;
-  border: 1px solid var(--color-gray-200);
-  border-radius: var(--radius-sm);
+  border: 1px solid #edf2f7;
+  border-radius: 0.375rem;
   font-size: 0.8rem;
   margin-bottom: 0.25rem;
 }
@@ -664,7 +662,7 @@
 .editTextarea:focus,
 .editSelect:focus {
   outline: none;
-  border-color: var(--color-primary);
+  border-color: #3182ce;
 }
 
 .priceEditGroup {
@@ -694,8 +692,8 @@
 .formSection,
 .productsSection {
   background: white;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
   margin-bottom: 2rem;
 }
@@ -703,10 +701,10 @@
 .sectionTitle {
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--color-gray-800);
+  color: #2d3748;
   margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--color-gray-200);
+  border-bottom: 2px solid #edf2f7;
 }
 
 .formGrid {
@@ -723,7 +721,7 @@
 
 .formLabel {
   font-weight: 600;
-  color: var(--color-gray-700);
+  color: #4a5568;
   font-size: 0.9rem;
 }
 
@@ -732,18 +730,18 @@
 .formSelect {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid var(--color-gray-200);
-  border-radius: var(--radius-sm);
+  border: 1px solid #edf2f7;
+  border-radius: 0.375rem;
   font-size: 0.95rem;
   background: white;
-  transition: var(--transition);
+  transition: all 0.2s ease;
 }
 
 .formInput:focus,
 .formTextarea:focus,
 .formSelect:focus {
   outline: none;
-  border-color: var(--color-primary);
+  border-color: #3182ce;
   box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
 }
 
@@ -754,17 +752,17 @@
 
 /* Upload */
 .uploadArea {
-  border: 2px dashed var(--color-gray-200);
-  border-radius: var(--radius-md);
+  border: 2px dashed #edf2f7;
+  border-radius: 0.5rem;
   padding: 1rem;
   text-align: center;
-  background: var(--color-gray-50);
+  background: #f9fafb;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.2s ease;
 }
 
 .uploadArea:hover {
-  border-color: var(--color-primary);
+  border-color: #3182ce;
   background: white;
 }
 
@@ -777,20 +775,20 @@
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
-  color: var(--color-gray-700);
+  color: #4a5568;
   font-size: 0.9rem;
 }
 
 .fileHint {
   font-size: 0.75rem;
-  color: var(--color-gray-500);
+  color: #a0aec0;
   margin-top: 0.25rem;
   display: block;
 }
 
 .progressBar {
   height: 4px;
-  background: var(--color-gray-200);
+  background: #edf2f7;
   border-radius: 2px;
   margin-top: 0.5rem;
   overflow: hidden;
@@ -798,7 +796,7 @@
 
 .progressFill {
   height: 100%;
-  background: var(--color-primary);
+  background: #3182ce;
   width: 0%;
   transition: width 0.3s;
 }
@@ -814,10 +812,10 @@
   position: relative;
   width: 80px;
   height: 80px;
-  border: 1px solid var(--color-gray-200);
-  border-radius: var(--radius-sm);
+  border: 1px solid #edf2f7;
+  border-radius: 0.375rem;
   overflow: hidden;
-  background: var(--color-gray-100);
+  background: #f7fafc;
 }
 
 .previewImage {
@@ -841,49 +839,49 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: var(--transition);
+  transition: all 0.2s ease;
 }
 
 .removeImageButton:hover {
-  background: var(--color-danger);
+  background: #e53e3e;
 }
 
 .helpText {
   font-size: 0.75rem;
-  color: var(--color-gray-500);
+  color: #a0aec0;
   margin-top: 0.5rem;
 }
 
 .slugPreview {
   font-size: 0.75rem;
-  color: var(--color-gray-600);
-  background: var(--color-gray-100);
+  color: #718096;
+  background: #f7fafc;
   padding: 0.25rem 0.5rem;
-  border-radius: var(--radius-sm);
+  border-radius: 0.375rem;
   margin-top: 0.25rem;
 }
 
 .slugPreviewSmall {
   font-size: 0.7rem;
   margin-top: 0.25rem;
-  color: var(--color-gray-500);
+  color: #a0aec0;
 }
 
 .submitButton {
-  background: var(--color-primary);
+  background: #3182ce;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: var(--radius-md);
+  border-radius: 0.5rem;
   font-weight: 600;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.2s ease;
   width: 100%;
   text-align: center;
 }
 
 .submitButton:hover:not(:disabled) {
-  background: var(--color-primary-dark);
+  background: #2c5aa0;
   transform: translateY(-1px);
 }
 
@@ -918,8 +916,8 @@
   }
 }
 
-/* Специфичные адаптации для таблиц на разных экранах */
-@media (max-width: 1024px) {
+/* Специфичные адаптации для таблиц */
+@media (max-width: 2000px) {
 
   .tableHeader,
   .tableRow {
@@ -996,7 +994,7 @@
 
   .mainContent {
     padding: 0.75rem;
-    padding-top: calc(var(--header-height) + 1rem);
+    padding-top: calc(60px + 1rem);
   }
 }
 
@@ -1005,7 +1003,7 @@
 .emptyState {
   text-align: center;
   padding: 3rem;
-  color: var(--color-gray-500);
+  color: #a0aec0;
 }
 
 .loadingContainer {
@@ -1020,8 +1018,8 @@
 .spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid var(--color-gray-200);
-  border-top-color: var(--color-primary);
+  border: 4px solid #edf2f7;
+  border-top-color: #3182ce;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -1033,23 +1031,23 @@
 
 .accessDenied h1 {
   font-size: 2rem;
-  color: var(--color-danger);
+  color: #e53e3e;
   margin-bottom: 1rem;
 }
 
 .homeLink {
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  background: var(--color-primary);
+  background: #3182ce;
   color: white;
   text-decoration: none;
-  border-radius: var(--radius-md);
+  border-radius: 0.5rem;
   margin-top: 1rem;
-  transition: var(--transition);
+  transition: all 0.2s ease;
 }
 
 .homeLink:hover {
-  background: var(--color-primary-dark);
+  background: #2c5aa0;
 }
 
 .overlay {
