@@ -7,7 +7,8 @@ import styles from '../AdminPanel.module.css';
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
 // SVG placeholder как data URL
-const PLACEHOLDER_IMAGE = "data:image/svg+xml;utf8,<svg width='400' height='400' viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'><rect fill='%23F1F1F1' width='400' height='400'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='32' fill='%23b3b3b3'>Нет фото</text></svg>";
+const PLACEHOLDER_IMAGE =
+  "data:image/svg+xml;utf8,<svg width='400' height='400' viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'><rect fill='%23F1F1F1' width='400' height='400'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='32' fill='%23b3b3b3'>Нет фото</text></svg>";
 
 const emptyProduct = {
   name: "",
@@ -24,13 +25,13 @@ const emptyProduct = {
     length: 20,
     width: 20,
     height: 10,
-    unit: 'cm'
+    unit: 'cm',
   },
   country: "Россия",
   old_price: "",
   new_price: "",
   quantity: "1",
-  images: []
+  images: [],
 };
 
 // Функция для генерации slug
@@ -78,17 +79,14 @@ export default function ListProduct() {
   useEffect(() => {
     if (newProduct.name) {
       const generatedSlug = generateSlug(newProduct.name);
-      setNewProduct(prev => ({
-        ...prev,
-        slug: generatedSlug
-      }));
+      setNewProduct((prev) => ({ ...prev, slug: generatedSlug }));
     }
   }, [newProduct.name]);
 
   // Update subcategories when category changes
   useEffect(() => {
     if (newProduct.category && newProduct.category !== "__new__") {
-      const selectedCategory = categories.find(c => c.category === newProduct.category);
+      const selectedCategory = categories.find((c) => c.category === newProduct.category);
       setSubcategories(selectedCategory ? selectedCategory.subcategories : []);
     } else {
       setSubcategories([]);
@@ -97,7 +95,8 @@ export default function ListProduct() {
 
   // Handle image errors
   const handleImageError = (imageUrl) => (e) => {
-    setImageErrors(prev => ({ ...prev, [imageUrl]: true }));
+    if (!imageUrl) return;
+    setImageErrors((prev) => ({ ...prev, [imageUrl]: true }));
     e.target.src = PLACEHOLDER_IMAGE;
   };
 
@@ -107,19 +106,16 @@ export default function ListProduct() {
     if (files.length < 1) return;
 
     setUploadProgress(10);
-
     const formData = new FormData();
-    files.forEach(file => formData.append('files', file));
+    files.forEach((file) => formData.append('files', file));
     formData.append('category', 'products');
 
     try {
       setUploadProgress(30);
-
       const res = await fetch(`${API_URL}/api/uploads/`, {
         method: 'POST',
-        body: formData
+        body: formData,
       });
-
       setUploadProgress(70);
 
       if (!res.ok) {
@@ -128,14 +124,12 @@ export default function ListProduct() {
       }
 
       const data = await res.json();
-
       if (data.success) {
-        setNewProduct(prev => ({
+        setNewProduct((prev) => ({
           ...prev,
-          images: [...prev.images, ...(data.image_urls || [])]
+          images: [...prev.images, ...(data.image_urls || [])],
         }));
         setUploadProgress(100);
-
         setTimeout(() => setUploadProgress(0), 1000);
       } else {
         throw new Error(data.error || 'Unknown error');
@@ -149,9 +143,9 @@ export default function ListProduct() {
 
   // Remove image from new product
   const removeNewImage = (index) => {
-    setNewProduct(prev => ({
+    setNewProduct((prev) => ({
       ...prev,
-      images: prev.images.filter((_, i) => i !== index)
+      images: prev.images.filter((_, i) => i !== index),
     }));
   };
 
@@ -159,21 +153,17 @@ export default function ListProduct() {
   const handleNewChange = (e) => {
     const { name, value } = e.target;
 
-    // Специальная обработка для полей dimensions
     if (name.startsWith('dimensions.')) {
       const dimensionField = name.split('.')[1];
-      setNewProduct(prev => ({
+      setNewProduct((prev) => ({
         ...prev,
         dimensions: {
           ...prev.dimensions,
-          [dimensionField]: value
-        }
+          [dimensionField]: value,
+        },
       }));
     } else {
-      setNewProduct(prev => ({
-        ...prev,
-        [name]: value
-      }));
+      setNewProduct((prev) => ({ ...prev, [name]: value }));
     }
   };
 
@@ -181,37 +171,33 @@ export default function ListProduct() {
   const handleNewSubmit = async (e) => {
     e.preventDefault();
 
-    // Базовая валидация
     if (!newProduct.name.trim()) {
       alert("Введите название товара!");
       return;
     }
-
     if (!newProduct.new_price || Number(newProduct.new_price) <= 0) {
       alert("Введите корректную цену!");
       return;
     }
-
     if (!newProduct.quantity || Number(newProduct.quantity) < 0) {
       alert("Введите корректное количество!");
       return;
     }
-
     if (!newProduct.category) {
       alert("Выберите категорию!");
       return;
     }
 
     setAdding(true);
-
     try {
-      const category = newProduct.category === "__new__"
-        ? (newProduct.category_typed || "").trim()
-        : newProduct.category;
-
-      const subcategory = newProduct.subcategory === "__new__"
-        ? (newProduct.subcategory_typed || "").trim()
-        : newProduct.subcategory;
+      const category =
+        newProduct.category === "__new__"
+          ? (newProduct.category_typed || "").trim()
+          : newProduct.category;
+      const subcategory =
+        newProduct.subcategory === "__new__"
+          ? (newProduct.subcategory_typed || "").trim()
+          : newProduct.subcategory;
 
       if (!category) {
         alert("Категория обязательна!");
@@ -219,44 +205,38 @@ export default function ListProduct() {
       }
 
       const finalSlug = generateSlug(newProduct.name);
-
       const productData = {
         name: newProduct.name.trim(),
         slug: finalSlug,
-        category: category,
-        subcategory: subcategory,
+        category,
+        subcategory,
         brand: newProduct.brand.trim(),
         vendor: newProduct.vendor?.trim() || newProduct.brand.trim(),
         vendorCode: newProduct.vendorCode?.trim() || '',
-        sku: newProduct.vendorCode?.trim() || newProduct.vendorCode?.trim() || '',
+        sku: newProduct.vendorCode?.trim() || '',
         gtin: newProduct.gtin?.trim() || '',
         weight: Number(newProduct.weight) || 0.5,
         dimensions: {
           length: Number(newProduct.dimensions?.length) || 20,
           width: Number(newProduct.dimensions?.width) || 20,
           height: Number(newProduct.dimensions?.height) || 10,
-          unit: 'cm'
+          unit: 'cm',
         },
         country: newProduct.country || 'Россия',
         old_price: Number(newProduct.old_price) || 0,
         new_price: Number(newProduct.new_price) || 0,
         description: newProduct.description,
-        quantity: Math.max(1, Number(newProduct.quantity) || 1), // Минимум 1 для YML
-        images: newProduct.images.length > 0 ? newProduct.images : [PLACEHOLDER_IMAGE]
+        quantity: Math.max(1, Number(newProduct.quantity) || 1),
+        images: newProduct.images.length > 0 ? newProduct.images : [PLACEHOLDER_IMAGE],
       };
-
-      console.log('Sending product data:', productData);
 
       const response = await fetch(`${API_URL}/api/addproduct`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(productData),
       });
 
       const data = await response.json();
-
       if (data.success) {
         setNewProduct({ ...emptyProduct, images: [] });
         await fetchInfo();
@@ -277,11 +257,7 @@ export default function ListProduct() {
     try {
       setLoading(true);
       const response = await fetch(`${API_URL}/api/allproducts`);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
 
       if (data.success && Array.isArray(data.products)) {
@@ -310,7 +286,6 @@ export default function ListProduct() {
       alert('Неверный идентификатор товара');
       return;
     }
-
     if (!window.confirm(`Удалить товар "${product.name}"?`)) return;
 
     try {
@@ -319,9 +294,7 @@ export default function ListProduct() {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
       });
-
       const data = await response.json();
-
       if (data.success) {
         alert('Товар успешно удален');
         await fetchInfo();
@@ -340,12 +313,10 @@ export default function ListProduct() {
       ...product,
       category_typed: "",
       subcategory_typed: "",
-      images: Array.isArray(product.images) ? product.images :
-        product.image ? [product.image] : []
+      images: Array.isArray(product.images) ? product.images : product.image ? [product.image] : [],
     });
-
     if (product.category && product.category !== "__new__") {
-      const selectedCategory = categories.find(c => c.category === product.category);
+      const selectedCategory = categories.find((c) => c.category === product.category);
       setEditingSubcategories(selectedCategory ? selectedCategory.subcategories : []);
     }
   };
@@ -353,38 +324,29 @@ export default function ListProduct() {
   // Handle edit form changes
   const handleEditChange = (e) => {
     const { name, value } = e.target;
-    setEditingProduct(prev => ({
-      ...prev,
-      [name]: value
-    }));
-
+    setEditingProduct((prev) => ({ ...prev, [name]: value }));
     if (name === 'name' && value) {
       const newSlug = generateSlug(value);
-      setEditingProduct(prev => ({
-        ...prev,
-        slug: newSlug
-      }));
+      setEditingProduct((prev) => ({ ...prev, slug: newSlug }));
     }
   };
 
-  // Handle category change in edit
   const handleEditCategoryChange = (e) => {
     const value = e.target.value;
-    setEditingProduct(prev => ({
+    setEditingProduct((prev) => ({
       ...prev,
       category: value,
       subcategory: "",
       category_typed: "",
-      subcategory_typed: ""
+      subcategory_typed: "",
     }));
   };
 
-  // Handle subcategory change in edit
   const handleEditSubcategoryChange = (e) => {
-    setEditingProduct(prev => ({
+    setEditingProduct((prev) => ({
       ...prev,
       subcategory: e.target.value,
-      subcategory_typed: ""
+      subcategory_typed: "",
     }));
   };
 
@@ -394,24 +356,22 @@ export default function ListProduct() {
     if (files.length < 1) return;
 
     const formData = new FormData();
-    files.forEach(file => formData.append('files', file));
+    files.forEach((file) => formData.append('files', file));
     formData.append('category', 'products');
 
     try {
       const res = await fetch(`${API_URL}/api/uploads/`, {
         method: 'POST',
-        body: formData
+        body: formData,
       });
-
       if (!res.ok) {
         const errorData = await res.json();
         throw new Error(errorData.error || `Ошибка сервера: ${res.status}`);
       }
-
       const data = await res.json();
-      setEditingProduct(prev => ({
+      setEditingProduct((prev) => ({
         ...prev,
-        images: [...prev.images, ...(data.image_urls || [])]
+        images: [...(prev?.images || []), ...(data.image_urls || [])],
       }));
     } catch (error) {
       console.error('Error uploading images:', error);
@@ -419,11 +379,10 @@ export default function ListProduct() {
     }
   };
 
-  // Remove image from editing product
   const removeEditImage = (index) => {
-    setEditingProduct(prev => ({
+    setEditingProduct((prev) => ({
       ...prev,
-      images: prev.images.filter((_, i) => i !== index)
+      images: prev.images.filter((_, i) => i !== index),
     }));
   };
 
@@ -431,33 +390,31 @@ export default function ListProduct() {
   const saveEdit = async () => {
     if (!editingProduct) return;
 
-    // Валидация
     if (!editingProduct.name.trim()) {
       alert("Введите название товара!");
       return;
     }
-
     if (!editingProduct.new_price || Number(editingProduct.new_price) <= 0) {
       alert("Введите корректную цену!");
       return;
     }
-
     if (!editingProduct.quantity || Number(editingProduct.quantity) < 0) {
       alert("Введите корректное количество!");
       return;
     }
 
-    const category = editingProduct.category === "__new__"
-      ? (editingProduct.category_typed || "").trim()
-      : editingProduct.category;
-
+    const category =
+      editingProduct.category === "__new__"
+        ? (editingProduct.category_typed || "").trim()
+        : editingProduct.category;
     let subcategory = "";
     if (editingProduct.category === "__new__") {
       subcategory = (editingProduct.subcategory_typed || "").trim();
     } else {
-      subcategory = editingProduct.subcategory === "__new__"
-        ? (editingProduct.subcategory_typed || "").trim()
-        : (editingProduct.subcategory || "").trim();
+      subcategory =
+        editingProduct.subcategory === "__new__"
+          ? (editingProduct.subcategory_typed || "").trim()
+          : (editingProduct.subcategory || "").trim();
     }
 
     if (!category) {
@@ -467,30 +424,24 @@ export default function ListProduct() {
 
     try {
       const identifier = editingProduct.slug || editingProduct._id;
-
       const updateData = {
         name: editingProduct.name.trim(),
         slug: editingProduct.slug,
-        category: category,
-        subcategory: subcategory,
+        category,
+        subcategory,
         brand: editingProduct.brand?.trim() || 'ServiceBox35',
         vendor: editingProduct.vendor?.trim() || editingProduct.brand?.trim() || 'ServiceBox35',
         vendorCode: editingProduct.vendorCode?.trim() || '',
         sku: editingProduct.sku?.trim() || editingProduct.vendorCode?.trim() || '',
         gtin: editingProduct.gtin?.trim() || '',
         weight: editingProduct.weight || 0.5,
-        dimensions: editingProduct.dimensions || {
-          length: 20,
-          width: 20,
-          height: 10,
-          unit: 'cm'
-        },
+        dimensions: editingProduct.dimensions || { length: 20, width: 20, height: 10, unit: 'cm' },
         country: editingProduct.country || 'Россия',
         old_price: Number(editingProduct.old_price) || 0,
         new_price: Number(editingProduct.new_price) || 0,
         description: editingProduct.description || '',
         quantity: Math.max(1, Number(editingProduct.quantity) || 1),
-        images: editingProduct.images || []
+        images: editingProduct.images || [],
       };
 
       const response = await fetch(`${API_URL}/api/updateproduct/${identifier}`, {
@@ -503,9 +454,7 @@ export default function ListProduct() {
         const errorText = await response.text();
         throw new Error(`HTTP error! status: ${response.status}. Details: ${errorText}`);
       }
-
       const data = await response.json();
-
       if (data.success) {
         setEditingProduct(null);
         await fetchInfo();
@@ -519,11 +468,18 @@ export default function ListProduct() {
     }
   };
 
+  // Get product images safely
+  const getProductImages = (product) => {
+    if (!product) return [PLACEHOLDER_IMAGE];
+    if (Array.isArray(product.images)) return product.images.filter((img) => img);
+    if (product.image) return [product.image];
+    return [PLACEHOLDER_IMAGE];
+  };
+
   // Filter products based on search
-  const filteredProducts = allproducts.filter(product => {
+  const filteredProducts = allproducts.filter((product) => {
     const q = searchQuery.trim().toLowerCase();
     if (!q) return true;
-
     const searchFields = [
       product.name,
       product.description,
@@ -531,29 +487,12 @@ export default function ListProduct() {
       product.subcategory,
       product.slug,
       product.brand,
-      product.vendorCode
+      product.vendorCode,
     ];
-
-    return searchFields.some(field =>
-      field && field.toString().toLowerCase().includes(q)
-    );
+    return searchFields.some((field) => field && field.toString().toLowerCase().includes(q));
   });
 
-  // Get product images safely
-  const getProductImages = (product) => {
-    if (Array.isArray(product.images)) {
-      return product.images.filter(img => img);
-    }
-    if (product.image) {
-      return [product.image];
-    }
-    return [PLACEHOLDER_IMAGE];
-  };
-
-  // Создаем уникальный ключ для каждого продукта
-  const getProductKey = (product) => {
-    return `${product._id}-${product.slug || 'no-slug'}`;
-  };
+  const getProductKey = (product) => `${product._id}-${product.slug || 'no-slug'}`;
 
   return (
     <div className={styles.pageContainer}>
@@ -623,14 +562,10 @@ export default function ListProduct() {
                 </label>
                 {uploadProgress > 0 && uploadProgress < 100 && (
                   <div className={styles.progressBar}>
-                    <div
-                      className={styles.progressFill}
-                      style={{ width: `${uploadProgress}%` }}
-                    ></div>
+                    <div className={styles.progressFill} style={{ width: `${uploadProgress}%` }} />
                   </div>
                 )}
               </div>
-
               <div className={styles.imagePreviews}>
                 {newProduct.images.map((img, index) => (
                   <div key={`new-${index}`} className={styles.previewImageContainer}>
@@ -668,8 +603,8 @@ export default function ListProduct() {
                 className={styles.formSelect}
               >
                 <option value="">Выберите категорию...</option>
-                {categories.map((cat, index) => (
-                  <option key={`cat-${index}`} value={cat.category}>
+                {categories.map((cat, idx) => (
+                  <option key={idx} value={cat.category}>
                     {cat.category}
                   </option>
                 ))}
@@ -691,7 +626,7 @@ export default function ListProduct() {
               </div>
             )}
 
-            {(newProduct.category && newProduct.category !== "__new__" && subcategories.length > 0) && (
+            {newProduct.category && newProduct.category !== "__new__" && subcategories.length > 0 && (
               <div className={styles.formGroup}>
                 <label className={styles.formLabel}>Подкатегория</label>
                 <select
@@ -701,8 +636,10 @@ export default function ListProduct() {
                   className={styles.formSelect}
                 >
                   <option value="">Выберите подкатегорию...</option>
-                  {subcategories.map((sub, index) => (
-                    <option key={`sub-${index}`} value={sub}>{sub}</option>
+                  {subcategories.map((sub, idx) => (
+                    <option key={idx} value={sub}>
+                      {sub}
+                    </option>
                   ))}
                   <option value="__new__">+ Создать новую подкатегорию</option>
                 </select>
@@ -887,7 +824,6 @@ export default function ListProduct() {
               />
             </div>
 
-            {/* Submit Button */}
             <div className={styles.formGroup}>
               <button
                 type="submit"
@@ -944,7 +880,7 @@ export default function ListProduct() {
                               Добавить фото
                             </label>
                             <div className={styles.editImagePreviews}>
-                              {(editingProduct.images || []).map((img, index) => (
+                              {(editingProduct?.images || []).map((img, index) => (
                                 <div key={`edit-${index}`} className={styles.previewImageContainer}>
                                   <img
                                     src={img}
@@ -997,8 +933,8 @@ export default function ListProduct() {
                             className={styles.editSelect}
                           >
                             <option value="">Выберите категорию...</option>
-                            {categories.map((cat, index) => (
-                              <option key={`edit-cat-${index}`} value={cat.category}>
+                            {categories.map((cat, idx) => (
+                              <option key={idx} value={cat.category}>
                                 {cat.category}
                               </option>
                             ))}
@@ -1013,8 +949,10 @@ export default function ListProduct() {
                               className={styles.editSelect}
                             >
                               <option value="">Подкатегория...</option>
-                              {editingSubcategories.map((sub, index) => (
-                                <option key={`edit-sub-${index}`} value={sub}>{sub}</option>
+                              {editingSubcategories.map((sub, idx) => (
+                                <option key={idx} value={sub}>
+                                  {sub}
+                                </option>
                               ))}
                               <option value="__new__">+ Новая подкатегория</option>
                             </select>
@@ -1092,18 +1030,20 @@ export default function ListProduct() {
                       <>
                         <div className={styles.tableCell}>
                           <div className={styles.productImages}>
-                            {getProductImages(product).slice(0, 1).map((img, index) => (
-                              <div key={`prod-${product._id}-img-${index}`} className={styles.productImageContainer}>
-                                <img
-                                  src={img}
-                                  alt={product.name}
-                                  width={50}
-                                  height={50}
-                                  className={styles.productImage}
-                                  onError={handleImageError(img)}
-                                />
-                              </div>
-                            ))}
+                            {getProductImages(product)
+                              .slice(0, 1)
+                              .map((img, index) => (
+                                <div key={`prod-${product._id}-img-${index}`} className={styles.productImageContainer}>
+                                  <img
+                                    src={img}
+                                    alt={product.name}
+                                    width={50}
+                                    height={50}
+                                    className={styles.productImage}
+                                    onError={handleImageError(img)}
+                                  />
+                                </div>
+                              ))}
                             {getProductImages(product).length > 1 && (
                               <div className={styles.moreImages}>+{getProductImages(product).length - 1}</div>
                             )}
@@ -1115,8 +1055,7 @@ export default function ListProduct() {
                           <div className={styles.productDescription}>
                             {product.description && product.description.length > 100
                               ? `${product.description.substring(0, 100)}...`
-                              : product.description
-                            }
+                              : product.description}
                           </div>
                           <div className={styles.productSlug}>
                             <code>{product.slug}</code>
@@ -1149,16 +1088,10 @@ export default function ListProduct() {
 
                         <div className={styles.tableCell}>
                           <div className={styles.actionButtons}>
-                            <button
-                              onClick={() => startEditing(product)}
-                              className={styles.editButton}
-                            >
+                            <button onClick={() => startEditing(product)} className={styles.editButton}>
                               Редактировать
                             </button>
-                            <button
-                              onClick={() => remove_product(product)}
-                              className={styles.deleteButton}
-                            >
+                            <button onClick={() => remove_product(product)} className={styles.deleteButton}>
                               Удалить
                             </button>
                           </div>
