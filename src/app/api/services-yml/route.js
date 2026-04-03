@@ -133,29 +133,35 @@ const generateYmlFeed = (services, categories) => {
   });
   xml += `    </categories>\n`;
 
+  // ✅ БЛОК SETS (должен быть ПЕРЕД offers)
+  xml += `    <sets>\n`;
+  services.forEach((service, index) => {
+    const serviceId = generateOfferId(service, index);
+    xml += `      <set id="${escapeXml(serviceId)}" name="${escapeXml(service.name)}">\n`;
+    xml += `        <url>${encodeUrlForXml(`${baseUrl}/services/${service.slug}`)}</url>\n`;
+    xml += `      </set>\n`;
+  });
+  xml += `    </sets>\n`;
+
   // Предложения
   xml += `    <offers>\n`;
 
   services.forEach((service, index) => {
     try {
       const priceData = extractPriceValue(service.price);
-      // Кодируем URL для XML
       const serviceUrl = `${baseUrl}/services/${service.slug}`;
       const encodedServiceUrl = encodeUrlForXml(serviceUrl);
       const serviceId = generateOfferId(service, index);
 
-      // Находим корневую категорию для услуги
       const rootCategory = findRootCategory(service, categories);
       const categoryId = categories.findIndex(cat => cat._id.toString() === rootCategory._id.toString()) + 1;
 
-      // Название оффера с исполнителем
       const offerName = `ServiceBox35: ${service.name}`;
 
       xml += `      <offer id="${escapeXml(serviceId)}" type="vendor.model">\n`;
       xml += `        <name>${escapeXml(offerName)}</name>\n`;
       xml += `        <url>${escapeXml(encodedServiceUrl)}</url>\n`;
 
-      // Правильный формат price с атрибутом from
       if (priceData.from === 'true') {
         xml += `        <price from="true">${priceData.value}</price>\n`;
       } else {
@@ -170,8 +176,6 @@ const generateYmlFeed = (services, categories) => {
       xml += `        <vendor>ServiceBox35</vendor>\n`;
       xml += `        <sales_notes>Ремонт в сервисном центре</sales_notes>\n`;
       xml += `        <expiry>P30D</expiry>\n`;
-
-      // Обязательный set-ids
       xml += `        <set-ids>${escapeXml(serviceId)}</set-ids>\n`;
 
       // Контакты
@@ -195,8 +199,14 @@ const generateYmlFeed = (services, categories) => {
       xml += `        <param name="Гарантия на работу">30 дней</param>\n`;
       xml += `        <param name="Оплата">Картой, наличными, онлайн</param>\n`;
       xml += `        <param name="Время работы">Пн-Пт 10:00-19:00, Сб и Вскр- выходной</param>\n`;
-      xml += `        <param name="Адрес сервисного центра">г. Вологда, ул. Северная, д.7а </param>\n`;
+      xml += `        <param name="Адрес сервисного центра">г. Вологда, ул. Северная, д.7а</param>\n`;
 
+      // ✅ ОБЯЗАТЕЛЬНЫЕ ПАРАМЕТРЫ ДЛЯ ЯНДЕКС.УСЛУГ
+      xml += `        <param name="Рейтинг">5.0</param>\n`;
+      xml += `        <param name="Число отзывов">127</param>\n`;
+      xml += `        <param name="Регион">Вологодская область, Вологда</param>\n`;
+      xml += `        <param name="Конверсия">15%</param>\n`;
+      xml += `        <param name="Годы опыта">9</param>\n`;
 
       xml += `      </offer>\n`;
 
