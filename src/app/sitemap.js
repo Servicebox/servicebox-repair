@@ -394,7 +394,7 @@ export default async function sitemap() {
     console.warn('Error fetching products for sitemap:', error.message);
   }
 
-  // 3. Новости (исправлено: используем baseUrl, а не API_URL)
+  // 3. Новости
   try {
     console.log('📰 Fetching news for sitemap...');
     const newsResponse = await fetch(`${baseUrl}/api/news?all=1&limit=500`, {
@@ -417,7 +417,7 @@ export default async function sitemap() {
           const summary = news.excerpt ? news.excerpt.substring(0, 200) : `Статья: ${news.title}`;
 
           return createSitemapEntry({
-            url: `${baseUrl}/news/${validSlug}`, // исправлено: baseUrl вместо BASE_URL
+            url: `${baseUrl}/news/${validSlug}`,
             lastModified,
             changeFrequency: 'monthly',
             priority: 0.7,
@@ -444,7 +444,7 @@ export default async function sitemap() {
     newsEntries = [];
   }
 
-  // Объединяем все страницы (исправлено: newsEntries вместо newsPages)
+  // Объединяем все страницы
   const allPages = [
     ...staticPages,
     ...apiPages,
@@ -474,13 +474,8 @@ export default async function sitemap() {
 
   uniquePages.sort((a, b) => (b.priority || 0) - (a.priority || 0));
 
-  // Исправлено: используем newsEntries вместо newsPages
   console.log(`Generated sitemap with ${uniquePages.length} pages, ${servicePages.length} services, ${productPages.length} products, ${newsEntries.length} news`);
 
   return uniquePages.slice(0, 10000);
 }
 
-// Экспорт для больших sitemap (если страниц > 50000)
-export async function generateSitemaps() {
-  return [{ id: 0 }];
-}

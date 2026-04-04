@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    //  "baseUrl": ".",
+    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./src/*"
@@ -25,7 +25,7 @@
     "noEmit": true,
     "incremental": true,
     "esModuleInterop": true,
-    // "moduleResolution": "node",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve"

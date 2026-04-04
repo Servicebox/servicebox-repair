@@ -10,7 +10,7 @@ function LoginSignupContent({ isOpen, onClose, onLoginSuccess }) {
   const token = searchParams.get('token'); // Изменено с token на token
   const router = useRouter();
   const { login } = useAuth();
-  
+
   const [mode, setMode] = useState("Login");
   const [formData, setFormData] = useState({
     username: "",
@@ -67,12 +67,12 @@ function LoginSignupContent({ isOpen, onClose, onLoginSuccess }) {
     setLoading(true);
     try {
       const result = await login(formData.email, formData.password);
-      
+
       if (result.success) {
         setMessage("Успешный вход!");
         onLoginSuccess?.();
         onClose?.();
-        
+
         // Перенаправление по роли
 
         if (result.user.role === 'admin') {
@@ -104,7 +104,7 @@ function LoginSignupContent({ isOpen, onClose, onLoginSuccess }) {
       setMessage("Имя обязательно");
       return;
     }
-    
+
     if (!formData.phone.trim()) {
       setMessage("Телефон обязателен");
       return;
@@ -132,7 +132,7 @@ function LoginSignupContent({ isOpen, onClose, onLoginSuccess }) {
       });
 
       const responseData = await response.json();
-      
+
       if (response.ok) {
         setMessage("Регистрация успешна! Проверьте ваш email для подтверждения.");
         setMode("Login");
@@ -163,9 +163,9 @@ function LoginSignupContent({ isOpen, onClose, onLoginSuccess }) {
         },
         body: JSON.stringify({ email: emailForReset }),
       });
-      
+
       const responseData = await response.json();
-      
+
       if (response.ok) {
         setMessage(responseData.message || "Письмо с инструкциями отправлено на ваш email");
         setMode("Login");
@@ -189,7 +189,7 @@ function LoginSignupContent({ isOpen, onClose, onLoginSuccess }) {
       setMessage("Пароли не совпадают");
       return;
     }
-    
+
     setLoading(true);
     try {
       const response = await fetch('/api/auth/reset-password', {
@@ -197,9 +197,9 @@ function LoginSignupContent({ isOpen, onClose, onLoginSuccess }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           token: token,
-          password: newPassword 
+          password: newPassword
         }),
       });
 
@@ -238,8 +238,8 @@ function LoginSignupContent({ isOpen, onClose, onLoginSuccess }) {
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalHeader}>
           <h2>{mode}</h2>
-          <button 
-            className={styles.closeButton} 
+          <button
+            className={styles.closeButton}
             onClick={onClose}
             type="button"
           >
@@ -276,8 +276,8 @@ function LoginSignupContent({ isOpen, onClose, onLoginSuccess }) {
               autoComplete="new-password"
               className={styles.input}
             />
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               disabled={loading}
               className={styles.submitButton}
             >
@@ -296,8 +296,8 @@ function LoginSignupContent({ isOpen, onClose, onLoginSuccess }) {
               autoComplete="email"
               className={styles.input}
             />
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               disabled={loading}
               className={styles.submitButton}
             >
@@ -328,7 +328,7 @@ function LoginSignupContent({ isOpen, onClose, onLoginSuccess }) {
                 />
               </>
             )}
-            
+
             <input
               name="email"
               value={formData.email}
@@ -349,9 +349,9 @@ function LoginSignupContent({ isOpen, onClose, onLoginSuccess }) {
               autoComplete={mode === "Login" ? "current-password" : "new-password"}
               className={styles.input}
             />
-            <button 
-              className={styles.submitButton} 
-              type="submit" 
+            <button
+              className={styles.submitButton}
+              type="submit"
               disabled={loading}
             >
               {loading ? "Загрузка..." : (mode === "Login" ? "Войти" : "Зарегистрироваться")}
@@ -362,7 +362,7 @@ function LoginSignupContent({ isOpen, onClose, onLoginSuccess }) {
         {mode !== "Forgot Password" && mode !== "Set New Password" && (
           <div className={styles.toggleState}>
             {mode === "Sign Up" ? "Уже есть аккаунт? " : "У вас нет аккаунта? "}
-            <span onClick={() => { 
+            <span onClick={() => {
               setMode(mode === "Login" ? "Sign Up" : "Login");
               setMessage("");
             }}>
@@ -395,7 +395,7 @@ function LoginSignupContent({ isOpen, onClose, onLoginSuccess }) {
                   Восстановить
                 </span>
               </p>
-              <button 
+              <button
                 onClick={closeWrongPasswordModal}
                 className={styles.closeModalButton}
               >
@@ -411,7 +411,7 @@ function LoginSignupContent({ isOpen, onClose, onLoginSuccess }) {
 
 const LoginSignup = (props) => {
   return (
-    <Suspense fallback={<div>Загрузка формы...</div>}>
+    <Suspense fallback={<div>Загрузка</div>}>
       <LoginSignupContent {...props} />
     </Suspense>
   );
