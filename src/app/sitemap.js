@@ -65,13 +65,11 @@ export default async function sitemap() {
     { url: `${baseUrl}/worksteps`, lastModified: currentDate, changeFrequency: 'monthly', priority: 0.85 },
   ];
 
-  // ✅ Исправлено: только существующие AI эндпоинты
+  // AI API эндпоинты
   const apiPages = [
     { url: `${baseUrl}/api/ai/v1/business`, lastModified: currentDate, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${baseUrl}/api/ai/v1/emergency`, lastModified: currentDate, changeFrequency: 'monthly', priority: 0.6 },
   ];
-
-
 
   let servicePages = [];
   let productPages = [];
@@ -137,10 +135,10 @@ export default async function sitemap() {
     console.warn('Error fetching news for sitemap:', error.message);
   }
 
+  // Объединяем все страницы (без serviceCategoryPages)
   const allPages = [
     ...staticPages,
     ...apiPages,
-    ...serviceCategoryPages,
     ...servicePages,
     ...productPages,
     ...newsEntries,
