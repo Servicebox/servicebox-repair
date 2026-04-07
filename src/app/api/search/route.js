@@ -7,15 +7,15 @@ import News from '@/models/News';
 export async function GET(request) {
   try {
     await connectDB();
-    
+
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('q')?.trim() || '';
-    
+
     console.log(`🔍 API поиск: "${query}"`);
-    
+
     if (!query || query.length < 2) {
-      return Response.json({ 
-        success: true, 
+      return Response.json({
+        success: true,
         results: [],
         counts: { total: 0 },
         message: 'Введите минимум 2 символа для поиска'
@@ -37,12 +37,12 @@ export async function GET(request) {
           { slug: searchRegex }
         ]
       })
-      .select('name slug description price isCategory level')
-      .limit(10)
-      .lean();
-      
+        .select('name slug description price isCategory level')
+        .limit(10)
+        .lean();
+
       console.log(`✅ Найдено услуг: ${services.length}`);
-      
+
       services.forEach(service => {
         const score = calculateRelevanceScore(service.name, service.description, query);
         allResults.push({
@@ -76,18 +76,20 @@ export async function GET(request) {
           },
           { isActive: true },
           { isDeleted: { $ne: true } },
-          { $or: [
-            { status: 'active' },
-            { status: { $exists: false } }
-          ]}
+          {
+            $or: [
+              { status: 'active' },
+              { status: { $exists: false } }
+            ]
+          }
         ]
       })
-      .select('name slug description new_price old_price images category brand')
-      .limit(10)
-      .lean();
-      
+        .select('name slug description new_price old_price images category brand')
+        .limit(10)
+        .lean();
+
       console.log(`✅ Найдено товаров: ${products.length}`);
-      
+
       products.forEach(product => {
         const score = calculateRelevanceScore(product.name, product.description, query);
         allResults.push({
@@ -124,12 +126,12 @@ export async function GET(request) {
           { isPublished: true }
         ]
       })
-      .select('title slug excerpt metaDescription publishedAt featuredImage')
-      .limit(10)
-      .lean();
-      
+        .select('title slug excerpt metaDescription publishedAt featuredImage')
+        .limit(10)
+        .lean();
+
       console.log(`✅ Найдено новостей: ${news.length}`);
-      
+
       news.forEach(newsItem => {
         const score = calculateRelevanceScore(newsItem.title, newsItem.excerpt, query);
         allResults.push({
@@ -149,11 +151,11 @@ export async function GET(request) {
 
     // Сортируем по релевантности
     const sortedResults = allResults.sort((a, b) => b.score - a.score).slice(0, 15);
-    
+
     console.log(`🎯 Итоговый поиск "${query}": найдено ${sortedResults.length} результатов`);
-    
-    return Response.json({ 
-      success: true, 
+
+    return Response.json({
+      success: true,
       results: sortedResults,
       counts: {
         total: sortedResults.length,
@@ -166,8 +168,8 @@ export async function GET(request) {
 
   } catch (error) {
     console.error('💥 Критическая ошибка поиска:', error);
-    return Response.json({ 
-      success: false, 
+    return Response.json({
+      success: false,
       error: error.message,
       results: [],
       counts: { total: 0 }
@@ -181,19 +183,19 @@ function calculateRelevanceScore(title = '', description = '', query) {
   const titleLower = title.toLowerCase();
   const descLower = description.toLowerCase();
   const queryLower = query.toLowerCase();
-  
+
   // Экспоненциальный бонус за точные совпадения
   if (titleLower === queryLower) score += 1000;
   if (descLower === queryLower) score += 500;
-  
+
   // Бонус за совпадение в начале
   if (titleLower.startsWith(queryLower)) score += 200;
   if (descLower.startsWith(queryLower)) score += 100;
-  
+
   // Бонус за слово в начале
   const titleWords = titleLower.split(' ');
   const descWords = descLower.split(' ');
-  
+
   titleWords.forEach((word, index) => {
     if (word.startsWith(queryLower)) {
       score += 150 - (index * 10); // Больше бонус за первые слова
@@ -201,7 +203,7 @@ function calculateRelevanceScore(title = '', description = '', query) {
       score += 50 - (index * 5);
     }
   });
-  
+
   descWords.forEach((word, index) => {
     if (word.startsWith(queryLower)) {
       score += 75 - (index * 5);
@@ -209,12 +211,12 @@ function calculateRelevanceScore(title = '', description = '', query) {
       score += 25 - (index * 2);
     }
   });
-  
+
   // Бонус за длину запроса (короткие запросы должны быть точнее)
   if (queryLower.length <= 3) {
     if (titleLower.includes(queryLower)) score += 100;
     if (descLower.includes(queryLower)) score += 50;
   }
-  
+
   return score;
 }

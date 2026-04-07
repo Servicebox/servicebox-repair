@@ -31,7 +31,7 @@ const BORDER_COLOR = 'border-gray-200'; // Светло-серый для гра
 export default function ServiceDetailPage() {
   const params = useParams();
   const router = useRouter();
-  
+
   const [service, setService] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showBookingForm, setShowBookingForm] = useState(false);
@@ -45,19 +45,19 @@ export default function ServiceDetailPage() {
     try {
       setLoading(true);
       const { slug } = params;
-      
+
       if (!slug) {
         router.push('/services');
         return;
       }
-      
+
       const decodedSlug = decodeURIComponent(slug);
       const response = await fetch(`/api/services/${encodeURIComponent(decodedSlug)}?breadcrumbs=true`);
       const data = await response.json();
-      
+
       if (data.success) {
         setService(data.data);
-        
+
         // Добавляем JSON-LD для SEO
         addJsonLd(data.data);
       } else {
@@ -130,27 +130,27 @@ export default function ServiceDetailPage() {
     if (!price || price.trim() === '' || price.toLowerCase() === 'уточняйте') {
       return 'Уточняйте';
     }
-    
+
     if (price.includes('₽') || price.toLowerCase().includes('руб')) {
       return price;
     }
-    
+
     if (price.toLowerCase().startsWith('')) {
       return `${price} ₽`;
     }
-    
+
     // Если это число
     const num = parseInt(price.replace(/\D/g, ''));
     if (!isNaN(num)) {
       return ` ${num.toLocaleString('ru-RU')} ₽`;
     }
-    
+
     return `${price} ₽`;
   };
 
   const getIconForCategory = (categoryName) => {
     if (!categoryName) return defaultIcon;
-    
+
     const lowerName = categoryName.toLowerCase();
     for (const [key, icon] of Object.entries(categoryIcons)) {
       if (lowerName.includes(key)) {
@@ -203,10 +203,10 @@ export default function ServiceDetailPage() {
                   </svg>
                   <span className="text-sm font-medium text-gray-700">Обслуживаем: {geoKeywords.join(', ')}</span>
                 </div>
-                
+
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center border border-gray-300">
-                    <Image 
+                    <Image
                       src={icon}
                       alt={service.name}
                       width={32}
@@ -224,11 +224,11 @@ export default function ServiceDetailPage() {
                     </p>
                   </div>
                 </div>
-                
+
                 <p className={`text-xl mb-8 max-w-3xl ${TEXT_COLOR}`}>
                   {service.description}
                 </p>
-                
+
                 <div className="flex flex-wrap gap-6 mb-8">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-300">
@@ -248,14 +248,14 @@ export default function ServiceDetailPage() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="w-full lg:w-auto">
                 <div className="bg-gray-50 rounded-2xl p-8 border border-gray-300">
                   <div className="text-center mb-6">
                     <div className="text-4xl font-bold mb-2 text-gray-900">{formatPrice(service.price)}</div>
                     <p className="text-gray-600">Стоимость услуги</p>
                   </div>
-                  
+
                   <button
                     onClick={handleBookingClick}
                     className="w-full px-8 py-4 rounded-xl font-bold text-lg shadow-md hover:shadow-lg transition-all"
@@ -263,7 +263,7 @@ export default function ServiceDetailPage() {
                   >
                     Записаться онлайн
                   </button>
-                  
+
                   <div className="mt-6 text-center">
                     <p className="text-gray-600 text-sm">или позвоните</p>
                     <a href="tel:+79115018828" className="text-2xl font-bold text-gray-900 hover:text-blue-900 transition-colors block">
@@ -286,8 +286,8 @@ export default function ServiceDetailPage() {
             <CategoryPage service={service} formatPrice={formatPrice} />
           ) : (
             // Страница услуги
-            <ServicePage 
-              service={service} 
+            <ServicePage
+              service={service}
               activeTab={activeTab}
               setActiveTab={setActiveTab}
               handleBookingClick={handleBookingClick}
@@ -303,12 +303,12 @@ export default function ServiceDetailPage() {
               Профессиональный ремонт техники в {geoKeywords.join(', ')}
             </h2>
             <p className="text-gray-700 mb-4">
-              Сервисный центр Сервис Бокс специализируется на профессиональном ремонте цифровой техники. 
+              Сервисный центр Сервис Бокс специализируется на профессиональном ремонте цифровой техники.
               Наши мастера имеют многолетний опыт работы с устройствами различных производителей.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-300">
+                <div className="w-12 h-8 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-300">
                   <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
@@ -316,7 +316,7 @@ export default function ServiceDetailPage() {
                 <span className="text-gray-700">Оригинальные запчасти</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-300">
+                <div className="w-12 h-8 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-300">
                   <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -324,7 +324,7 @@ export default function ServiceDetailPage() {
                 <span className="text-gray-700">Бесплатная диагностика</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-300">
+                <div className="w-12 h-8 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-300">
                   <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
@@ -396,7 +396,7 @@ function CategoryPage({ service, formatPrice }) {
       {/* SEO контент */}
       {service.content && (
         <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-300">
-          <div 
+          <div
             className="prose prose-lg max-w-none"
             style={{ color: '#374151' }}
             dangerouslySetInnerHTML={{ __html: service.content }}
@@ -421,18 +421,17 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
-                    activeTab === tab
-                      ? `border-blue-600 text-white-600`
-                      : 'border-transparent text-white-600 hover:text-white-900'
-                  }`}
+                  className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${activeTab === tab
+                    ? `border-blue-600 text-white-600`
+                    : 'border-transparent text-white-600 hover:text-white-900'
+                    }`}
                 >
                   {getTabName(tab)}
                 </button>
               ))}
             </nav>
           </div>
-          
+
           <div className="p-8">
             {renderTabContent(service, activeTab)}
           </div>
@@ -461,7 +460,7 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
         {service.content && (
           <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-300">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Подробное описание</h2>
-            <div 
+            <div
               className="prose prose-lg max-w-none"
               style={{ color: '#374151' }}
               dangerouslySetInnerHTML={{ __html: service.content }}
@@ -478,7 +477,7 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
             <div className="text-3xl font-bold text-gray-900 mb-2">{formatPrice(service.price)}</div>
             <p className="text-gray-600">Стоимость услуги</p>
           </div>
-          
+
           <button
             onClick={handleBookingClick}
             className="w-full py-3 rounded-lg transition-colors font-semibold mb-4 shadow-md hover:shadow-lg"
@@ -486,7 +485,7 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
           >
             Записаться на ремонт
           </button>
-          
+
           <div className="text-center">
             <p className="text-gray-600 text-sm mb-2">или позвоните</p>
             <a href="tel:+79115018828" className="text-lg font-bold text-gray-900 hover:text-blue-600 transition-colors block">
@@ -560,7 +559,7 @@ function renderTabContent(service, tab) {
         <div>
           <p className="text-gray-700 mb-4">{service.description}</p>
           {service.content && (
-            <div 
+            <div
               className="mt-4 prose prose-lg"
               style={{ color: '#374151' }}
               dangerouslySetInnerHTML={{ __html: service.content }}
@@ -568,7 +567,7 @@ function renderTabContent(service, tab) {
           )}
         </div>
       );
-      
+
     case 'process':
       return (
         <div className="space-y-6">
@@ -590,7 +589,7 @@ function renderTabContent(service, tab) {
           </div>
         </div>
       );
-      
+
     case 'features':
       return service.features ? (
         <ul className="space-y-3">
@@ -606,7 +605,7 @@ function renderTabContent(service, tab) {
       ) : (
         <p className="text-gray-600">Особенности не указаны</p>
       );
-      
+
     case 'faq':
       return (
         <div className="space-y-4">
@@ -622,7 +621,7 @@ function renderTabContent(service, tab) {
           ))}
         </div>
       );
-      
+
     default:
       return null;
   }

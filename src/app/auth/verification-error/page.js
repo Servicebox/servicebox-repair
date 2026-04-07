@@ -13,36 +13,36 @@ function VerificationErrorContent() {
       <div className="max-w-lg w-full">
 
         <div className="bg-white rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 hover:shadow-3xl transform hover:-translate-y-1">
-          
+
           {/* Header with Icon */}
           <div className="bg-gradient-to-r from-red-500 to-orange-600 px-6 py-12 sm:py-16 text-center relative overflow-hidden">
             {/* Animated Background Elements */}
             <div className="absolute top-0 left-0 w-full h-full opacity-10">
               <div className="absolute top-6 left-12 w-10 h-10 bg-white rounded-full animate-pulse"></div>
-              <div className="absolute bottom-10 right-14 w-8 h-8 bg-white rounded-full animate-pulse delay-500"></div>
+              <div className="absolute bottom-10 right-14 w-12 h-8 bg-white rounded-full animate-pulse delay-500"></div>
             </div>
-            
+
             <div className="relative z-10">
               <div className="mx-auto flex items-center justify-center h-20 w-20 sm:h-24 sm:w-24 bg-white rounded-full shadow-lg mb-6">
-                <svg 
-                  className="h-10 w-10 sm:h-12 sm:w-12 text-red-500" 
-                  fill="none" 
-                  stroke="currentColor" 
+                <svg
+                  className="h-10 w-10 sm:h-12 sm:w-12 text-red-500"
+                  fill="none"
+                  stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth="2" 
-                    d="M6 18L18 6M6 6l12 12" 
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
                   />
                 </svg>
               </div>
-              
+
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
                 Ошибка подтверждения
               </h1>
-              
+
               <p className="text-red-100 text-lg sm:text-xl opacity-90">
                 Не удалось подтвердить email
               </p>
@@ -129,7 +129,7 @@ function VerificationErrorContent() {
                 </svg>
                 Новая ссылка
               </Link>
-              
+
               <Link
                 href="/"
                 className="w-full sm:flex-1 inline-flex items-center justify-center px-6 py-4 border border-gray-300 text-lg font-semibold rounded-xl text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 shadow-md hover:shadow-lg"
@@ -144,8 +144,8 @@ function VerificationErrorContent() {
             {/* Support Link */}
             <div className="mt-8 pt-6 border-t border-gray-200">
               <div className="text-center">
-                <Link 
-                  href="/contact" 
+                <Link
+                  href="/contact"
                   className="inline-flex items-center text-base text-blue-600 hover:text-blue-500 font-medium transition-colors duration-300"
                 >
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -1,11 +1,11 @@
 // app/robots.js
 export default function robots() {
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
+  const baseUrl = 'https://servicebox35.ru';
   return {
     rules: {
-      userAgent: '*', // Правило для всех ботов
-      allow: ['/', '/api/ai/', '/services/', '/prices', '/contacts'], // Явно разрешаем API
-      disallow: ['/admin', '/private', '/cart/checkout', '/dashboard'],
+      userAgent: '*',
+      allow: ['/', '/api/ai/', '/services/', '/prices', '/contacts'],
+      disallow: ['/admin', '/private', '/cart/checkout', '/dashboard', '/api/admin/'],
     },
     sitemap: `${baseUrl}/sitemap.xml`,
     host: baseUrl,

@@ -36,8 +36,8 @@ const TreeNode = ({ service, onEdit, onDelete, onCreate, searchTerm, level = 0 }
   const [isExpanded, setIsExpanded] = useState(true);
 
   // Filter children by search term
-  const filteredChildren = service.children?.filter(child => 
-    !searchTerm || 
+  const filteredChildren = service.children?.filter(child =>
+    !searchTerm ||
     child.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     child.slug.toLowerCase().includes(searchTerm.toLowerCase())
   ) || [];
@@ -45,7 +45,7 @@ const TreeNode = ({ service, onEdit, onDelete, onCreate, searchTerm, level = 0 }
   const hasFilteredChildren = filteredChildren.length > 0;
   const hasOriginalChildren = service.children && service.children.length > 0;
 
-  const matchesSearch = !searchTerm || 
+  const matchesSearch = !searchTerm ||
     service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     service.slug.toLowerCase().includes(searchTerm.toLowerCase());
 
@@ -57,10 +57,9 @@ const TreeNode = ({ service, onEdit, onDelete, onCreate, searchTerm, level = 0 }
   return (
     <div className="select-none">
       {/* Node Content */}
-      <div 
-        className={`flex items-center gap-3 p-3 rounded-lg border transition-colors ${
-          matchesSearch ? 'bg-white border-gray-200 hover:border-gray-300' : 'bg-gray-50 border-gray-100'
-        }`}
+      <div
+        className={`flex items-center gap-3 p-3 rounded-lg border transition-colors ${matchesSearch ? 'bg-white border-gray-200 hover:border-gray-300' : 'bg-gray-50 border-gray-100'
+          }`}
         style={{ marginLeft: `${level * 24}px` }}
       >
         {/* Expand/Collapse Button */}
@@ -69,10 +68,10 @@ const TreeNode = ({ service, onEdit, onDelete, onCreate, searchTerm, level = 0 }
             onClick={() => setIsExpanded(!isExpanded)}
             className="w-6 h-6 flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded transition-colors"
           >
-            <svg 
-              className={`w-4 h-4 transform transition-transform ${isExpanded ? 'rotate-90' : ''}`} 
-              fill="none" 
-              stroke="currentColor" 
+            <svg
+              className={`w-4 h-4 transform transition-transform ${isExpanded ? 'rotate-90' : ''}`}
+              fill="none"
+              stroke="currentColor"
               viewBox="0 0 24 24"
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -84,9 +83,8 @@ const TreeNode = ({ service, onEdit, onDelete, onCreate, searchTerm, level = 0 }
         {!hasOriginalChildren && <div className="w-6 h-6" />}
 
         {/* Icon */}
-        <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-          service.isCategory ? 'bg-blue-100' : 'bg-green-100'
-        }`}>
+        <div className={`w-12 h-8 rounded-lg flex items-center justify-center ${service.isCategory ? 'bg-blue-100' : 'bg-green-100'
+          }`}>
           {service.isCategory ? (
             <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
@@ -112,22 +110,21 @@ const TreeNode = ({ service, onEdit, onDelete, onCreate, searchTerm, level = 0 }
                 </p>
               )}
             </div>
-            
+
             <div className="flex items-center gap-4 text-sm">
               {!service.isCategory && service.price && (
                 <span className="text-green-600 font-medium whitespace-nowrap">
                   {service.price}
                 </span>
               )}
-              
-              <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                service.isCategory 
-                  ? 'bg-blue-100 text-blue-800' 
-                  : 'bg-green-100 text-green-800'
-              }`}>
+
+              <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${service.isCategory
+                ? 'bg-blue-100 text-blue-800'
+                : 'bg-green-100 text-green-800'
+                }`}>
                 {service.isCategory ? 'Категория' : 'Услуга'}
               </span>
-              
+
               <code className="text-xs bg-gray-100 px-2 py-1 rounded text-gray-600 font-mono hidden sm:block">
                 {service.slug}
               </code>
@@ -140,7 +137,7 @@ const TreeNode = ({ service, onEdit, onDelete, onCreate, searchTerm, level = 0 }
           {service.isCategory && (
             <button
               onClick={() => onCreate(service)}
-              className="w-8 h-8 flex items-center justify-center text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors"
+              className="w-12 h-8 flex items-center justify-center text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors"
               title="Добавить подкатегорию"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -148,20 +145,20 @@ const TreeNode = ({ service, onEdit, onDelete, onCreate, searchTerm, level = 0 }
               </svg>
             </button>
           )}
-          
+
           <button
             onClick={() => onEdit(service)}
-            className="w-8 h-8 flex items-center justify-center text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors"
+            className="w-12 h-8 flex items-center justify-center text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors"
             title="Редактировать"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
             </svg>
           </button>
-          
+
           <button
             onClick={() => onDelete(service.slug)}
-            className="w-8 h-8 flex items-center justify-center text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition-colors"
+            className="w-12 h-8 flex items-center justify-center text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition-colors"
             title="Удалить"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

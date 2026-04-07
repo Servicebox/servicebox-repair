@@ -17,7 +17,7 @@ const ServiceForm = ({ service, onClose, onSuccess }) => {
     features: [''],
     order: 0
   });
-  
+
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState('');
@@ -39,7 +39,7 @@ const ServiceForm = ({ service, onClose, onSuccess }) => {
         order: service.order || 0
       });
     }
-    
+
     fetchCategories();
   }, [service]);
 
@@ -47,7 +47,7 @@ const ServiceForm = ({ service, onClose, onSuccess }) => {
     try {
       const response = await fetch('/api/services?tree=true');
       const data = await response.json();
-      
+
       if (data.success) {
         const collectCategories = (items, level = 0) => {
           let result = [];
@@ -65,7 +65,7 @@ const ServiceForm = ({ service, onClose, onSuccess }) => {
           });
           return result;
         };
-        
+
         const allCategories = collectCategories(data.data);
         setCategories(allCategories);
       }
@@ -75,54 +75,54 @@ const ServiceForm = ({ service, onClose, onSuccess }) => {
     }
   };
 
-// В handleSubmit добавьте:
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  setError('');
+  // В handleSubmit добавьте:
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
 
-  try {
-    // Проверка обязательных полей
-    if (!formData.name.trim()) throw new Error('Укажите название');
-    if (!formData.description.trim()) throw new Error('Укажите описание');
-    if (!formData.slug.trim()) throw new Error('Укажите slug');
+    try {
+      // Проверка обязательных полей
+      if (!formData.name.trim()) throw new Error('Укажите название');
+      if (!formData.description.trim()) throw new Error('Укажите описание');
+      if (!formData.slug.trim()) throw new Error('Укажите slug');
 
-    // Подготовка данных
-    const submitData = {
-      ...formData,
-      features: formData.features.filter(f => f.trim() !== ''),
-      price: formData.isCategory ? '' : formData.price
-    };
+      // Подготовка данных
+      const submitData = {
+        ...formData,
+        features: formData.features.filter(f => f.trim() !== ''),
+        price: formData.isCategory ? '' : formData.price
+      };
 
-    // Отправка запроса
-    const url = service && service._id 
-      ? `/api/services/${encodeURIComponent(service.slug)}`
-      : '/api/services';
-    
-    const response = await fetch(url, {
-      method: service && service._id ? 'PUT' : 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(submitData)
-    });
+      // Отправка запроса
+      const url = service && service._id
+        ? `/api/services/${encodeURIComponent(service.slug)}`
+        : '/api/services';
 
-    const result = await response.json();
-    
-    if (!response.ok) {
-      throw new Error(result.error || 'Ошибка сервера');
+      const response = await fetch(url, {
+        method: service && service._id ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(submitData)
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Ошибка сервера');
+      }
+
+      if (result.success) {
+        onSuccess();
+      } else {
+        throw new Error(result.error || 'Неизвестная ошибка');
+      }
+    } catch (error) {
+      setError(error.message);
+      console.error('Ошибка сохранения:', error);
+    } finally {
+      setLoading(false);
     }
-
-    if (result.success) {
-      onSuccess();
-    } else {
-      throw new Error(result.error || 'Неизвестная ошибка');
-    }
-  } catch (error) {
-    setError(error.message);
-    console.error('Ошибка сохранения:', error);
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -160,7 +160,7 @@ const handleSubmit = async (e) => {
       .replace(/-+/g, '-')
       .replace(/^-+/, '')
       .replace(/-+$/, '');
-    
+
     setFormData(prev => ({ ...prev, slug }));
   };
 
@@ -172,9 +172,9 @@ const handleSubmit = async (e) => {
           <h2 className="text-xl font-bold text-gray-900">
             {service ? 'Редактировать' : 'Создать'} {formData.isCategory ? 'категорию' : 'услугу'}
           </h2>
-          <button 
+          <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+            className="w-12 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -194,7 +194,7 @@ const handleSubmit = async (e) => {
                 </div>
                 <span className="text-red-800 text-sm">{error}</span>
               </div>
-              <button 
+              <button
                 onClick={() => setError('')}
                 className="text-red-600 hover:text-red-800"
               >
@@ -225,7 +225,7 @@ const handleSubmit = async (e) => {
                   placeholder="Например: Ремонт телефонов"
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
                   Slug *
@@ -240,8 +240,8 @@ const handleSubmit = async (e) => {
                     className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="remont-telefonov"
                   />
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     onClick={generateSlug}
                     className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
                   >
@@ -270,7 +270,7 @@ const handleSubmit = async (e) => {
                   Категории используются для группировки услуг и не имеют цены
                 </p>
               </div>
-              
+
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
                   Порядок сортировки
@@ -357,7 +357,7 @@ const handleSubmit = async (e) => {
                   placeholder={formData.name}
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
                   Meta Title
@@ -406,8 +406,8 @@ const handleSubmit = async (e) => {
                         placeholder="Например: Гарантия 30 дней"
                       />
                       {formData.features.length > 1 && (
-                        <button 
-                          type="button" 
+                        <button
+                          type="button"
                           onClick={() => removeFeature(index)}
                           className="px-3 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm font-medium"
                         >
@@ -417,8 +417,8 @@ const handleSubmit = async (e) => {
                     </div>
                   ))}
                 </div>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={addFeature}
                   className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
                 >
@@ -445,7 +445,7 @@ const handleSubmit = async (e) => {
 
           {/* Actions */}
           <div className="flex justify-end gap-3 pt-6 mt-6 border-t border-gray-200">
-            <button 
+            <button
               type="button"
               onClick={onClose}
               disabled={loading}
@@ -453,7 +453,7 @@ const handleSubmit = async (e) => {
             >
               Отмена
             </button>
-            <button 
+            <button
               type="submit"
               disabled={loading}
               className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium disabled:opacity-50 flex items-center gap-2"

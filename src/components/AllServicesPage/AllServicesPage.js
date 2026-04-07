@@ -33,7 +33,7 @@ const AllServicesPage = () => {
     // Группировка услуг по категориям
     const groupedServices = useMemo(() => {
         const groups = {};
-        
+
         filteredServices.forEach(service => {
             const category = service.category || 'Другие';
             if (!groups[category]) {
@@ -41,7 +41,7 @@ const AllServicesPage = () => {
             }
             groups[category].push(service);
         });
-        
+
         return groups;
     }, [filteredServices]);
 
@@ -51,15 +51,15 @@ const AllServicesPage = () => {
             try {
                 const response = await fetch('/api/services');
                 const data = await response.json();
-                
+
                 // Фильтрация невалидных услуг
-                const validServices = data.filter(service => 
+                const validServices = data.filter(service =>
                     service.serviceName && service.description
                 );
-                
+
                 setServices(validServices);
                 setFilteredServices(validServices);
-                
+
                 // Извлечение уникальных категорий
                 const uniqueCategories = [...new Set(validServices.map(s => s.category || 'Другие'))];
                 setCategories(['Все', ...uniqueCategories]);
@@ -76,14 +76,14 @@ const AllServicesPage = () => {
     // Обработка фильтрации
     useEffect(() => {
         let result = services;
-        
-      if (selectedCategory !== 'Все') {
-        result = result.filter(service => {
-            const serviceCategory = service.parent ? service.parent.name : 'Другие';
-            return serviceCategory === selectedCategory;
-        });
-    }
-        
+
+        if (selectedCategory !== 'Все') {
+            result = result.filter(service => {
+                const serviceCategory = service.parent ? service.parent.name : 'Другие';
+                return serviceCategory === selectedCategory;
+            });
+        }
+
         if (searchQuery) {
             const query = searchQuery.toLowerCase();
             result = result.filter(service => {
@@ -92,7 +92,7 @@ const AllServicesPage = () => {
                 return name.includes(query) || desc.includes(query);
             });
         }
-        
+
         setFilteredServices(result);
     }, [searchQuery, selectedCategory, services]);
 
@@ -211,21 +211,20 @@ const AllServicesPage = () => {
                     >
                         {categories.map(category => {
                             const displayData = categoryData[category] || {};
-                            
+
                             return (
                                 <motion.button
                                     key={category}
-                                    className={`px-4 py-2 rounded-lg border-2 font-medium transition-all ${
-                                        selectedCategory === category 
-                                            ? 'text-white' 
-                                            : 'text-gray-700 hover:bg-gray-50'
-                                    }`}
+                                    className={`px-4 py-2 rounded-lg border-2 font-medium transition-all ${selectedCategory === category
+                                        ? 'text-white'
+                                        : 'text-gray-700 hover:bg-gray-50'
+                                        }`}
                                     onClick={() => setSelectedCategory(category)}
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
-                                    style={{ 
-                                        backgroundColor: selectedCategory === category 
-                                            ? displayData.color || 'transparent' 
+                                    style={{
+                                        backgroundColor: selectedCategory === category
+                                            ? displayData.color || 'transparent'
                                             : 'transparent',
                                         borderColor: displayData.color || '#477'
                                     }}
@@ -234,9 +233,9 @@ const AllServicesPage = () => {
                                         <>
                                             <span className="mr-2">
                                                 {displayData.icon ? (
-                                                    <Image 
-                                                        src={displayData.icon} 
-                                                        alt={category} 
+                                                    <Image
+                                                        src={displayData.icon}
+                                                        alt={category}
                                                         className="inline-block w-5 h-5"
                                                         width={20}
                                                         height={20}
@@ -281,9 +280,9 @@ const AllServicesPage = () => {
                         {Object.keys(groupedServices).map(category => {
                             const categoryServices = groupedServices[category];
                             const displayData = categoryData[category] || {};
-                            
+
                             return (
-                                <motion.div 
+                                <motion.div
                                     key={category}
                                     className="bg-white rounded-2xl shadow-lg overflow-hidden"
                                     variants={container}
@@ -294,10 +293,10 @@ const AllServicesPage = () => {
                                         <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-b">
                                             <div className="flex items-center">
                                                 {displayData.icon ? (
-                                                    <Image 
-                                                        src={displayData.icon} 
-                                                        alt={category} 
-                                                        className="w-8 h-8 mr-3"
+                                                    <Image
+                                                        src={displayData.icon}
+                                                        alt={category}
+                                                        className="w-12 h-8 mr-6"
                                                         width={32}
                                                         height={32}
                                                         unoptimized
@@ -315,16 +314,15 @@ const AllServicesPage = () => {
                                             </div>
                                         </div>
                                     )}
-                                    
+
                                     <div className="p-6 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                                         {categoryServices.map(service => (
                                             <motion.div
                                                 key={service._id}
-                                                className={`border-2 rounded-xl p-6 transition-all duration-300 ${
-                                                    activeService === service._id 
-                                                        ? 'border-blue-500 shadow-lg' 
-                                                        : 'border-gray-200 hover:border-gray-300 hover:shadow-md'
-                                                }`}
+                                                className={`border-2 rounded-xl p-6 transition-all duration-300 ${activeService === service._id
+                                                    ? 'border-blue-500 shadow-lg'
+                                                    : 'border-gray-200 hover:border-gray-300 hover:shadow-md'
+                                                    }`}
                                                 variants={item}
                                                 whileHover={{ y: -5 }}
                                                 onClick={() => setActiveService(activeService === service._id ? null : service._id)}
@@ -335,11 +333,11 @@ const AllServicesPage = () => {
                                                         {formatPrice(service.price)}
                                                     </span>
                                                 </div>
-                                                
+
                                                 <p className="text-gray-600 mb-4 line-clamp-3">{service.description}</p>
-                                                
+
                                                 {activeService === service._id && (
-                                                    <motion.div 
+                                                    <motion.div
                                                         className="border-t pt-4 mt-4"
                                                         initial={{ height: 0, opacity: 0 }}
                                                         animate={{ height: 'auto', opacity: 1 }}
@@ -348,9 +346,9 @@ const AllServicesPage = () => {
                                                         <div className="flex flex-wrap gap-2 mb-4">
                                                             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                                                                 {displayData.icon ? (
-                                                                    <Image 
-                                                                        src={displayData.icon} 
-                                                                        alt={category} 
+                                                                    <Image
+                                                                        src={displayData.icon}
+                                                                        alt={category}
                                                                         className="w-4 h-4 mr-1"
                                                                         width={16}
                                                                         height={16}
@@ -363,8 +361,8 @@ const AllServicesPage = () => {
                                                                 {displayData.name || service.category}
                                                             </span>
                                                         </div>
-                                                        
-                                                        <button 
+
+                                                        <button
                                                             className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center justify-center"
                                                             onClick={(e) => handleBookingClick(service, e)}
                                                         >
@@ -388,7 +386,7 @@ const AllServicesPage = () => {
             {/* Модальное окно формы записи */}
             <AnimatePresence>
                 {isBookingFormOpen && selectedService && (
-                    <BookingForm 
+                    <BookingForm
                         service={selectedService}
                         onClose={handleBookingClose}
                         onBookingSuccess={handleBookingSuccess}

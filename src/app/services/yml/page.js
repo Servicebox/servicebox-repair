@@ -249,7 +249,7 @@ export default function ServicesYmlPage() {
           <div className="space-y-6">
             <div className="bg-white rounded-lg p-5 border border-blue-100">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
                   <span className="text-blue-600 font-bold">1</span>
                 </div>
                 <h4 className="font-bold text-gray-900">Перейдите в Яндекс.Вебмастер</h4>
@@ -262,7 +262,7 @@ export default function ServicesYmlPage() {
 
             <div className="bg-white rounded-lg p-5 border border-blue-100">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-8 bg-green-100 rounded-lg flex items-center justify-center">
                   <span className="text-green-600 font-bold">2</span>
                 </div>
                 <h4 className="font-bold text-gray-900">Добавьте фид</h4>
@@ -276,7 +276,7 @@ export default function ServicesYmlPage() {
 
             <div className="bg-white rounded-lg p-5 border border-blue-100">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
                   <span className="text-purple-600 font-bold">3</span>
                 </div>
                 <h4 className="font-bold text-gray-900">Проверка и публикация</h4>

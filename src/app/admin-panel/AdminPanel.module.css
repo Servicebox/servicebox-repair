@@ -152,7 +152,7 @@
 
 /* ========== ОСНОВНОЙ КОНТЕНТ ========== */
 .mainContent {
-  margin-left: 280px;
+  margin-left: 150px;
   padding: 2rem;
   min-height: 100vh;
   transition: margin-left 0.3s ease;
