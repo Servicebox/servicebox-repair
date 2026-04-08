@@ -17,7 +17,7 @@ export async function generateMetadata({ params }) {
 
   try {
     const response = await fetch(`${BASE_URL}/api/news/slug/${slug}`, {
-      next: { revalidate: 3600 } // Кэш на 1 час
+      next: { revalidate: 3600 }
     });
 
     if (!response.ok) {
@@ -30,17 +30,12 @@ export async function generateMetadata({ params }) {
     const { data: news } = await response.json();
 
     return {
-      // === Основные мета-теги ===
       title: news.seo?.title || `${news.title} | ServiceBox Вологда`,
       description: news.seo?.description || news.excerpt,
       keywords: news.keywords?.join(', '),
-
-      // === Canonical URL ===
       alternates: {
         canonical: `${BASE_URL}/news/${slug}`,
       },
-
-      // === Open Graph для соцсетей ===
       openGraph: {
         title: news.title,
         description: news.excerpt,
@@ -56,8 +51,6 @@ export async function generateMetadata({ params }) {
         authors: [news.author || 'ServiceBox'],
         tags: news.keywords,
       },
-
-      // === Twitter Card ===
       twitter: {
         card: 'summary_large_image',
         title: news.title,
@@ -65,8 +58,6 @@ export async function generateMetadata({ params }) {
         images: news.featuredImage ? [news.featuredImage] : [],
         creator: '@servicebox35',
       },
-
-      // === Robots ===
       robots: {
         index: true,
         follow: true,
@@ -90,6 +81,12 @@ export async function generateMetadata({ params }) {
 
 // ✅ Генерация статических путей для предварительного рендеринга (SSG)
 export async function generateStaticParams() {
+  // На этапе сборки (build) не пытаемся делать fetch, чтобы избежать ECONNREFUSED
+  if (process.env.NEXT_PHASE === 'phase-production-build') {
+    console.log('⏭️ Skipping static params generation for news during build');
+    return [];
+  }
+
   try {
     const response = await fetch(`${BASE_URL}/api/news?all=1&fields=slug,isPublished&limit=100`, {
       next: { revalidate: 3600 }
@@ -99,17 +96,16 @@ export async function generateStaticParams() {
 
     const { data } = await response.json();
 
-    // Генерируем пути только для опубликованных новостей с слагом
     return data
       ?.filter(news => news.isPublished && news.slug)
       .map(news => ({ slug: news.slug })) || [];
   } catch (error) {
-    console.error('Error generating static params:', error);
+    console.error('Error generating static params for news:', error.message);
     return [];
   }
 }
 
-// ✅ Серверный компонент — контент рендерится на сервере для поисковиков
+// ✅ Серверный компонент
 export default async function NewsDetailPage({ params }) {
   const { slug } = await params;
 
@@ -117,11 +113,10 @@ export default async function NewsDetailPage({ params }) {
     notFound();
   }
 
-  // Проверка валидности слага (базовая)
+  // Базовая проверка слага (только латиница, цифры, дефисы)
   if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) {
     notFound();
   }
 
-  // Передаём slug в клиентский компонент для загрузки контента
   return <NewsDetail newsSlug={slug} />;
 }

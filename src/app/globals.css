@@ -238,7 +238,6 @@ button:disabled {
 img {
   max-width: 100%;
   object-fit: contain;
-  border: 1px solid orange;
 
 }
 

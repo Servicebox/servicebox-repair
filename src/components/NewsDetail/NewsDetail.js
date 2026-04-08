@@ -7,7 +7,7 @@ import styles from './NewsDetail.module.css';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
-// Компонент JSON-LD для структурированных данных
+// JSON-LD для структурированных данных
 const NewsJsonLd = ({ news, slug }) => {
   if (!news) return null;
 
@@ -27,7 +27,7 @@ const NewsJsonLd = ({ news, slug }) => {
     author: {
       '@type': 'Organization',
       name: news.author || 'ServiceBox',
-      url: `${API_URL}`,
+      url: API_URL,
     },
     publisher: {
       '@type': 'Organization',
@@ -56,8 +56,8 @@ const NewsJsonLd = ({ news, slug }) => {
   );
 };
 
-// Компонент рендеринга блоков контента
-const ContentBlockRenderer = ({ blocks }) => {
+// Компонент рендеринга блоков контента с возможностью открытия изображений в лайтбоксе
+const ContentBlockRenderer = ({ blocks, onImageClick }) => {
   if (!Array.isArray(blocks)) return null;
 
   return (
@@ -83,13 +83,13 @@ const ContentBlockRenderer = ({ blocks }) => {
           case 'image':
             return block.media ? (
               <figure key={index} className={styles.imageBlock}>
-                <Image
+                <img
                   src={block.media}
                   alt={block.alt || block.description || 'Изображение новости'}
-                  width={800}
-                  height={500}
                   className={styles.contentImage}
                   loading="lazy"
+                  onClick={() => onImageClick?.(block.media)}
+                  style={{ cursor: 'pointer' }}
                 />
                 {block.description && (
                   <figcaption className={styles.imageCaption}>
@@ -138,6 +138,7 @@ export default function NewsDetail({ newsSlug }) {
   const [news, setNews] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [lightboxImage, setLightboxImage] = useState(null);
 
   useEffect(() => {
     if (!newsSlug) {
@@ -164,7 +165,6 @@ export default function NewsDetail({ newsSlug }) {
           setNews(data.data);
           setError(null);
 
-          // Обновление заголовка страницы для доступности
           if (data.data?.title) {
             document.title = `${data.data.title} | ServiceBox Вологда`;
           }
@@ -185,7 +185,6 @@ export default function NewsDetail({ newsSlug }) {
     return () => { isMounted = false; };
   }, [newsSlug]);
 
-  // Форматирование даты
   const formatDate = (dateString) => {
     if (!dateString) return '';
     return new Date(dateString).toLocaleDateString('ru-RU', {
@@ -197,7 +196,14 @@ export default function NewsDetail({ newsSlug }) {
     });
   };
 
-  // Состояние загрузки
+  const openLightbox = (imgUrl) => {
+    setLightboxImage(imgUrl);
+  };
+
+  const closeLightbox = () => {
+    setLightboxImage(null);
+  };
+
   if (loading) {
     return (
       <div className={styles.container}>
@@ -209,7 +215,6 @@ export default function NewsDetail({ newsSlug }) {
     );
   }
 
-  // Состояние ошибки
   if (error || !news) {
     return (
       <div className={styles.container}>
@@ -227,84 +232,52 @@ export default function NewsDetail({ newsSlug }) {
 
   return (
     <article className={styles.container} itemScope itemType="https://schema.org/NewsArticle">
-      {/* JSON-LD для поисковиков и ИИ */}
       <NewsJsonLd news={news} slug={newsSlug} />
 
-      {/* Хлебные крошки */}
       <nav className={styles.breadcrumbs} aria-label="Хлебные крошки">
-        <ol itemScope itemType="https://schema.org/BreadcrumbList">
-          <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-            <a href="/" itemProp="item">
-              <span itemProp="name">Главная</span>
-            </a>
-            <meta itemProp="position" content="1" />
-          </li>
-          <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-            <a href="/news" itemProp="item">
-              <span itemProp="name">Новости</span>
-            </a>
-            <meta itemProp="position" content="2" />
-          </li>
-          <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-            <span itemProp="name">{news.title}</span>
-            <meta itemProp="position" content="3" />
-          </li>
+        <ol>
+          <li><a href="/">Главная</a></li>
+          <li><a href="/news">Новости</a></li>
+          <li>{news.title}</li>
         </ol>
       </nav>
 
-      {/* Заголовок и мета-информация */}
       <header className={styles.header}>
-        <h1 className={styles.title} itemProp="headline">
-          {news.title}
-        </h1>
+        <h1 className={styles.title} itemProp="headline">{news.title}</h1>
 
         <div className={styles.meta}>
           {news.publishedAt && (
-            <time
-              className={styles.date}
-              dateTime={news.publishedAt}
-              itemProp="datePublished"
-            >
-              Опубликовано: {formatDate(news.publishedAt)}
+            <time className={styles.date} dateTime={news.publishedAt} itemProp="datePublished">
+              📅 {formatDate(news.publishedAt)}
             </time>
           )}
           {news.updatedAt && news.updatedAt !== news.publishedAt && (
-            <time
-              className={styles.date}
-              dateTime={news.updatedAt}
-              itemProp="dateModified"
-            >
-              Обновлено: {formatDate(news.updatedAt)}
+            <time className={styles.date} dateTime={news.updatedAt} itemProp="dateModified">
+              🔄 Обновлено: {formatDate(news.updatedAt)}
             </time>
           )}
           {news.author && (
-            <span className={styles.author} itemProp="author" itemScope itemType="https://schema.org/Organization">
-              <span itemProp="name">{news.author}</span>
+            <span className={styles.author} itemProp="author">
+              ✍️ {news.author}
             </span>
           )}
           {news.views > 0 && (
-            <span className={styles.views} aria-label={`${news.views} просмотров`}>
-              👁️ {news.views}
-            </span>
+            <span className={styles.views}>👁️ {news.views}</span>
           )}
         </div>
 
-        {/* Главное изображение */}
         {news.featuredImage && (
           <figure className={styles.featuredImage}>
-            <Image
+            <img
               src={news.featuredImage}
               alt={news.title}
-              width={1200}
-              height={630}
               className={styles.mainImage}
-              priority
               itemProp="image"
+              loading="eager"
             />
           </figure>
         )}
 
-        {/* Анонс */}
         {news.excerpt && (
           <p className={styles.excerpt} itemProp="description">
             {news.excerpt}
@@ -312,54 +285,55 @@ export default function NewsDetail({ newsSlug }) {
         )}
       </header>
 
-      {/* Основной контент */}
-      <ContentBlockRenderer blocks={news.contentBlocks} />
+      <ContentBlockRenderer blocks={news.contentBlocks} onImageClick={openLightbox} />
 
-      {/* Теги/ключевые слова */}
-      {news.keywords?.length > 0 && (
-        <footer className={styles.footer}>
+      <footer className={styles.footer}>
+        {news.keywords?.length > 0 && (
           <div className={styles.tags}>
             <strong>Теги:</strong>
-            {news.keywords.map((keyword, index) => (
-              <span key={index} className={styles.tag}>
-                {keyword}
-              </span>
+            {news.keywords.map((keyword, idx) => (
+              <span key={idx} className={styles.tag}>{keyword}</span>
             ))}
           </div>
+        )}
 
-          {/* Кнопки поделиться */}
-          <div className={styles.share}>
-            <strong>Поделиться:</strong>
-            <div className={styles.shareButtons}>
-              <a
-                href={`https://vk.com/share.php?url=${encodeURIComponent(news.seo?.url || window.location.href)}&title=${encodeURIComponent(news.title)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.shareButton}
-                aria-label="Поделиться ВКонтакте"
-              >
-                ВКонтакте
-              </a>
-              <a
-                href={`https://t.me/share/url?url=${encodeURIComponent(news.seo?.url || window.location.href)}&text=${encodeURIComponent(news.title)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.shareButton}
-                aria-label="Поделиться в Telegram"
-              >
-                Telegram
-              </a>
-            </div>
+        <div className={styles.share}>
+          <strong>Поделиться:</strong>
+          <div className={styles.shareButtons}>
+            <a
+              href={`https://vk.com/share.php?url=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent(news.title)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.shareButton}
+            >
+              ВКонтакте
+            </a>
+            <a
+              href={`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(news.title)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.shareButton}
+            >
+              Telegram
+            </a>
           </div>
-        </footer>
-      )}
+        </div>
+      </footer>
 
-      {/* Навигация */}
       <nav className={styles.navigation}>
         <a href="/news" className={styles.backLink}>
           ← Все новости
         </a>
       </nav>
+
+      {lightboxImage && (
+        <div className={styles.lightboxOverlay} onClick={closeLightbox}>
+          <div className={styles.lightboxContent}>
+            <button className={styles.lightboxClose} onClick={closeLightbox}>×</button>
+            <img src={lightboxImage} alt="Увеличенное изображение" className={styles.lightboxImage} />
+          </div>
+        </div>
+      )}
     </article>
   );
 }
