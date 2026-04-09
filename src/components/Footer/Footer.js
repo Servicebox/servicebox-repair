@@ -33,7 +33,7 @@ function Footer() {
               <li><Link href="/about" className={styles.footerLink}>О нас</Link></li>
               <li><Link href="/services" className={styles.footerLink}>Цены на услуги</Link></li>
               <li><Link href="/gallery" className={styles.footerLink}>Наши фото</Link></li>
-              <li><Link href="/news" className={styles.footerLink}>Блог / новости</Link></li>
+              <li><Link href="/news" className={styles.footerLink}> новости</Link></li>
               <li><Link href="/promotions-page" className={styles.footerLink}>Акции</Link></li>
               <li><Link href="/parts" className={styles.footerLink}>Каталог товаров</Link></li>
               <li><Link href="/price" className={styles.footerLink}>Прайс-лист</Link></li>

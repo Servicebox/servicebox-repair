@@ -30,7 +30,7 @@ export default function Breadcrumbs() {
       const slug = Array.isArray(params.slug) ? params.slug[params.slug.length - 1] : params.slug;
       const response = await fetch(`/api/services/${encodeURIComponent(slug)}`);
       const data = await response.json();
-      
+
       if (data.success) {
         setServiceName(data.data.name);
       }
@@ -57,7 +57,7 @@ export default function Breadcrumbs() {
     'services': 'Услуги и цены',
     'parts': 'Каталог запчастей',
     'gallery': 'Фото работ',
-    'news': 'Блог',
+    'news': 'Новости',
     'promotions-page': 'Акции',
     'depository-public': 'Схемы и BIOS',
     'contacts': 'Контакты',
@@ -74,7 +74,7 @@ export default function Breadcrumbs() {
   pathSegments.forEach((segment, index) => {
     currentPath += `/${segment}`;
     const isLast = index === pathSegments.length - 1;
-    
+
     // Для страницы услуги используем название из API
     if (pathname.startsWith('/services/') && isLast && serviceName) {
       breadcrumbs.push({
@@ -87,7 +87,7 @@ export default function Breadcrumbs() {
 
     // Для других страниц используем стандартные названия
     let label;
-    
+
     if (pathLabels[segment]) {
       label = pathLabels[segment];
     } else if (segment === 'services' && pathSegments.length > 1) {
@@ -100,7 +100,7 @@ export default function Breadcrumbs() {
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
     }
-    
+
     breadcrumbs.push({
       href: currentPath,
       label: label,
@@ -125,9 +125,9 @@ export default function Breadcrumbs() {
                 <FontAwesomeIcon icon={faChevronRight} />
               </span>
             )}
-            
+
             {crumb.isCurrent ? (
-              <span 
+              <span
                 className={styles.currentPage}
                 aria-current="page"
               >

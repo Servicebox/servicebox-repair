@@ -308,14 +308,6 @@ export default function NewsDetail({ newsSlug }) {
             >
               ВКонтакте
             </a>
-            <a
-              href={`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(news.title)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.shareButton}
-            >
-              Telegram
-            </a>
           </div>
         </div>
       </footer>

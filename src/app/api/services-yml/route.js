@@ -1,4 +1,3 @@
-// app/api/services-yml/route.js
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Service from '@/models/Service';
@@ -91,7 +90,6 @@ const generateYmlFeed = (services, categories) => {
   });
   xml += `    </categories>\n`;
 
-  // ✅ Правильный блок sets (без атрибута name, с дочерним <name>)
   xml += `    <sets>\n`;
   services.forEach((service, idx) => {
     const setId = generateOfferId(service, idx);
@@ -109,7 +107,9 @@ const generateYmlFeed = (services, categories) => {
       const serviceId = generateOfferId(service, idx);
       const rootCategory = findRootCategory(service, categories);
       const categoryId = categories.findIndex(cat => cat._id.toString() === rootCategory._id.toString()) + 1;
-      const offerName = `ServiceBox35: ${service.name}`;
+
+      // ✅ ИСПРАВЛЕНО: убран префикс "ServiceBox35:"
+      const offerName = service.name;
 
       xml += `      <offer id="${escapeXml(serviceId)}" type="vendor.model">\n`;
       xml += `        <name>${escapeXml(offerName)}</name>\n`;
@@ -152,11 +152,10 @@ const generateYmlFeed = (services, categories) => {
       xml += `        <param name="Время работы">Пн-Пт 10:00-19:00, Сб и Вскр- выходной</param>\n`;
       xml += `        <param name="Адрес сервисного центра">г. Вологда, ул. Северная, д.7а</param>\n`;
 
-      // ✅ Исправленные обязательные параметры
       xml += `        <param name="Рейтинг">5.0</param>\n`;
       xml += `        <param name="Число отзывов">127</param>\n`;
       xml += `        <param name="Регион">Вологодская область, Вологда</param>\n`;
-      xml += `        <param name="Конверсия">15</param>\n`;   // теперь число, а не "15%"
+      xml += `        <param name="Конверсия">15</param>\n`;
       xml += `        <param name="Годы опыта">9</param>\n`;
 
       xml += `      </offer>\n`;

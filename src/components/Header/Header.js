@@ -158,7 +158,7 @@ function Header() {
                   Ещё <FontAwesomeIcon icon={faChevronDown} size="xs" />
                 </button>
                 <ul className={styles.dropdownMenu}>
-                  <li><Link href="/news" className={styles.dropdownItem}>Блог</Link></li>
+                  <li><Link href="/news" className={styles.dropdownItem}>Новости</Link></li>
                   <li><Link href="/promotions-page" className={styles.dropdownItem}>Акции</Link></li>
                   <li><Link href="/price" className={styles.dropdownItem}>Прайс-лист</Link></li>
                   <li><Link href="/depository-public" className={styles.dropdownItem}>Схемы/Bios</Link></li>
