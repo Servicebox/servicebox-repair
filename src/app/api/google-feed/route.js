@@ -4,7 +4,7 @@ import dbConnect from '@/lib/db';
 import Product from '@/models/Product';
 
 export const dynamic = 'force-dynamic';
-export const revalidate = 3600; // кэш на 1 час
+export const revalidate = 3600;
 
 const escapeXml = (text) => {
     if (!text) return '';
@@ -17,8 +17,10 @@ const escapeXml = (text) => {
 };
 
 const formatPrice = (price) => {
-    if (price === null || price === undefined) return '';
-    return `${parseFloat(price).toFixed(2)} RUB`;
+    if (price === null || price === undefined || price <= 0) return '';
+    // Формат: целое число, без копеек, валюта RUB (Google допускает и .00)
+    const value = parseFloat(price).toFixed(0);
+    return `${value} RUB`;
 };
 
 const getAvailability = (quantity) => {
@@ -28,7 +30,6 @@ const getAvailability = (quantity) => {
 const getCondition = (product) => {
     // Если есть явное поле condition
     if (product.condition) return product.condition;
-    // Проверяем описание на наличие признаков б/у
     const desc = product.description || '';
     if (desc.includes('б/у') || desc.includes('Б/У') || product.isUsed) {
         return 'used';
@@ -36,21 +37,35 @@ const getCondition = (product) => {
     return 'new';
 };
 
+const getImageUrl = (product, baseUrl) => {
+    // Приоритет: mainImage (если не заглушка), первый из images, затем null
+    if (product.mainImage && product.mainImage !== '/images/placeholder.jpg') {
+        return product.mainImage;
+    }
+    if (product.images && product.images.length > 0) {
+        return product.images[0];
+    }
+    return null; // нет изображения – товар будет пропущен
+};
+
 export async function GET(request) {
     try {
         await dbConnect();
 
-        // Получаем только активные товары, не удалённые, с включённым экспортом
         const products = await Product.find({
             isActive: true,
             isDeleted: { $ne: true },
             ymlExport: true,
+            // Дополнительно: исключаем товары без изображений, чтобы избежать ошибок Google
+            $or: [
+                { mainImage: { $ne: null, $ne: '/images/placeholder.jpg' } },
+                { images: { $exists: true, $not: { $size: 0 } } }
+            ]
         })
             .sort({ createdAt: -1 })
             .lean();
 
         const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
-        const now = new Date().toISOString();
 
         let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
         xml += '<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">\n';
@@ -60,54 +75,33 @@ export async function GET(request) {
         xml += `<description>Оригинальные запчасти и аксессуары для ноутбуков, телефонов, телевизоров и другой электроники</description>\n`;
 
         for (const product of products) {
-            // ✅ g:id – используем _id (уникальный, стабильный)
+            // Проверка обязательных полей
+            if (!product.name || !product.slug) continue;
+
             const id = product._id.toString();
-
-            // ✅ g:title – название товара
             const title = product.name;
-
-            // ✅ g:description – чистим от HTML, укорачиваем при необходимости
             let description = product.description || '';
             if (description.length > 5000) description = description.substring(0, 5000);
-            description = escapeXml(description);
-
-            // ✅ g:link – ссылка на страницу товара
             const link = `${baseUrl}/product/${product.slug}`;
+            const imageLink = getImageUrl(product, baseUrl);
+            // Если нет изображения – пропускаем товар (иначе ошибка Google)
+            if (!imageLink) continue;
 
-            // ✅ g:image_link – первое изображение или заглушка
-            let imageLink = product.mainImage;
-            if (!imageLink || imageLink === '/images/placeholder.jpg') {
-                imageLink = product.images?.[0];
-            }
-            if (!imageLink) {
-                imageLink = `${baseUrl}/images/placeholder.jpg`;
-            }
-            imageLink = escapeXml(imageLink);
-
-            // ✅ g:price – цена с валютой
             const price = formatPrice(product.new_price);
+            if (!price) continue; // цена обязательна
 
-            // ✅ g:availability – наличие на складе
             const availability = getAvailability(product.quantity);
-
-            // ✅ g:condition – состояние товара
             const condition = getCondition(product);
-
-            // ✅ g:brand – бренд (если нет, то название магазина)
             const brand = product.brand || 'ServiceBox35';
-
-            // ✅ g:mpn – артикул производителя (sku или vendorCode)
             const mpn = product.sku || product.vendorCode || product._id;
-
-            // ✅ g:gtin – если есть
             const gtin = product.gtin || '';
 
             xml += '<item>\n';
             xml += `<g:id>${escapeXml(id)}</g:id>\n`;
             xml += `<g:title>${escapeXml(title)}</g:title>\n`;
-            xml += `<g:description>${description}</g:description>\n`;
+            xml += `<g:description>${escapeXml(description)}</g:description>\n`;
             xml += `<g:link>${escapeXml(link)}</g:link>\n`;
-            xml += `<g:image_link>${imageLink}</g:image_link>\n`;
+            xml += `<g:image_link>${escapeXml(imageLink)}</g:image_link>\n`;
             xml += `<g:price>${price}</g:price>\n`;
             xml += `<g:availability>${availability}</g:availability>\n`;
             xml += `<g:condition>${condition}</g:condition>\n`;
@@ -116,9 +110,11 @@ export async function GET(request) {
             if (gtin) {
                 xml += `<g:gtin>${escapeXml(gtin)}</g:gtin>\n`;
             }
-            if (product.old_price && product.old_price > product.new_price) {
-                xml += `<g:sale_price>${formatPrice(product.old_price)}</g:sale_price>\n`;
-            }
+            // ⚠️ sale_price временно отключён, так как страницы товаров не всегда отображают старую цену корректно
+            // Если хотите включить – раскомментируйте и убедитесь, что на сайте есть чёткая скидка
+            // if (product.old_price && product.old_price > product.new_price) {
+            //   xml += `<g:sale_price>${formatPrice(product.old_price)}</g:sale_price>\n`;
+            // }
             xml += '</item>\n';
         }
 
@@ -130,7 +126,7 @@ export async function GET(request) {
             headers: {
                 'Content-Type': 'application/xml; charset=utf-8',
                 'Cache-Control': 'public, max-age=3600',
-                'X-Robots-Tag': 'noindex', // чтобы фид не индексировался поисковиками
+                'X-Robots-Tag': 'noindex',
             },
         });
     } catch (error) {
