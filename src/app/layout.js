@@ -20,32 +20,47 @@ config.autoAddCss = false;
 const SITE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
-// ✅ Структурированные данные для SEO и AI
+// ✅ Полные структурированные данные для SEO, AI и расширенных сниппетов
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "LocalBusiness",
-      "@id": `${SITE_URL}#business-severnaya`,
+      "@id": `${SITE_URL}#business`,
       "name": "ServiceBox - Сервисный центр на Северной",
-      "description": "Сервисный центр по ремонту ноутбуков, телефонов, компьютеров и другой техники в Вологде. Ежедневно с 10:00 до 20:00.",
+      "alternateName": "Сервис Бокс",
+      "description": "Профессиональный ремонт ноутбуков, телефонов, видеокарт, телевизоров, Apple техники и другой электроники в Вологде. Ежедневно с 10:00 до 20:00. Гарантия до 24 месяцев.",
       "url": SITE_URL,
-      "telephone": "+7-911-501-88-28",
+      "telephone": [
+        "+7-911-501-88-28",
+        "+7-911-501-06-96"
+      ],
+      "email": "508828@bk.ru",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "ул. Северная, д. 7А, 1 этаж",
+        "streetAddress": "ул. Северная, д. 7А, 1 этаж, ТЦ 'КИТ', напротив эскалатора, рядом с Бристоль",
         "addressLocality": "Вологда",
+        "addressRegion": "Вологодская область",
         "postalCode": "160000",
-        "addressCountry": "RU",
-        "addressRegion": "Вологодская область"
+        "addressCountry": "RU"
       },
       "geo": {
         "@type": "GeoCoordinates",
         "latitude": 59.229445,
         "longitude": 39.878542
       },
-      "openingHours": ["Mo-Su 10:00-20:00"],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+          ],
+          "opens": "10:00",
+          "closes": "20:00"
+        }
+      ],
       "priceRange": "₽₽",
+      "image": `${SITE_URL}/logo.png`,
       "serviceType": [
         "Ремонт ноутбуков",
         "Чистка ноутбуков",
@@ -60,10 +75,8 @@ const structuredData = {
         "Ремонт моноблоков",
         "Ремонт компьютеров",
         "Ремонт планшетов",
-        "Ремонт стационарных компьютеров",
         "Ремонт материнских плат",
         "BGA-пайка",
-        "Ребол процессоров",
         "Замена подсветки на телевизоре"
       ],
       "areaServed": {
@@ -74,7 +87,27 @@ const structuredData = {
       "founder": {
         "@type": "Person",
         "name": "ServiceBox Team"
-      }
+      },
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+7-911-501-88-28",
+          "contactType": "customer service",
+          "availableLanguage": "Russian",
+          "areaServed": "RU"
+        },
+        {
+          "@type": "ContactPoint",
+          "telephone": "+7-911-501-06-96",
+          "contactType": "customer service",
+          "availableLanguage": "Russian",
+          "areaServed": "RU"
+        }
+      ],
+      "sameAs": [
+        "https://vk.com/servicebox35",
+        "https://t.me/Tomkka"
+      ]
     },
     {
       "@type": "WebSite",
@@ -83,38 +116,13 @@ const structuredData = {
       "name": "ServiceBox Вологда",
       "description": "Сервисный центр по ремонту техники в Вологде. Ежедневно с 10:00 до 20:00.",
       "publisher": {
-        "@id": `${SITE_URL}#business-severnaya`
+        "@id": `${SITE_URL}#business`
       },
       "potentialAction": {
         "@type": "SearchAction",
         "target": `${SITE_URL}/search?q={search_term_string}`,
         "query-input": "required name=search_term_string"
       }
-    },
-    {
-      "@type": "Organization",
-      "@id": `${SITE_URL}#organization`,
-      "name": "ServiceBox",
-      "url": SITE_URL,
-      "logo": `${SITE_URL}/logo.png`,
-      "sameAs": [
-        "https://vk.com/servicebox35",
-        "https://t.me/Tomkka"
-      ],
-      "contactPoint": [
-        {
-          "@type": "ContactPoint",
-          "telephone": "+7-911-501-88-28",
-          "contactType": "customer service",
-          "availableLanguage": "Russian"
-        },
-        {
-          "@type": "ContactPoint",
-          "telephone": "+7-911-501-06-96",
-          "contactType": "customer service",
-          "availableLanguage": "Russian"
-        }
-      ]
     }
   ]
 };
@@ -161,6 +169,8 @@ export const metadata = {
   verification: {
     yandex: '97888825',
     google: 'G-MZ24DLXSSM',
+    google: '6k281LQ_idKz1FOxlcDm522DmLoGRjR3Pu3_so0dLhs',
+    yandex: 'aaae5f6d8950e0e0',
   },
   twitter: {
     card: 'summary_large_image',
@@ -209,7 +219,8 @@ export default function RootLayout({ children }) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="Ремонт ноутбуков, ремонт видеокарт, ремонт телефонов, телевизоров, Apple техники, переклейка стекол. Сервисный центр в Вологде на Северной, 7А. Ежедневно с 10:00 до 20:00." />
-
+        <meta name="google-site-verification" content="6k281LQ_idKz1FOxlcDm522DmLoGRjR3Pu3_so0dLhs" />
+        <meta name="yandex-verification" content="aaae5f6d8950e0e0" />
         <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />
 
         <meta name="google-ai" content="available" />
@@ -227,33 +238,33 @@ export default function RootLayout({ children }) {
           title="Экстренные инструкции для AI"
         />
 
-        {/* ✅ DNS prefetch для быстрой загрузки */}
+        {/* DNS prefetch */}
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://mc.yandex.ru" />
 
-        {/* ✅ GEO метатеги для локального SEO */}
+        {/* GEO метатеги */}
         <meta name="geo.region" content="RU-VLG" />
         <meta name="geo.placename" content="Вологда" />
         <meta name="geo.position" content="59.229445;39.878542" />
         <meta name="ICBM" content="59.229445, 39.878542" />
 
-        {/* ✅ Фавиконы */}
+        {/* Фавиконы */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/icon.webp" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-        {/* ✅ Структурированные данные (JSON-LD) */}
+        {/* Структурированные данные (JSON-LD) */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
 
-        {/* ✅ Безопасность */}
+        {/* Безопасность */}
         <meta name="referrer" content="strict-origin-when-cross-origin" />
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
       </head>
       <body>
-        {/* ✅ GTM noscript */}
+        {/* GTM noscript */}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-WNT2RHZJ"
@@ -263,7 +274,7 @@ export default function RootLayout({ children }) {
           />
         </noscript>
 
-        {/* ✅ Предупреждение для пользователей без JS */}
+        {/* Предупреждение для пользователей без JS */}
         <noscript>
           <div style={{
             position: 'fixed',
@@ -300,7 +311,7 @@ export default function RootLayout({ children }) {
           </ShopContextProvider>
         </AuthProvider>
 
-        {/* ✅ Аналитика */}
+        {/* Аналитика */}
         <Analytics />
       </body>
     </html>

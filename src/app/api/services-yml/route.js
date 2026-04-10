@@ -1,3 +1,4 @@
+// app/api/services-yml/route.js
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Service from '@/models/Service';
@@ -108,11 +109,13 @@ const generateYmlFeed = (services, categories) => {
       const rootCategory = findRootCategory(service, categories);
       const categoryId = categories.findIndex(cat => cat._id.toString() === rootCategory._id.toString()) + 1;
 
-      // ✅ ИСПРАВЛЕНО: убран префикс "ServiceBox35:"
-      const offerName = service.name;
+      // ✅ Исправлено: в теге name указываем название организации (ServiceBox35)
+      // Название услуги передается в теге model и description
+      const organizationName = 'ServiceBox35';
+      const serviceName = service.name;
 
       xml += `      <offer id="${escapeXml(serviceId)}" type="vendor.model">\n`;
-      xml += `        <name>${escapeXml(offerName)}</name>\n`;
+      xml += `        <name>${escapeXml(organizationName)}</name>\n`;
       xml += `        <url>${encodeUrlForXml(`${baseUrl}/services/${service.slug}`)}</url>\n`;
       if (priceData.from === 'true') {
         xml += `        <price from="true">${priceData.value}</price>\n`;
@@ -123,7 +126,7 @@ const generateYmlFeed = (services, categories) => {
       xml += `        <categoryId>${categoryId}</categoryId>\n`;
       xml += `        <picture>${encodeUrlForXml(`${baseUrl}/images/Devices.webp`)}</picture>\n`;
       xml += `        <description>${escapeXml(service.description || service.name)}</description>\n`;
-      xml += `        <model>${escapeXml(service.name)}</model>\n`;
+      xml += `        <model>${escapeXml(serviceName)}</model>\n`;
       xml += `        <vendor>ServiceBox35</vendor>\n`;
       xml += `        <sales_notes>Ремонт в сервисном центре</sales_notes>\n`;
       xml += `        <expiry>P30D</expiry>\n`;
