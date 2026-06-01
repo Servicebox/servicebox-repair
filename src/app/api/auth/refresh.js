@@ -38,7 +38,7 @@ export default async function handler(req, res) {
   // For now, we are not rotating the refresh token, but it is a good security practice.
 
   // Set the new access token in cookie
-  res.setHeader('Set-Cookie', 
+  res.setHeader('Set-Cookie',
     serialize('token', newAccessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
