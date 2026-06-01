@@ -51,7 +51,7 @@ const mongoOptions = {
 async function connectToDatabase() {
   try {
     await dbConnect();
-    console.log('✅ Database ready for server');
+    console.log(' Database ready for server');
   } catch (error) {
     console.error('❌ Database connection failed:', error.message);
     console.log('🔄 Retrying in 5 seconds...');
@@ -104,7 +104,7 @@ app.prepare().then(async () => {
       },
     }));
 
-    console.log('✅ Compression enabled (gzip/deflate)');
+    console.log(' Compression enabled (gzip/deflate)');
   }
 
   expressApp.use(cookieParser());
@@ -157,7 +157,7 @@ app.prepare().then(async () => {
   // СОЗДАНИЕ HTTP СЕРВЕРА С ПРАВИЛЬНЫМ МАРШРУТИЗАТОРОМ
   // ==========================================
   const server = createServer((req, res) => {
-    // ✅ Все запросы к /api/* направляем сразу в Next.js, минуя Express
+
     if (req.url.startsWith('/api')) {
       const parsedUrl = parse(req.url, true);
       handle(req, res, parsedUrl);
@@ -192,10 +192,10 @@ app.prepare().then(async () => {
 ╠══════════════════════════════════════════════════════════════╣
 ║  📡 URL:        http://localhost:${PORT}                      ║
 ║  💚 Health:     http://localhost:${PORT}/health               ║
-║  🔧 Environment: ${(process.env.NODE_ENV || 'development').padEnd(20)}║
+║  🔧 Environment: ${(process.env.NODE_ENV || 'production').padEnd(20)}║
 ║  🗄️  Database:   ${mongoose.connection.readyState === 1 ? 'connected' : 'connecting'}                ║
 ║  📦 Compression: ${!dev ? 'enabled (gzip)' : 'disabled'}                     ║
-║  🚀 Next.js:     ${dev ? 'development' : 'production'} mode                     ║
+║  🚀 Next.js:     ${dev ? 'production' : 'production'} mode                     ║
 ╚══════════════════════════════════════════════════════════════╝
     `);
   });

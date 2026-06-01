@@ -7,44 +7,44 @@ export async function GET(request) {
   try {
     // Получаем сессию пользователя
     const session = await getServerSession(request);
-    
+
     console.log('🔐 Session in my-orders:', session);
-    
+
     if (!session || !session.userId) {
       console.log('❌ No session or userId found');
       return new Response(
-        JSON.stringify({ 
-          success: false, 
+        JSON.stringify({
+          success: false,
           error: 'Unauthorized',
-          message: 'Необходима авторизация' 
+          message: 'Необходима авторизация'
         }),
         { status: 401, headers: { 'Content-Type': 'application/json' } }
       );
     }
-    
+
     await connectDB();
-    
+
     console.log(`📋 Fetching orders for user: ${session.userId}`);
-    
+
     // Ищем заказы пользователя
-    const orders = await Order.find({ 
+    const orders = await Order.find({
       $or: [
         { userId: session.userId },
         { 'customerInfo.email': session.email }
       ],
-      isDeleted: false 
+      isDeleted: false
     })
-    .sort({ createdAt: -1 })
-    .limit(50)
-    .lean();
-    
+      .sort({ createdAt: -1 })
+      .limit(50)
+      .lean();
+
     console.log(`✅ Found ${orders.length} orders for user ${session.userId}`);
-    
+
     // Форматируем заказы для фронтенда
     const formattedOrders = orders.map(order => {
       // Проверяем, что products - массив
       const products = Array.isArray(order.products) ? order.products : [];
-      
+
       return {
         ...order,
         _id: order._id.toString(),
@@ -70,7 +70,7 @@ export async function GET(request) {
         status: order.status || 'pending'
       };
     });
-    
+
     return new Response(
       JSON.stringify({
         success: true,
@@ -78,27 +78,27 @@ export async function GET(request) {
         count: formattedOrders.length,
         message: `Найдено ${formattedOrders.length} заказов`
       }),
-      { 
-        status: 200, 
-        headers: { 
+      {
+        status: 200,
+        headers: {
           'Content-Type': 'application/json',
           'Cache-Control': 'no-store'
-        } 
+        }
       }
     );
-    
+
   } catch (error) {
     console.error('❌ Error fetching user orders:', error);
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         success: false,
         error: 'Internal Server Error',
         message: 'Ошибка сервера при получении заказов',
-        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+        details: process.env.NODE_ENV === 'production' ? error.message : undefined
       }),
-      { 
-        status: 500, 
-        headers: { 'Content-Type': 'application/json' } 
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
       }
     );
   }
@@ -107,11 +107,11 @@ export async function GET(request) {
 // Вспомогательная функция для форматирования адреса
 function formatShippingAddress(address) {
   if (!address) return 'Не указан';
-  
+
   if (typeof address === 'string') {
     return address;
   }
-  
+
   // Если это объект (новая модель Order)
   if (address.fullName) {
     const parts = [
@@ -121,10 +121,10 @@ function formatShippingAddress(address) {
       address.country,
       address.postalCode
     ].filter(Boolean);
-    
+
     return parts.join(', ');
   }
-  
+
   // Если это старый формат
   return JSON.stringify(address);
 }

@@ -1,33 +1,31 @@
 // components/Main/Main.js
 'use client';
 
-import { useEffect } from "react";
-import { useRouter } from 'next/navigation';
 import MainBanner from "../MainBanner/MainBanner";
-import Service from "../Service/Service";
+import RepairCalculator from '@/components/RepairCalculator/RepairCalculator';
+import CategoriesGrid from "../CategoriesGrid/CategoriesGrid";
 import AboutRef from "../AboutRef/AboutRef";
-import Contacts from "../Contacts/Contacts";
-import ArronService from "../ArronnService/ArronnService";
-import AboutMe from "../AboutMe/AboutMe";
-import Gifts from "../Gifts/Gifts";
+import ReviewsSection from "../ReviewsSection/ReviewsSection";
 import WorkSteps from "../WorkSteps/WorkSteps";
-import ReviewsSection from "../ReviewsSection/ReviewsSection"
-import ServicePricePage from "../ServicePricePage/ServicePricePage"
-
+import AboutMe from "../AboutMe/AboutMe";
+import NewsBlock from "../NewsBlock/NewsBlock";
+import Gifts from "../Gifts/Gifts";
+import Contacts from "../Contacts/Contacts";
 
 function Main() {
   return (
     <div>
       <section className="main">
         <MainBanner />
-        <ServicePricePage />
+        <RepairCalculator />
+        <CategoriesGrid />
         <AboutRef />
-        <ArronService />
-        <AboutMe />
+        <ReviewsSection />
         <WorkSteps />
+        <AboutMe />
+        <NewsBlock limit={4} />
         <Gifts />
         <Contacts />
-        <ReviewsSection />
       </section>
     </div>
   );

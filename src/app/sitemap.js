@@ -1,161 +1,182 @@
-// app/sitemap.js
+// src/app/sitemap.js
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
-const createSitemapEntry = ({ url, lastModified, changeFrequency, priority, aiMetadata = {} }) => {
-  if (!url || typeof url !== 'string' || !url.startsWith('http')) {
-    console.warn('⚠️ Invalid URL in sitemap entry:', url);
-    return null;
+// Жёсткая гарантия BASE_URL (никогда не будет undefined)
+const getBaseUrl = () => {
+  if (process.env.SITE_URL && process.env.SITE_URL.trim()) {
+    return process.env.SITE_URL.trim().replace(/\/$/, '');
   }
-
-  const formatDate = (date) => {
-    if (!date) return new Date().toISOString();
-    const d = new Date(date);
-    return isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
-  };
-
-  const normalizedPriority = typeof priority === 'number'
-    ? Math.max(0, Math.min(1, priority))
-    : 0.5;
-
-  const entry = {
-    loc: url,
-    lastmod: formatDate(lastModified),
-    changefreq: changeFrequency || 'monthly',
-    priority: normalizedPriority,
-  };
-
-  if (aiMetadata.pageType) entry['x-ai:type'] = aiMetadata.pageType;
-  if (aiMetadata.contentFocus) entry['x-ai:focus'] = aiMetadata.contentFocus;
-  if (Array.isArray(aiMetadata.primaryKeywords) && aiMetadata.primaryKeywords.length > 0) {
-    entry['x-ai:keywords'] = aiMetadata.primaryKeywords.slice(0, 5).join(', ');
+  if (process.env.NEXT_PUBLIC_API_URL && process.env.NEXT_PUBLIC_API_URL.trim()) {
+    return process.env.NEXT_PUBLIC_API_URL.trim().replace(/\/$/, '');
   }
-  if (aiMetadata.contentSummary) entry['x-ai:summary'] = aiMetadata.contentSummary.substring(0, 200);
-
-  entry['x-business:city'] = 'Вологда';
-  entry['x-business:region'] = 'Вологодская область';
-  entry['x-business:category'] = 'electronics_repair_service';
-  entry['x-business:language'] = 'ru';
-
-  if (aiMetadata.article) {
-    entry['x-article:title'] = aiMetadata.article.title?.substring(0, 100);
-    entry['x-article:published'] = aiMetadata.article.publishedAt;
-    entry['x-article:updated'] = aiMetadata.article.updatedAt;
-    entry['x-article:has-image'] = aiMetadata.article.hasImage ? 'true' : 'false';
-  }
-
-  return entry;
+  return 'https://servicebox35.ru';
 };
 
+const BASE_URL = getBaseUrl();
+
+console.log(`🗺️ [sitemap] BASE_URL="${BASE_URL}"`);
+
+const formatDate = (date) => {
+  if (!date) return new Date().toISOString();
+  const d = new Date(date);
+  return isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
+};
+
+const createEntry = (path, priority, changefreq = 'monthly', lastmod) => ({
+  url: `${BASE_URL}${path}`,
+  lastModified: formatDate(lastmod || new Date()),
+  changeFrequency: changefreq,
+  priority: Math.max(0, Math.min(1, priority || 0.5)),
+});
+
+const safeFetch = async (url) => {
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 3000);
+    const res = await fetch(url, { signal: ctrl.signal, headers: { Accept: 'application/json' } });
+    clearTimeout(t);
+    return res.ok ? await res.json() : null;
+  } catch (e) {
+    console.warn(`⚠️ Sitemap fetch failed: ${url}`);
+    return null;
+  }
+};
+
+// === СПИСКИ СЛАГОВ (константы, не зависят от `now`) ===
+const brandSlugs = [
+  'apple', 'samsung', 'xiaomi', 'huawei', 'asus', 'lenovo',
+  'hp', 'acer', 'msi', 'dell', 'sony', 'lg'
+];
+
+const problemSlugs = [
+  'laptop-not-turning-on',
+  'phone-battery-drains-fast',
+  'screen-artifacts',
+  'laptop-overheating',
+  'phone-charging-issue',
+  'water-damage',
+];
+
+const aiAnswerSlugs = [
+  'repair-laptop-vologda',
+  'phone-screen-replacement',
+  'videocard-repair-cost',
+  'water-damage-phone',
+  'apple-repair-warranty',
+  'laptop-not-turning-on',
+  'price-diagnostics',
+  'urgent-repair-vologda',
+];
+
 export default async function sitemap() {
-  const baseUrl = 'https://servicebox35.ru';
-  const currentDate = new Date();
+  const now = new Date();
 
-  // Статические страницы
-  const staticPages = [
-    { url: baseUrl, lastModified: currentDate, changeFrequency: 'daily', priority: 1.0 },
-    { url: `${baseUrl}/about`, lastModified: currentDate, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/contacts`, lastModified: currentDate, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${baseUrl}/parts`, lastModified: currentDate, changeFrequency: 'daily', priority: 0.9 },
-    { url: `${baseUrl}/services`, lastModified: currentDate, changeFrequency: 'daily', priority: 0.95 },
-    { url: `${baseUrl}/prices`, lastModified: currentDate, changeFrequency: 'weekly', priority: 0.9 },
-    { url: `${baseUrl}/gallery`, lastModified: currentDate, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${baseUrl}/news`, lastModified: currentDate, changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${baseUrl}/promotions-page`, lastModified: currentDate, changeFrequency: 'weekly', priority: 0.85 },
-    { url: `${baseUrl}/depository-public`, lastModified: currentDate, changeFrequency: 'weekly', priority: 0.6 },
-    { url: `${baseUrl}/tracking`, lastModified: currentDate, changeFrequency: 'daily', priority: 0.7 },
-    { url: `${baseUrl}/worksteps`, lastModified: currentDate, changeFrequency: 'monthly', priority: 0.85 },
-  ];
+  // === СТАТИЧЕСКИЕ СТРАНИЦЫ ===
+  const staticUrls = [
+    ['/', 1.0, 'daily'],
+    ['/about', 0.8, 'monthly'],
+    ['/contacts', 0.9, 'monthly'],
+    ['/parts', 0.9, 'daily'],
+    ['/services', 0.95, 'daily'],
+    ['/prices', 0.9, 'weekly'],
+    ['/gallery', 0.7, 'monthly'],
+    ['/news', 0.8, 'weekly'],
+    ['/promotions-page', 0.85, 'weekly'],
+    ['/depository-public', 0.6, 'weekly'],
+    ['/tracking', 0.7, 'daily'],
+    ['/worksteps', 0.85, 'monthly'],
+    ['/ai-assistant.json', 0.95, 'weekly'],
+  ].map(([p, pri, f]) => createEntry(p, pri, f, now));
 
-  // AI API эндпоинты
-  const apiPages = [
-    { url: `${baseUrl}/api/ai/v1/business`, lastModified: currentDate, changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${baseUrl}/api/ai/v1/emergency`, lastModified: currentDate, changeFrequency: 'monthly', priority: 0.6 },
-  ];
+  // === AI API ЭНДПОИНТЫ ===
+  const apiUrls = [
+    ['/api/ai/v1/business', 0.8, 'weekly'],
+    ['/api/ai/v1/emergency', 0.6, 'monthly'],
+  ].map(([p, pri, f]) => createEntry(p, pri, f, now));
 
-  let servicePages = [];
-  let productPages = [];
-  let newsEntries = [];
+  // === СТРАНИЦЫ БРЕНДОВ ===
+  const brandUrls = brandSlugs.map(slug =>
+    createEntry(`/brands/${slug}`, 0.85, 'weekly', now)
+  );
 
-  // Услуги (только активные, не категории)
-  try {
-    const res = await fetch(`${baseUrl}/api/services/all`, { next: { revalidate: 3600 } });
-    if (res.ok) {
-      const data = await res.json();
-      if (data.success && Array.isArray(data.data)) {
-        servicePages = data.data
-          .filter(service => service.isCategory === false && service.slug && service.isActive !== false)
-          .map(service => ({
-            url: `${baseUrl}/services/${encodeURIComponent(service.slug)}`,
-            lastModified: new Date(service.updatedAt || currentDate),
-            changeFrequency: 'monthly',
-            priority: 0.7,
-          }));
-      }
-    }
-  } catch (error) {
-    console.warn('Error fetching services for sitemap:', error.message);
-  }
+  // === СТРАНИЦЫ НЕИСПРАВНОСТЕЙ  ===
+  const problemUrls = problemSlugs.map(slug =>
+    createEntry(`/problems/${slug}`, 0.85, 'weekly', now)
+  );
 
-  // Товары
-  try {
-    const res = await fetch(`${baseUrl}/api/products?limit=1000`, { next: { revalidate: 3600 } });
-    if (res.ok) {
-      const data = await res.json();
-      if (data.products && Array.isArray(data.products)) {
-        productPages = data.products
-          .filter(product => product.slug)
-          .map(product => ({
-            url: `${baseUrl}/product/${encodeURIComponent(product.slug)}`,
-            lastModified: new Date(product.updatedAt || currentDate),
-            changeFrequency: 'weekly',
-            priority: 0.8,
-          }));
-      }
-    }
-  } catch (error) {
-    console.warn('Error fetching products for sitemap:', error.message);
-  }
+  // === AI-ANSWERS ===
+  const aiAnswers = aiAnswerSlugs.map(s =>
+    createEntry(`/ai-answers/${s}`, 0.85, 'weekly', now)
+  );
 
-  // Новости (только опубликованные)
-  try {
-    const res = await fetch(`${baseUrl}/api/news?all=1&limit=500`, { next: { revalidate: 3600 } });
-    if (res.ok) {
-      const data = await res.json();
-      if (data.success && Array.isArray(data.data)) {
-        newsEntries = data.data
-          .filter(news => news.isPublished === true && news.slug)
-          .map(news => ({
-            url: `${baseUrl}/news/${encodeURIComponent(news.slug)}`,
-            lastModified: new Date(news.updatedAt || news.publishedAt || currentDate),
-            changeFrequency: 'monthly',
-            priority: 0.7,
-          }));
-      }
-    }
-  } catch (error) {
-    console.warn('Error fetching news for sitemap:', error.message);
-  }
+  // === ДИНАМИЧЕСКИЕ  ===
+  const [svc, prod, news] = await Promise.all([
+    safeFetch(`${BASE_URL}/api/services/all`),
+    safeFetch(`${BASE_URL}/api/products?limit=500`),
+    safeFetch(`${BASE_URL}/api/news?all=1&limit=200`),
+  ]);
 
-  // Объединяем все страницы (без serviceCategoryPages)
-  const allPages = [
-    ...staticPages,
-    ...apiPages,
-    ...servicePages,
-    ...productPages,
-    ...newsEntries,
-  ];
+  const svcUrls = (svc?.success && Array.isArray(svc.data))
+    ? svc.data
+      .filter(s => s.slug && !s.isCategory && s.isActive !== false)
+      .map(s => createEntry(
+        `/services/${encodeURIComponent(s.slug)}`,
+        0.85,
+        'monthly',
+        s.updatedAt
+      ))
+    : [];
 
-  // Удаление дубликатов
-  const uniqueMap = new Map();
-  for (const page of allPages) {
-    if (!uniqueMap.has(page.url)) {
-      uniqueMap.set(page.url, page);
-    }
-  }
-  const uniquePages = Array.from(uniqueMap.values());
+  const prodUrls = (prod?.products && Array.isArray(prod.products))
+    ? prod.products
+      .filter(p => p.slug)
+      .map(p => createEntry(
+        `/product/${encodeURIComponent(p.slug)}`,
+        0.75,
+        'weekly',
+        p.updatedAt
+      ))
+    : [];
 
-  uniquePages.sort((a, b) => (b.priority || 0) - (a.priority || 0));
+  const newsUrls = (news?.success && Array.isArray(news.data))
+    ? news.data
+      .filter(n => n.slug && n.isPublished)
+      .map(n => createEntry(
+        `/news/${encodeURIComponent(n.slug)}`,
+        0.7,
+        'monthly',
+        n.updatedAt || n.publishedAt
+      ))
+    : [];
 
-  console.log(`✅ Sitemap generated: ${uniquePages.length} URLs (services: ${servicePages.length}, products: ${productPages.length}, news: ${newsEntries.length})`);
+  // === ОБЪЕДИНЕНИЕ ВСЕХ СТРАНИЦ ===
+  const all = [
+    ...staticUrls,
+    ...apiUrls,
+    ...aiAnswers,
+    ...brandUrls,
+    ...problemUrls,
+    ...svcUrls,
+    ...prodUrls,
+    ...newsUrls,
+  ].filter(e => e?.url?.startsWith('http'));
 
-  return uniquePages.slice(0, 50000);
+  // Уникальность по URL
+  const unique = Array.from(new Map(all.map(e => [e.url, e])).values());
+
+  // Сортировка по приоритету (самые важные — первыми)
+  unique.sort((a, b) => (b.priority || 0) - (a.priority || 0));
+
+  console.log(` Sitemap: ${unique.length} URLs | BASE="${BASE_URL}"`);
+  console.log(`   ├─ Static:    ${staticUrls.length}`);
+  console.log(`   ├─ API:       ${apiUrls.length}`);
+  console.log(`   ├─ AI Answers:${aiAnswers.length}`);
+  console.log(`   ├─ Brands:    ${brandUrls.length}`);
+  console.log(`   ├─ Problems:  ${problemUrls.length}`);
+  console.log(`   ├─ Services:  ${svcUrls.length}`);
+  console.log(`   ├─ Products:  ${prodUrls.length}`);
+  console.log(`   └─ News:      ${newsUrls.length}`);
+
+  return unique;
 }

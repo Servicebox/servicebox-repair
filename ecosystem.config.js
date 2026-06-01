@@ -3,11 +3,19 @@ module.exports = {
         {
             name: 'servicebox-repair',
             script: 'node',
-            args: '--env-file=.env.local src/server.js',
+            args: '--env-file=.env.production src/server.js',
             cwd: '/var/www/servicebox-repair',
             instances: 1,
             exec_mode: 'fork',
+            autorestart: true,
+            watch: false,
+            max_memory_restart: '1G',
             env: {
+                NODE_ENV: 'production',
+                PORT: 3000,
+                NODE_OPTIONS: '--max-old-space-size=4096',
+            },
+            env_production: {
                 NODE_ENV: 'production',
                 PORT: 3000,
                 NODE_OPTIONS: '--max-old-space-size=4096',
@@ -18,6 +26,7 @@ module.exports = {
             merge_logs: true,
             max_restarts: 10,
             restart_delay: 2000,
+            exp_backoff_restart_delay: 100,
         },
     ],
 };

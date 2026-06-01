@@ -1,0 +1,413 @@
+/* components/Admin/AiTrafficDashboard/AiTrafficDashboard.module.css */
+
+.dashboard {
+    padding: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+    color: #1a2a3a;
+}
+
+/* Заголовок */
+.header {
+    margin-bottom: 24px;
+}
+
+.header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    color: #0a1929;
+}
+
+.subtitle {
+    color: #64748b;
+    margin: 0;
+    font-size: 15px;
+}
+
+/* Фильтры */
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    padding: 16px;
+    background: #f8fafc;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    border: 1px solid #e2e8f0;
+}
+
+.filterGroup {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filterGroup label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #475569;
+}
+
+.select {
+    padding: 8px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    background: white;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.select:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.exportButton {
+    margin-left: auto;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #0066cc, #004499);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.exportButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+}
+
+.exportButton:active {
+    transform: translateY(0);
+}
+
+/* Карточки метрик */
+.metricsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.metricCard {
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    text-align: center;
+    transition: box-shadow 0.2s;
+}
+
+.metricCard:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.metricValue {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0a1929;
+    margin-bottom: 4px;
+}
+
+.metricLabel {
+    font-size: 13px;
+    color: #64748b;
+}
+
+/* Секции */
+.section {
+    margin-bottom: 32px;
+}
+
+.section h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #0a1929;
+    margin: 0 0 16px 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+/* Таблица */
+.tableWrapper {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    font-size: 14px;
+}
+
+.table th {
+    background: #f8fafc;
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: #475569;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #1a2a3a;
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.table tr:hover {
+    background: #f8fafc;
+}
+
+.botCell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.botIcon {
+    font-size: 18px;
+}
+
+.emptyRow {
+    text-align: center;
+    color: #64748b;
+    padding: 24px !important;
+}
+
+/* Список визитов */
+.visitsList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.visitItem {
+    padding: 16px;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    transition: box-shadow 0.2s;
+}
+
+.visitItem:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.visitHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.visitBot {
+    font-weight: 600;
+    color: #0a1929;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.visitTime {
+    font-size: 13px;
+    color: #64748b;
+}
+
+.visitDetails {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.visitPage {
+    font-family: monospace;
+    font-size: 13px;
+    color: #0066cc;
+    background: #eff6ff;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.visitQuery {
+    font-size: 13px;
+    color: #475569;
+    font-style: italic;
+}
+
+.visitReferrer {
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* Информационный блок */
+.infoBox {
+    padding: 16px;
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #0c4a6e;
+}
+
+.infoBox strong {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.infoBox ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.infoBox li {
+    margin-bottom: 4px;
+}
+
+/* Загрузка и ошибки */
+.loadingContainer,
+.errorContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    text-align: center;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #e2e8f0;
+    border-top-color: #0066cc;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.errorIcon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.errorContainer h3 {
+    color: #dc2626;
+    margin: 0 0 8px 0;
+}
+
+.errorContainer p {
+    color: #64748b;
+    margin: 0 0 20px 0;
+    max-width: 400px;
+}
+
+.retryButton {
+    padding: 10px 24px;
+    background: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.retryButton:hover {
+    background: #004499;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .dashboard {
+        padding: 16px;
+    }
+
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .exportButton {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .table th,
+    .table td {
+        padding: 12px 10px;
+        font-size: 13px;
+    }
+
+    .metricsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .metricsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+}
+/* Добавьте в конец файла */
+
+/* Кнопка обновления */
+.refreshButton {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #475569, #334155);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.refreshButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(71, 85, 105, 0.3);
+}
+
+.refreshButton:active {
+    transform: translateY(0);
+}
+
+/* Адаптив для заголовка */
+@media (max-width: 768px) {
+    .header>div {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+
+    .refreshButton {
+        width: 100%;
+        justify-content: center;
+    }
+}

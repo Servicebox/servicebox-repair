@@ -26,6 +26,8 @@ export default function AdminLayout({ children }) {
     { href: '/admin-panel/tracking', label: 'Отслеживание', icon: '📍' },
     { href: '/admin-panel/depository', label: 'Файлы', icon: '📁' },
     { href: '/admin-panel/price', label: 'Прайс-лист', icon: '📊' },
+
+    { href: '/admin-panel/ai-traffic', label: 'ИИ-трафик', icon: '🤖' },
   ];
 
   useEffect(() => {

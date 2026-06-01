@@ -4,7 +4,7 @@ import NewsDetail from '@/components/NewsDetail/NewsDetail';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
-// ✅ Генерация метаданных для поисковиков
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
 
@@ -79,7 +79,6 @@ export async function generateMetadata({ params }) {
   }
 }
 
-// ✅ Генерация статических путей для предварительного рендеринга (SSG)
 export async function generateStaticParams() {
   // На этапе сборки (build) не пытаемся делать fetch, чтобы избежать ECONNREFUSED
   if (process.env.NEXT_PHASE === 'phase-production-build') {
@@ -105,7 +104,6 @@ export async function generateStaticParams() {
   }
 }
 
-// ✅ Серверный компонент
 export default async function NewsDetailPage({ params }) {
   const { slug } = await params;
 

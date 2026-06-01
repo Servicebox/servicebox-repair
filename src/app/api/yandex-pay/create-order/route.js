@@ -109,7 +109,7 @@ export async function POST(request) {
         message: error.message,
         // Добавляем больше деталей для отладки
         validationErrors: error.errors,
-        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        stack: process.env.NODE_ENV === 'production' ? error.stack : undefined
       },
       { status: 500 }
     );
@@ -120,7 +120,7 @@ export async function GET(request) {
   return NextResponse.json({
     message: 'API создания заказа Яндекс.Пэй',
     status: 'active',
-    mode: process.env.NODE_ENV || 'development',
+    mode: process.env.NODE_ENV || 'production',
     testMode: true,
     instructions: 'В тестовом режиме создаются фиктивные платежи. Для реальных платежей настройте переменные окружения.'
   });

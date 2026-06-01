@@ -11,7 +11,7 @@ export default function Consent() {
   // Функция для генерации и скачивания PDF
   const handleDownloadPDF = () => {
     setIsGenerating(true);
-    
+
     // Создаем HTML-содержимое для PDF
     const htmlContent = `
       <!DOCTYPE html>
@@ -104,7 +104,7 @@ export default function Consent() {
           <p><strong>ИНН/КПП:</strong> 3525475916 / 352501001</p>
           <p><strong>Дата регистрации:</strong> 14.12.2021</p>
           <p><strong>Юридический адрес:</strong> 160029, Вологодская область, г. Вологда, Северная ул., д. 7а, офис 405</p>
-          <p><strong>Фактический адрес:</strong> 160029, Вологодская область, г. Вологда, Северная ул., д. 7а, офис 405</p>
+          <p><strong>Фактический адрес:</strong> 160029, Вологодская область, г. Вологда, Северная ул., д. 7а, 1 этаж на против эскалатора</p>
           <p><strong>Руководитель:</strong> Генеральный директор Кознов Андрей Викторович</p>
           
           <div class="contact-info">
@@ -151,7 +151,7 @@ export default function Consent() {
         
         <div class="section">
           <h2>5. Отзыв согласия</h2>
-          <p>Я имею право отозвать настоящее согласие путем направления письменного заявления по адресу: 160029, Вологодская область, г. Вологда, Северная ул., д. 7а, офис 405 или на email: 508828@bk.ru</p>
+          <p>Я имею право отозвать настоящее согласие путем направления письменного заявления по адресу: 160029, Вологодская область, г. Вологда, Северная ул., д. 7а, 1 этаж напротив эскалатора или на email: 508828@bk.ru</p>
         </div>
         
         <div class="signature">
@@ -170,7 +170,7 @@ export default function Consent() {
     // Создаем Blob из HTML
     const blob = new Blob([htmlContent], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
-    
+
     // Создаем ссылку для скачивания
     const a = document.createElement('a');
     a.href = url;
@@ -178,7 +178,7 @@ export default function Consent() {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    
+
     // Освобождаем ресурсы
     URL.revokeObjectURL(url);
     setIsGenerating(false);
@@ -194,7 +194,7 @@ export default function Consent() {
       <div className={styles.content}>
         <div className={styles.headerActions}>
           <div className={styles.actions}>
-            <button 
+            <button
               onClick={handleDownloadPDF}
               disabled={isGenerating}
               className={`${styles.downloadBtn} ${isGenerating ? styles.disabled : ''}`}
@@ -213,13 +213,13 @@ export default function Consent() {
                 </>
               )}
             </button>
-            
+
 
           </div>
         </div>
 
         <h1 className={styles.title}>Согласие на обработку персональных данных</h1>
-        
+
         <div className={styles.consentForm}>
           <div className={styles.companyInfo}>
             <h2 className={styles.companyTitle}>Оператор персональных данных</h2>
@@ -230,13 +230,13 @@ export default function Consent() {
               <p><strong>Дата регистрации:</strong> 14.12.2021</p>
               <p><strong>Уставный капитал:</strong> 10 000 руб.</p>
               <p><strong>Юридический адрес:</strong> 160029, Вологодская область, г. Вологда, Северная ул., д. 7а, офис 405</p>
-              <p><strong>Фактический адрес:</strong> 160029, Вологодская область, г. Вологда, Северная ул., д. 7а, офис 405</p>
+              <p><strong>Фактический адрес:</strong> 160029, Вологодская область, г. Вологда, Северная ул., д. 7а, 1 этаж, на против эскалатора</p>
               <p><strong>Руководитель:</strong> Генеральный директор Кознов Андрей Викторович (с 14 декабря 2021 г.)</p>
               <p><strong>Статус МСП:</strong> Микропредприятие (присвоен 10 января 2022 г.)</p>
               <p><strong>Основной вид деятельности:</strong> 95.11 - Ремонт компьютеров и периферийного компьютерного оборудования</p>
               <p><strong>Налоговый орган:</strong> Управление ФНС России по Вологодской области (с 18 сентября 2023 г.)</p>
             </div>
-            
+
             <div className={styles.contactInfo}>
               <h3>Контактная информация:</h3>
               <p><strong>Телефоны:</strong> +7 (911) 501-88-28, +7 (911) 501-06-96</p>
@@ -246,8 +246,8 @@ export default function Consent() {
           </div>
 
           <p className={styles.intro}>
-            Настоящим я даю согласие Обществу с ограниченной ответственностью "СЕРВИСБОКС" 
-            на обработку моих персональных данных в соответствии с Федеральным законом от 27.07.2006 № 152-ФЗ 
+            Настоящим я даю согласие Обществу с ограниченной ответственностью "СЕРВИСБОКС"
+            на обработку моих персональных данных в соответствии с Федеральным законом от 27.07.2006 № 152-ФЗ
             «О персональных данных».
           </p>
 
@@ -276,7 +276,7 @@ export default function Consent() {
           <section className={styles.section}>
             <h2>3. Способы обработки</h2>
             <p>
-              Обработка может осуществляться как автоматизированными, 
+              Обработка может осуществляться как автоматизированными,
               так и неавтоматизированными способами.
             </p>
           </section>
@@ -284,8 +284,8 @@ export default function Consent() {
           <section className={styles.section}>
             <h2>4. Срок действия согласия</h2>
             <p>
-              Согласие действует в течение <strong>5 лет</strong> с момента его предоставления. 
-              По истечении указанного срока действие согласия считается продленным 
+              Согласие действует в течение <strong>5 лет</strong> с момента его предоставления.
+              По истечении указанного срока действие согласия считается продленным
               на каждые следующие 5 лет при отсутствии моего отзыва.
             </p>
           </section>
@@ -293,8 +293,8 @@ export default function Consent() {
           <section className={styles.section}>
             <h2>5. Отзыв согласия</h2>
             <p>
-              Я имею право отозвать настоящее согласие путем направления 
-              письменного заявления по адресу: 160029, Вологодская область, г. Вологда, Северная ул., д. 7а, офис 405<br />
+              Я имею право отозвать настоящее согласие путем направления
+              письменного заявления по адресу: 160029, Вологодская область, г. Вологда, Северная ул., д. 7а<br />
               или на email: 508828@bk.ru
             </p>
           </section>
@@ -304,12 +304,12 @@ export default function Consent() {
               <p><strong>Подпись субъекта персональных данных:</strong></p>
               <div className={styles.signatureLine}>____________________</div>
             </div>
-            
+
             <div className={styles.signatureField}>
               <p><strong>ФИО полностью:</strong></p>
               <div className={styles.signatureLine}>_________________________________________</div>
             </div>
-            
+
             <div className={styles.signatureField}>
               <p><strong>Дата:</strong></p>
               <div className={styles.signatureLine}>«___» ___________ 20___ г.</div>
@@ -318,8 +318,8 @@ export default function Consent() {
 
           <div className={styles.acknowledgment}>
             <p>
-              Нажимая кнопку «Согласиться» в формах на сайте, 
-              я подтверждаю, что ознакомлен(а) с текстом настоящего согласия 
+              Нажимая кнопку «Согласиться» в формах на сайте,
+              я подтверждаю, что ознакомлен(а) с текстом настоящего согласия
               и даю согласие на обработку моих персональных данных.
             </p>
           </div>

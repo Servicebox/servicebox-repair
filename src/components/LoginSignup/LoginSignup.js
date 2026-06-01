@@ -7,7 +7,7 @@ import styles from './LoginSignup.module.css';
 
 function LoginSignupContent({ isOpen, onClose, onLoginSuccess }) {
   const searchParams = useSearchParams();
-  const token = searchParams.get('token'); // Изменено с token на token
+  const token = searchParams.get('token');
   const router = useRouter();
   const { login } = useAuth();
 
