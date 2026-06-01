@@ -16,7 +16,7 @@ export default function NewsEditPage() {
   useEffect(() => {
     const fetchNewsItem = async () => {
       try {
-        // ✅ ФИКС: Проверка ID
+
         const id = params?.id;
         if (!id || id === 'undefined') {
           throw new Error('ID новости не указан');

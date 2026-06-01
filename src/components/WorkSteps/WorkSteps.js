@@ -460,7 +460,6 @@ const WorkSteps = () => {
         </section>
       </div>
 
-      {/* ✅ JSON-LD структурированные данные */}
       {structuredData && (
         <Script
           id="structured-data-worksteps"

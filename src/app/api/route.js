@@ -29,7 +29,7 @@ const CONFIG = {
 export async function POST(request) {
   try {
     const formData = await request.formData();
-    
+
     // Получаем файлы - поддерживаем оба варианта: 'files' и 'file'
     let files = formData.getAll('files');
     if (files.length === 0) {
@@ -111,26 +111,26 @@ export async function POST(request) {
         // Генерируем уникальное имя файла
         const timestamp = Date.now();
         const randomString = Math.random().toString(36).substring(2, 15);
-        
+
         let filename, filePath, publicUrl;
 
         if (isImage) {
           // Для изображений конвертируем в WebP
           filename = `${timestamp}-${randomString}.webp`;
           filePath = path.join(uploadDir, filename); // Использует Node.js API
-          
+
           // Обрабатываем изображение с sharp
           const arrayBuffer = await file.arrayBuffer();
           const buffer = Buffer.from(arrayBuffer); // Buffer - Node.js API
 
           const processedImage = await sharp(buffer) // sharp использует Node.js
-            .webp({ 
+            .webp({
               quality: CONFIG.imageProcessing.quality,
               effort: 6
             })
             .resize(
-              CONFIG.imageProcessing.sizes[category]?.width || CONFIG.imageProcessing.sizes.default.width, 
-              CONFIG.imageProcessing.sizes[category]?.height || CONFIG.imageProcessing.sizes.default.height, 
+              CONFIG.imageProcessing.sizes[category]?.width || CONFIG.imageProcessing.sizes.default.width,
+              CONFIG.imageProcessing.sizes[category]?.height || CONFIG.imageProcessing.sizes.default.height,
               {
                 fit: 'inside',
                 withoutEnlargement: true
@@ -144,7 +144,7 @@ export async function POST(request) {
           const originalExtension = path.extname(file.name); // Использует Node.js API
           filename = `${timestamp}-${randomString}${originalExtension}`;
           filePath = path.join(uploadDir, filename); // Использует Node.js API
-          
+
           const arrayBuffer = await file.arrayBuffer();
           const buffer = Buffer.from(arrayBuffer); // Buffer - Node.js API
           await writeFile(filePath, buffer); // Использует Node.js API
@@ -183,8 +183,8 @@ export async function POST(request) {
     const successfulUploads = uploadResults.filter(result => result.success);
     if (successfulUploads.length === 0) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Не удалось загрузить ни один файл',
           details: uploadResults.map(r => r.error).filter(Boolean)
         },
@@ -200,12 +200,12 @@ export async function POST(request) {
 
   } catch (error) {
     console.error('Upload error details:', error);
-    
+
     return NextResponse.json(
-      { 
-        success: false, 
+      {
+        success: false,
         error: 'Ошибка при загрузке файла',
-        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+        details: process.env.NODE_ENV === 'production' ? error.message : undefined
       },
       { status: 500 }
     );

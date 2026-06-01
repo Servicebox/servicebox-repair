@@ -10,9 +10,9 @@ export async function POST(request) {
     console.log('🔧 === STARTING USER REGISTRATION ===');
 
     const { username, email, password, phone } = await request.json();
-    console.log('📝 Registration data received:', { 
-      username, 
-      email, 
+    console.log('📝 Registration data received:', {
+      username,
+      email,
       phone: phone ? '***' : 'missing',
       password: password ? '***' : 'missing'
     });
@@ -55,9 +55,9 @@ export async function POST(request) {
     console.log('👤 User instance created:', user._id);
 
     // Сохраняем пользователя
-    console.log('💾 Saving user to database...');
+    console.log('💾 сохранен в базу...');
     await user.save();
-    console.log('✅ User saved successfully');
+    console.log('✅ пользователь сохранен');
 
     // Проверяем, что токен действительно сохранился
     const savedUser = await User.findById(user._id);
@@ -85,7 +85,7 @@ export async function POST(request) {
     };
 
     return NextResponse.json(
-      { 
+      {
         message: 'Регистрация успешна! Проверьте ваш email для подтверждения.',
         user: userResponse
       },

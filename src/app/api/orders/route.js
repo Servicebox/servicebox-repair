@@ -10,17 +10,17 @@ import dbConnect from '@/lib/db';
 export async function POST(request) {
   try {
     await dbConnect();
-    
+
     const session = await getServerSession(request);
     console.log('🔐 Session in order creation:', session);
-    
+
     if (!session) {
       return NextResponse.json({ error: 'Неавторизован' }, { status: 401 });
     }
 
     const orderData = await request.json();
     console.log('📦 Order data received:', orderData);
-    
+
     if (!orderData.products || orderData.products.length === 0) {
       return NextResponse.json({ error: 'Корзина пуста' }, { status: 400 });
     }
@@ -31,25 +31,25 @@ export async function POST(request) {
       const timestamp = now.getTime();
       const random = Math.floor(Math.random() * 10000);
       orderData.orderNumber = `ORD-${timestamp}-${random}`;
-      console.log(`✅ Auto-generated order number: ${orderData.orderNumber}`);
+      console.log(`✅ авто генерация order number: ${orderData.orderNumber}`);
     }
 
     console.log('🔄 Checking product availability...');
     for (const item of orderData.products) {
       console.log(`📋 Checking product: ${item.name}, quantity: ${item.quantity}`);
-      
+
       const product = await Product.findOne({ slug: item.slug });
       if (!product) {
-        return NextResponse.json({ 
-          error: `Товар "${item.name}" не найден` 
+        return NextResponse.json({
+          error: `Товар "${item.name}" не найден`
         }, { status: 404 });
       }
-      
+
       console.log(`📊 Product ${item.slug} current quantity: ${product.quantity}, requested: ${item.quantity}`);
-      
+
       if (product.quantity < item.quantity) {
-        return NextResponse.json({ 
-          error: `Недостаточно товара "${item.name}". Доступно: ${product.quantity}, запрошено: ${item.quantity}` 
+        return NextResponse.json({
+          error: `Недостаточно товара "${item.name}". Доступно: ${product.quantity}, запрошено: ${item.quantity}`
         }, { status: 400 });
       }
 
@@ -78,10 +78,10 @@ export async function POST(request) {
     });
     console.log(`✅ Removed ${deletedReservations.deletedCount} reservations`);
 
-    return NextResponse.json({ 
-      success: true, 
+    return NextResponse.json({
+      success: true,
       order,
-      message: 'Заказ успешно создан' 
+      message: 'Заказ успешно создан'
     });
   } catch (error) {
     console.error('Error creating order:', error);
@@ -95,10 +95,10 @@ export async function POST(request) {
 export async function GET(request) {
   try {
     await dbConnect();
-    
+
     const session = await getServerSession(request);
     console.log('🔐 Session in orders GET:', session);
-    
+
     if (!session) {
       return NextResponse.json({ orders: [] }, { status: 200 });
     }
@@ -114,7 +114,7 @@ export async function GET(request) {
     if (session.role !== 'admin') {
       query.userId = session.userId;
     }
-    
+
     if (status && status !== 'all') {
       query.status = status;
     }
@@ -128,7 +128,7 @@ export async function GET(request) {
     const totalOrders = await Order.countDocuments(query);
     console.log(`✅ Found ${orders.length} orders out of ${totalOrders} total`);
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       orders,
       pagination: {
         currentPage: page,

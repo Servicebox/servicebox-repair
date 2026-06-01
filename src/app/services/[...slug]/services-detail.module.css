@@ -1,0 +1,811 @@
+/* ============================================================================
+   СТРАНИЦА УСЛУГИ / КАТЕГОРИИ — СОВРЕМЕННЫЙ ДИЗАЙН
+   ============================================================================ */
+
+.servicesDetailPage {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+}
+
+/* === HERO SECTION === */
+.heroSection {
+    padding: 3rem 0;
+    background: white;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.heroContainer {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.heroContent {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+    .heroContent {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.heroLeft {
+    flex: 1;
+}
+
+/* Бейдж гео */
+.geoBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #f0f4f8;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+}
+
+.geoBadgeIcon {
+    width: 1rem;
+    height: 1rem;
+    color: #64748b;
+}
+
+.geoBadgeText {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #475569;
+}
+
+/* Заголовок услуги */
+.serviceHeader {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.serviceIconWrapper {
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+    border-radius: 1rem;
+    border: 1px solid #e2e8f0;
+    flex-shrink: 0;
+}
+
+.serviceIcon {
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+}
+
+.serviceTitleBlock h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 800;
+    color: #002147;
+    margin: 0 0 0.25rem 0;
+    line-height: 1.2;
+}
+
+.serviceTitleBlock p {
+    font-size: 1.125rem;
+    color: #64748b;
+    margin: 0;
+}
+
+/* Описание услуги */
+.serviceDescription {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: #475569;
+    margin-bottom: 2rem;
+    max-width: 56rem;
+}
+
+/* Преимущества в hero */
+.heroFeatures {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.heroFeature {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.heroFeatureIcon {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f4f8;
+    border-radius: 0.5rem;
+    border: 1px solid #e2e8f0;
+}
+
+.heroFeatureText {
+    font-size: 0.95rem;
+    color: #475569;
+    font-weight: 500;
+}
+
+/* Правая колонка — карточка цены */
+.heroRight {
+    width: 100%;
+}
+
+@media (min-width: 1024px) {
+    .heroRight {
+        width: auto;
+        min-width: 380px;
+    }
+}
+
+.priceCard {
+    background: linear-gradient(135deg, #f8fafc 0%, #f0f4f8 100%);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    border: 2px solid #e2e8f0;
+    box-shadow: 0 10px 30px rgba(0, 33, 71, 0.08);
+}
+
+.priceCardContent {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.priceValue {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #002147;
+    margin-bottom: 0.5rem;
+    line-height: 1;
+}
+
+.priceLabel {
+    font-size: 0.95rem;
+    color: #64748b;
+    margin: 0;
+}
+
+.bookingButton {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 20px rgba(0, 33, 71, 0.25);
+}
+
+.bookingButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0, 33, 71, 0.35);
+}
+
+.bookingButton:active {
+    transform: translateY(0);
+}
+
+.phoneBlock {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.phoneLabel {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-bottom: 0.5rem;
+}
+
+.phoneNumber {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #002147;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    margin-top: 0.25rem;
+}
+
+.phoneNumber:hover {
+    color: #003d7a;
+}
+
+/* === MAIN CONTENT === */
+.mainContent {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+}
+
+/* === СТРАНИЦА КАТЕГОРИИ === */
+.categoryPage {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.categoryHeader {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.categoryTitle {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #002147;
+    margin: 0 0 1rem 0;
+}
+
+.categoryDescription {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: #475569;
+    margin: 0;
+}
+
+/* Подкатегории/услуги */
+.servicesSection {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.servicesTitle {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #002147;
+    margin: 0 0 1.5rem 0;
+}
+
+.servicesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.serviceCard {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    background: #f8fafc;
+    border-radius: 1rem;
+    border: 2px solid #e2e8f0;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 200px;
+}
+
+.serviceCard:hover {
+    border-color: #002147;
+    background: white;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 33, 71, 0.12);
+}
+
+.serviceCardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.serviceCardTitle {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #002147;
+    margin: 0;
+    line-height: 1.3;
+    flex: 1;
+}
+
+.serviceCardPrice {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #002147;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.serviceCardDescription {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #64748b;
+    margin: 0 0 1rem 0;
+    flex-grow: 1;
+
+    display: -webkit-box;
+    line-clamp: unset;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.serviceCardFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+    margin-top: auto;
+}
+
+.serviceCardLink {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #002147;
+    transition: color 0.3s ease;
+}
+
+.serviceCard:hover .serviceCardLink {
+    color: #003d7a;
+}
+
+.serviceCardArrow {
+    color: #94a3b8;
+    font-size: 1.25rem;
+    transition: transform 0.3s ease;
+}
+
+.serviceCard:hover .serviceCardArrow {
+    transform: translateX(4px);
+    color: #002147;
+}
+
+/* === СТРАНИЦА УСЛУГИ === */
+.servicePageGrid {
+    display: grid;
+    gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+    .servicePageGrid {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+/* Вкладки */
+.tabsContainer {
+    background: white;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.tabsNav {
+    display: flex;
+    border-bottom: 2px solid #e2e8f0;
+    overflow-x: auto;
+    scrollbar-width: thin;
+}
+
+.tabButton {
+    padding: 1rem 1.5rem;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    margin-bottom: -2px;
+}
+
+.tabButton:hover {
+    color: #002147;
+    background: #f8fafc;
+}
+
+.tabButtonActive {
+    color: #002147;
+    border-bottom-color: #002147;
+}
+
+.tabContent {
+    padding: 2rem;
+}
+
+/* Процесс ремонта */
+.processGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.processStep {
+    background: #f8fafc;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+}
+
+.processStepNumber {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+    color: white;
+    border-radius: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.processStepTitle {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #002147;
+    margin: 0 0 0.5rem 0;
+}
+
+.processStepDesc {
+    font-size: 0.875rem;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Особенности */
+.featuresSection {
+    background: #f8fafc;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    border: 1px solid #e2e8f0;
+    margin-top: 2rem;
+}
+
+.featuresTitle {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #002147;
+    margin: 0 0 1.5rem 0;
+}
+
+.featuresGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.featureItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.featureIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #dbeafe;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+}
+
+.featureText {
+    font-size: 0.95rem;
+    color: #475569;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* FAQ */
+.faqList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.faqItem {
+    background: #f8fafc;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+}
+
+.faqQuestion {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #002147;
+    margin: 0 0 0.75rem 0;
+}
+
+.faqAnswer {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* === САЙДБАР === */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.sidebarCard {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.sidebarTitle {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #002147;
+    margin: 0 0 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.geoList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.geoListItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: #475569;
+}
+
+.geoDot {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: #002147;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.scheduleList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.scheduleItem {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+}
+
+.scheduleDay {
+    color: #64748b;
+}
+
+.scheduleTime {
+    font-weight: 600;
+    color: #002147;
+}
+
+/* === SEO БЛОК === */
+.seoSection {
+    padding: 3rem 0;
+    border-top: 1px solid #e2e8f0;
+    background: white;
+}
+
+.seoContainer {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.seoTitle {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #002147;
+    margin: 0 0 1.5rem 0;
+}
+
+.seoText {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #475569;
+    margin: 0 0 2rem 0;
+    max-width: 56rem;
+}
+
+.seoFeatures {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.seoFeature {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.seoFeatureIcon {
+    width: 3rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f4f8;
+    border-radius: 0.5rem;
+    border: 1px solid #e2e8f0;
+}
+
+.seoFeatureText {
+    font-size: 0.95rem;
+    color: #475569;
+    font-weight: 500;
+}
+
+/* === ЗАГРУЗКА === */
+.loadingContainer {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.loadingSpinner {
+    width: 4rem;
+    height: 4rem;
+    border: 4px solid #e2e8f0;
+    border-top-color: #002147;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loadingText {
+    font-size: 1.125rem;
+    color: #475569;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* === НЕ НАЙДЕНО === */
+.notFoundContainer {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 1.5rem;
+}
+
+.notFoundTitle {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #002147;
+    margin: 0 0 1rem 0;
+}
+
+.notFoundLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.notFoundLink:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 33, 71, 0.25);
+}
+
+/* === АНИМАЦИИ === */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* === АДАПТИВНОСТЬ === */
+@media (max-width: 768px) {
+    .heroSection {
+        padding: 2rem 0;
+    }
+
+    .heroContainer {
+        padding: 0 1rem;
+    }
+
+    .serviceHeader {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .serviceIconWrapper {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+
+    .serviceIcon {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+
+    .priceCard {
+        padding: 1.5rem;
+    }
+
+    .priceValue {
+        font-size: 2rem;
+    }
+
+    .servicesGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .serviceCard {
+        min-height: 180px;
+    }
+
+    .serviceCardDescription {
+        line-clamp: unset;
+        -webkit-line-clamp: 2;
+    }
+
+    .tabButton {
+        padding: 0.875rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    .tabContent {
+        padding: 1.5rem;
+    }
+
+    .processGrid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,4 +1,3 @@
-// components/ReviewsSection/ReviewsSection.js
 import React from "react";
 import styles from "./ReviewsSection.module.css";
 
@@ -30,8 +29,9 @@ const ReviewsSection = () => {
     }
   ];
 
-  // Идентификатор вашего бизнеса, должен совпадать с @id в structuredData
-  const businessId = "https://servicebox35.ru#business-lenina";
+  // ✅ ИСПРАВЛЕНО: Используем статичный URL для точки на Северной 7А
+  // Это должно совпадать с @id в structuredData в layout.js
+  const businessId = "https://servicebox35.ru#business";
 
   return (
     <section className={styles.reviewsSection} aria-labelledby="reviews-heading">
@@ -46,7 +46,7 @@ const ReviewsSection = () => {
         <div className={styles.reviewsGrid}>
           {reviews.map((review) => (
             <article key={review.id} className={styles.reviewCard} itemScope itemType="https://schema.org/Review">
-              {/* ✅ ИСПРАВЛЕНИЕ: Добавляем ссылку на бизнес */}
+
               <link itemProp="itemReviewed" href={businessId} />
 
               <div className={styles.reviewHeader}>
@@ -82,7 +82,7 @@ const ReviewsSection = () => {
 
         <div className={styles.reviewsCta}>
           <a
-            href="https://yandex.ru/maps/org/servisboks/58578899506/reviews/"
+            href="https://yandex.ru/maps/org/servis_boks/58578899506/reviews/"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.reviewsLink}
@@ -91,7 +91,7 @@ const ReviewsSection = () => {
             Читать все отзывы на Яндекс.Картах →
           </a>
           <div className={styles.reviewsRatingSummary} itemScope itemType="https://schema.org/AggregateRating">
-            {/* ✅ Обновляем AggregateRating тоже */}
+            {/* ✅ ИСПРАВЛЕНО: Тот же статичный URL */}
             <link itemProp="itemReviewed" href={businessId} />
             <meta itemProp="ratingValue" content="5.0" />
             <meta itemProp="reviewCount" content="150" />
