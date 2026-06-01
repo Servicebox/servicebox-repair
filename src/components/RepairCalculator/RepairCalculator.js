@@ -3,101 +3,301 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 
-
 const PRICING = {
     phone: {
         label: 'Смартфон',
         icon: '📱',
         services: {
-            screen: { name: 'Замена экрана', basePrice: 2000, minTime: '30 мин', maxTime: '2 часа', desc: 'Работа без учёта дисплея' },
-            battery: { name: 'Замена аккумулятора', basePrice: 1400, minTime: '20 мин', maxTime: '1 час', desc: 'Работа без учёта батареи' },
-            charging: { name: 'Ремонт разъёма', basePrice: 1500, minTime: '40 мин', maxTime: '2 часа', desc: 'Type-C / Lightning' },
-            water: { name: 'Восстановление после воды', basePrice: 2500, minTime: '1 день', maxTime: '5 дней', desc: 'Ультразвуковая чистка' },
-            camera: { name: 'Замена камеры', basePrice: 1500, minTime: '30 мин', maxTime: '1.5 часа', desc: 'Основная или фронтальная' },
-            glass: { name: 'Замена стекла', basePrice: 2000, minTime: '2 часа', maxTime: '4 часа', desc: 'Переклейка без замены дисплея' },
-            speaker: { name: 'Ремонт динамика', basePrice: 1000, minTime: '30 мин', maxTime: '1 час', desc: 'Слуховой / полифонический' },
-            buttons: { name: 'Ремонт кнопок', basePrice: 900, minTime: '30 мин', maxTime: '1 час', desc: 'Питание, громкость, Home' },
+            screen: { name: 'Замена экрана (модуль)', basePrice: 2500, minTime: '30 мин', maxTime: '2 часа', desc: 'Замена дисплейного модуля целиком' },
+            battery: { name: 'Замена аккумулятора', basePrice: 1500, minTime: '20 мин', maxTime: '1 час', desc: 'Работа без учёта батареи' },
+            charging_type_c: { name: 'Замена разъёма Type-C', basePrice: 2500, minTime: '40 мин', maxTime: '2 часа', desc: 'USB Type-C порт (работа)', portType: 'type_c' },
+            charging_micro_usb: { name: 'Замена разъёма Micro-USB', basePrice: 1800, minTime: '40 мин', maxTime: '2 часа', desc: 'Micro-USB порт (работа)', portType: 'micro_usb' },
+            charging_lightning: { name: 'Замена разъёма Lightning', basePrice: 2800, minTime: '40 мин', maxTime: '2 часа', desc: 'Apple Lightning порт (работа)', portType: 'lightning' },
+            water: { name: 'Восстановление после воды', basePrice: 3000, minTime: '1 день', maxTime: '5 дней', desc: 'Ультразвуковая чистка платы' },
+            camera: { name: 'Замена камеры', basePrice: 1800, minTime: '30 мин', maxTime: '1.5 часа', desc: 'Основная или фронтальная' },
+            // ✅ ОБНОВЛЕНО: базовая цена 3000₽ (минимум по рынку)
+            glass: {
+                name: 'Переклейка стекла (OLED)',
+                basePrice: 3000,
+                minTime: '2 часа',
+                maxTime: '4 часа',
+                desc: 'Только для OLED/AMOLED. Замена стекла без дисплея',
+                requiresSeparateGlass: true
+            },
+            speaker: { name: 'Ремонт динамика', basePrice: 1200, minTime: '30 мин', maxTime: '1 час', desc: 'Слуховой / полифонический' },
+            buttons: { name: 'Ремонт кнопок', basePrice: 1000, minTime: '30 мин', maxTime: '1 час', desc: 'Питание, громкость, Home' },
         },
         brands: {
             apple: {
                 multiplier: 1.3,
                 name: 'Apple iPhone',
                 models: [
-                    { id: 'iphone_8', name: 'iPhone 8 / 8 Plus', gen: 0.6 },
-                    { id: 'iphone_x', name: 'iPhone X / XR / XS', gen: 0.7 },
-                    { id: 'iphone_11', name: 'iPhone 11 / 11 Pro', gen: 0.85 },
-                    { id: 'iphone_12', name: 'iPhone 12 / 12 Pro', gen: 0.95 },
-                    { id: 'iphone_13', name: 'iPhone 13 / 13 Pro', gen: 1.0 },
-                    { id: 'iphone_14', name: 'iPhone 14 / 14 Plus', gen: 1.1 },
-                    { id: 'iphone_15', name: 'iPhone 15 / 15 Plus', gen: 1.2 },
+                    // ❌ IPS — стекло НЕ меняется отдельно
+                    { id: 'iphone_8', name: 'iPhone 8 / 8 Plus', gen: 0.6, portType: 'lightning' },
+                    { id: 'iphone_xr', name: 'iPhone XR / 11', gen: 0.8, portType: 'lightning' },
+                    { id: 'iphone_se', name: 'iPhone SE (2020/2022)', gen: 0.6, portType: 'lightning' },
+
+                    // ✅ OLED — переклейка стекла возможна с точными ценами
                     {
-                        id: 'iphone_15_pro', name: 'iPhone 15 Pro / Pro Max', gen: 1.5,
-                        specificPrices: { screen: 4500, glass: 3500 }
+                        id: 'iphone_7_8',
+                        name: 'iPhone 7 / 8',
+                        gen: 0.5,
+                        portType: 'lightning',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 3000 }
                     },
-                    { id: 'iphone_16', name: 'iPhone 16 / 16 Plus', gen: 1.4 },
                     {
-                        id: 'iphone_16_pro', name: 'iPhone 16 Pro / Pro Max', gen: 1.7,
-                        specificPrices: { screen: 5500, glass: 4000 }
+                        id: 'iphone_7_8_plus',
+                        name: 'iPhone 7 Plus / 8 Plus',
+                        gen: 0.5,
+                        portType: 'lightning',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 3500 }
                     },
-                    { id: 'iphone_se', name: 'iPhone SE (2020/2022)', gen: 0.6 },
+                    {
+                        id: 'iphone_x_xs',
+                        name: 'iPhone X / XS',
+                        gen: 0.7,
+                        portType: 'lightning',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 4000 }
+                    },
+                    {
+                        id: 'iphone_xs_max',
+                        name: 'iPhone XS Max',
+                        gen: 0.7,
+                        portType: 'lightning',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 5000 }
+                    },
+                    {
+                        id: 'iphone_11_pro',
+                        name: 'iPhone 11 Pro',
+                        gen: 0.85,
+                        portType: 'lightning',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 5500 }
+                    },
+                    {
+                        id: 'iphone_11_pro_max',
+                        name: 'iPhone 11 Pro Max',
+                        gen: 0.85,
+                        portType: 'lightning',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 6000 }
+                    },
+                    {
+                        id: 'iphone_12_mini',
+                        name: 'iPhone 12 Mini',
+                        gen: 0.95,
+                        portType: 'lightning',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 6000 }
+                    },
+                    {
+                        id: 'iphone_12',
+                        name: 'iPhone 12 / 12 Pro',
+                        gen: 0.95,
+                        portType: 'lightning',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 6500 }
+                    },
+                    {
+                        id: 'iphone_12_pro_max',
+                        name: 'iPhone 12 Pro Max',
+                        gen: 0.95,
+                        portType: 'lightning',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 7000 }
+                    },
+                    {
+                        id: 'iphone_13_mini',
+                        name: 'iPhone 13 Mini',
+                        gen: 1.0,
+                        portType: 'lightning',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 7000 }
+                    },
+                    {
+                        id: 'iphone_13',
+                        name: 'iPhone 13',
+                        gen: 1.0,
+                        portType: 'lightning',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 8000 }
+                    },
+                    {
+                        id: 'iphone_13_pro',
+                        name: 'iPhone 13 Pro',
+                        gen: 1.0,
+                        portType: 'lightning',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 10000 }
+                    },
+                    {
+                        id: 'iphone_13_pro_max',
+                        name: 'iPhone 13 Pro Max',
+                        gen: 1.0,
+                        portType: 'lightning',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 12000 }
+                    },
+                    {
+                        id: 'iphone_14',
+                        name: 'iPhone 14',
+                        gen: 1.1,
+                        portType: 'lightning',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 8000 }
+                    },
+                    {
+                        id: 'iphone_14_plus',
+                        name: 'iPhone 14 Plus',
+                        gen: 1.1,
+                        portType: 'lightning',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 9000 }
+                    },
+                    {
+                        id: 'iphone_14_pro',
+                        name: 'iPhone 14 Pro',
+                        gen: 1.1,
+                        portType: 'lightning',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 12000 }
+                    },
+                    {
+                        id: 'iphone_14_pro_max',
+                        name: 'iPhone 14 Pro Max',
+                        gen: 1.1,
+                        portType: 'lightning',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 12000 }
+                    },
+                    {
+                        id: 'iphone_15',
+                        name: 'iPhone 15 / 15 Plus',
+                        gen: 1.2,
+                        portType: 'type_c',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 11000 }
+                    },
+                    {
+                        id: 'iphone_15_pro',
+                        name: 'iPhone 15 Pro',
+                        gen: 1.5,
+                        portType: 'type_c',
+                        hasSeparateGlass: true,
+                        specificPrices: { screen: 4500, glass: 15000 }
+                    },
+                    {
+                        id: 'iphone_15_pro_max',
+                        name: 'iPhone 15 Pro Max',
+                        gen: 1.5,
+                        portType: 'type_c',
+                        hasSeparateGlass: true,
+                        specificPrices: { screen: 5000, glass: 17000 }
+                    },
+                    {
+                        id: 'iphone_16',
+                        name: 'iPhone 16 / 16 Plus',
+                        gen: 1.4,
+                        portType: 'type_c',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 14000 }
+                    },
+                    {
+                        id: 'iphone_16_pro',
+                        name: 'iPhone 16 Pro',
+                        gen: 1.7,
+                        portType: 'type_c',
+                        hasSeparateGlass: true,
+                        specificPrices: { screen: 5500, glass: 20000 }
+                    },
+                    {
+                        id: 'iphone_16_pro_max',
+                        name: 'iPhone 16 Pro Max',
+                        gen: 1.7,
+                        portType: 'type_c',
+                        hasSeparateGlass: true,
+                        specificPrices: { screen: 6000, glass: 22000 }
+                    },
+                    {
+                        id: 'iphone_17',
+                        name: 'iPhone 17 / 17 Plus',
+                        gen: 1.8,
+                        portType: 'type_c',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 26000 }
+                    },
+                    {
+                        id: 'iphone_17_pro',
+                        name: 'iPhone 17 Pro',
+                        gen: 2.0,
+                        portType: 'type_c',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 28000 }
+                    },
+                    {
+                        id: 'iphone_17_pro_max',
+                        name: 'iPhone 17 Pro Max',
+                        gen: 2.0,
+                        portType: 'type_c',
+                        hasSeparateGlass: true,
+                        specificPrices: { glass: 30000 }
+                    },
                 ]
             },
             samsung: {
                 multiplier: 1.1,
                 name: 'Samsung Galaxy',
                 models: [
-                    { id: 'galaxy_a_old', name: 'Galaxy A50 / A51 / A52', gen: 0.6 },
-                    { id: 'galaxy_a_mid', name: 'Galaxy A53 / A54', gen: 0.8 },
-                    { id: 'galaxy_a_new', name: 'Galaxy A55 / A56', gen: 0.95 },
-                    { id: 'galaxy_s_old', name: 'Galaxy S10 / S20', gen: 0.8 },
-                    { id: 'galaxy_s21', name: 'Galaxy S21 / S21 FE', gen: 0.9 },
-                    { id: 'galaxy_s22', name: 'Galaxy S22 / S22 Ultra', gen: 1.0 },
-                    {
-                        id: 'galaxy_s23', name: 'Galaxy S23 / S23 Ultra', gen: 1.15,
-                        specificPrices: { screen: 3500 }
-                    },
-                    {
-                        id: 'galaxy_s24', name: 'Galaxy S24 / S24 Ultra', gen: 1.3,
-                        specificPrices: { screen: 4500 }
-                    },
-                    {
-                        id: 'galaxy_flip', name: 'Galaxy Z Flip 3/4/5', gen: 1.4,
-                        specificPrices: { screen: 4500, glass: 3500 }
-                    },
-                    {
-                        id: 'galaxy_fold', name: 'Galaxy Z Fold 3/4/5', gen: 1.7,
-                        specificPrices: { screen: 8500, glass: 6000 }
-                    },
+                    { id: 'galaxy_a_old_micro', name: 'Galaxy A3/A5/A7 (2017)', gen: 0.6, portType: 'micro_usb' },
+                    { id: 'galaxy_j', name: 'Galaxy J3/J5/J7 (2016-2018)', gen: 0.6, portType: 'micro_usb' },
+                    { id: 'galaxy_a_old', name: 'Galaxy A10/A20/A30/A40', gen: 0.6, portType: 'type_c' },
+                    { id: 'galaxy_a_mid', name: 'Galaxy A51/A52/A53/A54', gen: 0.8, portType: 'type_c' },
+                    { id: 'galaxy_a_new', name: 'Galaxy A55/A56', gen: 0.95, portType: 'type_c' },
+                    { id: 'galaxy_s_old_micro', name: 'Galaxy S5/S6/S7', gen: 0.7, portType: 'micro_usb', hasSeparateGlass: true },
+                    { id: 'galaxy_s_old', name: 'Galaxy S8/S9/S10/S20', gen: 0.8, portType: 'type_c', hasSeparateGlass: true },
+                    { id: 'galaxy_s21', name: 'Galaxy S21/S21+/S21 Ultra', gen: 0.9, portType: 'type_c', hasSeparateGlass: true },
+                    { id: 'galaxy_s22', name: 'Galaxy S22/S22+/S22 Ultra', gen: 1.0, portType: 'type_c', hasSeparateGlass: true },
+                    { id: 'galaxy_s23', name: 'Galaxy S23/S23+/S23 Ultra', gen: 1.15, portType: 'type_c', hasSeparateGlass: true, specificPrices: { screen: 3500 } },
+                    { id: 'galaxy_s24', name: 'Galaxy S24/S24+/S24 Ultra', gen: 1.3, portType: 'type_c', hasSeparateGlass: true, specificPrices: { screen: 4500 } },
+                    { id: 'galaxy_flip', name: 'Galaxy Z Flip 3/4/5/6', gen: 1.4, portType: 'type_c', hasSeparateGlass: true, specificPrices: { screen: 4500, glass: 3500 } },
+                    { id: 'galaxy_fold', name: 'Galaxy Z Fold 3/4/5/6', gen: 1.7, portType: 'type_c', hasSeparateGlass: true, specificPrices: { screen: 8500, glass: 6000 } },
                 ]
             },
             xiaomi: {
                 multiplier: 0.9,
                 name: 'Xiaomi / Redmi / POCO',
                 models: [
-                    { id: 'redmi_note_old', name: 'Redmi Note 10 / 11', gen: 0.6 },
-                    { id: 'redmi_note_mid', name: 'Redmi Note 12', gen: 0.8 },
-                    { id: 'redmi_note_new', name: 'Redmi Note 13 / 13 Pro', gen: 1.0 },
-                    { id: 'xiaomi_flagship', name: 'Xiaomi 13 / 14 / Pro', gen: 1.2 },
-                    { id: 'poco_x', name: 'POCO X5 / X6 / F5', gen: 0.9 },
+                    { id: 'redmi_note_old_micro', name: 'Redmi Note 7/8/8T', gen: 0.6, portType: 'micro_usb' },
+                    { id: 'redmi_old_micro', name: 'Redmi 7/8/9A/9C', gen: 0.6, portType: 'micro_usb' },
+                    { id: 'redmi_note_mid', name: 'Redmi Note 10/11/12', gen: 0.8, portType: 'type_c' },
+                    { id: 'redmi_note_new', name: 'Redmi Note 13/13 Pro', gen: 1.0, portType: 'type_c' },
+                    { id: 'poco_x', name: 'POCO X5/X6/F5/F6', gen: 0.9, portType: 'type_c' },
+                    { id: 'xiaomi_flagship', name: 'Xiaomi 12/13/14/Pro/Ultra', gen: 1.2, portType: 'type_c', hasSeparateGlass: true },
+                    { id: 'xiaomi_mi11', name: 'Xiaomi Mi 11 / Mi 11 Ultra', gen: 1.1, portType: 'type_c', hasSeparateGlass: true },
                 ]
             },
             huawei: {
                 multiplier: 1.0,
                 name: 'Huawei / Honor',
                 models: [
-                    { id: 'huawei_p_old', name: 'Huawei P30 / P40', gen: 0.7 },
-                    { id: 'huawei_p_new', name: 'Huawei P50 / P60', gen: 1.1 },
-                    { id: 'honor_mid', name: 'Honor 70 / 80 / 90', gen: 0.9 },
-                    { id: 'honor_magic', name: 'Honor Magic 5 / 6 Pro', gen: 1.3 },
+                    { id: 'huawei_p_old_micro', name: 'Huawei P10/P20 Lite', gen: 0.7, portType: 'micro_usb' },
+                    { id: 'honor_old_micro', name: 'Honor 8/9/10 Lite', gen: 0.7, portType: 'micro_usb' },
+                    { id: 'honor_mid', name: 'Honor 70/80/90', gen: 0.9, portType: 'type_c' },
+                    { id: 'huawei_p_new', name: 'Huawei P30/P40/P50/P60 Pro', gen: 1.1, portType: 'type_c', hasSeparateGlass: true },
+                    { id: 'honor_magic', name: 'Honor Magic 5/6 Pro', gen: 1.3, portType: 'type_c', hasSeparateGlass: true },
                 ]
             },
             other: {
                 multiplier: 1.0,
                 name: 'Другой бренд',
                 models: [
-                    { id: 'other_old', name: 'Старая модель (до 2019)', gen: 0.6 },
-                    { id: 'other_mid', name: 'Средняя модель (2020-2022)', gen: 0.9 },
-                    { id: 'other_new', name: 'Новая модель (2023+)', gen: 1.1 },
+                    { id: 'other_old', name: 'Старая модель (Micro-USB)', gen: 0.6, portType: 'micro_usb' },
+                    { id: 'other_mid', name: 'Средняя модель (IPS)', gen: 0.9, portType: 'type_c' },
+                    { id: 'other_new', name: 'Новая модель (OLED)', gen: 1.1, portType: 'type_c', hasSeparateGlass: true },
                 ]
             },
         },
@@ -108,7 +308,15 @@ const PRICING = {
         icon: '💻',
         services: {
             screen: { name: 'Замена матрицы', basePrice: 2500, minTime: '1 час', maxTime: '3 часа', desc: 'Работа без учёта матрицы' },
-            cleaning: { name: 'Чистка + термопаста', basePrice: 2000, minTime: '1 час', maxTime: '2 часа', desc: 'Полная разборка' },
+            cleaning: { name: 'Чистка + термопаста', basePrice: 2000, minTime: '1 час', maxTime: '2 часа', desc: 'Полная разборка, замена термопасты' },
+            thermal_pads: {
+                name: 'Замена термопрокладок',
+                basePrice: 3500,
+                minTime: '1.5 часа',
+                maxTime: '3 часа',
+                desc: 'Подбор толщины, качественные прокладки (0.5–2.0mm)',
+                requiresThermalPads: true
+            },
             keyboard: { name: 'Замена клавиатуры', basePrice: 1800, minTime: '1 час', maxTime: '3 часа', desc: 'Работа без учёта клавиатуры' },
             motherboard: { name: 'Ремонт мат. платы', basePrice: 4000, minTime: '3 дня', maxTime: '7 дней', desc: 'BGA-пайка, замена чипов' },
             water: { name: 'После залития', basePrice: 3000, minTime: '2 дня', maxTime: '7 дней', desc: 'Ультразвуковая чистка' },
@@ -122,16 +330,10 @@ const PRICING = {
                 models: [
                     { id: 'mba_old', name: 'MacBook Air (Intel 2018-2019)', gen: 0.8 },
                     { id: 'mba_m1', name: 'MacBook Air M1 (2020)', gen: 1.0 },
-                    {
-                        id: 'mba_m2', name: 'MacBook Air M2/M3 (2022-2024)', gen: 1.3,
-                        specificPrices: { screen: 9000, keyboard: 5000 }
-                    },
+                    { id: 'mba_m2', name: 'MacBook Air M2/M3 (2022-2024)', gen: 1.3, hasThermalPads: true, specificPrices: { screen: 9000, keyboard: 5000, thermal_pads: 4000 } },
                     { id: 'mbp_old', name: 'MacBook Pro (Intel 2016-2019)', gen: 0.9 },
-                    { id: 'mbp_m1', name: 'MacBook Pro M1/M2 (2020-2022)', gen: 1.2 },
-                    {
-                        id: 'mbp_m3', name: 'MacBook Pro M3/M4 (2023-2024)', gen: 1.5,
-                        specificPrices: { screen: 12000, keyboard: 6500 }
-                    },
+                    { id: 'mbp_m1', name: 'MacBook Pro M1/M2 (2020-2022)', gen: 1.2, hasThermalPads: true, specificPrices: { thermal_pads: 4500 } },
+                    { id: 'mbp_m3', name: 'MacBook Pro M3/M4 (2023-2024)', gen: 1.5, hasThermalPads: true, specificPrices: { screen: 12000, keyboard: 6500, thermal_pads: 5000 } },
                 ]
             },
             asus: {
@@ -140,8 +342,8 @@ const PRICING = {
                 models: [
                     { id: 'asus_vivobook', name: 'VivoBook 14/15/16', gen: 0.8 },
                     { id: 'asus_zenbook', name: 'ZenBook 13/14', gen: 1.1 },
-                    { id: 'asus_rog', name: 'ROG Strix / Zephyrus', gen: 1.2 },
-                    { id: 'asus_tuf', name: 'TUF Gaming', gen: 1.0 },
+                    { id: 'asus_rog', name: 'ROG Strix / Zephyrus', gen: 1.2, hasThermalPads: true, specificPrices: { thermal_pads: 3800 } },
+                    { id: 'asus_tuf', name: 'TUF Gaming A15/F15/F17', gen: 1.0, hasThermalPads: true, specificPrices: { thermal_pads: 3500 } },
                 ]
             },
             lenovo: {
@@ -150,7 +352,7 @@ const PRICING = {
                 models: [
                     { id: 'lenovo_ideapad', name: 'IdeaPad 3/5', gen: 0.8 },
                     { id: 'lenovo_thinkpad', name: 'ThinkPad E/T/X1', gen: 1.1 },
-                    { id: 'lenovo_legion', name: 'Legion 5/7', gen: 1.2 },
+                    { id: 'lenovo_legion', name: 'Legion 5/5i/7/Pro', gen: 1.2, hasThermalPads: true, specificPrices: { thermal_pads: 3800 } },
                     { id: 'lenovo_yoga', name: 'Yoga Slim / 9i', gen: 1.1 },
                 ]
             },
@@ -160,7 +362,7 @@ const PRICING = {
                 models: [
                     { id: 'hp_pavilion', name: 'Pavilion 14/15', gen: 0.8 },
                     { id: 'hp_envy', name: 'Envy 13/15', gen: 1.0 },
-                    { id: 'hp_omen', name: 'Omen 15/16', gen: 1.2 },
+                    { id: 'hp_omen', name: 'Omen 15/16/17', gen: 1.2, hasThermalPads: true, specificPrices: { thermal_pads: 3800 } },
                     { id: 'hp_elitebook', name: 'EliteBook / Spectre', gen: 1.3 },
                 ]
             },
@@ -171,7 +373,7 @@ const PRICING = {
                     { id: 'dell_inspiron', name: 'Inspiron 14/15', gen: 0.8 },
                     { id: 'dell_xps', name: 'XPS 13/15/17', gen: 1.4 },
                     { id: 'dell_latitude', name: 'Latitude / Precision', gen: 1.1 },
-                    { id: 'dell_alienware', name: 'Alienware m15/m17', gen: 1.3 },
+                    { id: 'dell_alienware', name: 'Alienware m15/m17/x14/x16', gen: 1.3, hasThermalPads: true, specificPrices: { thermal_pads: 4200 } },
                 ]
             },
             acer: {
@@ -180,8 +382,8 @@ const PRICING = {
                 models: [
                     { id: 'acer_aspire', name: 'Aspire 3/5', gen: 0.8 },
                     { id: 'acer_swift', name: 'Swift 3/5', gen: 1.0 },
-                    { id: 'acer_predator', name: 'Predator Helios / Triton', gen: 1.2 },
-                    { id: 'acer_nitro', name: 'Nitro 5/16', gen: 1.0 },
+                    { id: 'acer_predator', name: 'Predator Helios / Triton', gen: 1.2, hasThermalPads: true, specificPrices: { thermal_pads: 3800 } },
+                    { id: 'acer_nitro', name: 'Nitro 5/16/V15', gen: 1.0, hasThermalPads: true, specificPrices: { thermal_pads: 3500 } },
                 ]
             },
             msi: {
@@ -189,10 +391,10 @@ const PRICING = {
                 name: 'MSI',
                 models: [
                     { id: 'msi_gf', name: 'GF63 / GF75 Thin', gen: 0.9 },
-                    { id: 'msi_katana', name: 'Katana 15/17', gen: 1.0 },
-                    { id: 'msi_pulse', name: 'Pulse GL66/GL76', gen: 1.1 },
-                    { id: 'msi_raider', name: 'Raider GE66/GE78', gen: 1.3 },
-                    { id: 'msi_stealth', name: 'Stealth 15M / 16/17', gen: 1.4 },
+                    { id: 'msi_katana', name: 'Katana 15/17', gen: 1.0, hasThermalPads: true, specificPrices: { thermal_pads: 3500 } },
+                    { id: 'msi_pulse', name: 'Pulse GL66/GL76', gen: 1.1, hasThermalPads: true, specificPrices: { thermal_pads: 3500 } },
+                    { id: 'msi_raider', name: 'Raider GE66/GE78', gen: 1.3, hasThermalPads: true, specificPrices: { thermal_pads: 4000 } },
+                    { id: 'msi_stealth', name: 'Stealth 15M / 16/17', gen: 1.4, hasThermalPads: true, specificPrices: { thermal_pads: 4200 } },
                 ]
             },
             other: {
@@ -200,7 +402,7 @@ const PRICING = {
                 name: 'Другой бренд',
                 models: [
                     { id: 'laptop_office', name: 'Офисный (бюджетный)', gen: 0.8 },
-                    { id: 'laptop_gaming', name: 'Игровой', gen: 1.2 },
+                    { id: 'laptop_gaming', name: 'Игровой ноутбук', gen: 1.2, hasThermalPads: true, specificPrices: { thermal_pads: 3500 } },
                     { id: 'laptop_ultra', name: 'Ультрабук (премиум)', gen: 1.3 },
                 ]
             },
@@ -214,67 +416,67 @@ const PRICING = {
             screen: { name: 'Замена дисплея', basePrice: 2500, minTime: '1 час', maxTime: '3 часа', desc: 'Работа без учёта дисплея' },
             glass: { name: 'Замена тачскрина', basePrice: 2000, minTime: '2 часа', maxTime: '4 часа', desc: 'Переклейка стекла' },
             battery: { name: 'Замена аккумулятора', basePrice: 1800, minTime: '1 час', maxTime: '2 часа', desc: 'Работа без учёта батареи' },
-            charging: { name: 'Ремонт разъёма', basePrice: 1500, minTime: '1 час', maxTime: '2 часа', desc: 'Type-C / Lightning' },
+            charging_type_c: { name: 'Замена разъёма Type-C', basePrice: 2500, minTime: '1 час', maxTime: '2 часа', desc: 'USB Type-C порт', portType: 'type_c' },
+            charging_lightning: { name: 'Замена разъёма Lightning', basePrice: 2800, minTime: '1 час', maxTime: '2 часа', desc: 'Apple Lightning порт', portType: 'lightning' },
         },
         brands: {
             apple: {
                 multiplier: 1.5,
                 name: 'Apple iPad',
                 models: [
-                    { id: 'ipad_old', name: 'iPad 9 / 10 (2021-2022)', gen: 0.8 },
-                    { id: 'ipad_air', name: 'iPad Air 4 / 5 (2020-2022)', gen: 1.0 },
-                    { id: 'ipad_pro_11', name: 'iPad Pro 11" (2020-2024)', gen: 1.2 },
-                    {
-                        id: 'ipad_pro_12', name: 'iPad Pro 12.9" / 13" (2020-2024)', gen: 1.4,
-                        specificPrices: { screen: 7500 }
-                    },
-                    { id: 'ipad_mini', name: 'iPad mini 6 (2021)', gen: 1.0 },
+                    { id: 'ipad_old', name: 'iPad 9 / 10 (2021-2022)', gen: 0.8, portType: 'lightning' },
+                    { id: 'ipad_air', name: 'iPad Air 4 / 5 (2020-2022)', gen: 1.0, portType: 'type_c' },
+                    { id: 'ipad_pro_11', name: 'iPad Pro 11" (2020-2024)', gen: 1.2, portType: 'type_c' },
+                    { id: 'ipad_pro_12', name: 'iPad Pro 12.9" / 13" (2020-2024)', gen: 1.4, portType: 'type_c', specificPrices: { screen: 7500 } },
+                    { id: 'ipad_mini', name: 'iPad mini 6 (2021)', gen: 1.0, portType: 'type_c' },
                 ]
             },
             samsung: {
                 multiplier: 1.1,
                 name: 'Samsung Galaxy Tab',
                 models: [
-                    { id: 'tab_a', name: 'Galaxy Tab A7 / A8 (2020-2022)', gen: 0.7 },
-                    { id: 'tab_s7', name: 'Galaxy Tab S7 / S7+ (2020)', gen: 0.9 },
-                    { id: 'tab_s8', name: 'Galaxy Tab S8 / S8+ / S8 Ultra (2022)', gen: 1.1 },
-                    { id: 'tab_s9', name: 'Galaxy Tab S9 / S9+ / S9 Ultra (2023)', gen: 1.3 },
+                    { id: 'tab_a_old', name: 'Galaxy Tab A 10.1 (2019)', gen: 0.7, portType: 'micro_usb' },
+                    { id: 'tab_a', name: 'Galaxy Tab A7/A8/A9 (2020-2024)', gen: 0.7, portType: 'type_c' },
+                    { id: 'tab_s7', name: 'Galaxy Tab S7/S7+ (2020)', gen: 0.9, portType: 'type_c' },
+                    { id: 'tab_s8', name: 'Galaxy Tab S8/S8+/S8 Ultra (2022)', gen: 1.1, portType: 'type_c' },
+                    { id: 'tab_s9', name: 'Galaxy Tab S9/S9+/S9 Ultra (2023)', gen: 1.3, portType: 'type_c' },
                 ]
             },
             xiaomi: {
                 multiplier: 0.9,
                 name: 'Xiaomi Pad',
                 models: [
-                    { id: 'xiaomi_pad', name: 'Xiaomi Pad 5 / 6', gen: 0.9 },
-                    { id: 'xiaomi_pad_pro', name: 'Xiaomi Pad 6 Pro / S Pro', gen: 1.1 },
-                    { id: 'redmi_pad', name: 'Redmi Pad / Redmi Pad SE', gen: 0.8 },
+                    { id: 'xiaomi_pad', name: 'Xiaomi Pad 5/6', gen: 0.9, portType: 'type_c' },
+                    { id: 'xiaomi_pad_pro', name: 'Xiaomi Pad 6 Pro / S Pro', gen: 1.1, portType: 'type_c' },
+                    { id: 'redmi_pad', name: 'Redmi Pad / Redmi Pad SE', gen: 0.8, portType: 'type_c' },
                 ]
             },
             huawei: {
                 multiplier: 1.0,
                 name: 'Huawei MatePad',
                 models: [
-                    { id: 'matepad_old', name: 'MatePad 11 / 11.5 (2021-2022)', gen: 0.9 },
-                    { id: 'matepad_pro', name: 'MatePad Pro 12.6 (2021-2023)', gen: 1.2 },
-                    { id: 'matepad_t', name: 'MatePad T10 / T10s', gen: 0.7 },
+                    { id: 'matepad_old', name: 'MatePad 11/11.5 (2021-2022)', gen: 0.9, portType: 'type_c' },
+                    { id: 'matepad_pro', name: 'MatePad Pro 12.6 (2021-2023)', gen: 1.2, portType: 'type_c' },
+                    { id: 'matepad_t', name: 'MatePad T10/T10s', gen: 0.7, portType: 'micro_usb' },
                 ]
             },
             lenovo: {
                 multiplier: 1.0,
                 name: 'Lenovo Tab',
                 models: [
-                    { id: 'lenovo_m', name: 'Lenovo Tab M10 / M11', gen: 0.8 },
-                    { id: 'lenovo_p', name: 'Lenovo Tab P11 / P12', gen: 1.0 },
-                    { id: 'lenovo_extreme', name: 'Lenovo Tab Extreme', gen: 1.3 },
+                    { id: 'lenovo_m_old', name: 'Lenovo Tab M10 (2019)', gen: 0.8, portType: 'micro_usb' },
+                    { id: 'lenovo_m', name: 'Lenovo Tab M10/M11 (2022-2024)', gen: 0.8, portType: 'type_c' },
+                    { id: 'lenovo_p', name: 'Lenovo Tab P11/P12', gen: 1.0, portType: 'type_c' },
+                    { id: 'lenovo_extreme', name: 'Lenovo Tab Extreme', gen: 1.3, portType: 'type_c' },
                 ]
             },
             other: {
                 multiplier: 1.0,
                 name: 'Другой бренд',
                 models: [
-                    { id: 'tablet_budget', name: 'Бюджетный планшет', gen: 0.7 },
-                    { id: 'tablet_mid', name: 'Средний класс', gen: 0.9 },
-                    { id: 'tablet_premium', name: 'Премиум', gen: 1.2 },
+                    { id: 'tablet_budget', name: 'Бюджетный планшет', gen: 0.7, portType: 'micro_usb' },
+                    { id: 'tablet_mid', name: 'Средний класс', gen: 0.9, portType: 'type_c' },
+                    { id: 'tablet_premium', name: 'Премиум', gen: 1.2, portType: 'type_c' },
                 ]
             },
         },
@@ -284,361 +486,25 @@ const PRICING = {
         label: 'Телевизор',
         icon: '📺',
         services: {
-            backlight_small: {
-                name: 'Замена подсветки 32-43"',
-                basePrice: 4500,
-                minTime: '1 день',
-                maxTime: '2 дня',
-                desc: 'LED телевизоры малой диагонали'
-            },
-            backlight_medium: {
-                name: 'Замена подсветки 49-55"',
-                basePrice: 6500,
-                minTime: '1 день',
-                maxTime: '3 дня',
-                desc: 'LED телевизоры средней диагонали'
-            },
-            backlight_large: {
-                name: 'Замена подсветки 58-65"',
-                basePrice: 9000,
-                minTime: '2 дня',
-                maxTime: '4 дня',
-                desc: 'LED телевизоры большой диагонали'
-            },
-            backlight_xlarge: {
-                name: 'Замена подсветки 70"+',
-                basePrice: 14000,
-                minTime: '2 дня',
-                maxTime: '5 дней',
-                desc: 'LED телевизоры 70-85 дюймов'
-            },
-            backlight_qled: {
-                name: 'Замена подсветки QLED',
-                basePrice: 10000,
-                minTime: '2 дня',
-                maxTime: '4 дня',
-                desc: 'QLED Samsung / TCL / Hisense'
-            },
-            backlight_oled: {
-                name: 'Ремонт подсветки OLED',
-                basePrice: 18000,
-                minTime: '3 дня',
-                maxTime: '7 дней',
-                desc: 'OLED LG / Sony / Philips (сложный ремонт)'
-            },
-            power: {
-                name: 'Ремонт блока питания',
-                basePrice: 3000,
-                minTime: '1 день',
-                maxTime: '3 дня',
-                desc: 'Замена конденсаторов, MOSFET'
-            },
-            tcon: {
-                name: 'Ремонт T-Con платы',
-                basePrice: 3500,
-                minTime: '1 день',
-                maxTime: '3 дня',
-                desc: 'Восстановление изображения'
-            },
-            mainboard: {
-                name: 'Ремонт основной платы',
-                basePrice: 4500,
-                minTime: '2 дня',
-                maxTime: '5 дней',
-                desc: 'Smart TV, Wi-Fi, HDMI'
-            },
-            matrix: {
-                name: 'Замена матрицы',
-                basePrice: 8000,
-                minTime: '2 дня',
-                maxTime: '7 дней',
-                desc: 'LCD / OLED / QLED (работа без матрицы)'
-            },
+            backlight_small: { name: 'Замена подсветки 32-43"', basePrice: 4500, minTime: '1 день', maxTime: '2 дня', desc: 'LED телевизоры малой диагонали' },
+            backlight_medium: { name: 'Замена подсветки 49-55"', basePrice: 6500, minTime: '1 день', maxTime: '3 дня', desc: 'LED телевизоры средней диагонали' },
+            backlight_large: { name: 'Замена подсветки 58-65"', basePrice: 9000, minTime: '2 дня', maxTime: '4 дня', desc: 'LED телевизоры большой диагонали' },
+            backlight_xlarge: { name: 'Замена подсветки 70"+', basePrice: 14000, minTime: '2 дня', maxTime: '5 дней', desc: 'LED телевизоры 70-85 дюймов' },
+            backlight_qled: { name: 'Замена подсветки QLED', basePrice: 10000, minTime: '2 дня', maxTime: '4 дня', desc: 'QLED Samsung / TCL / Hisense' },
+            backlight_oled: { name: 'Ремонт подсветки OLED', basePrice: 18000, minTime: '3 дня', maxTime: '7 дней', desc: 'OLED LG / Sony / Philips (сложный ремонт)' },
+            power: { name: 'Ремонт блока питания', basePrice: 3000, minTime: '1 день', maxTime: '3 дня', desc: 'Замена конденсаторов, MOSFET' },
+            tcon: { name: 'Ремонт T-Con платы', basePrice: 3500, minTime: '1 день', maxTime: '3 дня', desc: 'Восстановление изображения' },
+            mainboard: { name: 'Ремонт основной платы', basePrice: 4500, minTime: '2 дня', maxTime: '5 дней', desc: 'Smart TV, Wi-Fi, HDMI' },
+            matrix: { name: 'Замена матрицы', basePrice: 8000, minTime: '2 дня', maxTime: '7 дней', desc: 'LCD / OLED / QLED (работа без матрицы)' },
         },
         brands: {
-            samsung: {
-                multiplier: 1.2,
-                name: 'Samsung',
-                models: [
-                    {
-                        id: 'samsung_uhd',
-                        name: 'Crystal UHD 43-55"',
-                        gen: 0.9,
-                        specificPrices: {
-                            backlight_small: 5000,
-                            backlight_medium: 7500
-                        }
-                    },
-                    {
-                        id: 'samsung_uhd_large',
-                        name: 'Crystal UHD 58-75"',
-                        gen: 1.1,
-                        specificPrices: {
-                            backlight_large: 10000,
-                            backlight_xlarge: 15000
-                        }
-                    },
-                    {
-                        id: 'samsung_qled',
-                        name: 'QLED 43-65"',
-                        gen: 1.2,
-                        specificPrices: {
-                            backlight_qled: 11000
-                        }
-                    },
-                    {
-                        id: 'samsung_neo_qled',
-                        name: 'Neo QLED 55-75"',
-                        gen: 1.4,
-                        specificPrices: {
-                            backlight_qled: 14000
-                        }
-                    },
-                    {
-                        id: 'samsung_frame',
-                        name: 'The Frame 43-65"',
-                        gen: 1.3,
-                        specificPrices: {
-                            backlight_small: 6000,
-                            backlight_medium: 8500
-                        }
-                    },
-                ]
-            },
-            lg: {
-                multiplier: 1.2,
-                name: 'LG',
-                models: [
-                    {
-                        id: 'lg_uhd',
-                        name: 'UHD 43-55"',
-                        gen: 0.9,
-                        specificPrices: {
-                            backlight_small: 5000,
-                            backlight_medium: 7500
-                        }
-                    },
-                    {
-                        id: 'lg_uhd_large',
-                        name: 'UHD 58-75"',
-                        gen: 1.1,
-                        specificPrices: {
-                            backlight_large: 10000,
-                            backlight_xlarge: 15000
-                        }
-                    },
-                    {
-                        id: 'lg_nanocell',
-                        name: 'NanoCell 49-65"',
-                        gen: 1.1,
-                        specificPrices: {
-                            backlight_medium: 8000,
-                            backlight_large: 10500
-                        }
-                    },
-                    {
-                        id: 'lg_oled',
-                        name: 'OLED 48-65"',
-                        gen: 1.4,
-                        specificPrices: {
-                            backlight_oled: 20000
-                        }
-                    },
-                    {
-                        id: 'lg_oled_large',
-                        name: 'OLED 65-83"',
-                        gen: 1.6,
-                        specificPrices: {
-                            backlight_oled: 25000
-                        }
-                    },
-                    {
-                        id: 'lg_qned',
-                        name: 'QNED 55-75"',
-                        gen: 1.3,
-                        specificPrices: {
-                            backlight_medium: 8500,
-                            backlight_large: 11000
-                        }
-                    },
-                ]
-            },
-            sony: {
-                multiplier: 1.3,
-                name: 'Sony',
-                models: [
-                    {
-                        id: 'sony_x75',
-                        name: 'Bravia X75/X80 43-55"',
-                        gen: 0.9,
-                        specificPrices: {
-                            backlight_small: 5500,
-                            backlight_medium: 8000
-                        }
-                    },
-                    {
-                        id: 'sony_x85',
-                        name: 'Bravia X85/X90 55-75"',
-                        gen: 1.1,
-                        specificPrices: {
-                            backlight_medium: 9000,
-                            backlight_large: 12000
-                        }
-                    },
-                    {
-                        id: 'sony_oled',
-                        name: 'Bravia XR A80/A90 OLED',
-                        gen: 1.4,
-                        specificPrices: {
-                            backlight_oled: 22000
-                        }
-                    },
-                    {
-                        id: 'sony_x95',
-                        name: 'Bravia XR X95/X98',
-                        gen: 1.3,
-                        specificPrices: {
-                            backlight_large: 13000
-                        }
-                    },
-                ]
-            },
-            philips: {
-                multiplier: 1.1,
-                name: 'Philips',
-                models: [
-                    {
-                        id: 'philips_performance',
-                        name: 'Performance 43-55"',
-                        gen: 0.9,
-                        specificPrices: {
-                            backlight_small: 4800,
-                            backlight_medium: 7000
-                        }
-                    },
-                    {
-                        id: 'philips_pus',
-                        name: 'PUS 58-75"',
-                        gen: 1.0,
-                        specificPrices: {
-                            backlight_large: 9500,
-                            backlight_xlarge: 14500
-                        }
-                    },
-                    {
-                        id: 'philips_oled',
-                        name: 'OLED 55-65"',
-                        gen: 1.4,
-                        specificPrices: {
-                            backlight_oled: 19000
-                        }
-                    },
-                ]
-            },
-            tcl: {
-                multiplier: 1.0,
-                name: 'TCL',
-                models: [
-                    {
-                        id: 'tcl_p',
-                        name: 'P-series 43-55"',
-                        gen: 0.8,
-                        specificPrices: {
-                            backlight_small: 4200,
-                            backlight_medium: 6000
-                        }
-                    },
-                    {
-                        id: 'tcl_c',
-                        name: 'C-series 55-75"',
-                        gen: 1.0,
-                        specificPrices: {
-                            backlight_medium: 7000,
-                            backlight_large: 9500
-                        }
-                    },
-                    {
-                        id: 'tcl_qled',
-                        name: 'QLED 55-65"',
-                        gen: 1.1,
-                        specificPrices: {
-                            backlight_qled: 9500
-                        }
-                    },
-                ]
-            },
-            xiaomi: {
-                multiplier: 0.9,
-                name: 'Xiaomi',
-                models: [
-                    {
-                        id: 'xiaomi_a2',
-                        name: 'TV A2 32-43"',
-                        gen: 0.8,
-                        specificPrices: {
-                            backlight_small: 4000
-                        }
-                    },
-                    {
-                        id: 'xiaomi_q1',
-                        name: 'TV Q1 55-75"',
-                        gen: 1.0,
-                        specificPrices: {
-                            backlight_medium: 6500,
-                            backlight_large: 9000
-                        }
-                    },
-                    {
-                        id: 'xiaomi_p1',
-                        name: 'TV P1 43-55"',
-                        gen: 0.9,
-                        specificPrices: {
-                            backlight_small: 4300,
-                            backlight_medium: 6500
-                        }
-                    },
-                ]
-            },
-            other: {
-                multiplier: 1.0,
-                name: 'Другой бренд',
-                models: [
-                    {
-                        id: 'tv_small',
-                        name: 'LED 32-43 дюйма',
-                        gen: 0.8,
-                        specificPrices: {
-                            backlight_small: 4500
-                        }
-                    },
-                    {
-                        id: 'tv_medium',
-                        name: 'LED 49-55 дюймов',
-                        gen: 1.0,
-                        specificPrices: {
-                            backlight_medium: 6500
-                        }
-                    },
-                    {
-                        id: 'tv_large',
-                        name: 'LED 58-75 дюймов',
-                        gen: 1.2,
-                        specificPrices: {
-                            backlight_large: 9500,
-                            backlight_xlarge: 14000
-                        }
-                    },
-                    {
-                        id: 'tv_oled',
-                        name: 'OLED / QLED',
-                        gen: 1.4,
-                        specificPrices: {
-                            backlight_qled: 10000,
-                            backlight_oled: 18000
-                        }
-                    },
-                ]
-            },
+            samsung: { multiplier: 1.2, name: 'Samsung', models: [{ id: 'samsung_uhd', name: 'Crystal UHD 43-55"', gen: 0.9, specificPrices: { backlight_small: 5000, backlight_medium: 7500 } }, { id: 'samsung_uhd_large', name: 'Crystal UHD 58-75"', gen: 1.1, specificPrices: { backlight_large: 10000, backlight_xlarge: 15000 } }, { id: 'samsung_qled', name: 'QLED 43-65"', gen: 1.2, specificPrices: { backlight_qled: 11000 } }, { id: 'samsung_neo_qled', name: 'Neo QLED 55-75"', gen: 1.4, specificPrices: { backlight_qled: 14000 } }, { id: 'samsung_frame', name: 'The Frame 43-65"', gen: 1.3, specificPrices: { backlight_small: 6000, backlight_medium: 8500 } }] },
+            lg: { multiplier: 1.2, name: 'LG', models: [{ id: 'lg_uhd', name: 'UHD 43-55"', gen: 0.9, specificPrices: { backlight_small: 5000, backlight_medium: 7500 } }, { id: 'lg_uhd_large', name: 'UHD 58-75"', gen: 1.1, specificPrices: { backlight_large: 10000, backlight_xlarge: 15000 } }, { id: 'lg_nanocell', name: 'NanoCell 49-65"', gen: 1.1, specificPrices: { backlight_medium: 8000, backlight_large: 10500 } }, { id: 'lg_oled', name: 'OLED 48-65"', gen: 1.4, specificPrices: { backlight_oled: 20000 } }, { id: 'lg_oled_large', name: 'OLED 65-83"', gen: 1.6, specificPrices: { backlight_oled: 25000 } }, { id: 'lg_qned', name: 'QNED 55-75"', gen: 1.3, specificPrices: { backlight_medium: 8500, backlight_large: 11000 } }] },
+            sony: { multiplier: 1.3, name: 'Sony', models: [{ id: 'sony_x75', name: 'Bravia X75/X80 43-55"', gen: 0.9, specificPrices: { backlight_small: 5500, backlight_medium: 8000 } }, { id: 'sony_x85', name: 'Bravia X85/X90 55-75"', gen: 1.1, specificPrices: { backlight_medium: 9000, backlight_large: 12000 } }, { id: 'sony_oled', name: 'Bravia XR A80/A90 OLED', gen: 1.4, specificPrices: { backlight_oled: 22000 } }, { id: 'sony_x95', name: 'Bravia XR X95/X98', gen: 1.3, specificPrices: { backlight_large: 13000 } }] },
+            philips: { multiplier: 1.1, name: 'Philips', models: [{ id: 'philips_performance', name: 'Performance 43-55"', gen: 0.9, specificPrices: { backlight_small: 4800, backlight_medium: 7000 } }, { id: 'philips_pus', name: 'PUS 58-75"', gen: 1.0, specificPrices: { backlight_large: 9500, backlight_xlarge: 14500 } }, { id: 'philips_oled', name: 'OLED 55-65"', gen: 1.4, specificPrices: { backlight_oled: 19000 } }] },
+            tcl: { multiplier: 1.0, name: 'TCL', models: [{ id: 'tcl_p', name: 'P-series 43-55"', gen: 0.8, specificPrices: { backlight_small: 4200, backlight_medium: 6000 } }, { id: 'tcl_c', name: 'C-series 55-75"', gen: 1.0, specificPrices: { backlight_medium: 7000, backlight_large: 9500 } }, { id: 'tcl_qled', name: 'QLED 55-65"', gen: 1.1, specificPrices: { backlight_qled: 9500 } }] },
+            xiaomi: { multiplier: 0.9, name: 'Xiaomi', models: [{ id: 'xiaomi_a2', name: 'TV A2 32-43"', gen: 0.8, specificPrices: { backlight_small: 4000 } }, { id: 'xiaomi_q1', name: 'TV Q1 55-75"', gen: 1.0, specificPrices: { backlight_medium: 6500, backlight_large: 9000 } }, { id: 'xiaomi_p1', name: 'TV P1 43-55"', gen: 0.9, specificPrices: { backlight_small: 4300, backlight_medium: 6500 } }] },
+            other: { multiplier: 1.0, name: 'Другой бренд', models: [{ id: 'tv_small', name: 'LED 32-43 дюйма', gen: 0.8, specificPrices: { backlight_small: 4500 } }, { id: 'tv_medium', name: 'LED 49-55 дюймов', gen: 1.0, specificPrices: { backlight_medium: 6500 } }, { id: 'tv_large', name: 'LED 58-75 дюймов', gen: 1.2, specificPrices: { backlight_large: 9500, backlight_xlarge: 14000 } }, { id: 'tv_oled', name: 'OLED / QLED', gen: 1.4, specificPrices: { backlight_qled: 10000, backlight_oled: 18000 } }] },
         },
     },
 
@@ -646,540 +512,104 @@ const PRICING = {
         label: 'Игровая приставка',
         icon: '🎮',
         services: {
-            // ОБНОВЛЕНО: разделение по типам чистки
-            cleaning_basic: {
-                name: 'Чистка от пыли (базовая)',
-                basePrice: 1500,
-                minTime: '1 час',
-                maxTime: '2 часа',
-                desc: 'Полная разборка, чистка радиатора и вентилятора'
-            },
-            cleaning_ps5: {
-                name: 'Чистка PlayStation 5',
-                basePrice: 3500,
-                minTime: '1.5 часа',
-                maxTime: '2.5 часа',
-                desc: 'Полная разборка PS5 с чисткой системы охлаждения'
-            },
-            liquid_metal: {
-                name: '🔥 Замена жидкого металла (PS5)',
-                basePrice: 5000,
-                minTime: '2 часа',
-                maxTime: '3 часа',
-                desc: 'Обновление Liquid Metal на APU. Премиум-услуга'
-            },
-            thermal: {
-                name: 'Замена термопасты',
-                basePrice: 2000,
-                minTime: '1 час',
-                maxTime: '2 часа',
-                desc: 'Качественная термопаста (для PS4/Xbox/Switch)'
-            },
-            hdmi: {
-                name: 'Ремонт HDMI порта',
-                basePrice: 3500,
-                minTime: '1 день',
-                maxTime: '2 дня',
-                desc: 'BGA-пайка разъёма'
-            },
-            controller: {
-                name: 'Ремонт геймпада',
-                basePrice: 1800,
-                minTime: '1 час',
-                maxTime: '3 часа',
-                desc: 'Стики, кнопки, триггеры, Bluetooth'
-            },
-            controller_dualsense: {
-                name: 'Ремонт DualSense (PS5)',
-                basePrice: 2800,
-                minTime: '1.5 часа',
-                maxTime: '3 часа',
-                desc: 'Дрифт стиков, адаптивные триггеры, тачпад'
-            },
-            drive: {
-                name: 'Ремонт привода',
-                basePrice: 3000,
-                minTime: '1 день',
-                maxTime: '3 дня',
-                desc: 'Лазер, шлейф, механика'
-            },
-            drive_ps5: {
-                name: 'Ремонт Blu-ray привода PS5',
-                basePrice: 5500,
-                minTime: '1 день',
-                maxTime: '3 дня',
-                desc: '4K UHD Blu-ray привод'
-            },
-            power: {
-                name: 'Ремонт блока питания',
-                basePrice: 3000,
-                minTime: '1 день',
-                maxTime: '3 дня',
-                desc: 'Замена компонентов БП'
-            },
-            power_ps5: {
-                name: 'Ремонт БП PlayStation 5',
-                basePrice: 5000,
-                minTime: '1 день',
-                maxTime: '3 дня',
-                desc: 'Оригинальный БП 350W'
-            },
-            ssd_upgrade: {
-                name: 'Установка SSD M.2 (PS5)',
-                basePrice: 2500,
-                minTime: '30 мин',
-                maxTime: '1 час',
-                desc: 'Без стоимости SSD. Установка + настройка'
-            },
-            motherboard: {
-                name: 'Ремонт материнской платы',
-                basePrice: 6000,
-                minTime: '3 дня',
-                maxTime: '7 дней',
-                desc: 'BGA-пайка, замена чипов'
-            },
-            motherboard_ps5: {
-                name: 'Ремонт мат. платы PS5',
-                basePrice: 9000,
-                minTime: '3 дня',
-                maxTime: '7 дней',
-                desc: 'Сложный ремонт с BGA-пайкой'
-            },
+            cleaning: { name: 'Чистка от пыли', basePrice: 1500, minTime: '1 час', maxTime: '2 часа', desc: 'Полная разборка, чистка радиатора и вентилятора' },
+            thermal: { name: 'Замена термопасты', basePrice: 2000, minTime: '1 час', maxTime: '2 часа', desc: 'Качественная термопаста' },
+            hdmi: { name: 'Ремонт HDMI порта', basePrice: 3500, minTime: '1 день', maxTime: '2 дня', desc: 'BGA-пайка разъёма' },
+            controller: { name: 'Ремонт геймпада', basePrice: 1800, minTime: '1 час', maxTime: '3 часа', desc: 'Стики, кнопки, триггеры, Bluetooth' },
+            drive: { name: 'Ремонт привода', basePrice: 3000, minTime: '1 день', maxTime: '3 дня', desc: 'Лазер, шлейф, механика' },
+            power: { name: 'Ремонт блока питания', basePrice: 3000, minTime: '1 день', maxTime: '3 дня', desc: 'Замена компонентов БП' },
+            motherboard: { name: 'Ремонт материнской платы', basePrice: 6000, minTime: '3 дня', maxTime: '7 дней', desc: 'BGA-пайка, замена чипов' },
         },
         brands: {
             playstation: {
                 multiplier: 1.0,
                 name: 'PlayStation',
                 models: [
-                    {
-                        id: 'ps3',
-                        name: 'PlayStation 3 (Fat/Slim/Super Slim)',
-                        gen: 0.7,
-                        specificPrices: {
-                            cleaning_basic: 1500,
-                            thermal: 2000,
-                            hdmi: 3000,
-                            drive: 2500,
-                            power: 2800
-                        }
-                    },
-                    {
-                        id: 'ps4_slim',
-                        name: 'PlayStation 4 Slim',
-                        gen: 0.9,
-                        specificPrices: {
-                            cleaning_basic: 1800,
-                            thermal: 2200,
-                            hdmi: 3500,
-                            drive: 3000,
-                            power: 3200
-                        }
-                    },
-                    {
-                        id: 'ps4_pro',
-                        name: 'PlayStation 4 Pro',
-                        gen: 1.0,
-                        specificPrices: {
-                            cleaning_basic: 2000,
-                            thermal: 2500,
-                            hdmi: 4000,
-                            drive: 3500,
-                            power: 3500
-                        }
-                    },
-                    // PS5 Standard — с жидким металлом
-                    {
-                        id: 'ps5_standard',
-                        name: 'PlayStation 5 Standard',
-                        gen: 1.2,
-                        specificPrices: {
-                            cleaning_ps5: 3500,
-                            liquid_metal: 5000,
-                            hdmi: 5500,
-                            controller_dualsense: 2800,
-                            drive_ps5: 5500,
-                            power_ps5: 5000,
-                            ssd_upgrade: 2500,
-                            motherboard_ps5: 9000
-                        }
-                    },
-                    //  PS5 Digital
-                    {
-                        id: 'ps5_digital',
-                        name: 'PlayStation 5 Digital Edition',
-                        gen: 1.2,
-                        specificPrices: {
-                            cleaning_ps5: 3500,
-                            liquid_metal: 5000,
-                            hdmi: 5500,
-                            controller_dualsense: 2800,
-                            power_ps5: 5000,
-                            ssd_upgrade: 2500,
-                            motherboard_ps5: 9000
-                        }
-                    },
-                    // PS5 Slim
-                    {
-                        id: 'ps5_slim',
-                        name: 'PlayStation 5 Slim',
-                        gen: 1.3,
-                        specificPrices: {
-                            cleaning_ps5: 3800,
-                            liquid_metal: 5500,
-                            hdmi: 6000,
-                            controller_dualsense: 2800,
-                            drive_ps5: 5800,
-                            power_ps5: 5200,
-                            ssd_upgrade: 2500,
-                            motherboard_ps5: 9500
-                        }
-                    },
+                    { id: 'ps3', name: 'PlayStation 3 (Fat/Slim/Super Slim)', gen: 0.7, specificPrices: { cleaning: 1500, thermal: 2000, hdmi: 3000, drive: 2500, power: 2800 } },
+                    { id: 'ps4_slim', name: 'PlayStation 4 Slim', gen: 0.9, specificPrices: { cleaning: 1800, thermal: 2200, hdmi: 3500, drive: 3000, power: 3200 } },
+                    { id: 'ps4_pro', name: 'PlayStation 4 Pro', gen: 1.0, specificPrices: { cleaning: 2000, thermal: 2500, hdmi: 4000, drive: 3500, power: 3500 } },
+                    { id: 'ps5_standard', name: 'PlayStation 5 Standard', gen: 1.2, specificPrices: { cleaning: 3500, thermal: 3000, hdmi: 5500, controller: 2800, drive: 5500, power: 5000, motherboard: 9000, liquid_metal: 5000, ssd_upgrade: 2500 } },
+                    { id: 'ps5_digital', name: 'PlayStation 5 Digital Edition', gen: 1.2, specificPrices: { cleaning: 3500, thermal: 3000, hdmi: 5500, controller: 2800, power: 5000, motherboard: 9000, liquid_metal: 5000, ssd_upgrade: 2500 } },
+                    { id: 'ps5_slim', name: 'PlayStation 5 Slim', gen: 1.3, specificPrices: { cleaning: 3800, thermal: 3200, hdmi: 6000, controller: 2800, drive: 5800, power: 5200, motherboard: 9500, liquid_metal: 5500, ssd_upgrade: 2500 } },
                 ]
             },
             xbox: {
                 multiplier: 1.1,
                 name: 'Xbox',
                 models: [
-                    {
-                        id: 'xbox_one_s',
-                        name: 'Xbox One S',
-                        gen: 0.8,
-                        specificPrices: {
-                            cleaning_basic: 1700,
-                            thermal: 2200,
-                            hdmi: 3500,
-                            drive: 3000,
-                            power: 3200
-                        }
-                    },
-                    {
-                        id: 'xbox_one_x',
-                        name: 'Xbox One X',
-                        gen: 0.9,
-                        specificPrices: {
-                            cleaning_basic: 2000,
-                            thermal: 2500,
-                            hdmi: 4000,
-                            drive: 3500,
-                            power: 3500
-                        }
-                    },
-                    {
-                        id: 'xbox_series_s',
-                        name: 'Xbox Series S',
-                        gen: 1.1,
-                        specificPrices: {
-                            cleaning_basic: 2500,
-                            thermal: 2800,
-                            hdmi: 4500,
-                            power: 4000,
-                            ssd_upgrade: 2800
-                        }
-                    },
-                    {
-                        id: 'xbox_series_x',
-                        name: 'Xbox Series X',
-                        gen: 1.3,
-                        specificPrices: {
-                            cleaning_basic: 3000,
-                            thermal: 3200,
-                            hdmi: 5500,
-                            drive: 5000,
-                            power: 5000,
-                            ssd_upgrade: 3000,
-                            motherboard: 8500
-                        }
-                    },
+                    { id: 'xbox_one_s', name: 'Xbox One S', gen: 0.8, specificPrices: { cleaning: 1700, thermal: 2200, hdmi: 3500, drive: 3000, power: 3200 } },
+                    { id: 'xbox_one_x', name: 'Xbox One X', gen: 0.9, specificPrices: { cleaning: 2000, thermal: 2500, hdmi: 4000, drive: 3500, power: 3500 } },
+                    { id: 'xbox_series_s', name: 'Xbox Series S', gen: 1.1, specificPrices: { cleaning: 2500, thermal: 2800, hdmi: 4500, power: 4000, ssd_upgrade: 2800 } },
+                    { id: 'xbox_series_x', name: 'Xbox Series X', gen: 1.3, specificPrices: { cleaning: 3000, thermal: 3200, hdmi: 5500, drive: 5000, power: 5000, ssd_upgrade: 3000, motherboard: 8500 } },
                 ]
             },
             nintendo: {
                 multiplier: 1.0,
                 name: 'Nintendo Switch',
                 models: [
-                    {
-                        id: 'switch',
-                        name: 'Nintendo Switch (2017-2019)',
-                        gen: 0.9,
-                        specificPrices: {
-                            cleaning_basic: 1500,
-                            thermal: 1800,
-                            controller: 2000,
-                            power: 2500
-                        }
-                    },
-                    {
-                        id: 'switch_v2',
-                        name: 'Nintendo Switch V2 (2019+)',
-                        gen: 1.0,
-                        specificPrices: {
-                            cleaning_basic: 1600,
-                            thermal: 2000,
-                            controller: 2000,
-                            power: 2700
-                        }
-                    },
-                    {
-                        id: 'switch_lite',
-                        name: 'Nintendo Switch Lite',
-                        gen: 1.0,
-                        specificPrices: {
-                            cleaning_basic: 1500,
-                            thermal: 1800,
-                            power: 2500
-                        }
-                    },
-                    {
-                        id: 'switch_oled',
-                        name: 'Nintendo Switch OLED',
-                        gen: 1.2,
-                        specificPrices: {
-                            cleaning_basic: 1800,
-                            thermal: 2200,
-                            controller: 2200,
-                            power: 3000
-                        }
-                    },
+                    { id: 'switch', name: 'Nintendo Switch (2017-2019)', gen: 0.9, specificPrices: { cleaning: 1500, thermal: 1800, controller: 2000, power: 2500 } },
+                    { id: 'switch_v2', name: 'Nintendo Switch V2 (2019+)', gen: 1.0, specificPrices: { cleaning: 1600, thermal: 2000, controller: 2000, power: 2700 } },
+                    { id: 'switch_lite', name: 'Nintendo Switch Lite', gen: 1.0, specificPrices: { cleaning: 1500, thermal: 1800, power: 2500 } },
+                    { id: 'switch_oled', name: 'Nintendo Switch OLED', gen: 1.2, specificPrices: { cleaning: 1800, thermal: 2200, controller: 2200, power: 3000 } },
                 ]
             },
-            other: {
-                multiplier: 1.0,
-                name: 'Другая приставка',
-                models: [
-                    { id: 'console_old', name: 'Старая модель (до 2015)', gen: 0.7 },
-                    { id: 'console_mid', name: 'Средняя модель (2016-2020)', gen: 0.9 },
-                    { id: 'console_new', name: 'Новая модель (2021+)', gen: 1.1 },
-                ]
-            },
+            other: { multiplier: 1.0, name: 'Другая приставка', models: [{ id: 'console_old', name: 'Старая модель (до 2015)', gen: 0.7 }, { id: 'console_mid', name: 'Средняя модель (2016-2020)', gen: 0.9 }, { id: 'console_new', name: 'Новая модель (2021+)', gen: 1.1 }] },
         },
     },
-    // ═══════════════════════════════════════════════════
-    // ВИДЕОКАРТЫ (эксклюзивные услуги)
-    // ═══════════════════════════════════════════════════
+
     videocard: {
         label: 'Видеокарта',
-        icon: '🔥',
+        icon: '🎨',
         services: {
-            cleaning: {
-                name: 'Чистка + термопаста',
-                basePrice: 1800,
-                minTime: '1 час',
-                maxTime: '2 часа',
-                desc: 'Полная разборка, замена термоинтерфейса'
-            },
-            thermal: {
-                name: 'Замена термопрокладок',
-                basePrice: 2200,
-                minTime: '1 час',
-                maxTime: '3 часа',
-                desc: 'Качественные термопрокладки'
-            },
-            fans: {
-                name: 'Ремонт/замена вентиляторов',
-                basePrice: 1500,
-                minTime: '1 час',
-                maxTime: '2 часа',
-                desc: 'Работа без учёта вентиляторов'
-            },
-            reball: {
-                name: 'Реболл GPU',
-                basePrice: 4500,
-                minTime: '2 дня',
-                maxTime: '5 дней',
-                desc: 'BGA-пайка графического чипа'
-            },
-            gpu_replace: {
-                name: 'Замена GPU (видеочипа)',
-                basePrice: 6000,
-                minTime: '3 дня',
-                maxTime: '7 дней',
-                desc: 'Работа без учёта чипа'
-            },
-            vram_replace: {
-                name: 'Замена видеопамяти (VRAM)',
-                basePrice: 4000,
-                minTime: '2 дня',
-                maxTime: '5 дней',
-                desc: 'Работа без учёта памяти'
-            },
-            power: {
-                name: 'Ремонт цепи питания',
-                basePrice: 3500,
-                minTime: '2 дня',
-                maxTime: '5 дней',
-                desc: 'MOSFET, конденсаторы, дроссели'
-            },
-            hdmi: {
-                name: 'Ремонт видеовыходов',
-                basePrice: 2000,
-                minTime: '1 день',
-                maxTime: '3 дня',
-                desc: 'HDMI, DisplayPort, DVI'
-            },
-            bios: {
-                name: 'Прошивка BIOS',
-                basePrice: 1200,
-                minTime: '1 час',
-                maxTime: '1 день',
-                desc: 'Восстановление, откат, модификация'
-            },
+            cleaning: { name: 'Чистка + термопаста', basePrice: 1800, minTime: '1 час', maxTime: '2 часа', desc: 'Полная разборка, замена термоинтерфейса' },
+            thermal: { name: 'Замена термопрокладок', basePrice: 2200, minTime: '1 час', maxTime: '3 часа', desc: 'Качественные термопрокладки' },
+            fans: { name: 'Ремонт/замена вентиляторов', basePrice: 1500, minTime: '1 час', maxTime: '2 часа', desc: 'Работа без учёта вентиляторов' },
+            reball: { name: 'Реболл GPU', basePrice: 4500, minTime: '2 дня', maxTime: '5 дней', desc: 'BGA-пайка графического чипа' },
+            gpu_replace: { name: 'Замена GPU (видеочипа)', basePrice: 6000, minTime: '3 дня', maxTime: '7 дней', desc: 'Работа без учёта чипа' },
+            vram_replace: { name: 'Замена видеопамяти (VRAM)', basePrice: 4000, minTime: '2 дня', maxTime: '5 дней', desc: 'Работа без учёта памяти' },
+            power: { name: 'Ремонт цепи питания', basePrice: 3500, minTime: '2 дня', maxTime: '5 дней', desc: 'MOSFET, конденсаторы, дроссели' },
+            hdmi: { name: 'Ремонт видеовыходов', basePrice: 2000, minTime: '1 день', maxTime: '3 дня', desc: 'HDMI, DisplayPort, DVI' },
+            bios: { name: 'Прошивка BIOS', basePrice: 1200, minTime: '1 час', maxTime: '1 день', desc: 'Восстановление, откат, модификация' },
         },
         brands: {
-            nvidia_gtx_old: {
-                multiplier: 0.8,
-                name: 'NVIDIA GTX 10xx / 16xx',
-                models: [
-                    { id: 'gtx_1050', name: 'GTX 1050 / 1050 Ti', gen: 0.6 },
-                    { id: 'gtx_1060', name: 'GTX 1060 (3/6 GB)', gen: 0.7 },
-                    { id: 'gtx_1070', name: 'GTX 1070 / 1070 Ti', gen: 0.8 },
-                    {
-                        id: 'gtx_1080', name: 'GTX 1080 / 1080 Ti', gen: 0.9,
-                        specificPrices: { reball: 4000, gpu_replace: 5500 }
-                    },
-                    { id: 'gtx_1650', name: 'GTX 1650 / 1650 Super', gen: 0.7 },
-                    { id: 'gtx_1660', name: 'GTX 1660 / 1660 Super / Ti', gen: 0.8 },
-                ]
-            },
-            nvidia_rtx_20: {
-                multiplier: 1.0,
-                name: 'NVIDIA RTX 20xx',
-                models: [
-                    { id: 'rtx_2060', name: 'RTX 2060 / 2060 Super', gen: 0.9 },
-                    { id: 'rtx_2070', name: 'RTX 2070 / 2070 Super', gen: 1.0 },
-                    {
-                        id: 'rtx_2080', name: 'RTX 2080 / 2080 Super', gen: 1.1,
-                        specificPrices: { reball: 5000, gpu_replace: 7000 }
-                    },
-                    {
-                        id: 'rtx_2080ti', name: 'RTX 2080 Ti', gen: 1.3,
-                        specificPrices: { reball: 6000, gpu_replace: 8500, vram_replace: 5000 }
-                    },
-                ]
-            },
-            nvidia_rtx_30: {
-                multiplier: 1.2,
-                name: 'NVIDIA RTX 30xx',
-                models: [
-                    { id: 'rtx_3060', name: 'RTX 3060 / 3060 Ti', gen: 1.0 },
-                    {
-                        id: 'rtx_3070', name: 'RTX 3070 / 3070 Ti', gen: 1.2,
-                        specificPrices: { reball: 5500, gpu_replace: 8000 }
-                    },
-                    {
-                        id: 'rtx_3080', name: 'RTX 3080 / 3080 Ti', gen: 1.4,
-                        specificPrices: { reball: 7000, gpu_replace: 10000, vram_replace: 5500 }
-                    },
-                    {
-                        id: 'rtx_3090', name: 'RTX 3090 / 3090 Ti', gen: 1.6,
-                        specificPrices: { reball: 8500, gpu_replace: 12500, vram_replace: 6500 }
-                    },
-                ]
-            },
-            nvidia_rtx_40: {
-                multiplier: 1.5,
-                name: 'NVIDIA RTX 40xx',
-                models: [
-                    { id: 'rtx_4060', name: 'RTX 4060 / 4060 Ti', gen: 1.2 },
-                    {
-                        id: 'rtx_4070', name: 'RTX 4070 / 4070 Super / Ti', gen: 1.4,
-                        specificPrices: { reball: 7500, gpu_replace: 11000 }
-                    },
-                    {
-                        id: 'rtx_4080', name: 'RTX 4080 / 4080 Super', gen: 1.6,
-                        specificPrices: { reball: 9000, gpu_replace: 14000, vram_replace: 7000 }
-                    },
-                    {
-                        id: 'rtx_4090', name: 'RTX 4090', gen: 1.8,
-                        specificPrices: { reball: 11000, gpu_replace: 18000, vram_replace: 8000, cleaning: 3000 }
-                    },
-                ]
-            },
-            amd_rx_old: {
-                multiplier: 0.9,
-                name: 'AMD Radeon RX 5xx / Vega',
-                models: [
-                    {
-                        id: 'rx_580', name: 'RX 570 / 580 / 590', gen: 0.6,
-                        specificPrices: { reball: 3800 }
-                    },
-                    {
-                        id: 'rx_vega', name: 'RX Vega 56 / 64', gen: 0.8,
-                        specificPrices: { reball: 4500, thermal: 2500 }
-                    },
-                ]
-            },
-            amd_rx_5000: {
-                multiplier: 1.0,
-                name: 'AMD Radeon RX 5xxx',
-                models: [
-                    { id: 'rx_5600', name: 'RX 5600 XT', gen: 0.9 },
-                    {
-                        id: 'rx_5700', name: 'RX 5700 / 5700 XT', gen: 1.0,
-                        specificPrices: { reball: 5000 }
-                    },
-                ]
-            },
-            amd_rx_6000: {
-                multiplier: 1.2,
-                name: 'AMD Radeon RX 6xxx',
-                models: [
-                    { id: 'rx_6600', name: 'RX 6600 / 6600 XT', gen: 1.0 },
-                    { id: 'rx_6700', name: 'RX 6700 XT', gen: 1.1 },
-                    {
-                        id: 'rx_6800', name: 'RX 6800 / 6800 XT', gen: 1.3,
-                        specificPrices: { reball: 6500, gpu_replace: 9000 }
-                    },
-                    {
-                        id: 'rx_6900', name: 'RX 6900 XT / 6950 XT', gen: 1.5,
-                        specificPrices: { reball: 8000, gpu_replace: 12000, vram_replace: 6000 }
-                    },
-                ]
-            },
-            amd_rx_7000: {
-                multiplier: 1.4,
-                name: 'AMD Radeon RX 7xxx',
-                models: [
-                    { id: 'rx_7600', name: 'RX 7600 / 7600 XT', gen: 1.2 },
-                    { id: 'rx_7700', name: 'RX 7700 XT', gen: 1.3 },
-                    {
-                        id: 'rx_7800', name: 'RX 7800 XT', gen: 1.4,
-                        specificPrices: { reball: 8000, gpu_replace: 11500 }
-                    },
-                    {
-                        id: 'rx_7900', name: 'RX 7900 XT / XTX', gen: 1.7,
-                        specificPrices: { reball: 10000, gpu_replace: 15500, vram_replace: 7500 }
-                    },
-                ]
-            },
-            intel_arc: {
-                multiplier: 1.1,
-                name: 'Intel Arc',
-                models: [
-                    { id: 'arc_a580', name: 'Arc A580', gen: 1.0 },
-                    { id: 'arc_a750', name: 'Arc A750', gen: 1.1 },
-                    { id: 'arc_a770', name: 'Arc A770', gen: 1.2 },
-                    { id: 'arc_b580', name: 'Arc B580 (Battlemage)', gen: 1.3 },
-                ]
-            },
-            other: {
-                multiplier: 1.0,
-                name: 'Другая видеокарта',
-                models: [
-                    { id: 'gpu_office', name: 'Офисная (GT 710/1030)', gen: 0.6 },
-                    { id: 'gpu_mid_old', name: 'Средняя (до 2018)', gen: 0.8 },
-                    { id: 'gpu_mid_new', name: 'Средняя (2019-2022)', gen: 1.0 },
-                    { id: 'gpu_top', name: 'Топовая (2023+)', gen: 1.3 },
-                ]
-            },
+            nvidia_gtx_old: { multiplier: 0.8, name: 'NVIDIA GTX 10xx / 16xx', models: [{ id: 'gtx_1050', name: 'GTX 1050 / 1050 Ti', gen: 0.6 }, { id: 'gtx_1060', name: 'GTX 1060 (3/6 GB)', gen: 0.7 }, { id: 'gtx_1070', name: 'GTX 1070 / 1070 Ti', gen: 0.8 }, { id: 'gtx_1080', name: 'GTX 1080 / 1080 Ti', gen: 0.9, specificPrices: { reball: 4000, gpu_replace: 5500 } }, { id: 'gtx_1650', name: 'GTX 1650 / 1650 Super', gen: 0.7 }, { id: 'gtx_1660', name: 'GTX 1660 / 1660 Super / Ti', gen: 0.8 }] },
+            nvidia_rtx_20: { multiplier: 1.0, name: 'NVIDIA RTX 20xx', models: [{ id: 'rtx_2060', name: 'RTX 2060 / 2060 Super', gen: 0.9 }, { id: 'rtx_2070', name: 'RTX 2070 / 2070 Super', gen: 1.0 }, { id: 'rtx_2080', name: 'RTX 2080 / 2080 Super', gen: 1.1, specificPrices: { reball: 5000, gpu_replace: 7000 } }, { id: 'rtx_2080ti', name: 'RTX 2080 Ti', gen: 1.3, specificPrices: { reball: 6000, gpu_replace: 8500, vram_replace: 5000 } }] },
+            nvidia_rtx_30: { multiplier: 1.2, name: 'NVIDIA RTX 30xx', models: [{ id: 'rtx_3060', name: 'RTX 3060 / 3060 Ti', gen: 1.0 }, { id: 'rtx_3070', name: 'RTX 3070 / 3070 Ti', gen: 1.2, specificPrices: { reball: 5500, gpu_replace: 8000 } }, { id: 'rtx_3080', name: 'RTX 3080 / 3080 Ti', gen: 1.4, specificPrices: { reball: 7000, gpu_replace: 10000, vram_replace: 5500 } }, { id: 'rtx_3090', name: 'RTX 3090 / 3090 Ti', gen: 1.6, specificPrices: { reball: 8500, gpu_replace: 12500, vram_replace: 6500 } }] },
+            nvidia_rtx_40: { multiplier: 1.5, name: 'NVIDIA RTX 40xx', models: [{ id: 'rtx_4060', name: 'RTX 4060 / 4060 Ti', gen: 1.2 }, { id: 'rtx_4070', name: 'RTX 4070 / 4070 Super / Ti', gen: 1.4, specificPrices: { reball: 7500, gpu_replace: 11000 } }, { id: 'rtx_4080', name: 'RTX 4080 / 4080 Super', gen: 1.6, specificPrices: { reball: 9000, gpu_replace: 14000, vram_replace: 7000 } }, { id: 'rtx_4090', name: 'RTX 4090', gen: 1.8, specificPrices: { reball: 11000, gpu_replace: 18000, vram_replace: 8000, cleaning: 3000 } }] },
+            amd_rx_old: { multiplier: 0.9, name: 'AMD Radeon RX 5xx / Vega', models: [{ id: 'rx_580', name: 'RX 570 / 580 / 590', gen: 0.6, specificPrices: { reball: 3800 } }, { id: 'rx_vega', name: 'RX Vega 56 / 64', gen: 0.8, specificPrices: { reball: 4500, thermal: 2500 } }] },
+            amd_rx_5000: { multiplier: 1.0, name: 'AMD Radeon RX 5xxx', models: [{ id: 'rx_5600', name: 'RX 5600 XT', gen: 0.9 }, { id: 'rx_5700', name: 'RX 5700 / 5700 XT', gen: 1.0, specificPrices: { reball: 5000 } }] },
+            amd_rx_6000: { multiplier: 1.2, name: 'AMD Radeon RX 6xxx', models: [{ id: 'rx_6600', name: 'RX 6600 / 6600 XT', gen: 1.0 }, { id: 'rx_6700', name: 'RX 6700 XT', gen: 1.1 }, { id: 'rx_6800', name: 'RX 6800 / 6800 XT', gen: 1.3, specificPrices: { reball: 6500, gpu_replace: 9000 } }, { id: 'rx_6900', name: 'RX 6900 XT / 6950 XT', gen: 1.5, specificPrices: { reball: 8000, gpu_replace: 12000, vram_replace: 6000 } }] },
+            amd_rx_7000: { multiplier: 1.4, name: 'AMD Radeon RX 7xxx', models: [{ id: 'rx_7600', name: 'RX 7600 / 7600 XT', gen: 1.2 }, { id: 'rx_7700', name: 'RX 7700 XT', gen: 1.3 }, { id: 'rx_7800', name: 'RX 7800 XT', gen: 1.4, specificPrices: { reball: 8000, gpu_replace: 11500 } }, { id: 'rx_7900', name: 'RX 7900 XT / XTX', gen: 1.7, specificPrices: { reball: 10000, gpu_replace: 15500, vram_replace: 7500 } }] },
+            intel_arc: { multiplier: 1.1, name: 'Intel Arc', models: [{ id: 'arc_a580', name: 'Arc A580', gen: 1.0 }, { id: 'arc_a750', name: 'Arc A750', gen: 1.1 }, { id: 'arc_a770', name: 'Arc A770', gen: 1.2 }, { id: 'arc_b580', name: 'Arc B580 (Battlemage)', gen: 1.3 }] },
+            other: { multiplier: 1.0, name: 'Другая видеокарта', models: [{ id: 'gpu_office', name: 'Офисная (GT 710/1030)', gen: 0.6 }, { id: 'gpu_mid_old', name: 'Средняя (до 2018)', gen: 0.8 }, { id: 'gpu_mid_new', name: 'Средняя (2019-2022)', gen: 1.0 }, { id: 'gpu_top', name: 'Топовая (2023+)', gen: 1.3 }] },
         },
     },
 };
 
+// ✅ ЕДИНАЯ ФУНКЦИЯ РАСЧЁТА ЦЕНЫ (с защитой Math.max)
+const getServicePrice = (serviceKey, category, brandData, modelData) => {
+    const service = category.services[serviceKey];
+    if (!service || !modelData || !brandData) return null;
+
+    let price = modelData.specificPrices?.[serviceKey];
+
+    if (price === undefined) {
+        const calculated = Math.round(
+            service.basePrice *
+            (modelData.gen || 1.0) *
+            (brandData.multiplier || 1.0)
+        );
+        price = Math.max(calculated, service.basePrice);
+    }
+
+    return price;
+};
+
 export default function RepairCalculator({ initialDeviceType = null }) {
-    const [deviceType, setDeviceType] = useState(null);
+    const [deviceType, setDeviceType] = useState(initialDeviceType);
     const [brand, setBrand] = useState(null);
     const [modelId, setModelId] = useState(null);
     const [selectedServices, setSelectedServices] = useState([]);
-
 
     const toggleService = (key) => {
         setSelectedServices(prev =>
@@ -1207,17 +637,8 @@ export default function RepairCalculator({ initialDeviceType = null }) {
         let maxTotal = 0;
 
         const details = selectedServices.map(serviceKey => {
-            const service = category.services[serviceKey];
-
-            let price = modelData.specificPrices?.[serviceKey];
-
-            if (price === undefined) {
-                price = Math.round(
-                    service.basePrice *
-                    (modelData.gen || 1.0) *
-                    (brandData.multiplier || 1.0)
-                );
-            }
+            const price = getServicePrice(serviceKey, category, brandData, modelData);
+            if (price === null) return null;
 
             const minPrice = Math.round(price * 0.85);
             const maxPrice = Math.round(price * 1.15);
@@ -1225,11 +646,45 @@ export default function RepairCalculator({ initialDeviceType = null }) {
             minTotal += minPrice;
             maxTotal += maxPrice;
 
-            return { ...service, minPrice, maxPrice };
-        });
+            return { ...category.services[serviceKey], minPrice, maxPrice };
+        }).filter(Boolean);
 
         return { minTotal, maxTotal, details, modelName: modelData.name };
     }, [deviceType, brand, modelId, selectedServices]);
+
+    // ✅ УМНАЯ ФИЛЬТРАЦИЯ УСЛУГ ПО ТИПУ РАЗЪЁМА, OLED и ТЕРМОПРОКЛАДКАМ
+    const getFilteredServices = () => {
+        if (!deviceType || !brand || !modelId) return [];
+
+        const category = PRICING[deviceType];
+        const brandData = category.brands[brand];
+        const modelData = brandData.models.find(m => m.id === modelId);
+
+        if (!modelData) return Object.entries(category.services);
+
+        return Object.entries(category.services).filter(([key, svc]) => {
+            // 1. Фильтрация по типу разъёма (Type-C / Micro-USB / Lightning)
+            if (svc.portType) {
+                if (modelData.portType) {
+                    return svc.portType === modelData.portType;
+                }
+                return true;
+            }
+
+            // 2. ✅ Фильтрация переклейки стекла: ТОЛЬКО для OLED/AMOLED (hasSeparateGlass: true)
+            if (svc.requiresSeparateGlass) {
+                return modelData.hasSeparateGlass === true;
+            }
+
+            // 3. Фильтрация термопрокладок: ТОЛЬКО для игровых/премиум ноутбуков
+            if (svc.requiresThermalPads) {
+                return modelData.hasThermalPads === true;
+            }
+
+            // Все остальные услуги показываем всегда
+            return true;
+        });
+    };
 
     return (
         <>
@@ -1310,7 +765,7 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                         </div>
                     )}
 
-                    {/* Шаг 4: Услуги */}
+                    {/* ✅ Шаг 4: Услуги (УМНАЯ ФИЛЬТРАЦИЯ) */}
                     {modelId && (
                         <div className="mb-8 animate-fadeIn">
                             <div className="flex items-center gap-2 mb-4">
@@ -1318,14 +773,11 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                                 <h3 className="text-xl font-bold" style={{ color: '#002147' }}>Какие работы нужны?</h3>
                             </div>
                             <div className="space-y-3">
-                                {Object.entries(PRICING[deviceType].services).map(([key, svc]) => {
+                                {getFilteredServices().map(([key, svc]) => {
                                     const modelData = PRICING[deviceType].brands[brand].models.find(m => m.id === modelId);
                                     const brandData = PRICING[deviceType].brands[brand];
 
-                                    let price = modelData.specificPrices?.[key];
-                                    if (price === undefined) {
-                                        price = Math.round(svc.basePrice * (modelData.gen || 1) * (brandData.multiplier || 1));
-                                    }
+                                    const price = getServicePrice(key, PRICING[deviceType], brandData, modelData);
 
                                     const isSelected = selectedServices.includes(key);
                                     return (
@@ -1342,7 +794,7 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                                                     <div className="text-xs text-gray-500">⏱️ {svc.minTime} — {svc.maxTime}</div>
                                                 </div>
                                                 <div className="text-right flex-shrink-0">
-                                                    <div className="font-bold text-lg" style={{ color: '#ff8c00' }}>~{price.toLocaleString('ru-RU')}₽</div>
+                                                    <div className="font-bold text-lg" style={{ color: '#ff8c00' }}>~{price?.toLocaleString('ru-RU')}₽</div>
                                                     <div className="text-xs text-gray-500">работа</div>
                                                 </div>
                                             </div>

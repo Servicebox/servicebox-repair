@@ -3,7 +3,14 @@
 
 import Link from 'next/link';
 import RepairCalculator from '@/components/RepairCalculator/RepairCalculator';
-
+const CALCULATOR_KEY_MAP = {
+    phones: 'phone',
+    laptops: 'laptop',
+    tablets: 'tablet',
+    tv: 'tv',
+    videocards: 'videocard',
+    consoles: 'console'
+};
 const CATEGORIES_DATA = {
     phones: {
         title: 'Ремонт смартфонов',
@@ -293,7 +300,7 @@ export default function CategoryTemplate({ categorySlug }) {
             {/* Калькулятор (предзагруженный на категорию) */}
             <section id="repair-calculator" className="py-16 bg-white">
                 <div className="max-w-7xl mx-auto px-4">
-                    <RepairCalculator initialDeviceType={categorySlug} />
+                    <RepairCalculator initialDeviceType={CALCULATOR_KEY_MAP[categorySlug]} />
                 </div>
             </section>
 

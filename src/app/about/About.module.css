@@ -6,7 +6,35 @@
   background: transparent;
   scroll-margin-top: 80px;
 }
+.quoteBlock {
+  margin: 2rem 0;
+  padding: 1.5rem 2rem;
+  background: #f8fafc;
+  border-left: 4px solid #002147;
+  border-radius: 0 12px 12px 0;
+}
 
+.quote {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #374151;
+  margin: 0;
+}
+
+.quoteLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #0066cc;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.quoteLink:hover {
+  color: #002147;
+  text-decoration: underline;
+}
 .content {
   max-width: 1280px;
   margin: 0 auto;
