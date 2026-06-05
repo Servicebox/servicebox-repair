@@ -1,8 +1,7 @@
-// src/app/sitemap.js
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-// Жёсткая гарантия BASE_URL (никогда не будет undefined)
+// Жёсткая гарантия BASE_URL
 const getBaseUrl = () => {
   if (process.env.SITE_URL && process.env.SITE_URL.trim()) {
     return process.env.SITE_URL.trim().replace(/\/$/, '');
@@ -43,7 +42,7 @@ const safeFetch = async (url) => {
   }
 };
 
-// === СПИСКИ СЛАГОВ (константы, не зависят от `now`) ===
+// === СПИСКИ СЛАГОВ ===
 const brandSlugs = [
   'apple', 'samsung', 'xiaomi', 'huawei', 'asus', 'lenovo',
   'hp', 'acer', 'msi', 'dell', 'sony', 'lg'
@@ -58,6 +57,7 @@ const problemSlugs = [
   'water-damage',
 ];
 
+// ✅ ВСЕ 8 AI-ответов
 const aiAnswerSlugs = [
   'repair-laptop-vologda',
   'phone-screen-replacement',
@@ -100,17 +100,17 @@ export default async function sitemap() {
     createEntry(`/brands/${slug}`, 0.85, 'weekly', now)
   );
 
-  // === СТРАНИЦЫ НЕИСПРАВНОСТЕЙ  ===
+  // === СТРАНИЦЫ НЕИСПРАВНОСТЕЙ ===
   const problemUrls = problemSlugs.map(slug =>
     createEntry(`/problems/${slug}`, 0.85, 'weekly', now)
   );
 
-  // === AI-ANSWERS ===
+  // === AI-ANSWERS (ВСЕ 8) ===
   const aiAnswers = aiAnswerSlugs.map(s =>
-    createEntry(`/ai-answers/${s}`, 0.85, 'weekly', now)
+    createEntry(`/ai-answers/${s}`, 0.95, 'weekly', now) // ✅ Повышенный приоритет
   );
 
-  // === ДИНАМИЧЕСКИЕ  ===
+  // === ДИНАМИЧЕСКИЕ ===
   const [svc, prod, news] = await Promise.all([
     safeFetch(`${BASE_URL}/api/services/all`),
     safeFetch(`${BASE_URL}/api/products?limit=500`),
@@ -165,18 +165,18 @@ export default async function sitemap() {
   // Уникальность по URL
   const unique = Array.from(new Map(all.map(e => [e.url, e])).values());
 
-  // Сортировка по приоритету (самые важные — первыми)
+  // Сортировка по приоритету
   unique.sort((a, b) => (b.priority || 0) - (a.priority || 0));
 
-  console.log(` Sitemap: ${unique.length} URLs | BASE="${BASE_URL}"`);
-  console.log(`   ├─ Static:    ${staticUrls.length}`);
-  console.log(`   ├─ API:       ${apiUrls.length}`);
-  console.log(`   ├─ AI Answers:${aiAnswers.length}`);
-  console.log(`   ├─ Brands:    ${brandUrls.length}`);
-  console.log(`   ├─ Problems:  ${problemUrls.length}`);
-  console.log(`   ├─ Services:  ${svcUrls.length}`);
-  console.log(`   ├─ Products:  ${prodUrls.length}`);
-  console.log(`   └─ News:      ${newsUrls.length}`);
+  console.log(`✅ Sitemap: ${unique.length} URLs | BASE="${BASE_URL}"`);
+  console.log(`   ├─ Static:     ${staticUrls.length}`);
+  console.log(`   ├─ API:        ${apiUrls.length}`);
+  console.log(`   ├─ AI Answers: ${aiAnswers.length}`);
+  console.log(`   ├─ Brands:     ${brandUrls.length}`);
+  console.log(`   ├─ Problems:   ${problemUrls.length}`);
+  console.log(`   ├─ Services:   ${svcUrls.length}`);
+  console.log(`   ├─ Products:   ${prodUrls.length}`);
+  console.log(`   └─ News:       ${newsUrls.length}`);
 
   return unique;
 }

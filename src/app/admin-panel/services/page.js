@@ -24,7 +24,7 @@ const ServicesAdmin = () => {
       setLoading(true);
       const response = await fetch('/api/services');
       const data = await response.json();
-      
+
       if (data.success) {
         setServices(data.data);
         setFilteredServices(data.data);
@@ -45,7 +45,7 @@ const ServicesAdmin = () => {
   // Фильтрация услуг
   useEffect(() => {
     let result = services;
-    
+
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       result = result.filter(service =>
@@ -54,7 +54,7 @@ const ServicesAdmin = () => {
         service.category.toLowerCase().includes(query)
       );
     }
-    
+
     setFilteredServices(result);
   }, [searchQuery, services]);
 
@@ -62,7 +62,7 @@ const ServicesAdmin = () => {
   const handleCreateService = async (e) => {
     e.preventDefault();
     setSaving(true);
-    
+
     try {
       const response = await fetch('/api/services', {
         method: 'POST',
@@ -71,9 +71,9 @@ const ServicesAdmin = () => {
         },
         body: JSON.stringify(newService),
       });
-      
+
       const data = await response.json();
-      
+
       if (data.success) {
         setNewService({ serviceName: '', description: '', price: '', category: '' });
         await fetchServices();
@@ -91,9 +91,9 @@ const ServicesAdmin = () => {
   // Обновление услуги
   const handleUpdateService = async () => {
     if (!editingService) return;
-    
+
     setSaving(true);
-    
+
     try {
       const response = await fetch(`/api/services/${editingService._id}`, {
         method: 'PUT',
@@ -102,9 +102,9 @@ const ServicesAdmin = () => {
         },
         body: JSON.stringify(editingService),
       });
-      
+
       const data = await response.json();
-      
+
       if (data.success) {
         setEditingService(null);
         await fetchServices();
@@ -122,14 +122,14 @@ const ServicesAdmin = () => {
   // Удаление услуги
   const handleDeleteService = async (id) => {
     if (!confirm('Вы уверены, что хотите удалить эту услугу?')) return;
-    
+
     try {
       const response = await fetch(`/api/services/${id}`, {
         method: 'DELETE',
       });
-      
+
       const data = await response.json();
-      
+
       if (data.success) {
         await fetchServices();
         alert('Услуга успешно удалена!');
@@ -199,7 +199,7 @@ const ServicesAdmin = () => {
                 required
               />
             </div>
-            
+
             <div className="form-group">
               <label>Категория *</label>
               <input
@@ -217,7 +217,7 @@ const ServicesAdmin = () => {
                 ))}
               </datalist>
             </div>
-            
+
             <div className="form-group">
               <label>Цена *</label>
               <input
@@ -229,7 +229,7 @@ const ServicesAdmin = () => {
                 required
               />
             </div>
-            
+
             <div className="form-group full-width">
               <label>Описание *</label>
               <textarea
@@ -242,7 +242,7 @@ const ServicesAdmin = () => {
               />
             </div>
           </div>
-          
+
           <button type="submit" disabled={saving} className="submit-btn">
             {saving ? 'Создание...' : 'Создать услугу'}
           </button>
@@ -278,7 +278,7 @@ const ServicesAdmin = () => {
                 <div>Категория</div>
                 <div>Действия</div>
               </div>
-              
+
               <div className="table-body">
                 {(showAll ? filteredServices : filteredServices.slice(0, 15)).map(service => (
                   <div key={service._id} className="table-row">
@@ -323,14 +323,14 @@ const ServicesAdmin = () => {
                           />
                         </div>
                         <div className="table-cell actions">
-                          <button 
+                          <button
                             onClick={handleUpdateService}
                             disabled={saving}
                             className="save-btn"
                           >
                             {saving ? '...' : '✓'}
                           </button>
-                          <button 
+                          <button
                             onClick={cancelEditing}
                             className="cancel-btn"
                           >
@@ -354,14 +354,14 @@ const ServicesAdmin = () => {
                           <span className="category-badge">{service.category}</span>
                         </div>
                         <div className="table-cell actions">
-                          <button 
+                          <button
                             onClick={() => startEditing(service)}
                             className="edit-btn"
                             title="Редактировать"
                           >
                             ✎
                           </button>
-                          <button 
+                          <button
                             onClick={() => handleDeleteService(service._id)}
                             className="delete-btn"
                             title="Удалить"
@@ -375,18 +375,18 @@ const ServicesAdmin = () => {
                 ))}
               </div>
             </div>
-            
+
             {filteredServices.length > 15 && (
               <div className="show-more-section">
                 {!showAll ? (
-                  <button 
+                  <button
                     onClick={() => setShowAll(true)}
                     className="show-more-btn"
                   >
                     Показать все ({filteredServices.length})
                   </button>
                 ) : (
-                  <button 
+                  <button
                     onClick={() => setShowAll(false)}
                     className="show-less-btn"
                   >

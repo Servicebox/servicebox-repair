@@ -1,4 +1,3 @@
-// app/robots.js
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
 export default function robots() {
@@ -32,6 +31,7 @@ export default function robots() {
           '/api/internal/',
         ],
       },
+      // ✅ Разрешаем AI-ботам индексировать AI-ответы
       {
         userAgent: [
           'Google-Extended',
@@ -45,6 +45,11 @@ export default function robots() {
           'PerplexityBot',
           'ClaudeBot',
           'YouBot',
+          'ChatGPT-User',
+          'Google-CloudVertexBot',
+          'anthropic-ai',
+          'YandexBot',
+          'Googlebot',
         ],
         allow: [
           '/api/ai/v1/',
@@ -53,6 +58,9 @@ export default function robots() {
           '/ai-answers/',
           '/sitemap.xml',
           '/',
+          '/services/',
+          '/prices',
+          '/contacts',
         ],
         disallow: ['/admin/', '/api/admin/', '/private/'],
       },

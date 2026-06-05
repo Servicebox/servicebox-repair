@@ -1,84 +1,68 @@
+/* app/services/services.module.css */
+
+/* Базовые стили страницы */
 .servicesPage {
     min-height: 100vh;
-    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
-    padding: 2rem 0;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    padding: 40px 0;
 }
 
 .contentWrapper {
-    max-width: 1280px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 20px;
 }
 
 /* Заголовок */
 .animatedTitle {
     text-align: center;
-    margin-bottom: 3rem;
-    animation: fadeInDown 0.6s ease-out;
+    margin-bottom: 40px;
 }
 
 .animatedTitle h1 {
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
     font-weight: 800;
-    margin: 0 0 1rem 0;
-    background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1.2;
+    color: #002147;
+    margin-bottom: 12px;
 }
 
 .animatedTitle p {
-    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-size: 1.125rem;
     color: #64748b;
-    margin: 0;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 /* Поиск */
 .controlsContainer {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 3rem;
-    animation: fadeInUp 0.6s ease-out 0.2s both;
+    max-width: 600px;
+    margin: 0 auto 40px;
 }
 
 .searchContainer {
     position: relative;
-    width: 100%;
-    max-width: 500px;
 }
 
 .searchInput {
     width: 100%;
-    padding: 1rem 1.5rem 1rem 3rem;
-    font-size: 1rem;
+    padding: 14px 20px;
     border: 2px solid #e2e8f0;
-    border-radius: 16px;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
     background: white;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .searchInput:focus {
     outline: none;
     border-color: #002147;
-    box-shadow: 0 8px 24px rgba(0, 33, 71, 0.15);
-    transform: translateY(-2px);
-}
-
-.searchInput::placeholder {
-    color: #94a3b8;
+    box-shadow: 0 0 0 3px rgba(0, 33, 71, 0.1);
 }
 
 /* Сетка категорий */
 .categoriesGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-    animation: fadeInUp 0.6s ease-out 0.3s both;
+    gap: 24px;
+    margin-bottom: 60px;
 }
 
 /* Карточка категории */
@@ -86,279 +70,200 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    padding: 1.5rem;
+    padding: 24px;
     background: white;
-    border-radius: 20px;
-    border: 2px solid transparent;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
     text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    color: inherit;
+    transition: all 0.3s ease;
     overflow: hidden;
-    min-height: 240px;
 }
 
-.categoryCard::before {
+.categoryCard:hover {
+    transform: translateY(-4px);
+    border-color: #002147;
+    box-shadow: 0 12px 24px -8px rgba(0, 33, 71, 0.15);
+}
+
+/* ✅ Выделение категорий-калькуляторов */
+.calculatorCategory {
+    background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
+    border-color: #0ea5e9;
+}
+
+.calculatorCategory:hover {
+    border-color: #0284c7;
+    box-shadow: 0 12px 24px -8px rgba(14, 165, 233, 0.25);
+}
+
+.calculatorCategory::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #002147 0%, #003d7a 100%);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
-}
-
-.categoryCard:hover {
-    transform: translateY(-8px);
-    border-color: #002147;
-    box-shadow: 0 20px 40px rgba(0, 33, 71, 0.15);
-}
-
-.categoryCard:hover::before {
-    transform: scaleX(1);
+    background: linear-gradient(90deg, #0ea5e9, #002147);
 }
 
 /* Иконка категории */
 .categoryIcon {
-    width: 70px;
-    height: 70px;
+    width: 64px;
+    height: 64px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1rem;
-    background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
-    border-radius: 16px;
-    transition: all 0.3s ease;
+    background: #f1f5f9;
+    border-radius: 12px;
+    margin-bottom: 16px;
 }
 
-.categoryCard:hover .categoryIcon {
-    transform: scale(1.1) rotate(5deg);
-    background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+.calculatorCategory .categoryIcon {
+    background: linear-gradient(135deg, #e0f2fe, #bae6fd);
 }
 
 .categoryImg {
-    width: 40px !important;
-    height: 40px !important;
+    width: 40px;
+    height: 40px;
     object-fit: contain;
-    transition: filter 0.3s ease;
 }
 
-.categoryCard:hover .categoryImg {
-    filter: brightness(0) invert(1);
-}
-
-/* Название категории */
+/* Название */
 .categoryName {
     font-size: 1.25rem;
     font-weight: 700;
     color: #002147;
-    margin: 0 0 0.75rem 0;
-    line-height: 1.3;
-    transition: color 0.3s ease;
+    margin-bottom: 8px;
 }
 
-.categoryCard:hover .categoryName {
-    color: #003d7a;
-}
-
-/* Описание категории (ОГРАНИЧЕНИЕ!) */
+/* Описание */
 .categoryDescription {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: #64748b;
-    line-height: 1.6;
-    margin: 0 0 1rem 0;
-    flex-grow: 1;
-
-    /* Ограничение до 3 строк */
-    display: -webkit-box;
-    line-clamp: unset;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    /* Минимальная высота для выравнивания */
-    min-height: 4.3em;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    flex: 1;
 }
 
-/* Бейдж с количеством услуг */
+/* Бейдж */
 .categoryBadge {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    padding: 0.5rem 1rem;
-    background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
-    color: #002147;
-    font-size: 0.85rem;
+    padding: 6px 12px;
+    background: #f1f5f9;
+    color: #475569;
+    border-radius: 20px;
+    font-size: 0.875rem;
     font-weight: 600;
-    border-radius: 100px;
-    margin-top: auto;
-    transition: all 0.3s ease;
+    align-self: flex-start;
 }
 
-.categoryCard:hover .categoryBadge {
-    background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+/* ✅ Бейдж для категорий-калькуляторов */
+.calculatorBadge {
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
     color: white;
-    transform: scale(1.05);
 }
 
-/* Загрузка */
-.loadingContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 400px;
-    gap: 1rem;
-}
-
-.loadingSpinner {
-    width: 50px;
-    height: 50px;
-    border: 4px solid #e2e8f0;
-    border-top-color: #002147;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-/* Нет результатов */
+/* Пустой результат */
 .noResults {
     text-align: center;
-    padding: 4rem 2rem;
+    padding: 60px 20px;
     background: white;
-    border-radius: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    border: 2px dashed #e2e8f0;
 }
 
 .noResults h3 {
     font-size: 1.5rem;
-    font-weight: 700;
     color: #002147;
-    margin: 0 0 0.5rem 0;
+    margin-bottom: 8px;
 }
 
 .noResults p {
     color: #64748b;
-    margin: 0 0 1.5rem 0;
+    margin-bottom: 20px;
 }
 
 .clearSearchButton {
-    padding: 0.75rem 2rem;
-    background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+    padding: 10px 20px;
+    background: #002147;
     color: white;
     border: none;
-    border-radius: 12px;
-    font-size: 1rem;
+    border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 33, 71, 0.2);
+    transition: background 0.2s;
 }
 
 .clearSearchButton:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 33, 71, 0.3);
+    background: #003d7a;
 }
 
-/* Анимации */
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* Загрузка */
+.loadingContainer {
+    text-align: center;
+    padding: 100px 20px;
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* ✅ Информационный блок внизу */
+.infoBlock {
+    background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+    color: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    margin-top: 40px;
 }
 
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+.infoBlock h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.infoBlock p {
+    font-size: 1.125rem;
+    opacity: 0.9;
+    margin-bottom: 24px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.infoButton {
+    display: inline-block;
+    padding: 14px 32px;
+    background: #10b981;
+    color: white;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.125rem;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.infoButton:hover {
+    background: #059669;
+    transform: scale(1.05);
 }
 
 /* Адаптивность */
 @media (max-width: 768px) {
-    .servicesPage {
-        padding: 1rem 0;
-    }
-
-    .contentWrapper {
-        padding: 0 1rem;
-    }
-
-    .animatedTitle {
-        margin-bottom: 2rem;
-    }
-
-    .controlsContainer {
-        margin-bottom: 2rem;
-    }
-
-    .searchInput {
-        padding: 0.875rem 1.25rem 0.875rem 2.75rem;
-        font-size: 0.95rem;
-    }
-
     .categoriesGrid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 1rem;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 16px;
     }
 
     .categoryCard {
-        padding: 1.25rem;
-        min-height: 220px;
+        padding: 20px;
     }
 
-    .categoryIcon {
-        width: 60px;
-        height: 60px;
-        margin-bottom: 0.75rem;
+    .infoBlock {
+        padding: 30px 20px;
     }
 
-    .categoryImg {
-        width: 35px !important;
-        height: 35px !important;
-    }
-
-    .categoryName {
-        font-size: 1.125rem;
-    }
-
-    .categoryDescription {
-        font-size: 0.85rem;
-        min-height: 3.8em;
-    }
-}
-
-@media (max-width: 480px) {
-    .categoriesGrid {
-        grid-template-columns: 1fr;
-    }
-
-    .categoryCard {
-        min-height: 200px;
-    }
-
-    .categoryDescription {
-        line-clamp: unset;
-        -webkit-line-clamp: 2;
-        min-height: 3.2em;
+    .infoBlock h2 {
+        font-size: 1.5rem;
     }
 }

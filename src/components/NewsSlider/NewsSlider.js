@@ -9,27 +9,36 @@ import styles from './NewsSlider.module.css';
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
 // Извлечение первого медиа (изображение или видео) из contentBlocks
+// ✅ ИСПРАВЛЕНО: добавлен поиск видео-файлов
+// ✅ ИСПРАВЛЕНО: теперь ищет и изображения, и видео-файлы
 const getFirstMedia = (contentBlocks) => {
     if (!Array.isArray(contentBlocks)) return null;
 
-    // Ищем YouTube видео
-    const youtubeBlock = contentBlocks.find(b => b.type === 'youtube' && b.videoUrl);
+    // 1. Сначала ищем изображение (приоритет для карточки)
+    const imageBlock = contentBlocks.find(block =>
+        block.type === 'image' && block.media
+    );
+    if (imageBlock) {
+        return { type: 'image', url: imageBlock.media, alt: imageBlock.alt || '' };
+    }
+
+    // 2. Если нет изображения — ищем видео-файл
+    const videoBlock = contentBlocks.find(block =>
+        block.type === 'video' && block.media
+    );
+    if (videoBlock) {
+        return { type: 'video', url: videoBlock.media, alt: videoBlock.description || 'Видео' };
+    }
+
+    // 3. YouTube видео
+    const youtubeBlock = contentBlocks.find(block =>
+        block.type === 'youtube' && block.videoUrl
+    );
     if (youtubeBlock) {
         return {
             type: 'youtube',
-            url: youtubeBlock.videoUrl,
-            thumbnail: youtubeBlock.thumbnail || `https://img.youtube.com/vi/${youtubeBlock.videoUrl}/maxresdefault.jpg`,
+            url: youtubeBlock.thumbnail || `https://img.youtube.com/vi/${youtubeBlock.videoUrl}/hqdefault.jpg`,
             alt: youtubeBlock.description || 'Видео'
-        };
-    }
-
-    // Ищем изображение
-    const imageBlock = contentBlocks.find(b => b.type === 'image' && b.media);
-    if (imageBlock) {
-        return {
-            type: 'image',
-            url: imageBlock.media,
-            alt: imageBlock.alt || 'Изображение новости'
         };
     }
 
@@ -205,6 +214,7 @@ export default function NewsSlider({ limit = 5, autoPlay = true, interval = 8000
                                 itemType="https://schema.org/NewsArticle"
                             >
                                 {/* Медиа-контейнер */}
+                                {/* Медиа-контейнер */}
                                 <div className={styles.mediaContainer}>
                                     {media?.type === 'youtube' ? (
                                         <div className={styles.videoWrapper}>
@@ -212,10 +222,8 @@ export default function NewsSlider({ limit = 5, autoPlay = true, interval = 8000
                                                 src={`https://www.youtube.com/embed/${media.url}?rel=0&modestbranding=1`}
                                                 title={item.title}
                                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                allowFullScreen
-                                                loading={isActive ? 'eager' : 'lazy'}
-                                                className={styles.videoFrame}
-                                            />
+                                                allowFullScreen loading={isActive ? 'eager' : 'lazy'}
+                                                className={styles.videoFrame} />
                                             <div className={styles.videoBadge}>
                                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                                     <path d="M8 5v14l11-7z" />
@@ -223,18 +231,26 @@ export default function NewsSlider({ limit = 5, autoPlay = true, interval = 8000
                                                 Видео
                                             </div>
                                         </div>
+                                    ) : media?.type === 'video' ? (
+                                        // ✅ ДОБАВЛЕНО: рендеринг видео-файлов
+                                        <video
+                                            src={media.url}
+                                            className={styles.slideImage}
+                                            muted
+                                            playsInline
+                                            loop
+                                            autoPlay={isActive}
+                                            preload="metadata"
+                                            style={{ objectFit: 'cover' }}
+                                            itemProp="video"
+                                        />
                                     ) : media?.type === 'image' ? (
                                         <Image
-                                            src={media.url}
-                                            alt={media.alt || item.title}
-                                            className={styles.slideImage}
-                                            width={1200}
-                                            height={600}
-                                            priority={isActive}
-                                            quality={90}
+                                            src={media.url} alt={media.alt || item.title}
+                                            className={styles.slideImage} width={1200} height={600}
+                                            priority={isActive} quality={90}
                                             sizes="(max-width: 768px) 100vw, 800px"
-                                            itemProp="image"
-                                        />
+                                            itemProp="image" />
                                     ) : (
                                         <div className={styles.noMedia}>
                                             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -244,8 +260,6 @@ export default function NewsSlider({ limit = 5, autoPlay = true, interval = 8000
                                             </svg>
                                         </div>
                                     )}
-
-                                    {/* Градиентный оверлей для читаемости текста */}
                                     <div className={styles.mediaOverlay}></div>
                                 </div>
 
