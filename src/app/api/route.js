@@ -13,6 +13,7 @@ const CONFIG = {
     image: ['image/jpeg', 'image/png', 'image/webp', 'image/gif'],
     video: ['video/mp4', 'video/webm', 'video/ogg'],
   },
+
   imageProcessing: {
     quality: 80,
     sizes: {
