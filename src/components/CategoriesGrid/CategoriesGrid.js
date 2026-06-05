@@ -55,7 +55,7 @@ const categories = [
 
 export default function CategoriesGrid() {
     return (
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-transparent">
             <div className="max-w-7xl mx-auto px-4">
                 {/* Заголовок */}
                 <div className="text-center mb-12">

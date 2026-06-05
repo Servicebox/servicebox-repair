@@ -1,18 +1,19 @@
 // src/app/api/route.js
 import { NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises'; // Использует Node.js API
-import path from 'path'; // Использует Node.js API
-import sharp from 'sharp'; // Зависит от Node.js
+import { writeFile, mkdir } from 'fs/promises';
+import path from 'path';
+import sharp from 'sharp';
 
 const CONFIG = {
   maxFileSizes: {
-    image: 5 * 1024 * 1024, // 5MB
-    video: 50 * 1024 * 1024, // 50MB
+    image: 100 * 1024 * 1024, // 5MB
+    video: 1000 * 1024 * 1024, // 50MB
   },
   allowedTypes: {
     image: ['image/jpeg', 'image/png', 'image/webp', 'image/gif'],
     video: ['video/mp4', 'video/webm', 'video/ogg'],
   },
+
   imageProcessing: {
     quality: 80,
     sizes: {
@@ -105,8 +106,8 @@ export async function POST(request) {
 
       try {
         // Создаем директорию для категории
-        const uploadDir = path.join(process.cwd(), 'public', 'uploads', category); // Использует Node.js API
-        await mkdir(uploadDir, { recursive: true }); // Использует Node.js API
+        const uploadDir = path.join(process.cwd(), 'public', 'uploads', category);
+        await mkdir(uploadDir, { recursive: true });
 
         // Генерируем уникальное имя файла
         const timestamp = Date.now();
@@ -117,13 +118,13 @@ export async function POST(request) {
         if (isImage) {
           // Для изображений конвертируем в WebP
           filename = `${timestamp}-${randomString}.webp`;
-          filePath = path.join(uploadDir, filename); // Использует Node.js API
+          filePath = path.join(uploadDir, filename);
 
           // Обрабатываем изображение с sharp
           const arrayBuffer = await file.arrayBuffer();
-          const buffer = Buffer.from(arrayBuffer); // Buffer - Node.js API
+          const buffer = Buffer.from(arrayBuffer);
 
-          const processedImage = await sharp(buffer) // sharp использует Node.js
+          const processedImage = await sharp(buffer)
             .webp({
               quality: CONFIG.imageProcessing.quality,
               effort: 6
@@ -136,18 +137,18 @@ export async function POST(request) {
                 withoutEnlargement: true
               }
             )
-            .toBuffer(); // sharp возвращает Buffer (Node.js)
+            .toBuffer();
 
-          await writeFile(filePath, processedImage); // Использует Node.js API
+          await writeFile(filePath, processedImage);
         } else {
           // Для видео сохраняем оригинал
-          const originalExtension = path.extname(file.name); // Использует Node.js API
+          const originalExtension = path.extname(file.name);
           filename = `${timestamp}-${randomString}${originalExtension}`;
-          filePath = path.join(uploadDir, filename); // Использует Node.js API
+          filePath = path.join(uploadDir, filename);
 
           const arrayBuffer = await file.arrayBuffer();
-          const buffer = Buffer.from(arrayBuffer); // Buffer - Node.js API
-          await writeFile(filePath, buffer); // Использует Node.js API
+          const buffer = Buffer.from(arrayBuffer);
+          await writeFile(filePath, buffer);
         }
 
         publicUrl = `/uploads/${category}/${filename}`;
@@ -195,7 +196,7 @@ export async function POST(request) {
     return NextResponse.json({
       success: true,
       files: uploadResults,
-      image_urls: successfulUploads.map(file => file.url) // для обратной совместимости
+      image_urls: successfulUploads.map(file => file.url)
     }, { status: 201 });
 
   } catch (error) {

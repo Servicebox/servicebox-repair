@@ -288,7 +288,7 @@
   align-items: center;
   gap: clamp(0.4rem, 1.2vw, 0.75rem);
   padding: clamp(0.65rem, 1.5vw, 1.25rem) clamp(0.75rem, 2vw, 1.5rem);
-  background: rgba(255, 255, 255, 0.95);
+  background: transparent;
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: clamp(12px, 2.5vw, 20px);

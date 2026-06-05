@@ -147,9 +147,6 @@ function Header() {
               <li className={`${styles.headerNavItem} ${menu === "parts" ? styles.active : ''}`}>
                 <Link href="/parts" className={styles.headerNavLink}>Каталог</Link>
               </li>
-              <li className={`${styles.headerNavItem} ${menu === "prices" ? styles.active : ''}`}>
-                <Link href="/services" className={styles.headerNavLink}>Цены</Link>
-              </li>
               <li className={`${styles.headerNavItem} ${menu === "gallery" ? styles.active : ''}`}>
                 <Link href="/gallery" className={styles.headerNavLink}>Фото работ</Link>
               </li>

@@ -48,14 +48,25 @@ export default function MainBanner() {
   };
 
   const scrollToCalculator = () => {
-    // Скроллим к калькулятору ниже
-    const calcSection = document.querySelector('[data-calculator]') ||
-      document.querySelector('#repair-calculator') ||
-      document.querySelectorAll('section')[1];
-    if (calcSection) {
-      calcSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const calculatorSection = document.getElementById('repair-calculator');
+
+    if (calculatorSection) {
+      calculatorSection.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
     } else {
-      window.scrollBy({ top: 800, behavior: 'smooth' });
+      // Fallback: если калькулятор еще не смонтирован, ждем и пробуем снова
+      console.warn('Калькулятор не найден, повторная попытка через 300мс...');
+      setTimeout(() => {
+        const retrySection = document.getElementById('repair-calculator');
+        if (retrySection) {
+          retrySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          // Последний fallback — скролл на примерную позицию
+          window.scrollTo({ top: 900, behavior: 'smooth' });
+        }
+      }, 300);
     }
   };
 

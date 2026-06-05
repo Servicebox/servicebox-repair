@@ -53,7 +53,7 @@ const NewsBlock = ({ limit = 3 }) => {
 
     if (loading) {
         return (
-            <section className="py-16 bg-gray-50">
+            <section className="py-16 bg-transparent">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: '#002147' }}>

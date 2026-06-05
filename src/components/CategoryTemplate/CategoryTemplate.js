@@ -114,7 +114,7 @@ const CATEGORIES_DATA = {
         title: 'Ремонт видеокарт',
         subtitle: 'в Вологде',
         description: 'Профессиональный ремонт видеокарт NVIDIA GeForce, AMD Radeon, Intel Arc. Реболл GPU, замена видеочипов, VRAM, цепей питания.',
-        icon: '🎨',
+        icon: '🔥',
         popularServices: [
             { name: 'Чистка + термопаста', price: 'от 1 800₽', time: '1-2 часа' },
             { name: 'Замена термопрокладок', price: 'от 2 200₽', time: '1-3 часа' },

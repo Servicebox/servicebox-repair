@@ -73,9 +73,6 @@ function BurgerMenu() {
             <Link href="/about" className={styles.menuLink} onClick={toggleMenu}>О нас</Link>
           </li>
           <li className={styles.menuItem}>
-            <Link href="/services" className={styles.menuLink} onClick={toggleMenu}>Цены</Link>
-          </li>
-          <li className={styles.menuItem}>
             <Link href="/gallery" className={styles.menuLink} onClick={toggleMenu}>Фото работ</Link>
           </li>
           <li className={styles.menuItem}>

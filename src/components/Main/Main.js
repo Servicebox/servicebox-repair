@@ -17,7 +17,12 @@ function Main() {
     <div>
       <section className="main">
         <MainBanner />
-        <RepairCalculator />
+
+        {/* ✅ ДОБАВЛЕН id ДЛЯ ТОЧНОГО СКРОЛЛА */}
+        <div id="repair-calculator" className="scroll-mt-24">
+          <RepairCalculator />
+        </div>
+
         <CategoriesGrid />
         <AboutRef />
         <ReviewsSection />
