@@ -16,7 +16,7 @@ const ContactsRef = forwardRef((props, ref) => {
   };
 
   const handleMailTo = () => {
-    window.location.href = "mailto:servicebox35@gmail.com";
+    window.location.href = "mailto:508828@bk.ru";
   };
 
   return (
@@ -42,7 +42,7 @@ const ContactsRef = forwardRef((props, ref) => {
         <div onClick={handleMailTo} className={styles.contactsBlock}>
           <p className={styles.contactsText}>
             <FontAwesomeIcon icon={faMailBulk} className={styles.icon} />
-            servicebox35@gmail.com
+            508828@bk.ru
           </p>
         </div>
 

@@ -1,5 +1,5 @@
 import CategoryTemplate from '@/components/CategoryTemplate/CategoryTemplate';
-export const dynamic = 'force-dynamic'
+
 export const metadata = {
     title: 'Ремонт видеокарт в Вологде | NVIDIA, AMD, Intel | ServiceBox',
     description: 'Ремонт видеокарт в Вологде: реболл GPU, замена видеочипов, VRAM, цепей питания. NVIDIA RTX 30xx/40xx, AMD Radeon. Гарантия до 12 месяцев.',

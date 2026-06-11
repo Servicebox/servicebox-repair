@@ -1,59 +1,61 @@
-// app/api/ai/v1/business/route.js
 import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-const getBusinessData = () => ({
-  name: "ServiceBox - Сервисный центр на Северной",
-  description: "Профессиональный ремонт ноутбуков, телефонов, видеокарт, телевизоров и другой техники в Вологде. Гарантия до 24 месяцев.",
-  url: "https://servicebox35.ru",
-  telephone: "+7-911-501-88-28",
-  email: "508828@bk.ru",
-  address: {
-    street: "ул. Северная, д. 7А, 1 этаж, ТЦ 'КИТ'",
-    city: "Вологда",
-    region: "Вологодская область",
-    postalCode: "160000",
-    country: "RU"
-  },
-  geo: { latitude: 59.229445, longitude: 39.878542 },
-  openingHours: "Mo-Su 10:00-20:00",
-  services: [
-    "Ремонт ноутбуков",
-    "Ремонт телефонов",
-    "Ремонт видеокарт",
-    "Ремонт телевизоров",
-    "Ремонт Apple техники",
-    "Чистка от пыли",
-    "Восстановление данных"
-  ],
-  priceRange: "₽₽",
-  warranty: "3-24 месяца",
-  aiKeywords: [
-    "ремонт ноутбуков Вологда",
-    "сервисный центр Вологда",
-    "ремонт телефонов недорого",
-    "замена экрана телефона",
-    "чистка ноутбука от пыли"
-  ],
-  lastUpdated: new Date().toISOString()
-});
-
 export async function GET() {
+  const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
+
+  const businessData = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${BASE}#organization`,
+    name: "ServiceBox - Сервисный центр на Северной",
+    legalName: "ООО СЕРВИСБОКС",
+    description: "Профессиональный ремонт ноутбуков, телефонов, видеокарт, телевизоров. BGA-пайка. Гарантия до 24 месяцев.",
+    url: BASE,
+    telephone: "+7-911-501-88-28",
+    email: "508828@bk.ru",
+    foundingDate: "2016",
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: "ул. Северная, д. 7А, 1 этаж, ТЦ 'КИТ'",
+      addressLocality: "Вологда",
+      addressRegion: "Вологодская область",
+      postalCode: "160000",
+      addressCountry: "RU"
+    },
+    // ✅ E-E-A-T: Указываем обоих владельцев-мастеров
+    founder: [
+      {
+        '@type': 'Person',
+        name: 'Тома',
+        jobTitle: 'Совладелец, BGA-инженер, MERN-разработчик'
+      },
+      {
+        '@type': 'Person',
+        name: 'Андрей Кознов',
+        jobTitle: 'Основатель, мастер-диагност, программист'
+      }
+    ],
+    sameAs: [
+      "https://vk.com/servicebox35",
+      "https://t.me/Tomkka",
+      "https://yandex.ru/maps/org/servis_boks/58578899506/"
+    ],
+    lastUpdated: new Date().toISOString()
+  };
+
   try {
-    return NextResponse.json(getBusinessData(), {
+    return NextResponse.json(businessData, {
       status: 200,
       headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        'Cache-Control': 'public, max-age=3600'
+        'Content-Type': 'application/ld+json; charset=utf-8', // Изменено на ld+json для ИИ
+        'Cache-Control': 'public, max-age=3600',
+        'Access-Control-Allow-Origin': '*'
       }
     });
   } catch (error) {
-    console.error('Business API error:', error);
-    return NextResponse.json({ error: 'Failed to load business data' }, {
-      status: 500,
-      headers: { 'Content-Type': 'application/json; charset=utf-8' }
-    });
+    return NextResponse.json({ error: 'Failed to load business data' }, { status: 500 });
   }
 }
 

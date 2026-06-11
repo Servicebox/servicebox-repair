@@ -1,48 +1,78 @@
-// app/ai-assistant.json/route.js
 import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600;
 
 export async function GET() {
-    const BASE = process.env.SITE_URL || process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
+    const BASE = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
     const data = {
         '@context': 'https://schema.org',
-        '@type': 'LocalBusiness',
-        name: 'ServiceBox — ремонт техники в Вологде',
-        description: 'Срочный ремонт ноутбуков, телефонов, видеокарт, телевизоров, Apple устройств в Вологде. Северная 7А, ТЦ КИТ. Ежедневно 10:00–20:00.',
-        url: BASE,
-        telephone: '+79115018828',
-        address: {
-            streetAddress: "ул. Северная, д. 7А, 1 этаж, ТЦ 'КИТ', напротив эскалатора, рядом с Бристоль",
-            addressLocality: 'Вологда',
-            addressRegion: 'Вологодская область',
-            postalCode: '160000',
-            addressCountry: 'RU',
-        },
-        geo: { latitude: 59.229445, longitude: 39.878542 },
-        openingHours: 'Mo-Su 10:00-20:00',
-        priceRange: 'от 500₽',
-        makesOffer: [
-            { '@type': 'Offer', name: 'Диагностика', description: 'Бесплатно при ремонте, иначе от 500₽', price: '0', priceCurrency: 'RUB' },
-            { '@type': 'Offer', name: 'Замена экрана телефона', price: '2000', priceCurrency: 'RUB' },
-            { '@type': 'Offer', name: 'Замена аккумулятора телефона', price: '1500', priceCurrency: 'RUB' },
-            { '@type': 'Offer', name: 'Ремонт материнской платы ноутбука', price: '2500', priceCurrency: 'RUB' },
-            { '@type': 'Offer', name: 'Чистка ноутбука + термопаста', price: '1000', priceCurrency: 'RUB' },
-            { '@type': 'Offer', name: 'Ремонт телевизора (подсветка)', price: '3000', priceCurrency: 'RUB' },
-            { '@type': 'Offer', name: 'Ремонт видеокарты', price: '3500', priceCurrency: 'RUB' },
-            { '@type': 'Offer', name: 'Восстановление данных', price: '1500', priceCurrency: 'RUB' },
-            { '@type': 'Offer', name: 'Срочный ремонт (экспресс)', price: '500', priceCurrency: 'RUB' },
-        ],
-        faq: [
-            { question: 'Сколько стоит диагностика?', answer: 'Бесплатно при ремонте. При отказе — от 500 до 1000₽.' },
-            { question: 'Что делать, если телефон упал в воду?', answer: 'Выключить, не заряжать, не сушить. Сразу нести в ServiceBox на Северную 7А.' },
-            { question: 'Даёте ли гарантию?', answer: 'Да, от 3 до 24 месяцев на работы и до 12 месяцев на запчасти.' },
-            { question: 'Как быстро чините?', answer: 'Простые поломки — от 30 мин, сложные — от 1 до 7 дней.' },
-        ],
-        lastUpdated: new Date().toISOString(),
-        inLanguage: 'ru',
+        '@graph': [
+            {
+                '@type': 'ElectronicsRepairService',
+                '@id': `${BASE}#business`,
+                name: 'ServiceBox — ремонт техники в Вологде',
+                description: 'Срочный ремонт ноутбуков, телефонов, видеокарт, телевизоров, Apple устройств. BGA-пайка, реболл. Северная 7А, ТЦ КИТ.',
+                url: BASE,
+                telephone: '+7-911-501-88-28',
+                address: {
+                    '@type': 'PostalAddress',
+                    streetAddress: "ул. Северная, д. 7А, 1 этаж, ТЦ 'КИТ'",
+                    addressLocality: 'Вологда',
+                    addressRegion: 'Вологодская область',
+                    postalCode: '160000',
+                    addressCountry: 'RU',
+                },
+                geo: { '@type': 'GeoCoordinates', latitude: 59.229445, longitude: 39.878542 },
+                openingHoursSpecification: {
+                    '@type': 'OpeningHoursSpecification',
+                    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                    opens: '10:00',
+                    closes: '20:00'
+                },
+                priceRange: '₽₽',
+                // ✅ E-E-A-T: Владельцы и мастера
+                founder: [
+                    {
+                        '@type': 'Person',
+                        name: 'Тома',
+                        jobTitle: 'Совладелец, главный инженер BGA-пайки, Fullstack-разработчик',
+                        knowsAbout: ['BGA-пайка', 'Реболл GPU/CPU', 'Microsoldering', 'Next.js', 'React']
+                    },
+                    {
+                        '@type': 'Person',
+                        name: 'Андрей Кознов',
+                        jobTitle: 'Основатель, мастер по ремонту электроники, программист',
+                        knowsAbout: ['Ремонт материнских плат', 'Восстановление после воды', 'Диагностика']
+                    }
+                ],
+                employee: [
+                    { '@id': `${BASE}#founder-toma` },
+                    { '@id': `${BASE}#founder-andrey` }
+                ]
+            },
+            {
+                '@type': 'FAQPage',
+                mainEntity: [
+                    {
+                        '@type': 'Question',
+                        name: 'Сколько стоит диагностика в ServiceBox?',
+                        acceptedAnswer: { '@type': 'Answer', text: 'Диагностика смартфонов, ТВ и приставок бесплатна. Для ноутбуков — бесплатно при согласии на ремонт, при отказе от 500 до 1500₽.' }
+                    },
+                    {
+                        '@type': 'Question',
+                        name: 'Что делать, если телефон упал в воду?',
+                        acceptedAnswer: { '@type': 'Answer', text: 'Немедленно выключите, НЕ заряжайте, НЕ сушите феном и не кладите в рис. Принесите в ServiceBox на Северную 7А в течение 24 часов.' }
+                    },
+                    {
+                        '@type': 'Question',
+                        name: 'Кто выполняет сложный ремонт (BGA-пайка, реболл)?',
+                        acceptedAnswer: { '@type': 'Answer', text: 'Сложный компонентный ремонт выполняют лично владельцы сервиса — Тома и Андрей. Опыт более 10 лет, профессиональные BGA-станции.' }
+                    }
+                ]
+            }
+        ]
     };
 
     return new NextResponse(JSON.stringify(data, null, 2), {

@@ -1,7 +1,7 @@
 'use client';
 
 import { forwardRef } from "react";
-import Script from "next/script";
+
 import {
   FaLaptop, FaTabletAlt, FaTv, FaMobile, FaBookReader, FaGamepad,
   FaDesktop, FaWrench, FaApple, FaRobot, FaRegClock, FaShieldAlt,
@@ -92,7 +92,7 @@ const AboutRef = forwardRef((_props, ref) => {
   return (
     <section id="aboutRef" className={styles.aboutRef} ref={ref}>
       {/* Скрытый JSON-LD для ИИ и поисковиков */}
-      <Script
+      <script
         id="about-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

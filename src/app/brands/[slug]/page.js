@@ -1,7 +1,8 @@
 // app/brands/[slug]/page.js
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-
+import { BUSINESS, BASE_URL } from '@/lib/constants';
+import { LOCAL_BUSINESS_SCHEMA, createBreadcrumbList } from '@/lib/seo-helpers';
 // === БАЗА БРЕНДОВ ===
 const BRANDS = {
   apple: {
@@ -462,11 +463,6 @@ export default async function BrandPage({ params }) {
             priceCurrency: 'RUB',
           })),
         },
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          ratingValue: '5.0',
-          reviewCount: '150',
-        },
       },
       {
         '@type': 'FAQPage',
@@ -811,7 +807,7 @@ export default async function BrandPage({ params }) {
         <h2 style={{ fontSize: '1.5rem', marginTop: 0 }}>Сломался {brand.name}? Починим сегодня!</h2>
         <p style={{ opacity: 0.95, marginBottom: '1.5rem' }}>Бесплатная диагностика · Ремонт от 30 минут · Гарантия до 24 месяцев</p>
         <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <a href="tel:+79115018828" style={{
+          <a href="tel:+7-911-501-88-28" style={{
             padding: '0.85rem 1.75rem',
             background: '#28a745',
             color: 'white',
@@ -878,7 +874,7 @@ export default async function BrandPage({ params }) {
       }}>
         <p>© {new Date().getFullYear()} ServiceBox Вологда · Ремонт цифровой техники с 2016 года</p>
         <p>
-          <a href="tel:+79115018828" style={{ color: '#002147', textDecoration: 'none' }}>+7 (911) 501-88-28</a>
+          <a href="tel:+7-911-501-88-28" style={{ color: '#002147', textDecoration: 'none' }}>+7 (911) 501-88-28</a>
           {' · '}
           ул. Северная, 7А, ТЦ КИТ · Ежедневно 10:00–20:00
         </p>

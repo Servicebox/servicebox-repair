@@ -33,6 +33,17 @@
     --color-gray-200: #edf2f7;
     --color-gray-600: #718096;
     --color-gray-800: #2d3748;
+    --primary: #2563eb;
+      /* акцентный синий */
+      --primary-dark: #1d4ed8;
+      --text: #1e293b;
+      --text-muted: #475569;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+      --radius: 16px;
+      --transition: 0.25s ease;
   --product-color-primary: #007bff;
   --product-color-success: #28a745;
   --product-color-danger: #dc3545;

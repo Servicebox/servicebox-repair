@@ -1,5 +1,5 @@
 'use client';
-import Script from 'next/script';
+import script from 'next/script';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import {
   Phone, Search, FileText, Wrench, CheckCircle, Shield,
@@ -127,7 +127,7 @@ const WorkSteps = () => {
   }, [openFaq]);
 
   const handleCall = () => {
-    window.location.href = "tel:+79115018828";
+    window.location.href = "tel:+7-911-501-88-28";
   };
 
   const scrollLeft = useCallback(() => {
@@ -454,14 +454,14 @@ const WorkSteps = () => {
           <h3>Как связаться</h3>
           <p><strong>Основной телефон:</strong> +7 (911) 501-88-28</p>
           <p><strong>Второй телефон:</strong> +7 (911) 501-06-96</p>
-          <p><strong>Email:</strong> servicebox35@gmail.com</p>
+          <p><strong>Email:</strong> 508828@bk.ru</p>
           <p><strong>ВКонтакте:</strong> vk.com/servicebox35</p>
           <p><strong>Режим работы:</strong> Ежедневно с 10:00 до 20:00</p>
         </section>
       </div>
 
       {structuredData && (
-        <Script
+        <script
           id="structured-data-worksteps"
           type="application/ld+json"
           dangerouslySetInnerHTML={{

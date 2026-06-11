@@ -1,7 +1,7 @@
 import CategoryTemplate from '@/components/CategoryTemplate/CategoryTemplate';
 
 // Принудительная динамическая рендеринг
-export const dynamic = 'force-dynamic';
+
 
 export const metadata = {
     title: 'Ремонт ноутбуков в Вологде | MacBook, ASUS, Lenovo | ServiceBox',

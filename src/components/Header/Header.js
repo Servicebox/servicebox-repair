@@ -98,7 +98,7 @@ function Header() {
       <div className={`${styles.headerTopBar} ${isScrolled ? styles.scrolled : ''}`}>
         <div className={styles.headerTopBarContainer}>
           <div className={styles.headerContacts}>
-            <a href="tel:+79115018828" className={styles.headerContactLink}>
+            <a href="tel:+7-911-501-88-28" className={styles.headerContactLink}>
               <FontAwesomeIcon icon={faMobilePhone} />
               <span>+7 (911) 501-88-28</span>
             </a>

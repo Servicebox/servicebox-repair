@@ -467,7 +467,7 @@ export default function BrandsPage() {
                     даже если бренда нет в списке. Привозите — починим!
                 </p>
                 <div className="brands-cta-buttons">
-                    <a href="tel:+79115018828" className="brands-cta-button brands-cta-button-primary">
+                    <a href="tel:+7-911-501-88-28" className="brands-cta-button brands-cta-button-primary">
                         📞 +7 (911) 501-88-28
                     </a>
                     <a href="/contacts" className="brands-cta-button brands-cta-button-secondary">
@@ -541,7 +541,7 @@ export default function BrandsPage() {
                 <h2>🚀 Готовы починить вашу технику?</h2>
                 <p>Бесплатная диагностика · Срочный ремонт от 30 минут · Гарантия до 24 месяцев</p>
                 <div className="brands-cta-buttons">
-                    <a href="tel:+79115018828" className="brands-cta-button brands-cta-button-primary">
+                    <a href="tel:+7-911-501-88-28" className="brands-cta-button brands-cta-button-primary">
                         📞 +7 (911) 501-88-28
                     </a>
                     <a href="/contacts" className="brands-cta-button brands-cta-button-secondary">
@@ -561,7 +561,7 @@ export default function BrandsPage() {
             }}>
                 <p>© {new Date().getFullYear()} ServiceBox Вологда · Ремонт цифровой техники с 2016 года</p>
                 <p>
-                    <a href="tel:+79115018828" style={{ color: '#002147', textDecoration: 'none' }}>+7 (911) 501-88-28</a>
+                    <a href="tel:+7-911-501-88-28" style={{ color: '#002147', textDecoration: 'none' }}>+7 (911) 501-88-28</a>
                     {' · '}
                     ул. Северная, 7А, ТЦ КИТ · Ежедневно 10:00–20:00
                 </p>

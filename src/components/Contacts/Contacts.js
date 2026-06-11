@@ -22,7 +22,7 @@ const Contacts = forwardRef((props, ref) => {
   };
 
   const handleMailTo = () => {
-    window.location.href = "mailto:servicebox35@gmail.com";
+    window.location.href = "mailto:508828@bk.ru";
   };
 
   const openMap = (address) => {
@@ -48,9 +48,9 @@ const Contacts = forwardRef((props, ref) => {
             {/* Крупные CTA кнопки */}
             <div className={styles.heroCta}>
               <a
-                href="tel:+79115018828"
+                href="tel:+7-911-501-88-28"
                 className={styles.ctaPrimary}
-                onClick={(e) => { e.preventDefault(); handlePhoneCall('+79115018828'); }}
+                onClick={(e) => { e.preventDefault(); handlePhoneCall('+7-911-501-88-28'); }}
               >
                 <FontAwesomeIcon icon={faPhoneVolume} className={styles.ctaIcon} />
                 <div className={styles.ctaContent}>
@@ -92,7 +92,7 @@ const Contacts = forwardRef((props, ref) => {
             {/* Телефон */}
             <div
               className={styles.contactCard}
-              onClick={() => handlePhoneCall('+79115018828')}
+              onClick={() => handlePhoneCall('+7-911-501-88-28')}
             >
               <div className={styles.contactIcon} style={{ background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)' }}>
                 <FontAwesomeIcon icon={faMobilePhone} />
@@ -118,7 +118,7 @@ const Contacts = forwardRef((props, ref) => {
               </div>
               <div className={styles.contactContent}>
                 <h3 className={styles.contactTitle}>Электронная почта</h3>
-                <p className={styles.contactValue}>servicebox35@gmail.com</p>
+                <p className={styles.contactValue}>508828@bk.ru</p>
                 <p className={styles.contactNote}>Отвечаем в течение 1 рабочего дня</p>
               </div>
               <div className={styles.contactArrow}>
@@ -232,9 +232,9 @@ const Contacts = forwardRef((props, ref) => {
             </p>
             <div className={styles.ctaBlockButtons}>
               <a
-                href="tel:+79115018828"
+                href="tel:+7-911-501-88-28"
                 className={styles.ctaBlockPrimary}
-                onClick={(e) => { e.preventDefault(); handlePhoneCall('+79115018828'); }}
+                onClick={(e) => { e.preventDefault(); handlePhoneCall('+7-911-501-88-28'); }}
               >
                 <FontAwesomeIcon icon={faPhoneVolume} />
                 Позвонить
