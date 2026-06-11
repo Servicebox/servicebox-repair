@@ -1,8 +1,15 @@
+// app/ai-answers/[slug]/page.js
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import { BUSINESS, BASE_URL } from '@/lib/constants';
+import { LOCAL_BUSINESS_SCHEMA, createBreadcrumbList, parseDurationToISO, stripHtml } from '@/lib/seo-helpers';
+
+export const dynamic = 'force-static';
+export const revalidate = 86400;
+export const fetchCache = 'force-cache';
 
 // ============================================
-// 📚 БАЗА ЗНАНИЙ ДЛЯ AI-ОТВЕТОВ (8 вопросов)
+// 📚 БАЗА ЗНАНИЙ ДЛЯ AI-ОТВЕТОВ
 // ============================================
 const ANSWERS = {
     'repair-laptop-vologda': {
@@ -34,8 +41,9 @@ const ANSWERS = {
             { q: 'Даёте ли гарантию?', a: 'Да, от 6 до 24 месяцев в зависимости от типа работ и запчастей.' },
         ],
         speakable: ['В сервисном центре ServiceBox на ул. Северная, 7А в Вологде. Работаем ежедневно с 10:00 до 20:00.'],
+        author: 'Андрей Кознов',
+        expertise: 'Мастер сервисного центра с опытом 10+ лет',
     },
-
     'phone-screen-replacement': {
         category: 'Телефоны',
         categoryIcon: '📱',
@@ -45,24 +53,15 @@ const ANSWERS = {
       <p>Стоимость замены экрана зависит от модели телефона и типа дисплея:</p>
       <h2>Популярные модели и цены</h2>
       <table>
-        <thead>
-          <tr><th>Модель</th><th>Оригинал</th><th>Аналог</th><th>Время</th></tr>
-        </thead>
+        <thead><tr><th>Модель</th><th>Оригинал</th><th>Аналог</th><th>Время</th></tr></thead>
         <tbody>
           <tr><td>iPhone 11</td><td>6 900₽</td><td>3 500₽</td><td>40 мин</td></tr>
           <tr><td>iPhone 12 / 13</td><td>8 500₽</td><td>4 200₽</td><td>45 мин</td></tr>
           <tr><td>iPhone 14 / 15</td><td>12 900₽</td><td>6 500₽</td><td>50 мин</td></tr>
-          <tr><td>iPhone 16 / 16 Pro</td><td>16 000₽</td><td>9 000₽</td><td>60 мин</td></tr>
           <tr><td>Samsung Galaxy S21–S23</td><td>9 900₽</td><td>5 500₽</td><td>1 час</td></tr>
-          <tr><td>Samsung S24 / S24 Ultra</td><td>12 000₽</td><td>7 500₽</td><td>1 час</td></tr>
           <tr><td>Xiaomi Redmi Note</td><td>4 900₽</td><td>2 500₽</td><td>40 мин</td></tr>
         </tbody>
       </table>
-      <h2>Оригинал или аналог — что выбрать?</h2>
-      <ul>
-        <li><strong>Оригинал</strong> — идеальная цветопередача, полная совместимость, гарантия 12 месяцев</li>
-        <li><strong>Качественный аналог (OLED/IPS)</strong> — в 2 раза дешевле, 95% качества оригинала, гарантия 6 месяцев</li>
-      </ul>
     `,
         price: 'от 2 500₽',
         duration: '30–60 минут',
@@ -75,8 +74,9 @@ const ANSWERS = {
             { q: 'Можно ли заменить только стекло?', a: 'Да, для OLED-дисплеев возможна переклейка стекла без замены дисплея.' },
         ],
         speakable: ['Стоимость замены экрана телефона в ServiceBox в Вологде — от 2500 рублей. Время работы — от 30 минут до 1 часа.'],
+        author: 'Андрей Кознов',
+        expertise: 'Мастер сервисного центра с опытом 10+ лет',
     },
-
     'water-damage-phone': {
         category: 'Телефоны',
         categoryIcon: '📱',
@@ -119,8 +119,9 @@ const ANSWERS = {
             { q: 'Сколько стоит восстановление?', a: 'От 1 500₽ за диагностику и чистку. Финальная цена зависит от повреждений.' },
         ],
         speakable: ['Если телефон упал в воду — немедленно выключите его, не заряжайте и не сушите феном. Принесите в ServiceBox в течение 24 часов.'],
+        author: 'Андрей Кознов',
+        expertise: 'Мастер сервисного центра с опытом 10+ лет',
     },
-
     'videocard-repair-cost': {
         category: 'Видеокарты',
         categoryIcon: '🔥',
@@ -130,9 +131,7 @@ const ANSWERS = {
       <p>Мы специализируемся на <strong>сложном ремонте видеокарт</strong> — у нас есть BGA-станции, микроскопы, профессиональное оборудование.</p>
       <h2>Прайс-лист на ремонт видеокарт</h2>
       <table>
-        <thead>
-          <tr><th>Услуга</th><th>Цена</th><th>Срок</th><th>Гарантия</th></tr>
-        </thead>
+        <thead><tr><th>Услуга</th><th>Цена</th><th>Срок</th><th>Гарантия</th></tr></thead>
         <tbody>
           <tr><td>Диагностика</td><td>500₽ (бесплатно при ремонте)</td><td>1 день</td><td>—</td></tr>
           <tr><td>Чистка + замена термопасты</td><td>2 500₽</td><td>1 день</td><td>3 мес</td></tr>
@@ -154,9 +153,9 @@ const ANSWERS = {
             { q: 'Даёте ли гарантию?', a: 'Да, от 6 до 12 месяцев в зависимости от типа работ.' },
         ],
         speakable: ['Стоимость ремонта видеокарты в ServiceBox в Вологде — от 2500 рублей. Гарантия до 12 месяцев.'],
+        author: 'Андрей Кознов',
+        expertise: 'Мастер сервисного центра с опытом 10+ лет, специалист по BGA-пайке',
     },
-
-    // ✅ НОВЫЕ ОТВЕТЫ (для исправления 404)
     'apple-repair-warranty': {
         category: 'Apple',
         categoryIcon: '🍎',
@@ -166,35 +165,16 @@ const ANSWERS = {
       <p>Мы предоставляем <strong>официальную гарантию</strong> на все виды ремонта техники Apple в Вологде:</p>
       <h2>Сроки гарантии по видам работ</h2>
       <table>
-        <thead>
-          <tr><th>Вид ремонта</th><th>Гарантия</th><th>Что покрывает</th></tr>
-        </thead>
+        <thead><tr><th>Вид ремонта</th><th>Гарантия</th><th>Что покрывает</th></tr></thead>
         <tbody>
           <tr><td>Замена экрана iPhone (оригинал)</td><td>12 месяцев</td><td>Дисплей, тачскрин, шлейфы</td></tr>
           <tr><td>Замена экрана iPhone (аналог)</td><td>6 месяцев</td><td>Дисплей, тачскрин</td></tr>
           <tr><td>Замена аккумулятора</td><td>6–12 месяцев</td><td>Ёмкость, контроллер питания</td></tr>
           <tr><td>Замена разъёма зарядки</td><td>6 месяцев</td><td>Разъём, шлейф</td></tr>
-          <tr><td>Ремонт после воды</td><td>3 месяца</td><td>Восстановленные цепи</td></tr>
           <tr><td>Ремонт MacBook (мат. плата)</td><td>12 месяцев</td><td>Восстановленные компоненты</td></tr>
-          <tr><td>Замена клавиатуры MacBook</td><td>12 месяцев</td><td>Клавиатура, шлейфы</td></tr>
-          <tr><td>Замена матрицы MacBook</td><td>12 месяцев</td><td>Дисплей, петли</td></tr>
           <tr><td>BGA-пайка чипов</td><td>12 месяцев</td><td>Запаянные компоненты</td></tr>
         </tbody>
       </table>
-      <h2>Что входит в гарантию</h2>
-      <ul>
-        <li>✅ <strong>Официальный гарантийный талон</strong> с печатью и датой</li>
-        <li>✅ <strong>Бесплатное устранение</strong> гарантийных случаев</li>
-        <li>✅ <strong>Быстрая диагностика</strong> при обращении по гарантии</li>
-        <li>✅ <strong>Замена на новую запчасть</strong> при повторной поломке</li>
-      </ul>
-      <h2>Что НЕ покрывает гарантия</h2>
-      <ul>
-        <li>❌ Механические повреждения (падения, удары)</li>
-        <li>❌ Повторное залитие жидкостью</li>
-        <li>❌ Самостоятельный ремонт или вмешательство</li>
-        <li>❌ Использование неоригинальных зарядок (при выходе из строя контроллера)</li>
-      </ul>
     `,
         price: 'входит в стоимость',
         duration: 'от 6 до 24 месяцев',
@@ -206,9 +186,10 @@ const ANSWERS = {
             { q: 'Что делать, если гарантийный случай?', a: 'Принесите устройство с гарантийным талоном — бесплатно устраним неисправность.' },
             { q: 'Гарантия распространяется на запчасти?', a: 'Да, гарантия покрывает и работу, и установленные запчасти.' },
         ],
-        speakable: ['ServiceBox даёт гарантию от 6 до 24 месяцев на ремонт техники Apple в Вологде. Официальный гарантийный талон, бесплатное устранение гарантийных случаев.'],
+        speakable: ['ServiceBox даёт гарантию от 6 до 24 месяцев на ремонт техники Apple в Вологде.'],
+        author: 'Андрей Кознов',
+        expertise: 'Мастер сервисного центра с опытом 10+ лет',
     },
-
     'laptop-not-turning-on': {
         category: 'Ноутбуки',
         categoryIcon: '💻',
@@ -224,27 +205,6 @@ const ANSWERS = {
         <li><strong>Отключите всю периферию</strong> — USB-устройства, внешние мониторы</li>
         <li><strong>Проверьте индикаторы</strong> — мигание может указывать на код ошибки</li>
       </ol>
-      <h2>⚠️ Возможные причины поломки</h2>
-      <table>
-        <thead>
-          <tr><th>Симптом</th><th>Возможная причина</th><th>Цена ремонта</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Не реагирует на кнопку</td><td>Неисправна кнопка / контроллер</td><td>от 2 000₽</td></tr>
-          <tr><td>Индикаторы горят, экран чёрный</td><td>Проблема с видеочипом / матрицей</td><td>от 3 500₽</td></tr>
-          <tr><td>Мигают индикаторы</td><td>Ошибка BIOS / RAM</td><td>от 2 500₽</td></tr>
-          <tr><td>Не заряжается</td><td>Разъём / контроллер питания</td><td>от 2 000₽</td></tr>
-          <tr><td>Включается и выключается</td><td>Перегрев / БП / мат. плата</td><td>от 3 000₽</td></tr>
-          <tr><td>После залития</td><td>Коррозия / КЗ</td><td>от 5 500₽</td></tr>
-        </tbody>
-      </table>
-      <h2>❌ Чего НЕЛЬЗЯ делать</h2>
-      <ul>
-        <li>❌ <strong>Многократно нажимать кнопку питания</strong> — усугубит проблему</li>
-        <li>❌ <strong>Разбирать ноутбук самостоятельно</strong> — повредите шлейфы</li>
-        <li>❌ <strong>Сушить феном после залития</strong> — расплавит компоненты</li>
-        <li>❌ <strong>Использовать "неродную" зарядку</strong> — может сжечь контроллер</li>
-      </ul>
     `,
         price: 'от 2 000₽',
         duration: '1–5 дней',
@@ -258,15 +218,16 @@ const ANSWERS = {
             'Проверьте индикаторы — мигание указывает на код ошибки',
             'Если не помогает — принесите в ServiceBox (ул. Северная, 7А)',
         ],
-        relatedServices: ['Ремонт материнской платы', 'Диагностика', 'Замена контроллера питания', 'Ремонт после залития'],
+        relatedServices: ['Ремонт материнской платы', 'Диагностика', 'Замена контроллера питания'],
         faq: [
             { q: 'Сколько стоит диагностика?', a: 'Бесплатно при согласии на ремонт. При отказе — от 500₽.' },
             { q: 'Можно ли починить ноутбук после залития?', a: 'Да, в 85% случаев. Цена от 5 500₽.' },
             { q: 'Сколько времени займёт ремонт?', a: 'От 1 дня (простые случаи) до 5-7 дней (сложные).' },
         ],
-        speakable: ['Если ноутбук не включается — проверьте зарядное устройство, удерживайте кнопку питания 15 секунд. Если не помогает — принесите в ServiceBox.'],
+        speakable: ['Если ноутбук не включается — проверьте зарядное устройство, удерживайте кнопку питания 15 секунд.'],
+        author: 'Андрей Кознов',
+        expertise: 'Мастер сервисного центра с опытом 10+ лет',
     },
-
     'price-diagnostics': {
         category: 'Диагностика',
         categoryIcon: '🔍',
@@ -276,49 +237,29 @@ const ANSWERS = {
       <p><strong>Диагностика в ServiceBox — БЕСПЛАТНО</strong> при согласии на ремонт. Это наша политика прозрачности.</p>
       <h2>Стоимость диагностики</h2>
       <table>
-        <thead>
-          <tr><th>Услуга</th><th>При согласии на ремонт</th><th>При отказе</th></tr>
-        </thead>
+        <thead><tr><th>Услуга</th><th>При согласии на ремонт</th><th>При отказе</th></tr></thead>
         <tbody>
           <tr><td>Простая диагностика (смартфоны)</td><td>Бесплатно</td><td>500₽</td></tr>
           <tr><td>Диагностика ноутбука</td><td>Бесплатно</td><td>700₽</td></tr>
           <tr><td>Диагностика MacBook</td><td>Бесплатно</td><td>1 000₽</td></tr>
           <tr><td>Сложная диагностика (BGA, цепи)</td><td>Бесплатно</td><td>1 500₽</td></tr>
-          <tr><td>Диагностика после залития</td><td>Бесплатно</td><td>1 500₽</td></tr>
-          <tr><td>Диагностика видеокарты</td><td>Бесплатно</td><td>1 000₽</td></tr>
-          <tr><td>Диагностика телевизора</td><td>Бесплатно</td><td>1 000₽</td></tr>
         </tbody>
       </table>
-      <h2>Что входит в диагностику</h2>
-      <ul>
-        <li>✅ <strong>Полная проверка</strong> всех компонентов устройства</li>
-        <li>✅ <strong>Определение причины</strong> неисправности</li>
-        <li>✅ <strong>Точная стоимость</strong> ремонта (без скрытых платежей)</li>
-        <li>✅ <strong>Сроки выполнения</strong> работы</li>
-        <li>✅ <strong>Консультация</strong> по оптимальному варианту ремонта</li>
-      </ul>
-      <h2>Почему мы берём плату при отказе?</h2>
-      <p>Сложная диагностика требует:</p>
-      <ul>
-        <li>⏱️ От 30 минут до 2 часов работы инженера</li>
-        <li>🔧 Использование профессионального оборудования (осциллографы, BGA-станции)</li>
-        <li>🔬 Замена компонентов для тестирования (в сложных случаях)</li>
-        <li>🔍 Поиск микротрещин на плате под микроскопом</li>
-      </ul>
     `,
         price: 'Бесплатно (при ремонте)',
         duration: '30 мин — 2 часа',
         warranty: '—',
         hasHowTo: false,
-        relatedServices: ['Диагностика ноутбука', 'Диагностика iPhone', 'Диагностика MacBook', 'Диагностика видеокарты'],
+        relatedServices: ['Диагностика ноутбука', 'Диагностика iPhone', 'Диагностика MacBook'],
         faq: [
-            { q: 'Диагностика действительно бесплатная?', a: 'Да, при согласии на ремонт. При отказе — от 500₽ в зависимости от сложности.' },
+            { q: 'Диагностика действительно бесплатная?', a: 'Да, при согласии на ремонт. При отказе — от 500₽.' },
             { q: 'Сколько времени занимает диагностика?', a: 'От 30 минут (простые случаи) до 2 часов (сложные).' },
             { q: 'Нужна ли запись на диагностику?', a: 'Желательна — чтобы избежать ожидания. Позвоните по +7 (911) 501-88-28.' },
         ],
         speakable: ['Диагностика в ServiceBox в Вологде — бесплатно при согласии на ремонт. При отказе — от 500 до 1500 рублей.'],
+        author: 'Андрей Кознов',
+        expertise: 'Мастер сервисного центра с опытом 10+ лет',
     },
-
     'urgent-repair-vologda': {
         category: 'Срочный ремонт',
         categoryIcon: '⚡',
@@ -326,38 +267,16 @@ const ANSWERS = {
         shortAnswer: 'ServiceBox — срочный ремонт за 30–60 минут в Вологде. iPhone, Samsung, ноутбуки, MacBook. Работаем ежедневно с 10:00 до 20:00 без выходных.',
         answer: `
       <p><strong>ServiceBox — это срочный ремонт</strong> цифровой техники в Вологде за 30–60 минут в присутствии клиента.</p>
-      <h2>⚡ Что ремонтируем срочно (за 30–60 минут)</h2>
+      <h2>⚡ Что ремонтируем срочно</h2>
       <table>
-        <thead>
-          <tr><th>Услуга</th><th>Время</th><th>Цена</th></tr>
-        </thead>
+        <thead><tr><th>Услуга</th><th>Время</th><th>Цена</th></tr></thead>
         <tbody>
           <tr><td>Замена экрана iPhone</td><td>30–60 мин</td><td>от 2 500₽</td></tr>
           <tr><td>Замена экрана Samsung</td><td>40–90 мин</td><td>от 2 500₽</td></tr>
           <tr><td>Замена аккумулятора iPhone</td><td>20–40 мин</td><td>от 2 000₽</td></tr>
-          <tr><td>Замена аккумулятора Samsung</td><td>30–60 мин</td><td>от 2 000₽</td></tr>
           <tr><td>Замена разъёма зарядки</td><td>40–90 мин</td><td>от 2 200₽</td></tr>
-          <tr><td>Замена экрана ноутбука</td><td>1–3 часа</td><td>от 2 500₽</td></tr>
-          <tr><td>Чистка ноутбука</td><td>1–2 часа</td><td>от 2 000₽</td></tr>
-          <tr><td>Замена клавиатуры ноутбука</td><td>1–3 часа</td><td>от 3 000₽</td></tr>
-          <tr><td>Замена экрана iPad</td><td>1–3 часа</td><td>от 3 500₽</td></tr>
-          <tr><td>Замена экрана MacBook</td><td>2–4 часа</td><td>от 9 000₽</td></tr>
         </tbody>
       </table>
-      <h2>🕐 График работы</h2>
-      <ul>
-        <li>🗓️ <strong>Ежедневно с 10:00 до 20:00</strong> — без выходных</li>
-        <li>⏰ <strong>Приём до 19:00</strong> — чтобы успеть сделать в день обращения</li>
-        <li>📞 <strong>Звонок за 30 минут</strong> — предупредим о готовности</li>
-        <li>🚗 <strong>Удобная парковка</strong> — у ТЦ КИТ</li>
-      </ul>
-      <h2>💡 Как ускорить ремонт</h2>
-      <ol>
-        <li><strong>Позвоните заранее</strong> — +7 (911) 501-88-28</li>
-        <li><strong>Опишите проблему</strong> — подготовим запчасти</li>
-        <li><strong>Запишитесь на время</strong> — без ожидания в очереди</li>
-        <li><strong>Привозите устройство</strong> — начинаем сразу</li>
-      </ol>
     `,
         price: 'от 2 000₽',
         duration: '30–60 минут',
@@ -370,25 +289,24 @@ const ANSWERS = {
             'Привезите устройство в ServiceBox (ул. Северная, 7А)',
             'Получите готовое устройство через 30–60 минут',
         ],
-        relatedServices: ['Срочный ремонт iPhone', 'Срочный ремонт ноутбука', 'Срочная замена экрана', 'Срочная замена аккумулятора'],
+        relatedServices: ['Срочный ремонт iPhone', 'Срочный ремонт ноутбука', 'Срочная замена экрана'],
         faq: [
             { q: 'Можно ли починить iPhone за 30 минут?', a: 'Да, замена экрана или аккумулятора — 30–60 минут.' },
             { q: 'Нужна ли запись на срочный ремонт?', a: 'Желательна — чтобы избежать ожидания. Позвоните заранее.' },
             { q: 'Работаете ли в выходные?', a: 'Да, работаем ежедневно с 10:00 до 20:00 без выходных.' },
         ],
         speakable: ['ServiceBox в Вологде — срочный ремонт за 30-60 минут. Работаем ежедневно с 10:00 до 20:00 без выходных. Адрес: ул. Северная, 7А.'],
+        author: 'Андрей Кознов',
+        expertise: 'Мастер сервисного центра с опытом 10+ лет',
     },
 };
 
-// ============================================
-// 🏗️ ГЕНЕРАЦИЯ СТАТИЧЕСКИХ ПУТЕЙ
-// ============================================
 export async function generateStaticParams() {
     return Object.keys(ANSWERS).map(slug => ({ slug }));
 }
 
 // ============================================
-// 🏷️ МЕТАДАННЫЕ (оптимизация под AI-ботов)
+// 🏷️ МЕТАДАННЫЕ (SEO + AI)
 // ============================================
 export async function generateMetadata({ params }) {
     const { slug } = await params;
@@ -401,15 +319,15 @@ export async function generateMetadata({ params }) {
         };
     }
 
-    const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
-    const cleanAnswer = data.shortAnswer.replace(/<[^>]*>/g, '').slice(0, 155);
     const pageUrl = `${BASE_URL}/ai-answers/${slug}`;
+    const cleanAnswer = stripHtml(data.shortAnswer).slice(0, 155);
 
     return {
-        title: `${data.question} | ServiceBox Вологда`,
+        title: `${data.question} — ответ эксперта | ServiceBox Вологда`,
         description: cleanAnswer,
-        keywords: `${data.category.toLowerCase()}, ремонт Вологда, ServiceBox, ${data.question.toLowerCase()}, ${data.relatedServices.slice(0, 3).join(', ').toLowerCase()}`,
+        keywords: `${data.category.toLowerCase()}, ремонт Вологда, ServiceBox, ${data.question.toLowerCase()}`,
         alternates: { canonical: pageUrl },
+        authors: [{ name: data.author, url: `${BASE_URL}/about` }],
         openGraph: {
             title: data.question,
             description: cleanAnswer,
@@ -417,6 +335,9 @@ export async function generateMetadata({ params }) {
             siteName: 'ServiceBox Вологда',
             type: 'article',
             locale: 'ru_RU',
+            publishedTime: '2024-01-15',
+            modifiedTime: new Date().toISOString(),
+            authors: [data.author],
             images: [{
                 url: `${BASE_URL}/og-image.jpg`,
                 width: 1200,
@@ -452,7 +373,7 @@ export async function generateMetadata({ params }) {
 }
 
 // ============================================
-// 🎨 ОСНОВНОЙ КОМПОНЕНТ СТРАНИЦЫ
+// 🎨 ОСНОВНОЙ КОМПОНЕНТ
 // ============================================
 export default async function AiAnswerPage({ params }) {
     const { slug } = await params;
@@ -460,7 +381,7 @@ export default async function AiAnswerPage({ params }) {
 
     if (!data) notFound();
 
-    const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
+    const today = new Date().toISOString().split('T')[0];
 
     // ============================================
     // 🏛️ JSON-LD РАЗМЕТКА (Schema.org)
@@ -468,7 +389,7 @@ export default async function AiAnswerPage({ params }) {
     const jsonLd = {
         '@context': 'https://schema.org',
         '@graph': [
-            // FAQPage Schema
+            // ✅ 1. FAQPage
             {
                 '@type': 'FAQPage',
                 '@id': `${BASE_URL}/ai-answers/${slug}#faq`,
@@ -478,7 +399,7 @@ export default async function AiAnswerPage({ params }) {
                         name: data.question,
                         acceptedAnswer: {
                             '@type': 'Answer',
-                            text: data.shortAnswer,
+                            text: stripHtml(data.shortAnswer),
                         },
                     },
                     ...(data.faq || []).map(f => ({
@@ -486,18 +407,19 @@ export default async function AiAnswerPage({ params }) {
                         name: f.q,
                         acceptedAnswer: {
                             '@type': 'Answer',
-                            text: f.a,
+                            text: stripHtml(f.a),
                         },
                     })),
                 ],
             },
-            // HowTo Schema (если есть пошаговая инструкция)
+
+            // ✅ 2. HowTo (с правильным ISO 8601 duration)
             ...(data.hasHowTo && data.howToSteps ? [{
                 '@type': 'HowTo',
                 '@id': `${BASE_URL}/ai-answers/${slug}#howto`,
                 name: data.question,
-                description: data.shortAnswer,
-                totalTime: data.duration ? `PT${data.duration.replace(/[^\d]/g, '')}M` : 'PT30M',
+                description: stripHtml(data.shortAnswer),
+                totalTime: parseDurationToISO(data.duration),
                 step: data.howToSteps.map((step, i) => ({
                     '@type': 'HowToStep',
                     position: i + 1,
@@ -506,28 +428,32 @@ export default async function AiAnswerPage({ params }) {
                     url: `${BASE_URL}/ai-answers/${slug}#step-${i + 1}`,
                 })),
             }] : []),
-            // TechArticle Schema (для SEO)
+
+            // ✅ 3. TechArticle (для SEO + E-E-A-T)
             {
                 '@type': 'TechArticle',
                 '@id': `${BASE_URL}/ai-answers/${slug}#article`,
                 headline: data.question,
-                description: data.shortAnswer,
+                description: stripHtml(data.shortAnswer),
                 image: `${BASE_URL}/og-image.jpg`,
                 author: {
-                    '@type': 'Organization',
-                    name: 'ServiceBox Вологда',
-                    url: BASE_URL,
+                    '@type': 'Person',
+                    name: data.author,
+                    url: `${BASE_URL}/about`,
+                    jobTitle: data.expertise,
+                    worksFor: { '@id': `${BASE_URL}#business` },
                 },
                 publisher: {
                     '@type': 'Organization',
-                    name: 'ServiceBox Вологда',
+                    name: BUSINESS.shortName,
+                    url: BASE_URL,
                     logo: {
                         '@type': 'ImageObject',
                         url: `${BASE_URL}/logo.png`,
                     },
                 },
                 datePublished: '2024-01-15',
-                dateModified: new Date().toISOString().split('T')[0],
+                dateModified: today,
                 mainEntityOfPage: {
                     '@type': 'WebPage',
                     '@id': `${BASE_URL}/ai-answers/${slug}`,
@@ -536,72 +462,18 @@ export default async function AiAnswerPage({ params }) {
                 articleSection: data.category,
                 inLanguage: 'ru-RU',
             },
-            // BreadcrumbList Schema
-            {
-                '@type': 'BreadcrumbList',
-                itemListElement: [
-                    {
-                        '@type': 'ListItem',
-                        position: 1,
-                        name: 'Главная',
-                        item: BASE_URL,
-                    },
-                    {
-                        '@type': 'ListItem',
-                        position: 2,
-                        name: 'Полезные статьи',
-                        item: `${BASE_URL}/news`,
-                    },
-                    {
-                        '@type': 'ListItem',
-                        position: 3,
-                        name: data.category,
-                        item: `${BASE_URL}/ai-answers/${slug}`,
-                    },
-                ],
-            },
-            // LocalBusiness Schema
-            {
-                '@type': 'ElectronicsRepairService',
-                '@id': `${BASE_URL}#business`,
-                name: 'ServiceBox - Сервисный центр на Северной',
-                url: BASE_URL,
-                telephone: '+7-911-501-88-28',
-                email: 'servicebox35@gmail.com',
-                priceRange: '₽₽',
-                address: {
-                    '@type': 'PostalAddress',
-                    streetAddress: "ул. Северная, д. 7А, 1 этаж, ТЦ 'КИТ'",
-                    addressLocality: 'Вологда',
-                    addressRegion: 'Вологодская область',
-                    postalCode: '160000',
-                    addressCountry: 'RU',
-                },
-                geo: {
-                    '@type': 'GeoCoordinates',
-                    latitude: 59.229445,
-                    longitude: 39.878542,
-                },
-                openingHoursSpecification: [{
-                    '@type': 'OpeningHoursSpecification',
-                    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-                    opens: '10:00',
-                    closes: '20:00',
-                }],
-                aggregateRating: {
-                    '@type': 'AggregateRating',
-                    ratingValue: '5.0',
-                    reviewCount: '150',
-                    bestRating: '5',
-                    worstRating: '1',
-                },
-                areaServed: {
-                    '@type': 'City',
-                    name: 'Вологда',
-                },
-                serviceType: 'Ремонт цифровой техники',
-            },
-            // Speakable Schema (для голосовых помощников)
+
+            // ✅ 4. BreadcrumbList
+            createBreadcrumbList([
+                { name: 'Главная', url: BASE_URL },
+                { name: 'Полезные статьи', url: `${BASE_URL}/news` },
+                { name: data.category, url: `${BASE_URL}/ai-answers/${slug}` },
+            ]),
+
+            // ✅ 5. LocalBusiness (из общей константы — с реальными отзывами)
+            LOCAL_BUSINESS_SCHEMA,
+
+            // ✅ 6. Speakable (для голосовых помощников — Алиса, Siri)
             ...(data.speakable ? [{
                 '@type': 'WebPage',
                 '@id': `${BASE_URL}/ai-answers/${slug}`,
@@ -613,71 +485,21 @@ export default async function AiAnswerPage({ params }) {
         ],
     };
 
-    // ============================================
-    // 🎨 CSS СТИЛИ
-    // ============================================
     const cssStyles = `
-    .ai-answer-content a {
-      color: #0066cc;
-      text-decoration: underline;
-    }
-    .ai-answer-content h2 {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-top: 2rem;
-      margin-bottom: 1rem;
-      color: #0a1929;
-    }
-    .ai-answer-content h3 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-top: 1.5rem;
-      margin-bottom: 0.75rem;
-      color: #0f172a;
-    }
-    .ai-answer-content ul,
-    .ai-answer-content ol {
-      padding-left: 1.5rem;
-      margin-bottom: 1rem;
-    }
-    .ai-answer-content li {
-      margin-bottom: 0.5rem;
-    }
-    .ai-answer-content table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1.5rem 0;
-      font-size: 0.95rem;
-    }
-    .ai-answer-content th {
-      background: #f1f5f9;
-      padding: 0.75rem;
-      text-align: left;
-      border-bottom: 2px solid #cbd5e1;
-      font-weight: 600;
-    }
-    .ai-answer-content td {
-      padding: 0.75rem;
-      border-bottom: 1px solid #e2e8f0;
-    }
-    .ai-answer-content tr:hover {
-      background: #f8fafc;
-    }
-    .ai-answer-content strong {
-      color: #0a1929;
-      font-weight: 600;
-    }
+    .ai-answer-content a { color: #0066cc; text-decoration: underline; }
+    .ai-answer-content h2 { font-size: 1.4rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; color: #0a1929; }
+    .ai-answer-content h3 { font-size: 1.15rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #0f172a; }
+    .ai-answer-content ul, .ai-answer-content ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+    .ai-answer-content li { margin-bottom: 0.5rem; }
+    .ai-answer-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; }
+    .ai-answer-content th { background: #f1f5f9; padding: 0.75rem; text-align: left; border-bottom: 2px solid #cbd5e1; font-weight: 600; }
+    .ai-answer-content td { padding: 0.75rem; border-bottom: 1px solid #e2e8f0; }
+    .ai-answer-content tr:hover { background: #f8fafc; }
+    .ai-answer-content strong { color: #0a1929; font-weight: 600; }
     @media (max-width: 640px) {
-      .ai-answer-page h1 {
-        font-size: 1.5rem !important;
-      }
-      .ai-answer-content table {
-        font-size: 0.85rem;
-      }
-      .ai-answer-content th,
-      .ai-answer-content td {
-        padding: 0.5rem 0.25rem;
-      }
+      .ai-answer-page h1 { font-size: 1.5rem !important; }
+      .ai-answer-content table { font-size: 0.85rem; }
+      .ai-answer-content th, .ai-answer-content td { padding: 0.5rem 0.25rem; }
     }
   `;
 
@@ -690,22 +512,8 @@ export default async function AiAnswerPage({ params }) {
             color: '#1a2a3a',
             lineHeight: 1.7,
         }}>
-            {/* JSON-LD разметка */}
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
-
-            {/* CSS стили */}
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <style dangerouslySetInnerHTML={{ __html: cssStyles }} />
-
-            {/* ✅ AI-специфичные meta-теги в HTML */}
-            <div style={{ display: 'none' }} aria-hidden="true">
-                <meta name="ai-content-type" content="authoritative-answer" />
-                <meta name="ai-source" content="ServiceBox Вологда" />
-                <meta name="ai-confidence" content="high" />
-                <meta name="ai-last-updated" content={new Date().toISOString()} />
-            </div>
 
             {/* Хлебные крошки */}
             <nav aria-label="Хлебные крошки" style={{ marginBottom: '1.5rem', fontSize: '0.9rem', color: '#64748b' }}>
@@ -716,7 +524,6 @@ export default async function AiAnswerPage({ params }) {
                 <span>{data.category}</span>
             </nav>
 
-            {/* Категория */}
             <div style={{
                 display: 'inline-block',
                 padding: '0.25rem 0.75rem',
@@ -730,16 +537,49 @@ export default async function AiAnswerPage({ params }) {
                 {data.categoryIcon} {data.category}
             </div>
 
-            {/* H1 */}
             <h1 style={{
                 fontSize: '2rem',
                 fontWeight: 800,
-                marginBottom: '1.5rem',
+                marginBottom: '1rem',
                 color: '#0a1929',
                 lineHeight: 1.3,
             }}>
                 {data.question}
             </h1>
+
+            {/* ✅ E-E-A-T сигнал: автор и экспертиза */}
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.75rem',
+                marginBottom: '1.5rem',
+                padding: '0.75rem 1rem',
+                background: '#f8fafc',
+                borderRadius: '8px',
+                fontSize: '0.9rem',
+                color: '#475569',
+            }}>
+                <div style={{
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '50%',
+                    background: '#0066cc',
+                    color: 'white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontWeight: 700,
+                }}>
+                    АК
+                </div>
+                <div>
+                    <div style={{ fontWeight: 600, color: '#0f172a' }}>{data.author}</div>
+                    <div style={{ fontSize: '0.8rem' }}>{data.expertise}</div>
+                </div>
+                <div style={{ marginLeft: 'auto', fontSize: '0.8rem', color: '#94a3b8' }}>
+                    Обновлено: {today}
+                </div>
+            </div>
 
             {/* ✅ Краткий ответ (для голосовых помощников) */}
             <div
@@ -758,7 +598,7 @@ export default async function AiAnswerPage({ params }) {
                 <strong>💡 Краткий ответ:</strong> {data.shortAnswer}
             </div>
 
-            {/* Информация о цене, времени, гарантии */}
+            {/* Цена, время, гарантия */}
             {(data.price || data.duration || data.warranty) && (
                 <div style={{
                     display: 'grid',
@@ -767,34 +607,19 @@ export default async function AiAnswerPage({ params }) {
                     marginBottom: '2rem',
                 }}>
                     {data.price && (
-                        <div style={{
-                            padding: '1rem',
-                            background: '#f0fdf4',
-                            borderRadius: '8px',
-                            border: '1px solid #bbf7d0',
-                        }}>
+                        <div style={{ padding: '1rem', background: '#f0fdf4', borderRadius: '8px', border: '1px solid #bbf7d0' }}>
                             <div style={{ fontSize: '0.85rem', color: '#15803d', marginBottom: '0.25rem' }}>💰 Стоимость</div>
                             <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#14532d' }}>{data.price}</div>
                         </div>
                     )}
                     {data.duration && (
-                        <div style={{
-                            padding: '1rem',
-                            background: '#fef3c7',
-                            borderRadius: '8px',
-                            border: '1px solid #fde68a',
-                        }}>
+                        <div style={{ padding: '1rem', background: '#fef3c7', borderRadius: '8px', border: '1px solid #fde68a' }}>
                             <div style={{ fontSize: '0.85rem', color: '#92400e', marginBottom: '0.25rem' }}>⏱️ Время работы</div>
                             <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#78350f' }}>{data.duration}</div>
                         </div>
                     )}
                     {data.warranty && (
-                        <div style={{
-                            padding: '1rem',
-                            background: '#ede9fe',
-                            borderRadius: '8px',
-                            border: '1px solid #c4b5fd',
-                        }}>
+                        <div style={{ padding: '1rem', background: '#ede9fe', borderRadius: '8px', border: '1px solid #c4b5fd' }}>
                             <div style={{ fontSize: '0.85rem', color: '#6b21a8', marginBottom: '0.25rem' }}>🛡️ Гарантия</div>
                             <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#581c87' }}>{data.warranty}</div>
                         </div>
@@ -802,7 +627,7 @@ export default async function AiAnswerPage({ params }) {
                 </div>
             )}
 
-            {/* Пошаговая инструкция */}
+            {/* HowTo инструкция */}
             {data.hasHowTo && data.howToSteps && (
                 <div style={{
                     padding: '1.5rem',
@@ -824,17 +649,13 @@ export default async function AiAnswerPage({ params }) {
                 </div>
             )}
 
-            {/* Подробный ответ */}
             <article
                 className="ai-answer-content"
-                style={{
-                    fontSize: '1.05rem',
-                    marginBottom: '2rem',
-                }}
+                style={{ fontSize: '1.05rem', marginBottom: '2rem' }}
                 dangerouslySetInnerHTML={{ __html: data.answer }}
             />
 
-            {/* FAQ секция (если есть) */}
+            {/* FAQ */}
             {data.faq && data.faq.length > 0 && (
                 <div style={{
                     padding: '1.5rem',
@@ -852,53 +673,48 @@ export default async function AiAnswerPage({ params }) {
                                 <h4 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem', color: '#0f172a' }}>
                                     {item.q}
                                 </h4>
-                                <p style={{ margin: 0, color: '#475569', fontSize: '0.95rem' }}>
-                                    {item.a}
-                                </p>
+                                <p style={{ margin: 0, color: '#475569', fontSize: '0.95rem' }}>{item.a}</p>
                             </div>
                         ))}
                     </div>
                 </div>
             )}
 
-            {/* Связанные услуги */}
-            {data.relatedServices && data.relatedServices.length > 0 && (
-                <div style={{
-                    padding: '1.5rem',
-                    background: '#f8fafc',
-                    borderRadius: '12px',
-                    marginBottom: '2rem',
-                    border: '1px solid #e2e8f0',
-                }}>
-                    <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginTop: 0, marginBottom: '1rem', color: '#0f172a' }}>
-                        🔧 Связанные услуги в ServiceBox
-                    </h3>
-                    <div style={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        gap: '0.5rem',
-                    }}>
-                        {data.relatedServices.map((service, i) => (
-                            <span
-                                key={i}
+            {/* Похожие вопросы */}
+            <div style={{
+                padding: '1.5rem',
+                background: '#f8fafc',
+                borderRadius: '12px',
+                marginBottom: '2rem',
+                border: '1px solid #e2e8f0',
+            }}>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginTop: 0, marginBottom: '1rem' }}>
+                    🔍 Похожие вопросы
+                </h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    {Object.entries(ANSWERS)
+                        .filter(([key, val]) => key !== slug && val.category === data.category)
+                        .slice(0, 3)
+                        .map(([key, related]) => (
+                            <Link
+                                key={key}
+                                href={`/ai-answers/${key}`}
                                 style={{
-                                    padding: '0.4rem 0.9rem',
+                                    padding: '0.75rem',
                                     background: 'white',
-                                    border: '1px solid #cbd5e1',
-                                    borderRadius: '999px',
-                                    fontSize: '0.9rem',
-                                    color: '#334155',
-                                    fontWeight: 500,
+                                    borderRadius: '8px',
+                                    color: '#0066cc',
+                                    textDecoration: 'none',
+                                    border: '1px solid #e2e8f0',
                                 }}
                             >
-                                {service}
-                            </span>
+                                {related.categoryIcon} {related.question}
+                            </Link>
                         ))}
-                    </div>
                 </div>
-            )}
+            </div>
 
-            {/* CTA блок */}
+            {/* CTA */}
             <div style={{
                 padding: '2rem',
                 background: 'linear-gradient(135deg, #0066cc 0%, #004499 100%)',
@@ -911,16 +727,11 @@ export default async function AiAnswerPage({ params }) {
                     Нужна помощь прямо сейчас?
                 </h2>
                 <p style={{ fontSize: '1rem', marginBottom: '1.5rem', opacity: 0.95 }}>
-                    Бесплатная консультация и диагностика при ремонте. Работаем ежедневно с 10:00 до 20:00.
+                    Бесплатная консультация и диагностика при ремонте.
                 </p>
-                <div style={{
-                    display: 'flex',
-                    gap: '1rem',
-                    justifyContent: 'center',
-                    flexWrap: 'wrap',
-                }}>
+                <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                     <a
-                        href="tel:+79115018828"
+                        href={`tel:${BUSINESS.phones.primary.replace(/-/g, '')}`}
                         style={{
                             display: 'inline-flex',
                             alignItems: 'center',
@@ -931,12 +742,11 @@ export default async function AiAnswerPage({ params }) {
                             borderRadius: '10px',
                             textDecoration: 'none',
                             fontWeight: 600,
-                            fontSize: '1rem',
                         }}
                     >
-                        📞 +7 (911) 501-88-28
+                        📞 {BUSINESS.phonesFormatted.primary}
                     </a>
-                    <a
+                    <Link
                         href="/contacts"
                         style={{
                             display: 'inline-flex',
@@ -948,18 +758,16 @@ export default async function AiAnswerPage({ params }) {
                             borderRadius: '10px',
                             textDecoration: 'none',
                             fontWeight: 600,
-                            fontSize: '1rem',
                         }}
                     >
                         📍 Как нас найти
-                    </a>
+                    </Link>
                 </div>
                 <p style={{ fontSize: '0.9rem', marginTop: '1rem', opacity: 0.9 }}>
-                    Адрес: Вологда, ул. Северная, 7А, ТЦ КИТ, 1 этаж
+                    Адрес: {BUSINESS.mainAddress.city}, {BUSINESS.mainAddress.street}
                 </p>
             </div>
 
-            {/* Футер */}
             <footer style={{
                 marginTop: '3rem',
                 paddingTop: '2rem',
@@ -968,15 +776,13 @@ export default async function AiAnswerPage({ params }) {
                 color: '#64748b',
                 fontSize: '0.9rem',
             }}>
+                <p>© {new Date().getFullYear()} {BUSINESS.shortName} · Ремонт цифровой техники с {BUSINESS.foundingDate} года</p>
                 <p>
-                    © {new Date().getFullYear()} ServiceBox Вологда · Ремонт цифровой техники с 2016 года
-                </p>
-                <p>
-                    <a href="tel:+79115018828" style={{ color: '#0066cc', textDecoration: 'none' }}>
-                        +7 (911) 501-88-28
+                    <a href={`tel:${BUSINESS.phones.primary.replace(/-/g, '')}`} style={{ color: '#0066cc', textDecoration: 'none' }}>
+                        {BUSINESS.phonesFormatted.primary}
                     </a>
                     {' · '}
-                    ул. Северная, 7А, ТЦ КИТ · Ежедневно 10:00–20:00
+                    {BUSINESS.mainAddress.streetShort}, {BUSINESS.mainAddress.landmark} · {BUSINESS.hours.text}
                 </p>
             </footer>
         </main>

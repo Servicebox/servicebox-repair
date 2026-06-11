@@ -3,7 +3,7 @@
 import { forwardRef, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Script from "next/script";
+import script from "next/script";
 import styles from './About.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTelegram } from '@fortawesome/free-brands-svg-icons';
@@ -19,8 +19,8 @@ const ABOUT_JSON_LD = {
       "alternateName": ["ServiceBox Вологда", "Ремонт техники Сервис Бокс"],
       "description": "Профессиональный ремонт ноутбуков, видеокарт, материнских плат, телефонов и техники Apple в Вологде. BGA-пайка, реболл, восстановление после залития. Опыт мастеров более 10 лет.",
       "url": "https://servicebox35.ru",
-      "telephone": "+79115018828",
-      "email": "servicebox35@gmail.com",
+      "telephone": "+7-911-501-88-28",
+      "email": "508828@bk.ru",
       "image": "https://servicebox35.ru/images/mestomastera1.webp",
       "priceRange": "₽₽",
       "address": {
@@ -73,19 +73,22 @@ const ABOUT_JSON_LD = {
   ]
 };
 
-const About = forwardRef((_props, ref) => {
+const AboutRef = forwardRef((_props, ref) => {
   const [currentPhoto, setCurrentPhoto] = useState(0);
 
   // ✅ Уникальные alt-тексты с ключевыми словами для SEO
   const photos = [
+
     { src: "/images/mestomastera1.webp", alt: "Рабочее место мастера по ремонту ноутбуков и видеокарт в сервисном центре ServiceBox Вологда" },
+    { src: "/images/mestomastera2.webp", alt: "Оборудование для BGA-пайки и реболла видеочипов в мастерской ServiceBox" },
     { src: "/images/ya.webp", alt: "Мастер сервисного центра ServiceBox за диагностикой материнской платы" },
-    { src: "/images/magistr.webp", alt: "Оборудование для BGA-пайки и реболла видеочипов в мастерской ServiceBox" },
-    { src: "/images/stend.webp", alt: "Стенд для тестирования отремонтированных видеокарт и ноутбуков" },
-    { src: "/images/resepshen.webp", alt: "Зона приёма клиентов в сервисном центре ServiceBox на Северной 7А" },
+    { src: "/images/1.webp", alt: "Рабочая зона сервисного центра ServiceBox" },
+    { src: "/images/7793.webp", alt: "Стенд для тестирования отремонтированных видеокарт и ноутбуков" },
+    { src: "/images/vhod.webp", alt: "Зона приёма клиентов в сервисном центре ServiceBox на Северной 7А" },
+    { src: "/images/2.webp", alt: "ресепшн мастерской ServiceBox" },
     { src: "/images/5060carta.webp", alt: "Ремонт видеокарты RTX на профессиональном оборудовании" },
-    { src: "/images/mestomastera.webp", alt: "Инструменты для микропайки и диагностики электроники" },
-    { src: "/images/PSXvideocard.webp", alt: "Чистка и обслуживание игровой приставки PlayStation в ServiceBox" }
+    { src: "/images/magistr.webp", alt: "Инструменты для микропайки и диагностики электроники" },
+
   ];
 
   const Clock = "/images/clock.svg";
@@ -103,7 +106,7 @@ const About = forwardRef((_props, ref) => {
     <section id="aboutRef" className={styles.container} ref={ref} itemScope itemType="https://schema.org/LocalBusiness">
 
       {/* ✅ JSON-LD для ИИ-поисковиков */}
-      <Script
+      <script
         id="about-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(ABOUT_JSON_LD) }}
@@ -111,8 +114,8 @@ const About = forwardRef((_props, ref) => {
 
       {/* Скрытые мета-данные Schema.org Microdata */}
       <meta itemProp="name" content="Сервисный центр ServiceBox (Сервис Бокс)" />
-      <meta itemProp="telephone" content="+79115018828" />
-      <meta itemProp="email" content="servicebox35@gmail.com" />
+      <meta itemProp="telephone" content="+7-911-501-88-28" />
+      <meta itemProp="email" content="508828@bk.ru" />
       <meta itemProp="url" content="https://servicebox35.ru" />
       <div itemProp="address" itemScope itemType="https://schema.org/PostalAddress" style={{ display: 'none' }}>
         <span itemProp="streetAddress">ул. Северная, д. 7А, 1 этаж, ТЦ КИТ</span>
@@ -230,5 +233,5 @@ const About = forwardRef((_props, ref) => {
   );
 });
 
-About.displayName = "About";
-export default About;
+AboutRef.displayName = "AboutRef";
+export default AboutRef;

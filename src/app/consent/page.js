@@ -1,5 +1,4 @@
-// app/consent/page.jsx
-// app/consent/page.jsx
+// app/consent/page.js
 'use client';
 
 import { useState } from 'react';

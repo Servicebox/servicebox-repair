@@ -1,0 +1,12 @@
+11:41:34.043073 exec-cmd.c:145          trace: resolved executable path from Darwin stack: /Applications/Xcode.app/Contents/Developer/usr/bin/git
+11:41:34.043677 exec-cmd.c:267          trace: resolved executable dir: /Applications/Xcode.app/Contents/Developer/usr/bin
+11:41:34.044415 git.c:476               trace: built-in: git push origin main
+11:41:34.045775 run-command.c:673       trace: run_command: unset GIT_PREFIX; ssh git@github.com 'git-receive-pack '\''Servicebox/servicebox-repair.git'\'''
+11:41:34.046055 run-command.c:765       trace: start_command: /usr/bin/ssh git@github.com 'git-receive-pack '\''Servicebox/servicebox-repair.git'\'''
+11:41:36.210850 run-command.c:673       trace: run_command: git pack-objects --all-progress-implied --revs --stdout --thin --delta-base-offset -q
+11:41:36.210971 run-command.c:765       trace: start_command: /Applications/Xcode.app/Contents/Developer/usr/libexec/git-core/git pack-objects --all-progress-implied --revs --stdout --thin --delta-base-offset -q
+11:41:36.223232 exec-cmd.c:145          trace: resolved executable path from Darwin stack: /Applications/Xcode.app/Contents/Developer/usr/libexec/git-core/git
+11:41:36.224097 exec-cmd.c:267          trace: resolved executable dir: /Applications/Xcode.app/Contents/Developer/usr/libexec/git-core
+11:41:36.225245 git.c:476               trace: built-in: git pack-objects --all-progress-implied --revs --stdout --thin --delta-base-offset -q
+To github.com:Servicebox/servicebox-repair.git
+   81ea603..e332308  main -> main

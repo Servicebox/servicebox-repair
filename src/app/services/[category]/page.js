@@ -1,7 +1,7 @@
 // app/services/[category]/page.js
 import CategoryTemplate from '@/components/CategoryTemplate/CategoryTemplate';
 
-export const dynamic = 'force-dynamic';
+
 
 export const metadata = {
     title: 'Ремонт видеокарт в Вологде | NVIDIA, AMD, Intel | ServiceBox',

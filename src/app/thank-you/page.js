@@ -11,7 +11,7 @@ function ThankYouContent() {
   const orderId = searchParams.get('orderId');
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
     if (orderId) {
       fetch(`/api/orders/${orderId}`)
@@ -25,7 +25,7 @@ function ThankYouContent() {
       setLoading(false);
     }
   }, [orderId]);
-  
+
   if (loading) {
     return (
       <div className={styles.container}>
@@ -33,13 +33,13 @@ function ThankYouContent() {
       </div>
     );
   }
-  
+
   return (
     <div className={styles.container}>
       <div className={styles.successCard}>
         <div className={styles.successIcon}>✅</div>
         <h1>Заказ успешно оформлен!</h1>
-        
+
         {order ? (
           <>
             <div className={styles.orderInfo}>
@@ -48,7 +48,7 @@ function ThankYouContent() {
               <p><strong>Сумма:</strong> {order.pricing?.totalAmount || order.totalAmount} ₽</p>
               <p><strong>Дата:</strong> {new Date(order.createdAt).toLocaleString('ru-RU')}</p>
             </div>
-            
+
             <div className={styles.nextSteps}>
               <h3>Что дальше?</h3>
               <ol>
@@ -61,7 +61,7 @@ function ThankYouContent() {
         ) : (
           <p>Спасибо за ваш заказ! Мы свяжемся с вами в ближайшее время.</p>
         )}
-        
+
         <div className={styles.actions}>
           <Link href="/profile" className={styles.profileButton}>
             📋 Перейти в личный кабинет
@@ -70,10 +70,10 @@ function ThankYouContent() {
             ← Продолжить покупки
           </Link>
         </div>
-        
+
         <div className={styles.contactInfo}>
           <p>Есть вопросы? Звоните: <strong>+7 (911) 501-88-28</strong></p>
-          <p>Или пишите: <strong>servicebox35@gmail.com</strong></p>
+          <p>Или пишите: <strong>508828@bk.ru</strong></p>
         </div>
       </div>
     </div>

@@ -38,8 +38,8 @@ function BurgerMenu() {
 
   const handleContactAction = (action) => {
     toggleMenu();
-    if (action === 'tel') window.location.href = "tel:+79115018828";
-    if (action === 'mail') window.location.href = "mailto:servicebox35@gmail.com";
+    if (action === 'tel') window.location.href = "tel:+7-911-501-88-28";
+    if (action === 'mail') window.location.href = "mailto:508828@bk.ru";
   };
 
   return (
@@ -107,7 +107,7 @@ function BurgerMenu() {
           <div className={styles.contactInfo}>
             <div className={styles.contactItem} onClick={() => handleContactAction('mail')}>
               <FontAwesomeIcon icon={faMailBulk} />
-              <span>servicebox35@gmail.com</span>
+              <span>508828@bk.ru</span>
             </div>
 
             <div className={styles.addressBlock}>

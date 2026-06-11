@@ -95,20 +95,6 @@ export default function CategoriesGrid() {
                         </Link>
                     ))}
                 </div>
-
-                {/* Кнопка "Все услуги" */}
-                <div className="text-center mt-8">
-                    <Link
-                        href="/services"
-                        className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-white transition-all hover:scale-105 shadow-lg"
-                        style={{ background: '#002147' }}
-                    >
-                        Все услуги и цены
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                        </svg>
-                    </Link>
-                </div>
             </div>
         </section>
     );

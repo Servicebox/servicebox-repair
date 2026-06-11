@@ -1,10 +1,13 @@
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// app/sitemap.js
+import dbConnect from '@/lib/db';
+import Product from '@/models/Product';
+import News from '@/models/News';
+import Service from '@/models/Service';
 
-// Жёсткая гарантия BASE_URL
+// Жёсткая гарантия BASE_URL для продакшена
 const getBaseUrl = () => {
-  if (process.env.SITE_URL && process.env.SITE_URL.trim()) {
-    return process.env.SITE_URL.trim().replace(/\/$/, '');
+  if (process.env.NEXT_PUBLIC_BASE_URL && process.env.NEXT_PUBLIC_BASE_URL.trim()) {
+    return process.env.NEXT_PUBLIC_BASE_URL.trim().replace(/\/$/, '');
   }
   if (process.env.NEXT_PUBLIC_API_URL && process.env.NEXT_PUBLIC_API_URL.trim()) {
     return process.env.NEXT_PUBLIC_API_URL.trim().replace(/\/$/, '');
@@ -13,7 +16,6 @@ const getBaseUrl = () => {
 };
 
 const BASE_URL = getBaseUrl();
-
 console.log(`🗺️ [sitemap] BASE_URL="${BASE_URL}"`);
 
 const formatDate = (date) => {
@@ -29,48 +31,22 @@ const createEntry = (path, priority, changefreq = 'monthly', lastmod) => ({
   priority: Math.max(0, Math.min(1, priority || 0.5)),
 });
 
-const safeFetch = async (url) => {
-  try {
-    const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), 3000);
-    const res = await fetch(url, { signal: ctrl.signal, headers: { Accept: 'application/json' } });
-    clearTimeout(t);
-    return res.ok ? await res.json() : null;
-  } catch (e) {
-    console.warn(`⚠️ Sitemap fetch failed: ${url}`);
-    return null;
-  }
-};
-
-// === СПИСКИ СЛАГОВ ===
-const brandSlugs = [
-  'apple', 'samsung', 'xiaomi', 'huawei', 'asus', 'lenovo',
-  'hp', 'acer', 'msi', 'dell', 'sony', 'lg'
-];
-
-const problemSlugs = [
-  'laptop-not-turning-on',
-  'phone-battery-drains-fast',
-  'screen-artifacts',
-  'laptop-overheating',
-  'phone-charging-issue',
-  'water-damage',
-];
-
-// ✅ ВСЕ 8 AI-ответов
-const aiAnswerSlugs = [
-  'repair-laptop-vologda',
-  'phone-screen-replacement',
-  'videocard-repair-cost',
-  'water-damage-phone',
-  'apple-repair-warranty',
-  'laptop-not-turning-on',
-  'price-diagnostics',
-  'urgent-repair-vologda',
-];
+// === СПИСКИ СЛАГОВ (Статические массивы) ===
+const brandSlugs = ['apple', 'samsung', 'xiaomi', 'huawei', 'asus', 'lenovo', 'hp', 'acer', 'msi', 'dell', 'sony', 'lg'];
+const problemSlugs = ['laptop-not-turning-on', 'phone-battery-drains-fast', 'screen-artifacts', 'laptop-overheating', 'phone-charging-issue', 'water-damage'];
+const aiAnswerSlugs = ['repair-laptop-vologda', 'phone-screen-replacement', 'videocard-repair-cost', 'water-damage-phone', 'apple-repair-warranty', 'laptop-not-turning-on', 'price-diagnostics', 'urgent-repair-vologda'];
 
 export default async function sitemap() {
   const now = new Date();
+
+  // 1. Подключаемся к БД напрямую (без HTTP fetch!)
+  let dbConnected = false;
+  try {
+    await dbConnect();
+    dbConnected = true;
+  } catch (e) {
+    console.error('❌ [Sitemap] MongoDB connection failed:', e.message);
+  }
 
   // === СТАТИЧЕСКИЕ СТРАНИЦЫ ===
   const staticUrls = [
@@ -87,6 +63,8 @@ export default async function sitemap() {
     ['/tracking', 0.7, 'daily'],
     ['/worksteps', 0.85, 'monthly'],
     ['/ai-assistant.json', 0.95, 'weekly'],
+    ['/consent', 0.1, 'yearly'],
+    ['/privacy-policy', 0.1, 'yearly'],
   ].map(([p, pri, f]) => createEntry(p, pri, f, now));
 
   // === AI API ЭНДПОИНТЫ ===
@@ -95,60 +73,41 @@ export default async function sitemap() {
     ['/api/ai/v1/emergency', 0.6, 'monthly'],
   ].map(([p, pri, f]) => createEntry(p, pri, f, now));
 
-  // === СТРАНИЦЫ БРЕНДОВ ===
-  const brandUrls = brandSlugs.map(slug =>
-    createEntry(`/brands/${slug}`, 0.85, 'weekly', now)
-  );
+  // === СТРАНИЦЫ БРЕНДОВ, ПРОБЛЕМ, AI-ОТВЕТОВ ===
+  const brandUrls = brandSlugs.map(slug => createEntry(`/brands/${slug}`, 0.85, 'weekly', now));
+  const problemUrls = problemSlugs.map(slug => createEntry(`/problems/${slug}`, 0.85, 'weekly', now));
+  const aiAnswers = aiAnswerSlugs.map(s => createEntry(`/ai-answers/${s}`, 0.95, 'weekly', now));
 
-  // === СТРАНИЦЫ НЕИСПРАВНОСТЕЙ ===
-  const problemUrls = problemSlugs.map(slug =>
-    createEntry(`/problems/${slug}`, 0.85, 'weekly', now)
-  );
+  // === ДИНАМИЧЕСКИЕ СТРАНИЦЫ (ПРЯМОЙ ЗАПРОС В БД) ===
+  let svcUrls = [];
+  let prodUrls = [];
+  let newsUrls = [];
 
-  // === AI-ANSWERS (ВСЕ 8) ===
-  const aiAnswers = aiAnswerSlugs.map(s =>
-    createEntry(`/ai-answers/${s}`, 0.95, 'weekly', now) // ✅ Повышенный приоритет
-  );
+  if (dbConnected) {
+    // Услуги
+    try {
+      const services = await Service.find({ isActive: { $ne: false }, isCategory: { $ne: true } }, { slug: 1, updatedAt: 1 }).lean();
+      svcUrls = services
+        .filter(s => s.slug)
+        .map(s => createEntry(`/services/${encodeURIComponent(s.slug)}`, 0.85, 'monthly', s.updatedAt));
+    } catch (e) { console.warn('⚠️ Sitemap Services fetch failed:', e.message); }
 
-  // === ДИНАМИЧЕСКИЕ ===
-  const [svc, prod, news] = await Promise.all([
-    safeFetch(`${BASE_URL}/api/services/all`),
-    safeFetch(`${BASE_URL}/api/products?limit=500`),
-    safeFetch(`${BASE_URL}/api/news?all=1&limit=200`),
-  ]);
+    // Товары
+    try {
+      const products = await Product.find({ isActive: true, isDeleted: false }, { slug: 1, updatedAt: 1 }).limit(500).lean();
+      prodUrls = products
+        .filter(p => p.slug)
+        .map(p => createEntry(`/product/${encodeURIComponent(p.slug)}`, 0.75, 'weekly', p.updatedAt));
+    } catch (e) { console.warn('⚠️ Sitemap Products fetch failed:', e.message); }
 
-  const svcUrls = (svc?.success && Array.isArray(svc.data))
-    ? svc.data
-      .filter(s => s.slug && !s.isCategory && s.isActive !== false)
-      .map(s => createEntry(
-        `/services/${encodeURIComponent(s.slug)}`,
-        0.85,
-        'monthly',
-        s.updatedAt
-      ))
-    : [];
-
-  const prodUrls = (prod?.products && Array.isArray(prod.products))
-    ? prod.products
-      .filter(p => p.slug)
-      .map(p => createEntry(
-        `/product/${encodeURIComponent(p.slug)}`,
-        0.75,
-        'weekly',
-        p.updatedAt
-      ))
-    : [];
-
-  const newsUrls = (news?.success && Array.isArray(news.data))
-    ? news.data
-      .filter(n => n.slug && n.isPublished)
-      .map(n => createEntry(
-        `/news/${encodeURIComponent(n.slug)}`,
-        0.7,
-        'monthly',
-        n.updatedAt || n.publishedAt
-      ))
-    : [];
+    // Новости
+    try {
+      const news = await News.find({ isPublished: true }, { slug: 1, updatedAt: 1, publishedAt: 1 }).limit(200).lean();
+      newsUrls = news
+        .filter(n => n.slug)
+        .map(n => createEntry(`/news/${encodeURIComponent(n.slug)}`, 0.7, 'monthly', n.updatedAt || n.publishedAt));
+    } catch (e) { console.warn('⚠️ Sitemap News fetch failed:', e.message); }
+  }
 
   // === ОБЪЕДИНЕНИЕ ВСЕХ СТРАНИЦ ===
   const all = [
@@ -164,13 +123,10 @@ export default async function sitemap() {
 
   // Уникальность по URL
   const unique = Array.from(new Map(all.map(e => [e.url, e])).values());
-
-  // Сортировка по приоритету
   unique.sort((a, b) => (b.priority || 0) - (a.priority || 0));
 
   console.log(`✅ Sitemap: ${unique.length} URLs | BASE="${BASE_URL}"`);
   console.log(`   ├─ Static:     ${staticUrls.length}`);
-  console.log(`   ├─ API:        ${apiUrls.length}`);
   console.log(`   ├─ AI Answers: ${aiAnswers.length}`);
   console.log(`   ├─ Brands:     ${brandUrls.length}`);
   console.log(`   ├─ Problems:   ${problemUrls.length}`);

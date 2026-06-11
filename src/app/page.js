@@ -1,5 +1,4 @@
 // src/app/page.js
-'use client';
 import Main from '../components/Main/Main';
 
 

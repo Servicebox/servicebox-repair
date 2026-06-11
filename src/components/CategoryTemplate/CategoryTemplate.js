@@ -218,7 +218,7 @@ export default function CategoryTemplate({ categorySlug }) {
                             🧮 Рассчитать стоимость
                         </a>
                         <a
-                            href="tel:+79115018828"
+                            href="tel:+7-911-501-88-28"
                             className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white border-2 border-white/30 rounded-xl font-bold text-lg hover:bg-white/20 transition-all"
                         >
                             📞 +7 (911) 501-88-28
@@ -345,7 +345,7 @@ export default function CategoryTemplate({ categorySlug }) {
                     </p>
                     <div className="flex flex-wrap gap-4 justify-center">
                         <a
-                            href="tel:+79115018828"
+                            href="tel:+7-911-501-88-28"
                             className="px-8 py-4 bg-green-500 hover:bg-green-600 rounded-xl font-bold text-lg hover:scale-105 transition-all shadow-lg"
                         >
                             📞 +7 (911) 501-88-28

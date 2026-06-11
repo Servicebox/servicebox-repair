@@ -244,7 +244,7 @@ export default function ServiceDetailPage() {
 
                   <div className={styles.phoneBlock}>
                     <p className={styles.phoneLabel}>или позвоните</p>
-                    <a href="tel:+79115018828" className={styles.phoneNumber}>
+                    <a href="tel:+7-911-501-88-28" className={styles.phoneNumber}>
                       +7 (911) 501-88-28
                     </a>
                     <a href="tel:+79115010696" className={styles.phoneNumber}>
@@ -445,7 +445,7 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
 
           <div className={styles.phoneBlock}>
             <p className={styles.phoneLabel}>или позвоните</p>
-            <a href="tel:+79115018828" className={styles.phoneNumber}>
+            <a href="tel:+7-911-501-88-28" className={styles.phoneNumber}>
               +7 (911) 501-88-28
             </a>
             <a href="tel:+79115010696" className={styles.phoneNumber}>

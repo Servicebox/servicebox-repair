@@ -2,7 +2,7 @@
 import { notFound } from 'next/navigation';
 
 // Явно указываем, что это динамический route
-export const dynamic = 'force-dynamic';
+
 export const revalidate = 3600; // Ревалидация каждые 3600 секунд
 
 export async function generateMetadata({ params }) {
