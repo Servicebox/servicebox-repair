@@ -74,7 +74,7 @@ export async function POST(request) {
             textModulesData: [
                 {
                     header: `Приветствуем, клиент ${userId}!`,
-                    body: 'Спасибо, что выбираете ServiceBox.',
+                    body: 'Спасибо, что выбираете ServiceBox',
                 },
             ],
             barcode: {

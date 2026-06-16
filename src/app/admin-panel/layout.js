@@ -16,6 +16,7 @@ export default function AdminLayout({ children }) {
   const navItems = [
     { href: '/admin-panel/listservice', label: 'Услуги', icon: '⚙️' },
     { href: '/admin-panel/listproduct', label: 'Товары', icon: '📦' },
+    { href: '/admin-panel/calculator-config', label: 'Цены калькулятора', icon: '🧮' },
     { href: '/admin-panel/imagelist', label: 'Фотогалерея', icon: '🖼️' },
     { href: '/admin-panel/addnews', label: 'Добавить новость', icon: '📝' },
     { href: '/admin-panel/listnews', label: 'Новости', icon: '📰' },

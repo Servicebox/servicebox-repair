@@ -9,9 +9,9 @@ import ClientProductDisplay from '@/components/ProductDisplay/ProductDisplay';
 // ⚙️ НАСТРОЙКИ КЭШИРОВАНИЯ И СТАТИЗАЦИИ
 // ============================================
 export const dynamic = 'force-static';
-export const revalidate = 3600; // ISR: перегенерация раз в час (цены, остатки)
+export const revalidate = 3600;
 export const fetchCache = 'force-cache';
-export const dynamicParams = true; // Разрешить рендеринг новых товаров, не попавших в generateStaticParams
+export const dynamicParams = true;
 
 // ============================================
 // 🗺️ ГЕНЕРАЦИЯ СТАТИЧЕСКИХ ПУТЕЙ (на этапе build)
@@ -41,7 +41,6 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
 
-  // Валидация slug (защита от инъекций и мусорных URL)
   if (!slug || typeof slug !== 'string' || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) {
     return {
       title: 'Товар не найден | ServiceBox Вологда',
@@ -185,11 +184,10 @@ export default async function ProductPage({ params }) {
     // ============================================
     // 🏛️ JSON-LD РАЗМЕТКА (Schema.org)
     // ============================================
-    // Используем @graph для корректной связи сущностей
     const structuredData = {
       '@context': 'https://schema.org',
       '@graph': [
-        // === WebPage (mainEntityOfPage) ===
+        // 1. WebPage
         {
           '@type': 'WebPage',
           '@id': pageUrl,
@@ -203,26 +201,24 @@ export default async function ProductPage({ params }) {
           },
         },
 
-        // === Product ===
+        // 2. Product
         {
           '@type': 'Product',
           '@id': `${pageUrl}#product`,
           name: productWithVirtuals.name,
-          description:
-            productWithVirtuals.description || productWithVirtuals.name,
+          description: productWithVirtuals.description || productWithVirtuals.name,
           image: productImages,
           sku: productWithVirtuals.sku || productWithVirtuals.slug,
           mpn: productWithVirtuals.sku || productWithVirtuals.slug,
           url: pageUrl,
           mainEntityOfPage: { '@id': pageUrl },
 
-          // Бренд (если указан в товаре)
+          // Бренд
           ...(productWithVirtuals.brand || productWithVirtuals.vendor
             ? {
               brand: {
                 '@type': 'Brand',
-                name:
-                  productWithVirtuals.brand || productWithVirtuals.vendor,
+                name: productWithVirtuals.brand || productWithVirtuals.vendor,
               },
             }
             : {}),
@@ -237,8 +233,7 @@ export default async function ProductPage({ params }) {
             }
             : {}),
 
-          // ⚠️ aggregateRating ТОЛЬКО если есть реальные отзывы в БД!
-          // Не добавляем фиктивные отзывы — это нарушает политику Google/Яндекса
+          // Агрегированный рейтинг (только если есть отзывы)
           ...(productWithVirtuals.reviews?.length > 0
             ? {
               aggregateRating: {
@@ -251,16 +246,14 @@ export default async function ProductPage({ params }) {
             }
             : {}),
 
-          // === Offer (предложение) ===
+          // Offer
           offers: {
             '@type': 'Offer',
             '@id': `${pageUrl}#offer`,
             url: pageUrl,
             priceCurrency: 'RUB',
             price: price.toString(),
-            priceValidUntil: new Date(
-              Date.now() + 30 * 24 * 60 * 60 * 1000
-            )
+            priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
               .toISOString()
               .split('T')[0],
             availability: productWithVirtuals.hasStock
@@ -268,14 +261,8 @@ export default async function ProductPage({ params }) {
               : 'https://schema.org/OutOfStock',
             itemCondition: 'https://schema.org/NewCondition',
 
-            // Продавец
-            seller: {
-              '@type': 'Organization',
-              name: 'ServiceBox Вологда',
-              url: baseUrl,
-              telephone: '+7-911-501-88-28',
-              email: '508828@bk.ru',
-            },
+            // Продавец – только ссылка на глобальный бизнес
+            seller: { '@id': `${baseUrl}#business` },
 
             // Доставка
             shippingDetails: {
@@ -306,113 +293,26 @@ export default async function ProductPage({ params }) {
               },
             },
 
-            // Самовывоз из магазина
-            availableAtOrFrom: {
-              '@type': 'Place',
-              name: 'ServiceBox — Сервисный центр на Северной',
-              address: {
-                '@type': 'PostalAddress',
-                streetAddress: "ул. Северная, д. 7А, 1 этаж, ТЦ 'КИТ'",
-                addressLocality: 'Вологда',
-                addressRegion: 'Вологодская область',
-                postalCode: '160000',
-                addressCountry: 'RU',
-              },
-            },
+            // Самовывоз – только ссылка на глобальный бизнес
+            availableAtOrFrom: { '@id': `${baseUrl}#business` },
           },
         },
 
-        // === BreadcrumbList (отдельная сущность!) ===
+        // 3. BreadcrumbList
         {
           '@type': 'BreadcrumbList',
           itemListElement: [
-            {
-              '@type': 'ListItem',
-              position: 1,
-              name: 'Главная',
-              item: baseUrl,
-            },
-            {
-              '@type': 'ListItem',
-              position: 2,
-              name: 'Каталог',
-              item: `${baseUrl}/parts`,
-            },
+            { '@type': 'ListItem', position: 1, name: 'Главная', item: baseUrl },
+            { '@type': 'ListItem', position: 2, name: 'Каталог', item: `${baseUrl}/parts` },
             ...(productWithVirtuals.category
               ? [
-                {
-                  '@type': 'ListItem',
-                  position: 3,
-                  name: productWithVirtuals.category,
-                  item: `${baseUrl}/parts?category=${encodeURIComponent(
-                    productWithVirtuals.category
-                  )}`,
-                },
-                {
-                  '@type': 'ListItem',
-                  position: 4,
-                  name: productWithVirtuals.name,
-                  item: pageUrl,
-                },
+                { '@type': 'ListItem', position: 3, name: productWithVirtuals.category, item: `${baseUrl}/parts?category=${encodeURIComponent(productWithVirtuals.category)}` },
+                { '@type': 'ListItem', position: 4, name: productWithVirtuals.name, item: pageUrl },
               ]
               : [
-                {
-                  '@type': 'ListItem',
-                  position: 3,
-                  name: productWithVirtuals.name,
-                  item: pageUrl,
-                },
+                { '@type': 'ListItem', position: 3, name: productWithVirtuals.name, item: pageUrl },
               ]),
           ],
-        },
-
-        // === LocalBusiness (информация о магазине) ===
-        {
-          '@type': 'ElectronicsRepairService',
-          '@id': `${baseUrl}#business`,
-          name: 'ServiceBox - Сервисный центр на Северной',
-          alternateName: ['Сервис Бокс', 'ServiceBox35'],
-          url: baseUrl,
-          telephone: ['+7-911-501-88-28', '+7-911-501-06-96'],
-          email: '508828@bk.ru',
-          priceRange: '₽₽',
-          address: {
-            '@type': 'PostalAddress',
-            streetAddress: "ул. Северная, д. 7А, 1 этаж, ТЦ 'КИТ'",
-            addressLocality: 'Вологда',
-            addressRegion: 'Вологодская область',
-            postalCode: '160000',
-            addressCountry: 'RU',
-          },
-          geo: {
-            '@type': 'GeoCoordinates',
-            latitude: 59.229445,
-            longitude: 39.878542,
-          },
-          openingHoursSpecification: [
-            {
-              '@type': 'OpeningHoursSpecification',
-              dayOfWeek: [
-                'Monday',
-                'Tuesday',
-                'Wednesday',
-                'Thursday',
-                'Friday',
-                'Saturday',
-                'Sunday',
-              ],
-              opens: '10:00',
-              closes: '20:00',
-            },
-          ],
-          aggregateRating: {
-            '@type': 'AggregateRating',
-            ratingValue: '5.0',
-            reviewCount: '150',
-            bestRating: '5',
-            worstRating: '1',
-          },
-          areaServed: { '@type': 'City', name: 'Вологда' },
         },
       ],
     };
@@ -421,9 +321,7 @@ export default async function ProductPage({ params }) {
       <>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
           key="product-jsonld"
         />
         <ClientProductDisplay product={productWithVirtuals} />

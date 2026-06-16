@@ -1,53 +1,54 @@
-// components/ServicePricePage/ServicePricePage.jsx
+// src/components/ServicePricePage/ServicePricePage.jsx
 'use client';
-
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
 import styles from './ServicePricePage.module.css';
+// Импортируем калькулятор. Убедись, что путь указан верно!
+import RepairCalculator from '../RepairCalculator/RepairCalculator';
 import BookingForm from "../BookingForm/BookingForm";
 
-// Метаданные для SEO
-export const metadata = {
-    title: 'Цены на услуги по ремонту техники | Все виды ремонта',
-    description: 'Профессиональный ремонт ноутбуков, телефонов, компьютеров и другой техники. Гарантия качества. Запишитесь онлайн!',
-};
-
-// Иконки категорий (оптимизированная карта)
-const CATEGORY_ICONS = {
-    'Ремонт ноутбуков': { icon: '/images/notebook.webp', label: 'Ремонт ноутбуков' },
-    'Ремонт телефонов': { icon: '/images/android.webp', label: 'Ремонт телефонов' },
-    'Ремонт компьютеров': { icon: '/images/monoblok.webp', label: 'Компьютеры и моноблоки' },
-    'Техника Apple': { icon: '/images/apple.webp', label: 'Apple техника' },
-    'Ремонт планшетов': { icon: '/images/tablet.webp', label: 'Планшеты' },
-    'Ремонт телевизоров': { icon: '/images/tv.webp', label: 'Телевизоры' },
-    'Замена стекла': { icon: '/images/glass.webp', label: 'Замена стекла' },
-    'Ремонт видеокарт': { icon: '/images/videocard.webp', label: 'Видеокарты' },
-};
-
-const DEFAULT_ICON = '/images/Devices.webp';
-
-const ServicePricePage = () => {
+export default function ServicePricePage() {
     const [services, setServices] = useState([]);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isBookingFormOpen, setIsBookingFormOpen] = useState(false);
     const [selectedService, setSelectedService] = useState(null);
+
+    // Навигация по категориям (из БД)
     const [currentCategory, setCurrentCategory] = useState(null);
     const [categoryPath, setCategoryPath] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
 
-    // Загрузка услуг
+    // Состояние для калькулятора (если открыт)
+    const [activeCalculatorDevice, setActiveCalculatorDevice] = useState(null);
+
+    // Маппинг категорий из БД на типы калькулятора (чтобы показывать нужные эмодзи и открывать нужный калькулятор)
+    const CATEGORY_MAP = {
+        'Ремонт телефонов': { icon: '📱', type: 'phone' },
+        'Техника Apple': { icon: '🍎', type: 'phone' }, // Используем тип phone, так как в калькуляторе это бренды внутри phone
+        'Ремонт ноутбуков': { icon: '💻', type: 'laptop' },
+        'Ремонт планшетов': { icon: '📲', type: 'tablet' },
+        'Ремонт телевизоров': { icon: '📺', type: 'tv' },
+        'Ремонт видеокарт': { icon: '🔥', type: 'videocard' },
+        // Для остальных можно оставить стандартные
+        'Ремонт компьютеров': { icon: '🖥️', type: null },
+        'Замена стекла': { icon: '🔨', type: null },
+        'Другие услуги': { icon: '⚙️', type: null }
+    };
+
+    // Загрузка услуг из БД
     useEffect(() => {
         let isMounted = true;
-
         const fetchServices = async () => {
             try {
                 const response = await fetch('/api/services?tree=true');
                 const data = await response.json();
-
                 if (isMounted && data.success) {
                     setServices(data.data);
-                    setCategories(data.data.filter(s => s.isCategory && !s.parent));
+                    const rootCategories = data.data.filter(service =>
+                        service.isCategory && !service.parent
+                    );
+                    setCategories(rootCategories);
                 }
             } catch (error) {
                 console.error('Error fetching services:', error);
@@ -55,281 +56,272 @@ const ServicePricePage = () => {
                 if (isMounted) setLoading(false);
             }
         };
-
         fetchServices();
         return () => { isMounted = false; };
     }, []);
 
-    // Получение элементов текущей категории
+    // Получение текущих элементов
     const currentItems = useMemo(() => {
         if (!currentCategory) return categories;
-
-        const findInTree = (items, targetId) => {
-            for (const item of items) {
-                if (item._id === targetId) return item.children || [];
-                if (item.children) {
-                    const found = findInTree(item.children, targetId);
-                    if (found) return found;
+        const findCategoryItems = (categoryId, allServices) => {
+            const findInTree = (items, targetId) => {
+                for (const item of items) {
+                    if (item._id === targetId) return item.children || [];
+                    if (item.children) {
+                        const found = findInTree(item.children, targetId);
+                        if (found) return found;
+                    }
                 }
-            }
-            return null;
+                return null;
+            };
+            return findInTree(allServices, categoryId) || [];
         };
-
-        return findInTree(services, currentCategory._id) || [];
+        return findCategoryItems(currentCategory._id, services);
     }, [currentCategory, categories, services]);
 
-    // Фильтрация по поиску
+    // Фильтрация
     const filteredItems = useMemo(() => {
         if (!searchQuery) return currentItems;
         const query = searchQuery.toLowerCase();
-        return currentItems.filter(item =>
-            item.name?.toLowerCase().includes(query) ||
-            item.description?.toLowerCase().includes(query)
-        );
+        return currentItems.filter(item => {
+            const name = item.name?.toLowerCase() || '';
+            const desc = item.description?.toLowerCase() || '';
+            return name.includes(query) || desc.includes(query);
+        });
     }, [currentItems, searchQuery]);
 
-    // Обработчики навигации
+    // Обработчики
     const handleCategoryClick = useCallback((category) => {
-        if (!category.isCategory) return;
-        setCurrentCategory(category);
-        setCategoryPath(prev => [...prev, category]);
+        if (category.isCategory) {
+            setCurrentCategory(category);
+            setCategoryPath(prev => [...prev, category]);
+        }
     }, []);
 
     const handleBackClick = useCallback(() => {
-        setCategoryPath(prev => {
-            const newPath = prev.slice(0, -1);
+        if (categoryPath.length > 0) {
+            const newPath = [...categoryPath];
+            newPath.pop();
+            setCategoryPath(newPath);
             setCurrentCategory(newPath[newPath.length - 1] || null);
-            return newPath;
-        });
-    }, []);
+        } else {
+            setCurrentCategory(null);
+        }
+    }, [categoryPath]);
 
     const handleHomeClick = useCallback(() => {
         setCurrentCategory(null);
         setCategoryPath([]);
         setSearchQuery('');
+        setActiveCalculatorDevice(null); // Сброс калькулятора
     }, []);
 
+    // Обработчик клика по карточке категории (открывает калькулятор, если есть маппинг)
+    const handleCardClick = useCallback((category) => {
+        const mapData = CATEGORY_MAP[category.name];
+        // Если для категории есть тип калькулятора И мы на верхнем уровне (нет текущей категории), открываем калькулятор
+        if (mapData && mapData.type && !currentCategory) {
+            setActiveCalculatorDevice(mapData.type);
+        } else {
+            handleCategoryClick(category);
+        }
+    }, [currentCategory, handleCategoryClick]);
+
     const handleBookingClick = useCallback((service, e) => {
-        e?.stopPropagation();
+        if (e) e.stopPropagation();
         setSelectedService(service);
         setIsBookingFormOpen(true);
     }, []);
 
-    const handleBookingSuccess = useCallback((bookingData) => {
-        alert(`Запись создана! Ваш код: ${bookingData.trackingCode}`);
+    const handleBookingSuccess = useCallback(() => {
         setIsBookingFormOpen(false);
         setSelectedService(null);
     }, []);
 
-    const handleCloseBooking = useCallback(() => {
-        setIsBookingFormOpen(false);
-        setSelectedService(null);
-    }, []);
-
-    // Форматирование цены
     const formatPrice = useCallback((price) => {
         if (!price || price === '') return 'Уточняйте';
-        const priceStr = String(price);
-        if (priceStr.includes('₽') || priceStr.includes('руб')) return priceStr;
+        if (String(price).includes('₽') || String(price).includes('руб')) return price;
         return `${price} ₽`;
     }, []);
 
-    // Получение данных категории
-    const getCategoryDisplay = (name) =>
-        CATEGORY_ICONS[name] || { icon: DEFAULT_ICON, label: name };
+    // Анимации
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        show: { opacity: 1, transition: { staggerChildren: 0.05, delayChildren: 0.1 } }
+    };
+    const itemVariants = {
+        hidden: { opacity: 0, y: 15 },
+        show: { opacity: 1, y: 0, transition: { duration: 0.3 } }
+    };
 
-    // Состояние загрузки
     if (loading) {
         return (
-            <div className={styles.servicePricePage}>
-                <div className={styles.contentWrapper}>
-                    <div className={styles.loadingContainer}>
-                        <div className={styles.loadingSpinner} />
-                        <p>Загружаем услуги...</p>
-                    </div>
+            <motion.div className={styles.servicePricePage}>
+                <div className={styles.loadingContainer}>
+                    <div className={styles.loadingSpinner}></div>
+                    <p>Загружаем услуги...</p>
                 </div>
-            </div>
+            </motion.div>
         );
     }
 
     return (
-        <section id="services" className={styles.servicePricePage}>
+        <motion.section
+            id="services"
+            className={styles.servicePricePage}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+            aria-label="Список услуг сервисного центра"
+        >
             <div className={styles.contentWrapper}>
-                {/* Заголовок */}
-                <header className={styles.animatedTitle}>
-                    <h1>{currentCategory?.name || 'Услуги по ремонту техники rb'}</h1>
-                    <p>{currentCategory?.description || 'Ремонтируем любую технику с гарантией качества'}</p>
-                </header>
-
-                {/* Управление */}
-                <div className={styles.controlsContainer}>
-                    <nav className={styles.breadcrumbs} aria-label="Навигация по категориям">
-                        {categoryPath.length > 0 && (
-                            <button
-                                className={styles.breadcrumbHome}
-                                onClick={handleHomeClick}
-                                aria-label="Вернуться к корню"
-                            >
-                                🏠
-                            </button>
-                        )}
-                        {categoryPath.map((category, index) => (
-                            <span key={category._id} className={styles.breadcrumbSeparator}>
-                                <span className={styles.chevron}>/</span>
-                                <button
-                                    className={styles.breadcrumbItem}
-                                    onClick={() => {
-                                        const newPath = categoryPath.slice(0, index + 1);
-                                        setCategoryPath(newPath);
-                                        setCurrentCategory(category);
-                                    }}
-                                    aria-label={`Перейти к ${category.name}`}
-                                >
-                                    {category.name}
-                                </button>
-                            </span>
-                        ))}
-                    </nav>
-                </div>
-
-                {/* Кнопка назад */}
-                {currentCategory && (
-                    <div className={styles.backButtonContainer}>
+                {/* Если открыт калькулятор */}
+                {activeCalculatorDevice ? (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className={styles.calculatorContainer}
+                    >
                         <button
-                            className={styles.backButton}
-                            onClick={handleBackClick}
-                            aria-label="Назад"
+                            onClick={() => setActiveCalculatorDevice(null)}
+                            className={styles.backToServicesBtn}
                         >
-                            <span className={styles.backArrow}>←</span>
-                            Назад
+                            ← Вернуться к списку услуг
                         </button>
-                    </div>
-                )}
-
-                {/* Контент */}
-                {filteredItems.length === 0 ? (
-                    <div className={styles.noResults}>
-                        <h3>Ничего не найдено</h3>
-                        <p>Попробуйте изменить запрос или выбрать другую категорию</p>
-                        {searchQuery && (
-                            <button
-                                onClick={() => setSearchQuery('')}
-                                className={styles.clearSearchButton}
-                            >
-                                Очистить поиск
-                            </button>
-                        )}
-                    </div>
+                        <RepairCalculator initialDeviceType={activeCalculatorDevice} />
+                    </motion.div>
                 ) : (
-                    <div className={styles.itemsContainer}>
-                        {/* Сетка категорий */}
-                        {!currentCategory ? (
-                            <div className={styles.categoriesGrid}>
-                                {filteredItems.map((category) => {
-                                    const displayData = getCategoryDisplay(category.name);
-                                    return (
-                                        <button
-                                            key={category._id}
-                                            className={styles.categoryCard}
-                                            onClick={() => handleCategoryClick(category)}
-                                            type="button"
-                                            aria-label={`Открыть категорию: ${category.name}`}
-                                        >
-                                            <div className={styles.categoryIcon}>
-                                                <Image
-                                                    src={displayData.icon}
-                                                    alt=""
-                                                    className={styles.categoryImg}
-                                                    width={48}
-                                                    height={48}
-                                                    loading="lazy"
-                                                />
-                                            </div>
-                                            <h2 className={styles.categoryName}>
-                                                {displayData.label}
-                                            </h2>
-                                            <p className={styles.categoryDescription}>
-                                                {category.description}
-                                            </p>
-                                            <span className={styles.categoryBadge}>
-                                                {category.children?.length || 0} услуг
-                                            </span>
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                        ) : (
-                            /* Сетка подкатегорий и услуг */
-                            <div className={styles.itemsGrid}>
-                                {filteredItems.map((item) => (
-                                    <button
-                                        key={item._id}
-                                        className={`${styles.itemCard} ${item.isCategory ? styles.categoryItem : styles.serviceItem
-                                            }`}
-                                        onClick={() => item.isCategory
-                                            ? handleCategoryClick(item)
-                                            : handleBookingClick(item)
-                                        }
-                                        type="button"
-                                        aria-label={item.isCategory
-                                            ? `Открыть: ${item.name}`
-                                            : `Записаться: ${item.name}, ${formatPrice(item.price)}`
-                                        }
-                                    >
-                                        <div className={styles.itemHeader}>
-                                            <h3 className={styles.itemName}>{item.name}</h3>
-                                            {item.isCategory ? (
-                                                <span className={styles.itemType}>Категория</span>
-                                            ) : (
-                                                <span className={styles.priceTag}>
-                                                    {formatPrice(item.price)}
-                                                </span>
-                                            )}
-                                        </div>
+                    // Обычный список услуг
+                    <>
+                        {/* Заголовок */}
+                        <header className={styles.animatedTitle}>
+                            <motion.h1 initial={{ y: -15, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 }}>
+                                {currentCategory ? currentCategory.name : 'Услуги по ремонту техники'}
+                            </motion.h1>
+                            <motion.p initial={{ y: -15, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.15 }}>
+                                {currentCategory ? currentCategory.description : 'Ремонтируем любую технику с гарантией качества'}
+                            </motion.p>
+                        </header>
 
-                                        <p className={styles.itemDescription}>
-                                            {item.description}
-                                        </p>
-
-                                        <div className={styles.itemFooter}>
-                                            {item.isCategory ? (
-                                                <>
-                                                    <span className={styles.itemsCount}>
-                                                        {item.children?.length || 0} услуг
-                                                    </span>
-                                                    <span className={styles.arrowIcon}>→</span>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <span className={styles.serviceTime}>
-                                                        {item.description?.includes('день')
-                                                            ? 'В течение дня'
-                                                            : 'Уточняйте'}
-                                                    </span>
-                                                    <span className={styles.bookButton}>
-                                                        Записаться
-                                                    </span>
-                                                </>
-                                            )}
-                                        </div>
-                                    </button>
+                        {/* Крошки и поиск */}
+                        <div className={styles.controlsContainer}>
+                            <motion.nav className={styles.breadcrumbs} initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }}>
+                                {categoryPath.length > 0 && (
+                                    <button className={styles.breadcrumbHome} onClick={handleHomeClick} aria-label="Вернуться к корню">🏠</button>
+                                )}
+                                {categoryPath.map((category, index) => (
+                                    <span key={category._id} className={styles.breadcrumbSeparator}>
+                                        <span className={styles.chevron}>/</span>
+                                        <button className={styles.breadcrumbItem} onClick={() => {
+                                            const newPath = categoryPath.slice(0, index + 1);
+                                            setCategoryPath(newPath);
+                                            setCurrentCategory(category);
+                                        }}>{category.name}</button>
+                                    </span>
                                 ))}
-                            </div>
+                            </motion.nav>
+                        </div>
+
+                        {/* Кнопка назад */}
+                        {currentCategory && (
+                            <motion.div className={styles.backButtonContainer} initial={{ x: -15, opacity: 0 }} animate={{ x: 0, opacity: 1 }}>
+                                <button className={styles.backButton} onClick={handleBackClick}>
+                                    <span className={styles.backArrow}>←</span> Назад
+                                </button>
+                            </motion.div>
                         )}
-                    </div>
+
+                        {/* Сетка элементов */}
+                        {filteredItems.length === 0 ? (
+                            <motion.div className={styles.noResults} initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
+                                <h3>Ничего не найдено</h3>
+                                {searchQuery && <button onClick={() => setSearchQuery('')} className={styles.clearSearchButton}>Очистить поиск</button>}
+                            </motion.div>
+                        ) : (
+                            <motion.div className={styles.itemsContainer} variants={containerVariants} initial="hidden" animate="show">
+                                {/* Горизонтальная сетка категорий */}
+                                {!currentCategory && (
+                                    <div className={styles.categoriesGrid}>
+                                        {filteredItems.map((category) => {
+                                            // Берем иконку из маппинга или дефолтную
+                                            const mapData = CATEGORY_MAP[category.name] || {};
+                                            const icon = mapData.icon || '⚙️';
+                                            const hasCalculator = !!mapData.type;
+
+                                            return (
+                                                <motion.button
+                                                    key={category._id}
+                                                    className={styles.categoryCard}
+                                                    variants={itemVariants}
+                                                    whileHover={{ scale: 1.02, y: -3 }}
+                                                    whileTap={{ scale: 0.98 }}
+                                                    onClick={() => handleCardClick(category)}
+                                                    aria-label={`Открыть категорию: ${category.name}`}
+                                                >
+                                                    <div className={styles.categoryIcon}>
+                                                        <span style={{ fontSize: '4rem', lineHeight: 1 }} role="img" aria-hidden="true">
+                                                            {icon}
+                                                        </span>
+                                                    </div>
+                                                    <h2 className={styles.categoryName}>{category.name}</h2>
+                                                    <p className={`${styles.categoryDescription} ${styles.textClamp2}`}>{category.description}</p>
+
+                                                    <div className={styles.categoryFooter}>
+                                                        <span className={styles.categoryBadge}>{category.children?.length || 0} услуг</span>
+                                                        {hasCalculator && (
+                                                            <span className={styles.calcBadge}>🧮 Калькулятор</span>
+                                                        )}
+                                                    </div>
+                                                </motion.button>
+                                            );
+                                        })}
+                                    </div>
+                                )}
+
+                                {/* Вертикальная сетка подкатегорий */}
+                                {currentCategory && (
+                                    <div className={styles.itemsGrid}>
+                                        {filteredItems.map((item) => (
+                                            <motion.button
+                                                key={item._id}
+                                                className={`${styles.itemCard} ${item.isCategory ? styles.categoryItem : styles.serviceItem}`}
+                                                variants={itemVariants}
+                                                whileHover={{ y: -3 }}
+                                                whileTap={{ scale: 0.99 }}
+                                                onClick={() => item.isCategory ? handleCategoryClick(item) : handleBookingClick(item)}
+                                                aria-label={item.isCategory ? `Открыть: ${item.name}` : `Записаться: ${item.name}`}
+                                            >
+                                                <div className={styles.itemHeader}>
+                                                    <h3 className={`${styles.itemName} ${styles.textClamp2}`}>{item.name}</h3>
+                                                    {!item.isCategory && <span className={styles.priceTag}>{formatPrice(item.price)}</span>}
+                                                </div>
+                                                <p className={`${styles.itemDescription} ${styles.textClamp3}`}>{item.description}</p>
+                                                <div className={styles.itemFooter}>
+                                                    <span className={item.isCategory ? styles.itemsCount : styles.serviceTime}>
+                                                        {item.isCategory ? `${item.children?.length || 0} услуг` : 'Записаться →'}
+                                                    </span>
+                                                </div>
+                                            </motion.button>
+                                        ))}
+                                    </div>
+                                )}
+                            </motion.div>
+                        )}
+                    </>
                 )}
             </div>
 
-            {/* Модальное окно */}
-            {isBookingFormOpen && selectedService && (
-                <BookingForm
-                    service={selectedService}
-                    onClose={handleCloseBooking}
-                    onBookingSuccess={handleBookingSuccess}
-                />
-            )}
-        </section>
+            {/* Модальное окно формы записи */}
+            <AnimatePresence>
+                {isBookingFormOpen && selectedService && (
+                    <BookingForm
+                        service={selectedService}
+                        onClose={() => { setIsBookingFormOpen(false); setSelectedService(null); }}
+                        onBookingSuccess={handleBookingSuccess}
+                    />
+                )}
+            </AnimatePresence>
+        </motion.section>
     );
 };
-
-export default ServicePricePage;

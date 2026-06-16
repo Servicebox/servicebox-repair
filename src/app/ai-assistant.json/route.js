@@ -10,7 +10,7 @@ export async function GET() {
         '@context': 'https://schema.org',
         '@graph': [
             {
-                '@type': 'ElectronicsRepairService',
+                '@type': ['LocalBusiness', 'ElectronicsStore'],
                 '@id': `${BASE}#business`,
                 name: 'ServiceBox — ремонт техники в Вологде',
                 description: 'Срочный ремонт ноутбуков, телефонов, видеокарт, телевизоров, Apple устройств. BGA-пайка, реболл. Северная 7А, ТЦ КИТ.',

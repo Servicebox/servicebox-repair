@@ -71,8 +71,7 @@ export default function MainBanner() {
   };
 
   return (
-    <section
-      className={styles.mainBannerSection}
+    <section className={styles.mainBannerSection} suppressHydrationWarning
       itemScope
       itemType="https://schema.org/Service"
     >

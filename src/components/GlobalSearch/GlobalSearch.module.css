@@ -76,7 +76,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+  background: transparent;
   border: 2px solid transparent;
   border-radius: 16px;
   overflow: hidden;

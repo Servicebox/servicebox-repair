@@ -6,18 +6,19 @@ export async function GET() {
 
   const emergencyData = {
     '@context': 'https://schema.org',
-    '@type': 'Service',
-    serviceType: 'Экстренная помощь и инструкции при поломках электроники',
-    name: 'ServiceBox - Первая помощь технике',
-    provider: { '@id': `${BASE_URL}#business` },
-    areaServed: { '@type': 'City', name: 'Вологда' },
-
-    // ✅ Валидный массив HowTo вместо выдуманного свойства "instruction"
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Инструкции по спасению техники',
-      itemListElement: [
-        {
+    '@graph': [
+      {
+        '@type': 'Service',
+        serviceType: 'Экстренная помощь и инструкции при поломках электроники',
+        name: 'ServiceBox - Первая помощь технике',
+        provider: { '@id': `${BASE_URL}#business` },
+        areaServed: { '@type': 'City', name: 'Вологда' },
+        contactPoint: {
+          '@type': 'ContactPoint',
+          telephone: '+7-911-501-88-28',
+          contactType: 'customer support'
+        },
+        subjectOf: {
           '@type': 'HowTo',
           name: 'Телефон или ноутбук упал в воду',
           description: 'Что делать немедленно после попадания влаги',
@@ -30,13 +31,8 @@ export async function GET() {
             { '@type': 'HowToStep', position: 5, text: 'Принесите в ServiceBox (Северная 7А) в течение 24 часов для ультразвуковой чистки.' }
           ]
         }
-      ]
-    },
-    contactPoint: {
-      '@type': 'ContactPoint',
-      telephone: '+7-911-501-88-28',
-      contactType: 'customer support'
-    },
+      }
+    ],
     lastUpdated: new Date().toISOString(),
   };
 

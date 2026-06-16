@@ -1,177 +1,157 @@
+//components/Aboutref/AboutRef.js
+// components/AboutRef/AboutRef.js
 'use client';
 
-import { forwardRef } from "react";
+import { forwardRef, useState, useEffect, useMemo } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import styles from './AboutRef.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTelegram } from '@fortawesome/free-brands-svg-icons';
 
-import {
-  FaLaptop, FaTabletAlt, FaTv, FaMobile, FaBookReader, FaGamepad,
-  FaDesktop, FaWrench, FaApple, FaRobot, FaRegClock, FaShieldAlt,
-  FaCreditCard, FaMicroscope, FaFire, FaBath
-} from "react-icons/fa";
-import styles from "./AboutRef.module.css";
+// ✅ Безопасное получение домена (избегает гидратации и undefined при билде)
+const BASE_URL = typeof window !== 'undefined'
+  ? process.env.NEXT_PUBLIC_BASE_URL || window.location.origin
+  : 'https://servicebox35.ru';
 
-// Группируем услуги для лучшего восприятия и SEO
-const serviceCategories = [
-  {
-    category: "Мобильная техника",
-    items: [
-      { icon: <FaApple />, title: "Ремонт iPhone", text: "Замена экранов, батарей, стекол. Сохраняем True Tone и Face ID." },
-      { icon: <FaMobile />, title: "Смартфоны Android", text: "Samsung, Xiaomi, Huawei. Замена шлейфов, разъемов Type-C." },
-      { icon: <FaTabletAlt />, title: "Планшеты и iPad", text: "Замена тачскринов, дисплейных модулей, восстановление после воды." },
-    ]
-  },
-  {
-    category: "Компьютеры и ноутбуки",
-    items: [
-      { icon: <FaLaptop />, title: "Ноутбуки", text: "Чистка, замена матриц, клавиатур. Ремонт материнских плат." },
-      { icon: <FaDesktop />, title: "ПК и моноблоки", text: "Апгрейд, сборка, устранение перегрева, восстановление данных." },
-      { icon: <FaWrench />, title: "Видеокарты", text: "Реболл GPU, замена VRAM, ремонт цепей питания после майнинга." },
-    ]
-  },
-  {
-    category: "Мультимедиа и другое",
-    items: [
-      { icon: <FaTv />, title: "Телевизоры", text: "Замена LED-подсветки, ремонт блоков питания и T-Con плат." },
-      { icon: <FaGamepad />, title: "Игровые приставки", text: "PS4/PS5, Xbox, Switch. Чистка, замена термопасты, ремонт HDMI." },
-      { icon: <FaRobot />, title: "Роботы-пылесосы", text: "Замена аккумуляторов, ремонт моторов и лидаров." },
-    ]
-  }
-];
+const AboutRef = forwardRef(({ className = '' }, ref) => {
+  const [currentPhoto, setCurrentPhoto] = useState(0);
 
-// JSON-LD для ИИ-поисковиков и Google/Yandex
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "LocalBusiness",
-      "@id": "https://servicebox35.ru#business",
-      "name": "Сервисный центр ServiceBox",
-      "description": "Профессиональный ремонт цифровой техники в Вологде. Основан в 2016 году. Специализация: BGA-пайка, восстановление после залития, замена экранов.",
-      "image": "https://servicebox35.ru/images/logo.png",
-      "telephone": "+7-911-501-88-28",
-      "email": "servicebox35@gmail.com",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "ул. Северная, д. 7А, 1 этаж, ТЦ КИТ",
-        "addressLocality": "Вологда",
-        "addressRegion": "Вологодская область",
-        "postalCode": "160000",
-        "addressCountry": "RU"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": "59.229445",
-        "longitude": "39.878542"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "5.0",
-        "reviewCount": "150",
-        "bestRating": "5"
-      },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        "opens": "10:00",
-        "closes": "20:00"
-      },
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Услуги ремонта техники",
-        "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Ремонт смартфонов" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Ремонт ноутбуков" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Ремонт видеокарт" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Ремонт телевизоров" } }
-        ]
-      }
-    }
-  ]
-};
+  const photos = useMemo(() => [
+    { src: "/images/mestomastera1.webp", alt: "Рабочее место мастера по ремонту ноутбуков и видеокарт в ServiceBox" },
+    { src: "/images/mestomastera2.webp", alt: "Оборудование для BGA-пайки и реболла видеочипов в мастерской" },
+    { src: "/images/ya.webp", alt: "Мастер ServiceBox за диагностикой материнской платы" },
+    { src: "/images/1.webp", alt: "Рабочая зона сервисного центра" },
+    { src: "/images/7793.webp", alt: "Стенд для тестирования отремонтированных видеокарт и ноутбуков" },
+    { src: "/images/vhod.webp", alt: "Зона приёма клиентов ServiceBox на Северной 7А" },
+    { src: "/images/2.webp", alt: "Ресепшн мастерской ServiceBox" },
+    { src: "/images/5060carta.webp", alt: "Ремонт видеокарты RTX на профессиональном оборудовании" },
+    { src: "/images/magistr.webp", alt: "Инструменты для микропайки и диагностики электроники" },
+  ], []);
 
-const AboutRef = forwardRef((_props, ref) => {
+  const Clock = "/images/clock.svg";
+  const Card = "/images/Card.svg";
+  const Secure = "/images/secure.svg";
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentPhoto(prev => (prev === photos.length - 1 ? 0 : prev + 1));
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [photos.length]);
+
+
   return (
-    <section id="aboutRef" className={styles.aboutRef} ref={ref}>
-      {/* Скрытый JSON-LD для ИИ и поисковиков */}
+    <section id="aboutRef" className={`${styles.container} ${className}`} ref={ref}>
+
       <script
         id="about-schema"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutJsonLd) }}
       />
 
-      <div className={styles.aboutContent}>
-        {/* Введение с фактами */}
-        <div className={styles.introBlock}>
-          <h2 className={styles.animatedTitle}>Сервисный центр ServiceBox в Вологде</h2>
-          <p className={styles.leadText}>
-            Работаем с <strong>2016 года</strong>. Выполняем сложный компонентный ремонт там, где другие предлагают только замену деталей.
-            Официальный рейтинг <strong>5.0 на Яндекс.Картах</strong> на основе <strong>150+ отзывов</strong>.
+      <div className={styles.content}>
+        <h1 className={styles.title}>
+          Ремонт ноутбуков, видеокарт и техники Apple в Вологде — Сервис Бокс
+        </h1>
+
+        <h2 className={styles.heading}>
+          Профессиональный ремонт цифровой техники с гарантией до 24 месяцев
+        </h2>
+
+        <p className={styles.subheading}>
+          Сервисный центр <strong>ServiceBox</strong> выполняет сложный компонентный ремонт в Вологде:
+          BGA-пайка видеочипов и хабов, реболл GPU, замена видеопамяти, устранение прогаров на материнских платах,
+          восстановление техники после залития и механических повреждений. Ремонтируем ноутбуки, видеокарты,
+          ПК, игровые консоли (PlayStation, Xbox), технику Apple, телефоны, планшеты и телевизоры.
+        </p>
+
+        <p className={styles.subheading}>
+          Прозрачное ценообразование: стоимость работ согласуется до начала ремонта и не меняется после диагностики.
+          Бесплатная диагностика при согласии на ремонт. Оплата только после проверки работоспособности устройства.
+        </p>
+
+        <h3 className={styles.heading}>Почему выбирают ServiceBox в Вологде</h3>
+        <p className={styles.subheading}>
+          Мастера с опытом более 10 лет берутся за случаи, от которых отказались другие сервисы.
+          Используем профессиональное оборудование: инфракрасные BGA-станции, микроскопы, осциллографы.
+          Онлайн-консультации через сайт и Telegram. Официальная гарантия на все виды работ и установленные запчасти.
+        </p>
+
+        <div className={styles.quoteBlock}>
+          <p className={styles.quote}>
+            Есть замечания, пожелания или идеи по улучшению сервиса? Напишите напрямую руководителю в{' '}
+            <a
+              href="https://t.me/Tomkka"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.quoteLink}
+              aria-label="Написать руководителю ServiceBox в Telegram"
+            >
+              <FontAwesomeIcon icon={faTelegram} />
+              <span>Telegram @Tomkka</span>
+            </a>.
+            Мы учитываем каждый отзыв клиентов для улучшения качества обслуживания.
           </p>
         </div>
 
-        {/* Блок: Почему мы (УТП) */}
+        <div className={styles.galleryContainer}>
+          <div className={styles.gallery}>
+            {/* ✅ Убран unoptimized для .webp (Next.js сам оптимизирует), добавлен sizes для LCP */}
+            <Image
+              src={photos[currentPhoto].src}
+              className={styles.image}
+              alt={photos[currentPhoto].alt}
+              width={800}
+              height={450}
+              priority={currentPhoto === 0}
+              sizes="(max-width: 768px) 100vw, 800px"
+              style={{ objectFit: 'cover' }}
+            />
+            <div className={styles.dots} role="tablist" aria-label="Фотографии сервисного центра">
+              {photos.map((photo, index) => (
+                <button
+                  key={index}
+                  className={`${styles.dot} ${currentPhoto === index ? styles.dotActive : ""}`}
+                  onClick={() => setCurrentPhoto(index)}
+                  role="tab"
+                  aria-selected={currentPhoto === index}
+                  aria-label={`Фото ${index + 1}: ${photo.alt}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
         <div className={styles.featuresGrid}>
+          {/* ✅ SVG иконки остаются с unoptimized, так как Next.js не оптимизирует вектор */}
           <div className={styles.featureCard}>
-            <FaRegClock className={styles.featureIcon} />
-            <h3>Экспресс от 30 минут</h3>
-            <p>80% поломок (экраны, батареи, разъемы) устраняем в день обращения при вас.</p>
+            <Image src={Clock} className={styles.featureIcon} alt="" width={50} height={50} unoptimized aria-hidden="true" />
+            <h3 className={styles.featureTitle}>Ремонт от 30 минут</h3>
+            <p className={styles.featureText}>Срочный ремонт без очередей — большинство работ выполняем при вас</p>
           </div>
-          <div className={styles.featureCard}>
-            <FaShieldAlt className={styles.featureIcon} />
-            <h3>Гарантия до 24 месяцев</h3>
-            <p>Выдаем официальный чек и гарантийный талон. Отвечаем за свою работу.</p>
-          </div>
-          <div className={styles.featureCard}>
-            <FaCreditCard className={styles.featureIcon} />
-            <h3>Оплата после ремонта</h3>
-            <p>Никаких предоплат. Вы платите только когда устройство проверено и работает.</p>
-          </div>
-        </div>
 
-        {/* Блок: Оборудование (Критически важно для ИИ и доверия) */}
-        <div className={styles.equipmentBlock}>
-          <h3 className={styles.sectionTitle}>Профессиональное оборудование</h3>
-          <p className={styles.sectionSubtitle}>Мы не используем "кустарные" методы. В нашей лаборатории установлены:</p>
-          <div className={styles.equipmentGrid}>
-            <div className={styles.equipItem}>
-              <FaFire className={styles.equipIcon} />
-              <span>Инфракрасные и термовоздушные BGA-станции для пайки чипов</span>
-            </div>
-            <div className={styles.equipItem}>
-              <FaBath className={styles.equipIcon} />
-              <span>Ультразвуковые ванны для восстановления после залития жидкостью</span>
-            </div>
-            <div className={styles.equipItem}>
-              <FaMicroscope className={styles.equipIcon} />
-              <span>Лабораторные микроскопы для работы с микрокомпонентами</span>
-            </div>
+          <div className={styles.featureCard}>
+            <Image src={Secure} className={styles.featureIcon} alt="" width={50} height={50} unoptimized aria-hidden="true" />
+            <h3 className={styles.featureTitle}>Гарантия до 24 месяцев</h3>
+            <p className={styles.featureText}>Официальная гарантия на все виды работ и установленные запчасти</p>
           </div>
-        </div>
 
-        {/* Блок: Услуги */}
-        <div className={styles.repairServices}>
-          <h2 className={styles.sectionTitle}>Что мы ремонтируем</h2>
-          <div className={styles.categoriesWrapper}>
-            {serviceCategories.map((cat, catIndex) => (
-              <div key={catIndex} className={styles.categoryBlock}>
-                <h3 className={styles.categoryTitle}>{cat.category}</h3>
-                <div className={styles.servicesGrid}>
-                  {cat.items.map((service, index) => (
-                    <article className={styles.serviceCard} key={index}>
-                      <div className={styles.serviceIconWrapper}>
-                        {service.icon}
-                      </div>
-                      <div className={styles.serviceInfo}>
-                        <h4 className={styles.serviceTitle}>{service.title}</h4>
-                        <p className={styles.serviceText}>{service.text}</p>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </div>
-            ))}
+          <div className={styles.featureCard}>
+            <Image src={Card} className={styles.featureIcon} alt="" width={50} height={50} unoptimized aria-hidden="true" />
+            <h3 className={styles.featureTitle}>Любые формы оплаты</h3>
+            <p className={styles.featureText}>Наличные, карты, безнал для юрлиц — оплата после проверки устройства</p>
           </div>
         </div>
       </div>
+
+      <nav className={styles.backButton} aria-label="Навигация">
+        <ul className={styles.backList}>
+          <li className={styles.backItem}>
+            <Link href="/" className={styles.backLink}>← На главную</Link>
+          </li>
+        </ul>
+      </nav>
     </section>
   );
 });

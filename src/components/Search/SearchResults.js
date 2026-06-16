@@ -10,7 +10,7 @@ export default function SearchResults({ results, counts = {}, query, error }) {
       <div className="text-center py-12">
         <div className="text-red-500 text-5xl mb-4">⚠️</div>
         <h3 className="text-xl font-semibold mb-2">Ошибка при поиске</h3>
-        <p className="text-gray-600">Попробуйте обновить страницу или повторить поиск позже</p>
+        <p className="text-gray-900">Попробуйте обновить страницу или повторить поиск позже</p>
       </div>
     );
   }
@@ -20,7 +20,7 @@ export default function SearchResults({ results, counts = {}, query, error }) {
       <div className="text-center py-12">
         <div className="text-gray-400 text-5xl mb-4">🔍</div>
         <h3 className="text-xl font-semibold mb-2">Что ищем?</h3>
-        <p className="text-gray-600">Введите запрос в поисковой строке</p>
+        <p className="text-gray-900">Введите запрос в поисковой строке</p>
         <div className="mt-6">
           <h4 className="font-medium mb-3">Популярные запросы:</h4>
           <div className="flex flex-wrap justify-center gap-2">
@@ -28,7 +28,7 @@ export default function SearchResults({ results, counts = {}, query, error }) {
               <Link
                 key={tag}
                 href={`/search?q=${encodeURIComponent(tag)}`}
-                className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                className="px-4 py-2 bg-white border border-gray-800 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 {tag}
               </Link>

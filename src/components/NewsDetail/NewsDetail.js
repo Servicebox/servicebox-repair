@@ -1,13 +1,10 @@
-// src/components/NewsDetail/NewsDetail.js
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import styles from './NewsDetail.module.css';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
-// JSON-LD для структурированных данных
 const NewsJsonLd = ({ news, slug }) => {
   if (!news) return null;
   const textContent = news.contentBlocks
@@ -24,11 +21,7 @@ const NewsJsonLd = ({ news, slug }) => {
     datePublished: news.publishedAt || news.createdAt,
     dateModified: news.updatedAt,
     author: { '@type': 'Organization', name: news.author || 'ServiceBox', url: API_URL },
-    publisher: {
-      '@type': 'Organization',
-      name: 'ServiceBox',
-      logo: { '@type': 'ImageObject', url: `${API_URL}/logo.png`, width: 600, height: 60 },
-    },
+    publisher: { '@id': `${API_URL}#business` },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${API_URL}/news/${slug}` },
     articleBody: textContent.substring(0, 5000),
     wordCount: textContent.split(/\s+/).filter(Boolean).length,
@@ -38,7 +31,6 @@ const NewsJsonLd = ({ news, slug }) => {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />;
 };
 
-// ✅ ИСПРАВЛЕННЫЙ ContentBlockRenderer С ПОДДЕРЖКОЙ ВИДЕО
 const ContentBlockRenderer = ({ blocks, onImageClick }) => {
   if (!Array.isArray(blocks)) return null;
 
@@ -48,13 +40,11 @@ const ContentBlockRenderer = ({ blocks, onImageClick }) => {
         switch (block.type) {
           case 'heading':
             return <h2 key={index} className={styles.heading}>{block.content}</h2>;
-
           case 'text':
             return (
               <div key={index} className={styles.textBlock}
                 dangerouslySetInnerHTML={{ __html: block.content?.replace(/\n/g, '<br>') }} />
             );
-
           case 'image':
             return block.media ? (
               <figure key={index} className={styles.imageBlock}>
@@ -64,8 +54,6 @@ const ContentBlockRenderer = ({ blocks, onImageClick }) => {
                 {block.description && <figcaption className={styles.imageCaption}>{block.description}</figcaption>}
               </figure>
             ) : null;
-
-          // ✅ ДОБАВЛЕН: Рендеринг видео-файлов
           case 'video':
             return block.media ? (
               <figure key={index} className={styles.videoBlock}>
@@ -79,7 +67,6 @@ const ContentBlockRenderer = ({ blocks, onImageClick }) => {
                 {block.description && <figcaption className={styles.videoCaption}>{block.description}</figcaption>}
               </figure>
             ) : null;
-
           case 'youtube':
             return block.videoUrl ? (
               <div key={index} className={styles.videoBlock}>
@@ -93,14 +80,12 @@ const ContentBlockRenderer = ({ blocks, onImageClick }) => {
                 {block.description && <p className={styles.videoCaption}>{block.description}</p>}
               </div>
             ) : null;
-
           case 'list':
             return block.content ? (
               <ul key={index} className={styles.listBlock}>
                 {block.content.split('\n').filter(Boolean).map((item, i) => <li key={i}>{item}</li>)}
               </ul>
             ) : null;
-
           default:
             return null;
         }
@@ -178,7 +163,7 @@ export default function NewsDetail({ newsSlug }) {
   }
 
   return (
-    <article className={styles.container} itemScope itemType="https://schema.org/NewsArticle">
+    <article className={styles.container}>
       <NewsJsonLd news={news} slug={newsSlug} />
       <nav className={styles.breadcrumbs} aria-label="Хлебные крошки">
         <ol>
@@ -188,27 +173,27 @@ export default function NewsDetail({ newsSlug }) {
         </ol>
       </nav>
       <header className={styles.header}>
-        <h1 className={styles.title} itemProp="headline">{news.title}</h1>
+        <h1 className={styles.title}>{news.title}</h1>
         <div className={styles.meta}>
           {news.publishedAt && (
-            <time className={styles.date} dateTime={news.publishedAt} itemProp="datePublished">
+            <time className={styles.date} dateTime={news.publishedAt}>
               📅 {formatDate(news.publishedAt)}
             </time>
           )}
           {news.updatedAt && news.updatedAt !== news.publishedAt && (
-            <time className={styles.date} dateTime={news.updatedAt} itemProp="dateModified">
+            <time className={styles.date} dateTime={news.updatedAt}>
               🔄 Обновлено: {formatDate(news.updatedAt)}
             </time>
           )}
-          {news.author && <span className={styles.author} itemProp="author">✍️ {news.author}</span>}
+          {news.author && <span className={styles.author}>✍️ {news.author}</span>}
           {news.views > 0 && <span className={styles.views}>👁️ {news.views}</span>}
         </div>
         {news.featuredImage && (
           <figure className={styles.featuredImage}>
-            <img src={news.featuredImage} alt={news.title} className={styles.mainImage} itemProp="image" loading="eager" />
+            <img src={news.featuredImage} alt={news.title} className={styles.mainImage} loading="eager" />
           </figure>
         )}
-        {news.excerpt && <p className={styles.excerpt} itemProp="description">{news.excerpt}</p>}
+        {news.excerpt && <p className={styles.excerpt}>{news.excerpt}</p>}
       </header>
 
       <ContentBlockRenderer blocks={news.contentBlocks} onImageClick={openLightbox} />

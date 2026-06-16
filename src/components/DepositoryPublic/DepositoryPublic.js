@@ -1,4 +1,4 @@
-// app/depository-public/page.jsx
+// components/depositoryPublic/page.js
 'use client';
 import { useEffect, useState } from 'react';
 import styles from './DepositoryPublic.module.css';
@@ -32,7 +32,7 @@ export default function DepositoryPublic() {
             if (selectedCategory && selectedCategory !== 'all') {
                 params.append('category', selectedCategory);
             }
-            
+
             const response = await fetch(`/api/depository/files?${params}`);
             if (response.ok) {
                 const data = await response.json();
@@ -117,7 +117,7 @@ export default function DepositoryPublic() {
                         className={styles.searchInput}
                     />
                 </div>
-                
+
                 <div className={styles.categoryFilter}>
                     <select
                         value={selectedCategory}
@@ -132,8 +132,8 @@ export default function DepositoryPublic() {
                         ))}
                     </select>
                 </div>
-                
-                <button 
+
+                <button
                     onClick={fetchFiles}
                     className={styles.refreshButton}
                 >
@@ -234,13 +234,13 @@ export default function DepositoryPublic() {
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     {file.description && (
                                         <div className={styles.cardDescription}>
                                             <p>{file.description}</p>
                                         </div>
                                     )}
-                                    
+
                                     <div className={styles.cardDetails}>
                                         <div className={styles.detailItem}>
                                             <strong>Тип:</strong>
@@ -255,7 +255,7 @@ export default function DepositoryPublic() {
                                             <span>{file.downloadCount || 0}</span>
                                         </div>
                                     </div>
-                                    
+
                                     <button
                                         className={styles.downloadButton}
                                         onClick={() => handleDownload(file._id, file.originalName)}
