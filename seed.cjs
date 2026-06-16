@@ -1,5 +1,5 @@
 // seed.cjs
-require('dotenv').config({ path: '.env.local' });
+require('dotenv').config({ path: '.env.production' });
 const mongoose = require('mongoose');
 
 // Подключение к БД

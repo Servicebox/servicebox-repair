@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/serviceboxdb';
 
 if (!MONGODB_URI) {
-  throw new Error('Пожалуйста, определите переменную окружения MONGODB_URI в .env.local');
+  throw new Error('Пожалуйста, определите переменную окружения MONGODB_URI в .env.production');
 }
 
 let cached = global.mongoose;
