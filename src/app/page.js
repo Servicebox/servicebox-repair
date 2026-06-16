@@ -1,4 +1,6 @@
+// app/page.js
 import Main from '../components/Main/Main';
+import { BUSINESS, BASE_URL } from '@/lib/constants';
 
 export const metadata = {
   title: 'Ремонт телефонов, ноутбуков, телевизоров и видеокарт в Вологде',
@@ -9,16 +11,38 @@ export const metadata = {
     'ремонт ноутбуков Вологда',
     'ремонт телевизоров Вологда',
     'ремонт видеокарт Вологда',
+    'ремонт консолей вологда',
     'замена экрана Вологда',
     'BGA пайка Вологда',
     'сервисный центр Вологда',
     'ServiceBox',
   ],
-  alternates: { canonical: '/' },
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     title: 'Ремонт техники в Вологде | Сервисный центр ServiceBox',
     description:
       'Срочный ремонт телефонов, ноутбуков и видеокарт. Бесплатная диагностика и гарантия до 2 лет.',
+    url: BASE_URL,
+    siteName: BUSINESS.shortName,
+    locale: 'ru_RU',
+    type: 'website',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: `${BUSINESS.shortName} - Ремонт техники в Вологде`,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ремонт техники в Вологде | Сервисный центр ServiceBox',
+    description:
+      'Срочный ремонт телефонов, ноутбуков и видеокарт. Бесплатная диагностика и гарантия до 2 лет.',
+    images: ['/og-image.jpg'],
   },
 };
 
