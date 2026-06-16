@@ -2,26 +2,31 @@ import { NextResponse } from 'next/server';
 import Service from '@/models/Service';
 import dbConnect from '@/lib/db';
 
+// ✅ 1. Добавь эту функцию в начало файла (после импортов)
+const isValidObjectId = (id) => {
+  if (!id || typeof id !== 'string') return false;
+  // Проверяем, что строка состоит ровно из 24 hex-символов (стандарт MongoDB ObjectId)
+  return /^[0-9a-fA-F]{24}$/.test(id);
+};
+
 export async function GET(request) {
   try {
     await dbConnect();
-    
+
     const { searchParams } = new URL(request.url);
     const tree = searchParams.get('tree');
-    
+
     if (tree === 'true') {
-      // Возвращаем древовидную структуру
       const treeData = await Service.getTree();
       return NextResponse.json({
         success: true,
         data: treeData
       });
     } else {
-      // Возвращаем плоский список
       const services = await Service.find({})
         .populate('parent')
         .sort({ order: 1, name: 1 });
-      
+
       return NextResponse.json({
         success: true,
         data: services
@@ -43,7 +48,7 @@ export async function POST(request) {
 
     console.log('📝 POST запрос для создания услуги:', body);
 
-    // Проверяем уникальность slug
+    // 1. Проверяем уникальность slug
     if (body.slug) {
       const existingService = await Service.findOne({ slug: body.slug });
       if (existingService) {
@@ -54,7 +59,16 @@ export async function POST(request) {
       }
     }
 
-    // Создаем услугу
+    // 2. ✅ ВАЛИДАЦИЯ PARENT (ВСТАВЛЯЕТСЯ ЗДЕСЬ)
+    if (body.parent) {
+      if (typeof body.parent === 'string' &&
+        (body.parent.startsWith('calc-') || !isValidObjectId(body.parent))) {
+        console.warn('⚠️ Некорректный parent ID при создании:', body.parent);
+        delete body.parent; // Удаляем поле, чтобы Mongoose не упал с CastError
+      }
+    }
+
+    // 3. Создаем услугу (теперь body безопасен для Mongoose)
     const service = new Service(body);
     await service.save();
 
@@ -64,14 +78,14 @@ export async function POST(request) {
 
     console.log('✅ Услуга создана:', service.name);
 
-    return NextResponse.json({ 
-      success: true, 
-      data: service 
+    return NextResponse.json({
+      success: true,
+      data: service
     }, { status: 201 });
-    
+
   } catch (error) {
     console.error('❌ Ошибка создания услуги:', error);
-    
+
     if (error.name === 'ValidationError') {
       const errors = Object.values(error.errors).map(err => err.message);
       return NextResponse.json(

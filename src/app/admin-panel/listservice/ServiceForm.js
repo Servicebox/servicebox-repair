@@ -2,6 +2,16 @@
 
 import { useState, useEffect } from 'react';
 
+// Категории из калькулятора (соответствуют ключам в PRICING)
+const CALCULATOR_CATEGORIES = [
+  { id: 'calc-phone', name: '📱 Смартфон' },
+  { id: 'calc-laptop', name: '💻 Ноутбук' },
+  { id: 'calc-tablet', name: '📲 Планшет' },
+  { id: 'calc-tv', name: '📺 Телевизор' },
+  { id: 'calc-console', name: '🎮 Игровая приставка' },
+  { id: 'calc-videocard', name: '🔥 Видеокарта' },
+];
+
 const ServiceForm = ({ service, onClose, onSuccess }) => {
   const [formData, setFormData] = useState({
     name: '',
@@ -75,26 +85,22 @@ const ServiceForm = ({ service, onClose, onSuccess }) => {
     }
   };
 
-  // В handleSubmit добавьте:
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
     try {
-      // Проверка обязательных полей
       if (!formData.name.trim()) throw new Error('Укажите название');
       if (!formData.description.trim()) throw new Error('Укажите описание');
       if (!formData.slug.trim()) throw new Error('Укажите slug');
 
-      // Подготовка данных
       const submitData = {
         ...formData,
         features: formData.features.filter(f => f.trim() !== ''),
         price: formData.isCategory ? '' : formData.price
       };
 
-      // Отправка запроса
       const url = service && service._id
         ? `/api/services/${encodeURIComponent(service.slug)}`
         : '/api/services';
@@ -331,6 +337,8 @@ const ServiceForm = ({ service, onClose, onSuccess }) => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">— Без родителя (корневой уровень) —</option>
+
+                {/* ✅ ТОЛЬКО РЕАЛЬНЫЕ КАТЕГОРИИ ИЗ БАЗЫ */}
                 {categories.map(cat => (
                   <option key={cat._id} value={cat._id}>
                     {cat.name} {cat.level > 0 ? `(уровень ${cat.level})` : ''}
@@ -338,7 +346,7 @@ const ServiceForm = ({ service, onClose, onSuccess }) => {
                 ))}
               </select>
               <p className="text-xs text-gray-500">
-                Выберите родительскую категорию для вложенности
+                Выберите существующую категорию из базы. Категории калькулятора выбираются автоматически по ключам PRICING.
               </p>
             </div>
 

@@ -16,12 +16,12 @@ const extractDeviceModel = (serviceName) => {
     /(Apple\s+Watch\s+\w*\s*\d*)/i,
     /(Google\s+Pixel\s+\d+)/i
   ];
-  
+
   for (let pattern of patterns) {
     const match = serviceName.match(pattern);
     if (match) return match[0];
   }
-  
+
   return serviceName;
 };
 
@@ -50,7 +50,7 @@ const BookingForm = ({ service, onClose, onBookingSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!privacyAgreed) {
       setError('Необходимо согласие на обработку персональных данных');
       return;
@@ -83,14 +83,14 @@ const BookingForm = ({ service, onClose, onBookingSuccess }) => {
       });
 
       const result = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(result.message || 'Ошибка при создании записи');
       }
 
       // ИСПРАВЛЕНИЕ: Проверяем разные форматы ответа
       let bookingDataResult;
-      
+
       if (result.success && result.data) {
         // Формат: {success: true, data: {...}}
         bookingDataResult = result.data;
@@ -100,9 +100,9 @@ const BookingForm = ({ service, onClose, onBookingSuccess }) => {
       } else {
         bookingDataResult = result;
       }
-      
+
       console.log('✅ Бронирование создано успешно:', bookingDataResult);
-      
+
       // Телеграм уведомление
       try {
         await fetch('/api/telegram', {
@@ -124,7 +124,7 @@ const BookingForm = ({ service, onClose, onBookingSuccess }) => {
 
       // Показываем SuccessBookingModal
       setSuccessBooking(bookingDataResult);
-      
+
       if (onBookingSuccess) {
         onBookingSuccess(bookingDataResult);
       }
@@ -157,7 +157,7 @@ const BookingForm = ({ service, onClose, onBookingSuccess }) => {
         <div className={styles.bookingForm}>
           <div className={styles.formHeader}>
             <h2 className={styles.formTitle}>Запись на услугу</h2>
-            <button 
+            <button
               onClick={onClose}
               className={styles.closeButton}
             >
@@ -257,7 +257,7 @@ const BookingForm = ({ service, onClose, onBookingSuccess }) => {
             </div>
 
             <div style={{ marginTop: '1.5rem' }}>
-              <PrivacyCheckbox 
+              <PrivacyCheckbox
                 onAgreementChange={setPrivacyAgreed}
                 required={true}
               />
@@ -286,7 +286,7 @@ const BookingForm = ({ service, onClose, onBookingSuccess }) => {
 
       {/* SuccessBookingModal показывается поверх всего */}
       {successBooking && (
-        <SuccessBookingModal 
+        <SuccessBookingModal
           booking={successBooking}
           onClose={handleSuccessModalClose}
         />

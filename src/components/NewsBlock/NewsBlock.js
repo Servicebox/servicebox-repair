@@ -63,7 +63,7 @@ const NewsBlock = ({ limit = 3 }) => {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {[...Array(limit)].map((_, i) => (
-                            <div key={i} className="bg-white rounded-2xl overflow-hidden shadow-lg animate-pulse">
+                            <div key={i} className="bg-transparent rounded-2xl overflow-hidden shadow-lg animate-pulse">
                                 <div className="h-48 bg-gray-200" />
                                 <div className="p-6">
                                     <div className="h-4 bg-gray-200 rounded mb-3 w-1/3" />
@@ -81,7 +81,7 @@ const NewsBlock = ({ limit = 3 }) => {
     if (news.length === 0) return null;
 
     return (
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-transparent">
             <div className="max-w-7xl mx-auto px-4">
                 {/* Заголовок */}
                 <div className="flex items-center justify-between mb-12">

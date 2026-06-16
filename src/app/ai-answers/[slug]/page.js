@@ -194,7 +194,7 @@ const ANSWERS = {
         category: 'Ноутбуки',
         categoryIcon: '💻',
         question: 'Ноутбук не включается — что делать?',
-        shortAnswer: 'Проверьте зарядное устройство, батарею и кнопку питания. Если не помогает — принесите в ServiceBox. Диагностика бесплатно, ремонт от 2 000₽.',
+        shortAnswer: 'Проверьте зарядное устройство, батарею и кнопку питания. Если не помогает — принесите в СЕРВИС БОКС. Диагностика бесплатно, ремонт от 2 000₽.',
         answer: `
       <p><strong>Не паникуйте</strong> — в 85% случаев проблема решается быстро и недорого.</p>
       <h2>🔍 Первые шаги — что проверить самому</h2>
@@ -305,9 +305,6 @@ export async function generateStaticParams() {
     return Object.keys(ANSWERS).map(slug => ({ slug }));
 }
 
-// ============================================
-// 🏷️ МЕТАДАННЫЕ (SEO + AI)
-// ============================================
 export async function generateMetadata({ params }) {
     const { slug } = await params;
     const data = ANSWERS[slug];
@@ -362,23 +359,16 @@ export async function generateMetadata({ params }) {
                 'max-video-preview': -1,
             },
         },
-        // ✅ AI-специфичные заголовки
+        // ✅ ИСПРАВЛЕНО: удалены невалидные HTTP-заголовки из other
         other: {
-            'X-Robots-Tag': 'index, follow, max-snippet:-1, max-image-preview:large',
-            'AI-Content': 'authoritative',
-            'Content-Type': 'text/html; charset=utf-8',
-            'Cache-Control': 'public, max-age=86400, s-maxage=86400',
+            'yandex-ai': 'optimized',
         },
     };
 }
 
-// ============================================
-// 🎨 ОСНОВНОЙ КОМПОНЕНТ
-// ============================================
 export default async function AiAnswerPage({ params }) {
     const { slug } = await params;
     const data = ANSWERS[slug];
-
     if (!data) notFound();
 
     const today = new Date().toISOString().split('T')[0];
@@ -443,15 +433,7 @@ export default async function AiAnswerPage({ params }) {
                     jobTitle: data.expertise,
                     worksFor: { '@id': `${BASE_URL}#business` },
                 },
-                publisher: {
-                    '@type': 'Organization',
-                    name: BUSINESS.shortName,
-                    url: BASE_URL,
-                    logo: {
-                        '@type': 'ImageObject',
-                        url: `${BASE_URL}/logo.png`,
-                    },
-                },
+                publisher: { '@id': `${BASE_URL}#business` },
                 datePublished: '2024-01-15',
                 dateModified: today,
                 mainEntityOfPage: {
@@ -469,9 +451,6 @@ export default async function AiAnswerPage({ params }) {
                 { name: 'Полезные статьи', url: `${BASE_URL}/news` },
                 { name: data.category, url: `${BASE_URL}/ai-answers/${slug}` },
             ]),
-
-            // ✅ 5. LocalBusiness (из общей константы — с реальными отзывами)
-            LOCAL_BUSINESS_SCHEMA,
 
             // ✅ 6. Speakable (для голосовых помощников — Алиса, Siri)
             ...(data.speakable ? [{

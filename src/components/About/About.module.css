@@ -1,0 +1,70 @@
+/* About.module.css – для галереи PhotoCarousel */
+
+.galleryContainer {
+    margin: 2rem 0;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.2);
+}
+
+.gallery {
+    position: relative;
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: opacity 0.3s ease;
+}
+
+.dots {
+    position: absolute;
+    bottom: 16px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 8px 16px;
+    border-radius: 40px;
+    width: fit-content;
+    margin: 0 auto;
+    backdrop-filter: blur(4px);
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 0;
+}
+
+.dotActive {
+    background: #ff8c00;
+    transform: scale(1.3);
+    box-shadow: 0 0 0 2px white;
+}
+
+/* Адаптив */
+@media (max-width: 640px) {
+    .dots {
+        bottom: 8px;
+        gap: 8px;
+        padding: 6px 12px;
+    }
+
+    .dot {
+        width: 8px;
+        height: 8px;
+    }
+}

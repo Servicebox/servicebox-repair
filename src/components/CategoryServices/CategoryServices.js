@@ -16,15 +16,15 @@ export default function CategoryServices({ categoryId, categoryName }) {
     try {
       setLoading(true);
       const response = await fetch('/api/services');
-      
+
       if (response.ok) {
         const allServices = await response.json();
-        
+
         // Фильтруем услуги по parent категории
-        const categoryServices = allServices.filter(service => 
+        const categoryServices = allServices.filter(service =>
           !service.isCategory && service.parent && service.parent._id === categoryId
         );
-        
+
         setServices(categoryServices);
       }
     } catch (error) {
@@ -44,7 +44,7 @@ export default function CategoryServices({ categoryId, categoryName }) {
       <div className="min-h-screen bg-gray-50 p-4">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center mb-6">
-            <button 
+            <button
               onClick={() => router.back()}
               className="flex items-center text-blue-600 hover:text-blue-800 mr-4"
             >
@@ -54,7 +54,7 @@ export default function CategoryServices({ categoryId, categoryName }) {
               Назад к категориям
             </button>
           </div>
-          
+
           <div className="bg-white rounded-lg shadow p-6">
             <div className="animate-pulse space-y-4">
               <div className="h-6 bg-gray-200 rounded w-1/4"></div>
@@ -74,7 +74,7 @@ export default function CategoryServices({ categoryId, categoryName }) {
       <div className="max-w-4xl mx-auto">
         {/* Хлебные крошки */}
         <div className="flex items-center mb-6">
-          <button 
+          <button
             onClick={() => router.push('/services')}
             className="flex items-center text-blue-600 hover:text-blue-800 mr-4"
           >
@@ -90,7 +90,7 @@ export default function CategoryServices({ categoryId, categoryName }) {
         {/* Заголовок и поиск */}
         <div className="bg-white rounded-lg shadow p-6 mb-6">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">{categoryName}</h1>
-          
+
           <div className="relative">
             <input
               type="text"
@@ -99,10 +99,10 @@ export default function CategoryServices({ categoryId, categoryName }) {
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
-            <svg 
-              className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" 
-              fill="none" 
-              stroke="currentColor" 
+            <svg
+              className="absolute left-3 top-3.5 h-5 w-5 text-gray-400"
+              fill="none"
+              stroke="currentColor"
               viewBox="0 0 24 24"
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -119,7 +119,7 @@ export default function CategoryServices({ categoryId, categoryName }) {
                 {searchTerm ? 'Ничего не найдено' : 'В этой категории пока нет услуг'}
               </h3>
               <p className="text-gray-500 mb-4">
-                {searchTerm 
+                {searchTerm
                   ? 'Попробуйте изменить поисковый запрос или выбрать другую категорию'
                   : 'Скоро здесь появятся новые услуги'
                 }
@@ -145,11 +145,11 @@ export default function CategoryServices({ categoryId, categoryName }) {
                       <p className="text-gray-600 mb-3">
                         {service.description}
                       </p>
-                      
+
                       {service.features && service.features.length > 0 && (
                         <div className="flex flex-wrap gap-2 mb-3">
                           {service.features.map((feature, index) => (
-                            <span 
+                            <span
                               key={index}
                               className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
                             >
@@ -159,7 +159,7 @@ export default function CategoryServices({ categoryId, categoryName }) {
                         </div>
                       )}
                     </div>
-                    
+
                     <div className="text-right ml-4">
                       {service.price && (
                         <div className="text-xl font-bold text-gray-900 mb-2">
@@ -174,7 +174,7 @@ export default function CategoryServices({ categoryId, categoryName }) {
                       </button>
                     </div>
                   </div>
-                  
+
                   {service.metaDescription && service.metaDescription !== service.description && (
                     <div className="mt-3 p-3 bg-gray-50 rounded-lg border">
                       <p className="text-sm text-gray-600">{service.metaDescription}</p>

@@ -2,7 +2,7 @@ import { BUSINESS, BASE_URL, SEO_DEFAULTS } from './constants';
 
 // ✅ Переиспользуемая схема LocalBusiness (для layout.js)
 export const LOCAL_BUSINESS_SCHEMA = {
-    '@type': 'ElectronicsRepairService',
+    '@type': ['LocalBusiness', 'ElectronicsStore'],
     '@id': `${BASE_URL}#business`,
     name: BUSINESS.name,
     alternateName: ['Сервис Бокс', 'СервисБокс Вологда', 'ServiceBox35'],

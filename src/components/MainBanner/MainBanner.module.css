@@ -1,18 +1,17 @@
 /* ============================================================================
-   HERO BANNER — ПОЛНАЯ АДАПТИВНОСТЬ (320px → 4K+)
-   Mobile-first подход с 10+ брейкпоинтами
+   HERO BANNER — ЧИСТЫЕ СТИЛИ (mobile-first, 320px – 1920px)
    ============================================================================ */
 
 .mainBannerSection {
   position: relative;
-  min-height: 90vh;
+  min-height: 100vh;
   background: linear-gradient(135deg, #002147 0%, #003d7a 50%, #002147 100%);
   overflow: hidden;
   padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 3vw, 1.5rem) clamp(2rem, 4vw, 3rem);
-  margin-bottom: clamp(1rem, 2vw, 2rem);
+  width: 100%;
 }
 
-/* Декоративный градиентный круг (верхний правый) */
+/* Декоративные градиентные круги */
 .mainBannerSection::before {
   content: '';
   position: absolute;
@@ -24,7 +23,6 @@
   pointer-events: none;
 }
 
-/* Декоративный градиентный круг (нижний левый) */
 .mainBannerSection::after {
   content: '';
   position: absolute;
@@ -47,7 +45,7 @@
   align-items: center;
 }
 
-/* === ЛЕВАЯ КОЛОНКА === */
+/* Левая колонка */
 .heroLeft {
   color: white;
   order: 2;
@@ -63,12 +61,11 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 100px;
   margin-bottom: clamp(1rem, 2vw, 1.5rem);
-  animation: fadeInDown 0.6s ease-out;
 }
 
 .badgeStars {
   display: flex;
-  gap: clamp(1px, 0.3vw, 2px);
+  gap: 2px;
   font-size: clamp(0.65rem, 1.5vw, 0.9rem);
 }
 
@@ -87,7 +84,6 @@
   line-height: 1.1;
   margin: 0 0 clamp(0.75rem, 2vw, 1.25rem) 0;
   letter-spacing: -0.02em;
-  animation: fadeInUp 0.6s ease-out 0.1s both;
 }
 
 .titleAccent {
@@ -95,7 +91,6 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  display: inline-block;
 }
 
 .heroSubtitle {
@@ -104,7 +99,6 @@
   color: rgba(255, 255, 255, 0.85);
   margin: 0 0 clamp(1.25rem, 3vw, 2rem) 0;
   max-width: 540px;
-  animation: fadeInUp 0.6s ease-out 0.2s both;
 }
 
 .heroSubtitle strong {
@@ -117,7 +111,6 @@
   grid-template-columns: 1fr;
   gap: clamp(0.5rem, 1.5vw, 1rem);
   margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
-  animation: fadeInUp 0.6s ease-out 0.3s both;
 }
 
 .trustItem {
@@ -129,7 +122,7 @@
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: clamp(10px, 2vw, 16px);
-  transition: all 0.3s ease;
+  transition: background 0.3s, border-color 0.3s, transform 0.3s;
 }
 
 .trustItem:hover {
@@ -156,35 +149,33 @@
   line-height: 1.3;
 }
 
-/* CTA-кнопки */
+/* CTA */
 .heroCTA {
   display: flex;
   flex-direction: column;
   gap: clamp(0.5rem, 1.5vw, 1rem);
   margin-bottom: clamp(1.5rem, 3vw, 2rem);
-  animation: fadeInUp 0.6s ease-out 0.4s both;
 }
 
 .heroBtn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(0.4rem, 1.2vw, 0.625rem);
+  gap: 0.5rem;
   padding: clamp(0.875rem, 2vw, 1.125rem) clamp(1.25rem, 3vw, 2rem);
   border: none;
   border-radius: clamp(10px, 2vw, 14px);
   font-size: clamp(0.9rem, 1.8vw, 1.05rem);
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
   width: 100%;
-  text-align: center;
 }
 
 .heroBtn.primary {
   background: linear-gradient(135deg, #ff8c00 0%, #ff6b00 100%);
   color: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .heroBtn.primary:hover {
@@ -210,7 +201,6 @@
   display: flex;
   align-items: center;
   gap: clamp(0.5rem, 1.5vw, 1rem);
-  animation: fadeInUp 0.6s ease-out 0.5s both;
 }
 
 .microAvatars {
@@ -222,14 +212,14 @@
   width: clamp(28px, 6vw, 36px);
   height: clamp(28px, 6vw, 36px);
   border-radius: 50%;
-  border: clamp(2px, 0.5vw, 3px) solid #002147;
+  border: 2px solid #002147;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-weight: 700;
   font-size: clamp(0.7rem, 1.5vw, 0.875rem);
-  margin-left: clamp(-6px, -1.5vw, -8px);
+  margin-left: -8px;
 }
 
 .avatar:first-child {
@@ -246,11 +236,10 @@
   color: white;
 }
 
-/* === ПРАВАЯ КОЛОНКА: ВИЗУАЛ === */
+/* Правая колонка */
 .heroRight {
   position: relative;
   order: 1;
-  animation: fadeInRight 0.8s ease-out 0.3s both;
 }
 
 .heroVisual {
@@ -288,37 +277,12 @@
   align-items: center;
   gap: clamp(0.4rem, 1.2vw, 0.75rem);
   padding: clamp(0.65rem, 1.5vw, 1.25rem) clamp(0.75rem, 2vw, 1.5rem);
-  background: transparent;
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: clamp(12px, 2.5vw, 20px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: floatChip 3s ease-in-out infinite;
-}
-
-.serviceChip:nth-child(1) {
-  animation-delay: 0s;
-}
-
-.serviceChip:nth-child(2) {
-  animation-delay: 0.5s;
-}
-
-.serviceChip:nth-child(3) {
-  animation-delay: 1s;
-}
-
-.serviceChip:nth-child(4) {
-  animation-delay: 1.5s;
-}
-
-.serviceChip:nth-child(5) {
-  animation-delay: 2s;
-}
-
-.serviceChip:nth-child(6) {
-  animation-delay: 2.5s;
+  transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
 }
 
 .serviceChip:hover {
@@ -337,14 +301,13 @@
   color: #002147;
 }
 
-/* Плавающий бейдж срочности */
+/* Плавающие бейджи */
 .floatingBadge {
   position: absolute;
   top: 10%;
   right: -5%;
   z-index: 3;
   display: none;
-  /* Скрыт по умолчанию, появится на больших экранах */
   align-items: center;
   gap: 0.75rem;
   padding: 0.875rem 1.25rem;
@@ -352,7 +315,6 @@
   color: white;
   border-radius: 100px;
   box-shadow: 0 15px 40px rgba(239, 68, 68, 0.4);
-  animation: floatBadge 3s ease-in-out infinite;
 }
 
 .pulse {
@@ -393,21 +355,18 @@
   opacity: 0.9;
 }
 
-/* Плавающий бейдж гарантии */
 .floatingBadgeBottom {
   position: absolute;
   bottom: 10%;
   left: -5%;
   z-index: 3;
   display: none;
-  /* Скрыт по умолчанию */
   align-items: center;
   gap: 0.75rem;
   padding: 1rem 1.5rem;
-  background: white;
+  background: transparent;
   border-radius: 20px;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-  animation: floatBadge 3.5s ease-in-out infinite 0.5s;
 }
 
 .guaranteeIcon {
@@ -431,7 +390,7 @@
   color: #64748b;
 }
 
-/* === РВАНЫЙ КРАЙ (SVG-ВОЛНА) === */
+/* Волна */
 .heroWave {
   position: absolute;
   bottom: -1px;
@@ -449,43 +408,7 @@
   display: block;
 }
 
-/* === АНИМАЦИИ === */
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(40px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
+/* Анимации */
 @keyframes pulse {
 
   0%,
@@ -514,67 +437,8 @@
   }
 }
 
-@keyframes floatChip {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes floatBadge {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-15px);
-  }
-}
-
-/* ============================================================================
-   БРЕЙКПОИНТЫ — MOBILE-FIRST (от маленького к большому)
-   ============================================================================ */
-
-/* 📱 Extra Small: 320px - 479px (iPhone SE, старые Android) */
-@media (min-width: 320px) {
-  .heroTitle {
-    font-size: clamp(1.5rem, 7vw, 1.85rem);
-  }
-
-  .heroSubtitle {
-    font-size: 0.85rem;
-  }
-
-  .serviceChip {
-    padding: 0.6rem 0.7rem;
-  }
-
-  .serviceIcon {
-    font-size: 1.15rem;
-  }
-
-  .serviceName {
-    font-size: 0.7rem;
-  }
-}
-
-/* 📱 Small Mobile: 480px - 639px (iPhone 12/13/14, современные Android) */
+/* Адаптивность */
 @media (min-width: 480px) {
-  .heroTitle {
-    font-size: clamp(1.75rem, 6vw, 2.25rem);
-  }
-
-  .heroSubtitle {
-    font-size: 0.95rem;
-  }
-
   .heroCTA {
     flex-direction: row;
     flex-wrap: wrap;
@@ -586,33 +450,12 @@
     width: auto;
   }
 
-  .serviceChip {
-    padding: 0.75rem 1rem;
-  }
-
-  .serviceIcon {
-    font-size: 1.4rem;
-  }
-
-  .serviceName {
-    font-size: 0.8rem;
-  }
-
   .trustSignals {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* 📱 Large Mobile: 640px - 767px (iPhone Pro Max, большие Android) */
 @media (min-width: 640px) {
-  .heroTitle {
-    font-size: clamp(2rem, 5.5vw, 2.75rem);
-  }
-
-  .heroSubtitle {
-    font-size: 1.05rem;
-  }
-
   .heroCTA {
     flex-direction: row;
   }
@@ -625,43 +468,16 @@
   .trustSignals {
     grid-template-columns: repeat(3, 1fr);
   }
-
-  .servicesGrid {
-    gap: 0.85rem;
-  }
 }
 
-/* 📱 Tablet Portrait: 768px - 1023px (iPad Mini, iPad Air) */
 @media (min-width: 768px) {
-  .heroTitle {
-    font-size: clamp(2.25rem, 5vw, 3rem);
-  }
 
-  .heroSubtitle {
-    font-size: 1.1rem;
-    max-width: 500px;
-  }
-
-  .serviceChip {
-    padding: 1rem 1.25rem;
-  }
-
-  .serviceIcon {
-    font-size: 1.65rem;
-  }
-
-  .serviceName {
-    font-size: 0.9rem;
-  }
-
-  /* Показываем плавающие бейджи на планшетах */
   .floatingBadge,
   .floatingBadgeBottom {
     display: flex;
   }
 }
 
-/* 💻 Tablet Landscape: 1024px - 1279px (iPad Pro, маленькие ноутбуки) */
 @media (min-width: 1024px) {
   .bannerContent {
     grid-template-columns: 1.2fr 1fr;
@@ -676,465 +492,37 @@
     order: 2;
   }
 
-  .heroTitle {
-    font-size: clamp(2.5rem, 4.5vw, 3.5rem);
-  }
-
-  .heroSubtitle {
-    font-size: 1.15rem;
-    max-width: 540px;
-  }
-
-  .trustSignals {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .servicesGrid {
-    gap: 1rem;
-    padding: 2rem;
-  }
-
-  .serviceChip {
-    padding: 1.25rem 1.5rem;
-  }
-
-  .serviceIcon {
-    font-size: 2rem;
-  }
-
-  .serviceName {
-    font-size: 0.95rem;
-  }
-
   .heroVisual {
     max-width: 450px;
   }
 }
 
-/* 💻 Standard Laptop: 1280px - 1535px (MacBook Air, стандартные ноутбуки) */
 @media (min-width: 1280px) {
   .bannerContent {
     gap: 4rem;
   }
 
-  .heroTitle {
-    font-size: clamp(3rem, 4vw, 3.75rem);
-  }
-
   .heroVisual {
     max-width: 500px;
   }
-
-  .serviceChip {
-    padding: 1.35rem 1.6rem;
-  }
 }
 
-/* 🖥️ Desktop: 1536px - 1919px (большие десктопы) */
 @media (min-width: 1536px) {
   .bannerContent {
     max-width: 1440px;
     gap: 5rem;
   }
 
-  .heroTitle {
-    font-size: 4rem;
-  }
-
-  .heroSubtitle {
-    font-size: 1.25rem;
-    max-width: 600px;
-  }
-
   .heroVisual {
     max-width: 550px;
   }
-
-  .serviceChip {
-    padding: 1.5rem 1.75rem;
-  }
-
-  .serviceIcon {
-    font-size: 2.25rem;
-  }
-
-  .serviceName {
-    font-size: 1.05rem;
-  }
 }
 
-/* 🖥️ Full HD: 1920px - 2559px (Full HD мониторы) */
-@media (min-width: 1920px) {
-  .bannerContent {
-    max-width: 1600px;
-    gap: 6rem;
-  }
-
-  .heroTitle {
-    font-size: 4.5rem;
-  }
-
-  .heroSubtitle {
-    font-size: 1.35rem;
-    max-width: 650px;
-  }
-
-  .heroVisual {
-    max-width: 600px;
-  }
-
-  .heroBtn {
-    padding: 1.25rem 2.5rem;
-    font-size: 1.15rem;
-  }
-
-  .trustItem {
-    padding: 1.25rem;
-  }
-
-  .trustIcon {
-    font-size: 2rem;
-  }
-
-  .trustTitle {
-    font-size: 1.05rem;
-  }
-
-  .trustDesc {
-    font-size: 0.9rem;
-  }
-}
-
-/* 🖥️ 2K/QHD: 2560px - 3199px (2K мониторы) */
-@media (min-width: 2560px) {
-  .mainBannerSection {
-    padding: 5rem 2rem 4rem;
-  }
-
-  .bannerContent {
-    max-width: 1920px;
-    gap: 7rem;
-  }
-
-  .heroTitle {
-    font-size: 5.25rem;
-  }
-
-  .heroSubtitle {
-    font-size: 1.5rem;
-    max-width: 720px;
-  }
-
-  .heroVisual {
-    max-width: 700px;
-  }
-
-  .heroBadge {
-    padding: 0.75rem 1.5rem;
-  }
-
-  .badgeStars {
-    font-size: 1.1rem;
-  }
-
-  .badgeText {
-    font-size: 1rem;
-  }
-
-  .heroBtn {
-    padding: 1.5rem 3rem;
-    font-size: 1.25rem;
-    border-radius: 18px;
-  }
-
-  .serviceChip {
-    padding: 1.75rem 2rem;
-    border-radius: 24px;
-  }
-
-  .serviceIcon {
-    font-size: 2.75rem;
-  }
-
-  .serviceName {
-    font-size: 1.2rem;
-  }
-
-  .floatingBadge {
-    padding: 1.25rem 1.75rem;
-  }
-
-  .floatingIcon {
-    font-size: 1.5rem;
-  }
-
-  .floatingText strong {
-    font-size: 1.05rem;
-  }
-
-  .floatingText span {
-    font-size: 0.9rem;
-  }
-
-  .floatingBadgeBottom {
-    padding: 1.5rem 2rem;
-    border-radius: 24px;
-  }
-
-  .guaranteeIcon {
-    font-size: 2.5rem;
-  }
-
-  .guaranteeText strong {
-    font-size: 1.25rem;
-  }
-
-  .guaranteeText span {
-    font-size: 1rem;
-  }
-
-  .microText {
-    font-size: 1.05rem;
-  }
-
-  .avatar {
-    width: 44px;
-    height: 44px;
-    font-size: 1rem;
-  }
-}
-
-/* 🖥️ 4K/UHD: 3200px - 3839px (4K мониторы) */
-@media (min-width: 3200px) {
-  .mainBannerSection {
-    padding: 6rem 3rem 5rem;
-    min-height: 85vh;
-  }
-
-  .bannerContent {
-    max-width: 2200px;
-    gap: 8rem;
-  }
-
-  .heroTitle {
-    font-size: 6rem;
-  }
-
-  .heroSubtitle {
-    font-size: 1.75rem;
-    max-width: 800px;
-  }
-
-  .heroVisual {
-    max-width: 800px;
-  }
-
-  .heroBadge {
-    padding: 1rem 2rem;
-    border-radius: 120px;
-  }
-
-  .badgeStars {
-    font-size: 1.3rem;
-  }
-
-  .badgeText {
-    font-size: 1.2rem;
-  }
-
-  .heroBtn {
-    padding: 1.75rem 3.5rem;
-    font-size: 1.4rem;
-    border-radius: 22px;
-  }
-
-  .trustItem {
-    padding: 1.5rem;
-    border-radius: 20px;
-  }
-
-  .trustIcon {
-    font-size: 2.5rem;
-  }
-
-  .trustTitle {
-    font-size: 1.2rem;
-  }
-
-  .trustDesc {
-    font-size: 1.05rem;
-  }
-
-  .serviceChip {
-    padding: 2rem 2.5rem;
-    border-radius: 28px;
-  }
-
-  .serviceIcon {
-    font-size: 3.25rem;
-  }
-
-  .serviceName {
-    font-size: 1.4rem;
-  }
-}
-
-/* 🖥️ Ultra-wide 4K+: 3840px+ (ультраширокие 4K, 5K) */
-@media (min-width: 3840px) {
-  .bannerContent {
-    max-width: 2560px;
-    gap: 10rem;
-  }
-
-  .heroTitle {
-    font-size: 7rem;
-    letter-spacing: -0.03em;
-  }
-
-  .heroSubtitle {
-    font-size: 2rem;
-    max-width: 900px;
-  }
-
-  .heroVisual {
-    max-width: 950px;
-  }
-
-  .heroBtn {
-    padding: 2rem 4rem;
-    font-size: 1.6rem;
-  }
-
-  .trustSignals {
-    gap: 2rem;
-  }
-
-  .serviceChip {
-    padding: 2.5rem 3rem;
-  }
-
-  .serviceIcon {
-    font-size: 4rem;
-  }
-
-  .serviceName {
-    font-size: 1.75rem;
-  }
-}
-
-/* ============================================================================
-   ДОПОЛНИТЕЛЬНЫЕ ОПТИМИЗАЦИИ
-   ============================================================================ */
-
-/* Поддержка устройств с высокой плотностью пикселей (Retina) */
-@media (-webkit-min-device-pixel-ratio: 2),
-(min-resolution: 192dpi) {
-  .serviceChip {
-    border-width: 0.5px;
-  }
-}
-
-/* Поддержка тач-устройств (убираем hover-эффекты) */
-@media (hover: none) {
-
-  .trustItem:hover,
-  .serviceChip:hover,
-  .heroBtn.primary:hover,
-  .heroBtn.secondary:hover {
-    transform: none;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  }
-}
-
-/* Поддержка уменьшенной анимации (accessibility) */
+/* Уменьшение анимации для доступности */
 @media (prefers-reduced-motion: reduce) {
 
-  .heroBadge,
-  .heroTitle,
-  .heroSubtitle,
-  .trustSignals,
-  .heroCTA,
-  .heroMicro,
-  .heroRight {
-    animation: none !important;
-  }
-
-  .serviceChip,
-  .floatingBadge,
-  .floatingBadgeBottom,
-  .visualGradient {
-    animation: none !important;
-  }
-
+  .visualGradient,
   .pulse {
-    animation: none !important;
-  }
-}
-
-/* Тёмная тема (если нужно) */
-@media (prefers-color-scheme: dark) {
-  .serviceChip {
-    background: rgba(255, 255, 255, 0.98);
-  }
-
-  .floatingBadgeBottom {
-    background: rgba(255, 255, 255, 0.98);
-  }
-}
-
-/* Пейзажная ориентация на мобильных */
-@media (max-height: 500px) and (orientation: landscape) {
-  .mainBannerSection {
-    min-height: auto;
-    padding: 2rem 1.5rem;
-  }
-
-  .heroTitle {
-    font-size: clamp(1.5rem, 4vw, 2rem);
-  }
-
-  .heroVisual {
-    max-width: 250px;
-  }
-
-  .heroSubtitle {
-    display: none;
-  }
-
-  .trustSignals {
-    display: none;
-  }
-
-  .heroMicro {
-    display: none;
-  }
-
-  .bannerContent {
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-  }
-
-  .heroLeft {
-    order: 1;
-  }
-
-  .heroRight {
-    order: 2;
-  }
-}
-
-/* Книжная ориентация на очень высоких экранах */
-@media (min-aspect-ratio: 1/2) and (max-width: 640px) {
-  .heroVisual {
-    max-width: 240px;
-  }
-
-  .servicesGrid {
-    gap: 0.4rem;
-    padding: 0.5rem;
-  }
-
-  .serviceChip {
-    padding: 0.5rem 0.6rem;
+    animation: none;
   }
 }

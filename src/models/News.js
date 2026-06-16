@@ -1,6 +1,6 @@
 // src/models/News.js
 import mongoose from 'mongoose';
-
+import { BASE_URL } from '@/lib/constants';
 const ContentBlockSchema = new mongoose.Schema({
   type: {
     type: String,
@@ -166,18 +166,9 @@ NewsSchema.methods.getJsonLd = function () {
     author: {
       '@type': 'Organization',
       name: this.author || 'ServiceBox',
-      url: 'https://servicebox35.ru',
+      url: BASE_URL,
     },
-    publisher: {
-      '@type': 'Organization',
-      name: 'ServiceBox',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://servicebox35.ru/logo.png',
-        width: 600,
-        height: 60,
-      },
-    },
+    publisher: { '@id': `${BASE_URL}#business` },
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': this.fullUrl,

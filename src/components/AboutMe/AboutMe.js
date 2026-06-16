@@ -1,76 +1,89 @@
 'use client';
 
-import { useState, useEffect, useRef } from "react";
-import styles from "./AboutMe.module.css";
+import { useState, useEffect, useCallback, useRef } from 'react';
+import styles from './AboutMe.module.css';
 
-function AboutMe() {
-  const [currentQuote, setCurrentQuote] = useState(0);
-  const [transition, setTransition] = useState(true);
-  const sectionRef = useRef(null);
+// ✅ 1. Статические данные вынесены за пределы компонента. 
+// Это предотвращает пересоздание массива при каждом рендере и экономит память.
+const QUOTES = [
+  "В нашей компании работают лучшие специалисты, которые прекрасно разбираются в современных технологиях и имеют более 10 лет опыта работы.",
+  "Каждый ремонт — это вызов, который мы принимаем с энтузиазмом и профессионализмом.",
+  "Мы используем только оригинальные запчасти и современное диагностическое оборудование.",
+  "Ваше устройство в надежных руках — мы относимся к каждой технике, как к своей собственной."
+];
 
-  const quotes = [
-    "В нашей компании работают лучшие специалисты, которые прекрасно разбираются в современных технологиях и имеют более 10 лет опыта работы.",
-    "Каждый ремонт — это вызов, который мы принимаем с энтузиазмом и профессионализмом.",
-    "Мы используем только оригинальные запчасти и современное диагностическое оборудование.",
-    "Ваше устройство в надежных руках — мы относимся к каждой технике, как к своей собственной."
-  ];
+export default function AboutMe() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
+  // ✅ 2. useRef для хранения ID таймера. Позволяет корректно очищать setTimeout при быстром клике.
+  const transitionTimerRef = useRef(null);
+
+  // Автоматическое переключение цитат
   useEffect(() => {
     const interval = setInterval(() => {
-      setTransition(false);
-      setTimeout(() => {
-        setCurrentQuote((prev) => (prev + 1) % quotes.length);
-        setTransition(true);
-      }, 500);
+      setIsTransitioning(true);
+      if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current);
+
+      transitionTimerRef.current = setTimeout(() => {
+        setCurrentIndex(prev => (prev + 1) % QUOTES.length);
+        setIsTransitioning(false);
+      }, 500); // 500ms совпадает с длительностью CSS-анимации
     }, 8000);
 
-    return () => clearInterval(interval);
-  }, [quotes.length]);
+    // ✅ 3. Полная очистка интервалов и таймеров при размонтировании компонента
+    return () => {
+      clearInterval(interval);
+      if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current);
+    };
+  }, []);
+
+  // Ручное переключение при клике на точку
+  const handleDotClick = useCallback((index) => {
+    if (index === currentIndex || isTransitioning) return;
+
+    setIsTransitioning(true);
+    if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current);
+
+    transitionTimerRef.current = setTimeout(() => {
+      setCurrentIndex(index);
+      setIsTransitioning(false);
+    }, 500);
+  }, [currentIndex, isTransitioning]);
 
   return (
     <section
       className={styles.aboutMe}
       id="about-company"
-      ref={sectionRef}
-      itemScope
-      itemType="https://schema.org/AboutPage"
-      aria-labelledby="about-heading"
+      aria-label="Преимущества сервисного центра"
     >
-      <meta itemProp="name" content="О компании ServiceBox" />
-      <meta itemProp="description" content="Профессиональный ремонт техники в Вологде с гарантией качества. Опытные специалисты, оригинальные запчасти, современное оборудование." />
-
       <div className={styles.aboutMeContent}>
-        <div className={styles.quoteContainer} itemScope itemType="https://schema.org/Quotation">
+        <div className={styles.quoteContainer}>
           <h2 id="about-heading" className={styles.aboutMeTitle}>
+            {/* ✅ 4. aria-live="polite" сообщает скринридерам об изменении текста без прерывания пользователя */}
             <span
-              className={`${styles.aboutMeQuote} ${transition ? styles.fadeIn : styles.fadeOut}`}
-              itemProp="text"
+              className={`${styles.aboutMeQuote} ${isTransitioning ? styles.fadeOut : styles.fadeIn}`}
+              aria-live="polite"
             >
-              {quotes[currentQuote]}
+              {QUOTES[currentIndex]}
             </span>
           </h2>
-          <div className={styles.quoteDecoration} aria-hidden="true"></div>
-          <div className={styles.seoContent} aria-hidden="true" style={{ display: 'none' }}>
-            <h3>профессиональный ремонт техники</h3>
-            <p>Наша компания Сервис Бокс уже более 10 лет предоставляет качественные услуги по ремонту электронной техники в городе Вологда. Мы специализируемся на ремонте smartphones, ноутбуков, планшетов и другой цифровой техники.</p>
-            <p>Наши мастера имеют сертификаты и регулярно проходят обучение новым технологиям ремонта. Мы используем только оригинальные запчасти и современное диагностическое оборудование.</p>
-            <p>Наш сервисный центр находится по адресу: г. Вологда, ул. Северная 7А, 1 этаж.</p>
-            <p>График работы: Ежедневно с 10:00 до 20:00. Контактные телефоны: +7 911 501 88 28, +7 911 501 06 96.</p>
-          </div>
+          <div className={styles.quoteDecoration} aria-hidden="true" />
         </div>
-        <div className={styles.quoteNavigation}>
-          {quotes.map((_, index) => (
+
+        {/* ✅ 5. Правильная ARIA-разметка для навигации карусели */}
+        <div className={styles.quoteNavigation} role="tablist" aria-label="Навигация по цитатам">
+          {QUOTES.map((_, index) => (
             <button
               key={index}
-              className={`${styles.quoteDot} ${currentQuote === index ? styles.active : ''}`}
-              onClick={() => {
-                setTransition(false);
-                setTimeout(() => {
-                  setCurrentQuote(index);
-                  setTransition(true);
-                }, 500);
-              }}
-              aria-label={`Показать цитату ${index + 1}`}
+              className={`${styles.quoteDot} ${currentIndex === index ? styles.active : ''}`}
+              onClick={() => handleDotClick(index)}
+              role="tab"
+              aria-selected={currentIndex === index}
+              aria-label={`Перейти к цитате ${index + 1}`}
+              aria-controls="about-heading"
+              // ✅ 6. Только активная точка доступна через Tab-навигацию
+              tabIndex={currentIndex === index ? 0 : -1}
             />
           ))}
         </div>
@@ -78,5 +91,3 @@ function AboutMe() {
     </section>
   );
 }
-
-export default AboutMe;

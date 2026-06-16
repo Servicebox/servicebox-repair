@@ -662,3 +662,45 @@
  .modalContent::-webkit-scrollbar-thumb:hover {
      background: #a1a1a1;
  }
+ /* В конце файла ServicePricePage.module.css */
+
+ .calculatorContainer {
+     background: white;
+     border-radius: 20px;
+     padding: 20px;
+     min-height: 500px;
+ }
+
+ .backToServicesBtn {
+     background: #f0f4f8;
+     border: none;
+     padding: 10px 20px;
+     border-radius: 8px;
+     cursor: pointer;
+     font-weight: 600;
+     color: #4a5568;
+     margin-bottom: 20px;
+     transition: background 0.2s;
+ }
+
+ .backToServicesBtn:hover {
+     background: #e2e8f0;
+ }
+
+ .categoryFooter {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     width: 100%;
+     margin-top: auto;
+     padding-top: 10px;
+ }
+
+ .calcBadge {
+     background: linear-gradient(135deg, #0066cc, #004499);
+     color: white;
+     padding: 4px 8px;
+     border-radius: 12px;
+     font-size: 0.7rem;
+     font-weight: bold;
+ }

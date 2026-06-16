@@ -5,10 +5,10 @@ import dbConnect from '@/lib/db';
 export async function GET(request) {
   try {
     await dbConnect();
-    
+
     const { searchParams } = new URL(request.url);
     const tree = searchParams.get('tree');
-    
+
     if (tree === 'true') {
       // Возвращаем древовидную структуру
       const treeData = await Service.getTree();
@@ -21,7 +21,7 @@ export async function GET(request) {
       const services = await Service.find({})
         .populate('parent')
         .sort({ order: 1, name: 1 });
-      
+
       return NextResponse.json({
         success: true,
         data: services
@@ -64,14 +64,14 @@ export async function POST(request) {
 
     console.log('✅ Услуга создана:', service.name);
 
-    return NextResponse.json({ 
-      success: true, 
-      data: service 
+    return NextResponse.json({
+      success: true,
+      data: service
     }, { status: 201 });
-    
+
   } catch (error) {
     console.error('❌ Ошибка создания услуги:', error);
-    
+
     if (error.name === 'ValidationError') {
       const errors = Object.values(error.errors).map(err => err.message);
       return NextResponse.json(

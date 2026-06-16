@@ -4,12 +4,10 @@
 import MainBanner from "../MainBanner/MainBanner";
 import RepairCalculator from '@/components/RepairCalculator/RepairCalculator';
 import CategoriesGrid from "../CategoriesGrid/CategoriesGrid";
-import AboutRef from "../AboutRef/AboutRef";
 import ReviewsSection from "../ReviewsSection/ReviewsSection";
 import WorkSteps from "../WorkSteps/WorkSteps";
 import AboutMe from "../AboutMe/AboutMe";
 import NewsBlock from "../NewsBlock/NewsBlock";
-
 import Gifts from "../Gifts/Gifts";
 import Contacts from "../Contacts/Contacts";
 
@@ -21,7 +19,6 @@ function Main() {
         <div id="repair-calculator" className="scroll-mt-24">
           <RepairCalculator />
         </div>
-        <AboutRef />
         <CategoriesGrid />
         <ReviewsSection />
         <WorkSteps />

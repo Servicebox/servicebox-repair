@@ -1,4 +1,3 @@
-// src/components/NewsList/NewsList.js
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -8,31 +7,20 @@ import styles from './NewsList.module.css';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
-// ✅ ИСПРАВЛЕНА: Универсальная функция поиска медиа (изображения + видео)
 const getFirstMedia = (contentBlocks) => {
   if (!Array.isArray(contentBlocks)) return null;
-
-  // 1. Сначала ищем изображение (приоритет для карточки)
   const imageBlock = contentBlocks.find(block => block.type === 'image' && block.media);
-  if (imageBlock) {
-    return { type: 'image', url: imageBlock.media, alt: imageBlock.alt || '' };
-  }
+  if (imageBlock) return { type: 'image', url: imageBlock.media, alt: imageBlock.alt || '' };
 
-  // 2. Если нет изображения — ищем видео-файл
   const videoBlock = contentBlocks.find(block => block.type === 'video' && block.media);
-  if (videoBlock) {
-    return { type: 'video', url: videoBlock.media, alt: videoBlock.description || 'Видео' };
-  }
+  if (videoBlock) return { type: 'video', url: videoBlock.media, alt: videoBlock.description || 'Видео' };
 
-  // 3. YouTube видео (используем превью)
   const youtubeBlock = contentBlocks.find(block => block.type === 'youtube' && block.videoUrl);
-  if (youtubeBlock) {
-    return {
-      type: 'youtube',
-      url: youtubeBlock.thumbnail || `https://img.youtube.com/vi/${youtubeBlock.videoUrl}/hqdefault.jpg`,
-      alt: youtubeBlock.description || 'Видео'
-    };
-  }
+  if (youtubeBlock) return {
+    type: 'youtube',
+    url: youtubeBlock.thumbnail || `https://img.youtube.com/vi/${youtubeBlock.videoUrl}/hqdefault.jpg`,
+    alt: youtubeBlock.description || 'Видео'
+  };
 
   return null;
 };
@@ -47,9 +35,7 @@ const getContentExcerpt = (contentBlocks, fallback) => {
   return textContent.length > 150 ? textContent.substring(0, 150) + '...' : textContent;
 };
 
-const formatDate = (dateString) => {
-  return new Date(dateString).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
-};
+const formatDate = (dateString) => new Date(dateString).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
 
 const NewsList = () => {
   const [news, setNews] = useState([]);
@@ -126,16 +112,13 @@ const NewsList = () => {
         <>
           <div className={styles.newsGrid} role="list">
             {news.map((item) => {
-              // ✅ ИСПОЛЬЗУЕМ getFirstMedia вместо getFirstImage
               const media = getFirstMedia(item.contentBlocks);
               const excerpt = getContentExcerpt(item.contentBlocks, item.excerpt);
               const newsUrl = `/news/${item.slug}`;
 
               return (
-                <article key={item._id} className={styles.newsCard} role="listitem"
-                  itemScope itemType="https://schema.org/NewsArticle">
+                <article key={item._id} className={styles.newsCard} role="listitem">
                   <Link href={newsUrl} className={styles.cardLink}>
-                    {/* ✅ ПОДДЕРЖКА ВИДЕО В КАРТОЧКЕ */}
                     {media && (
                       <div className={styles.imageContainer}>
                         {media.type === 'video' ? (
@@ -160,11 +143,11 @@ const NewsList = () => {
 
                     <div className={styles.cardContent}>
                       <div className={styles.cardHeader}>
-                        <h2 className={styles.cardTitle} itemProp="headline">{item.title}</h2>
-                        {excerpt && <p className={styles.cardExcerpt} itemProp="description">{excerpt}</p>}
+                        <h2 className={styles.cardTitle}>{item.title}</h2>
+                        {excerpt && <p className={styles.cardExcerpt}>{excerpt}</p>}
                       </div>
                       <footer className={styles.cardFooter}>
-                        <time className={styles.date} dateTime={item.publishedAt || item.createdAt} itemProp="datePublished">
+                        <time className={styles.date} dateTime={item.publishedAt || item.createdAt}>
                           {formatDate(item.publishedAt || item.createdAt)}
                         </time>
                         <span className={styles.readMore} aria-label={`Читать новость: ${item.title}`}>
@@ -176,8 +159,6 @@ const NewsList = () => {
                       </footer>
                     </div>
                   </Link>
-                  <meta itemProp="url" content={`${API_URL}${newsUrl}`} />
-                  {item.author && <meta itemProp="author" content={item.author} />}
                 </article>
               );
             })}

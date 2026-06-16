@@ -6,10 +6,10 @@ import Service from '@/models/Service';
 
 export async function POST(request) {
   await dbConnect();
-  
+
   try {
     const { serviceId, serviceName, userName, userPhone, userEmail, deviceModel, notes } = await request.json();
-    
+
     console.log('📝 Получены данные для бронирования:', {
       serviceId, serviceName, userName, userPhone, userEmail, deviceModel, notes
     });
@@ -67,7 +67,7 @@ export async function POST(request) {
             text: telegramMsg
           })
         });
-        
+
         console.log('✅ Уведомление отправлено в Telegram');
       } catch (telegramError) {
         console.error('❌ Ошибка отправки в Telegram:', telegramError);
@@ -87,12 +87,12 @@ export async function POST(request) {
 // GET - получение всех бронирований
 export async function GET() {
   await dbConnect();
-  
+
   try {
     const bookings = await Booking.find()
       .populate('serviceId')
       .sort({ createdAt: -1 });
-    
+
     // Фронтенд ожидает формат { success: true, data: [...] }
     return NextResponse.json({
       success: true,
@@ -101,9 +101,9 @@ export async function GET() {
   } catch (error) {
     console.error('Get bookings error:', error);
     return NextResponse.json(
-      { 
+      {
         success: false,
-        message: error.message 
+        message: error.message
       },
       { status: 500 }
     );
@@ -112,18 +112,18 @@ export async function GET() {
 // PUT - обновление статуса бронирования
 export async function PUT(request, { params }) {
   await dbConnect();
-  
+
   try {
     const { id } = params; // получаем id из параметров пути
     const { status } = await request.json();
-    
+
     // Валидация статуса
     const validStatuses = ['pending', 'confirmed', 'in_progress', 'completed', 'canceled'];
     if (!validStatuses.includes(status)) {
       return NextResponse.json(
-        { 
+        {
           success: false,
-          message: 'Недопустимый статус' 
+          message: 'Недопустимый статус'
         },
         { status: 400 }
       );
@@ -132,9 +132,9 @@ export async function PUT(request, { params }) {
     const booking = await Booking.findById(id);
     if (!booking) {
       return NextResponse.json(
-        { 
+        {
           success: false,
-          message: 'Бронирование не найдено' 
+          message: 'Бронирование не найдено'
         },
         { status: 404 }
       );
@@ -142,10 +142,10 @@ export async function PUT(request, { params }) {
 
     // Сохраняем предыдущий статус для истории
     const previousStatus = booking.status;
-    
+
     // Обновляем статус
     booking.status = status;
-    
+
     // Добавляем запись в историю статусов
     booking.statusHistory.push({
       status: status,
@@ -164,12 +164,11 @@ export async function PUT(request, { params }) {
   } catch (error) {
     console.error('Update booking error:', error);
     return NextResponse.json(
-      { 
+      {
         success: false,
-        message: error.message 
+        message: error.message
       },
       { status: 500 }
     );
   }
 }
-  

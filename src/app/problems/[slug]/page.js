@@ -290,25 +290,10 @@ export default async function ProblemPage({ params }) {
 
     const BASE_URL = getBaseUrl();
 
-    // ============================================
-    // 🏛️ JSON-LD РАЗМЕТКА (Schema.org)
-    // ✅ HowTo с явными шагами (без regex)
-    // ✅ FAQPage
-    // ✅ TechArticle с Person-автором (E-E-A-T)
-    // ✅ LocalBusiness (связь с сервисом)
-    // ✅ BreadcrumbList
-    // ============================================
     const jsonLd = {
         '@context': 'https://schema.org',
         '@graph': [
-            // 1. LocalBusiness (для привязки к сервису)
-            {
-                '@type': 'ElectronicsRepairService',
-                '@id': `${BASE_URL}#business`,
-                name: 'ServiceBox',
-                url: BASE_URL,
-            },
-            // 2. HowTo с явными шагами из массива `steps`
+            // 1. HowTo
             {
                 '@type': 'HowTo',
                 '@id': `${BASE_URL}/problems/${slug}#howto`,
@@ -323,22 +308,17 @@ export default async function ProblemPage({ params }) {
                     url: `${BASE_URL}/problems/${slug}#step-${i + 1}`,
                 })),
             },
-            // 3. FAQPage
+            // 2. FAQPage
             {
                 '@type': 'FAQPage',
                 '@id': `${BASE_URL}/problems/${slug}#faq`,
-                mainEntity: [
-                    {
-                        '@type': 'Question',
-                        name: problem.title,
-                        acceptedAnswer: {
-                            '@type': 'Answer',
-                            text: problem.shortAnswer,
-                        },
-                    },
-                ],
+                mainEntity: [{
+                    '@type': 'Question',
+                    name: problem.title,
+                    acceptedAnswer: { '@type': 'Answer', text: problem.shortAnswer },
+                }],
             },
-            // 4. TechArticle (E-E-A-T сигнал с автором)
+            // 3. TechArticle (E-E-A-T)
             {
                 '@type': 'TechArticle',
                 '@id': `${BASE_URL}/problems/${slug}#article`,
@@ -348,28 +328,16 @@ export default async function ProblemPage({ params }) {
                     '@type': 'Person',
                     name: problem.author,
                     jobTitle: problem.authorRole,
-                    worksFor: { '@id': `${BASE_URL}#business` },
-                    knowsAbout: ['Ремонт электроники', 'Диагностика', 'BGA-пайка'],
+                    worksFor: { '@id': `${BASE_URL}#business` },  // ссылка
                 },
-                publisher: {
-                    '@type': 'Organization',
-                    name: 'ServiceBox Вологда',
-                    url: BASE_URL,
-                    logo: {
-                        '@type': 'ImageObject',
-                        url: `${BASE_URL}/logo.png`,
-                    },
-                },
+                publisher: { '@id': `${BASE_URL}#business` },    // ссылка
                 datePublished: '2024-01-15',
                 dateModified: new Date().toISOString().split('T')[0],
-                mainEntityOfPage: {
-                    '@type': 'WebPage',
-                    '@id': `${BASE_URL}/problems/${slug}`,
-                },
+                mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE_URL}/problems/${slug}` },
                 articleSection: problem.category,
                 inLanguage: 'ru-RU',
             },
-            // 5. BreadcrumbList
+            // 4. BreadcrumbList
             {
                 '@type': 'BreadcrumbList',
                 itemListElement: [
