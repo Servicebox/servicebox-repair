@@ -377,3 +377,22 @@ h6 {
     transition-duration: 0.01ms !important;
   }
 }
+/* === Скрытие брендинга Chatwoot (в самый низ файла) === */
+.woot-widget-bubble__footer,
+.woot--footer,
+.chatwoot-footer,
+[class*="powered-by"] {
+  display: none !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Убираем остаточный отступ у основного контейнера виджета */
+.woot-widget-bubble {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}

@@ -1,12 +1,16 @@
 import './globals.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+
+// 1. Добавлен импорт Script для правильной работы чата
+import Script from 'next/script';
+
 import Header from '../components/Header/Header';
 import BubbleBackground from '../components/BubbleBackground/BubbleBackground';
 import Footer from '../components/Footer/Footer';
 import CookieConsent from '../components/CookieConsent/CookieConsent';
 import { AuthProvider } from '../components/contexts/AuthContext';
-import Chat from '../components/Chat/Chat';
+// import Chat from '../components/Chat/Chat'; // ❌ Старый чат закомментирован/удален
 import ShopContextProvider from '../components/ShopContext/ShopContext';
 import Analytics from '../components/Analytics/Analytics';
 import BreadcrumbsWithContext from '@/components/BreadcrumbsWithContext';
@@ -122,6 +126,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="bg-gray-50 text-slate-900">
+        {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-WNT2RHZJ"
@@ -130,6 +135,7 @@ export default function RootLayout({ children }) {
             style={{ display: 'none', visibility: 'hidden' }}
           ></iframe>
         </noscript>
+
         <AuthProvider>
           <ShopContextProvider>
             <BreadcrumbProvider>
@@ -142,12 +148,48 @@ export default function RootLayout({ children }) {
                 </div>
                 <Footer />
                 <CookieConsent />
-                <Chat />
+                {/* ❌ Старый чат удален, чтобы не дублировался */}
               </div>
             </BreadcrumbProvider>
           </ShopContextProvider>
         </AuthProvider>
+
         <Analytics />
+
+        {/* ✅ ВИДЖЕТ CHATWOOT (ваш существующий скрипт) */}
+        <Script id="chatwoot-widget" strategy="afterInteractive">
+          {`(function(d,t) {
+            var BASE_URL="https://service-box-35.ru";
+            var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=BASE_URL+"/packs/js/sdk.js";
+            g.defer = true; g.async = true;
+            s.parentNode.insertBefore(g,s);
+            g.onload=function(){
+              window.chatwootSDK.run({
+                websiteToken: 'dPQfRWS8ASmV5yq6tZkAPubu',
+                baseUrl: BASE_URL
+              })
+            }
+          })(document,"script");`}
+        </Script>
+
+        {/* 🚫 СКРЫТИЕ БРЕНДИНГА CHATWOOT */}
+        <Script id="hide-chatwoot-branding" strategy="afterInteractive">
+          {`(function() {
+    var checkWidget = setInterval(function() {
+      var widget = document.querySelector('chatwoot-widget');
+      if (widget && widget.shadowRoot && !widget.shadowRoot.querySelector('#chatwoot-custom-hide')) {
+        var style = document.createElement('style');
+        style.id = 'chatwoot-custom-hide';
+        style.textContent = "div[class*='justify-center']:has(img[class*='max-w-3']), div.px-0.py-3.flex.justify-center { display: none !important; height: 0 !important; padding: 0 !important; margin: 0 !important; }";
+        widget.shadowRoot.appendChild(style);
+        clearInterval(checkWidget);
+      }
+    }, 500);
+    setTimeout(function() { clearInterval(checkWidget); }, 10000);
+  })();`}
+        </Script>
+
       </body>
     </html>
   );
