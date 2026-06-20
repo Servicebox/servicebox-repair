@@ -4,7 +4,7 @@ cat > .gitignore << EOF
 node_modules/
 .npm
 .yarn
-.env.production
+.env.local
 .env.production
 .env.*.local
 .env.production
