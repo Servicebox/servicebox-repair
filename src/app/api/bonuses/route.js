@@ -65,18 +65,25 @@ export async function POST(request) {
   // Знак дельты: spend всегда уменьшает баланс
   const delta = body.type === 'spend' ? -body.points : body.points;
 
-  // findOneAndUpdate атомарно проверяет условие и обновляет баланс
+  // For spend: atomically check balance and decrement.
+  // For earn/adjust: only match by _id — no balance precondition
+  // (users created before the bonuses field existed may have bonuses: null,
+  //  which would cause { $gte: 0 } to fail even for an earn operation).
+  const query = body.type === 'spend'
+    ? { _id: body.userId, bonuses: { $gte: body.points } }
+    : { _id: body.userId };
+
   const updatedUser = await User.findOneAndUpdate(
-    { _id: body.userId, bonuses: { $gte: body.type === 'spend' ? body.points : 0 } },
+    query,
     { $inc: { bonuses: delta } },
     { new: true, select: 'bonuses' }
   );
 
   if (!updatedUser) {
-    return NextResponse.json(
-      { error: 'Недостаточно бонусов или пользователь не найден' },
-      { status: 422 }
-    );
+    const msg = body.type === 'spend'
+      ? 'Недостаточно бонусов или пользователь не найден'
+      : 'Пользователь не найден';
+    return NextResponse.json({ error: msg }, { status: 422 });
   }
 
   const tx = await BonusTransaction.create({

@@ -1,6 +1,5 @@
 'use client';
 import { useState, useCallback, useEffect } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useAuth } from '@/components/contexts/AuthContext';
 import { ProtectedRoute } from '@/components/ProtectedRoute/ProtectedRoute';
@@ -10,6 +9,22 @@ import ProfileSettings from '@/components/ProfileSettings/ProfileSettings';
 import { Bookmark, ShoppingBag, Settings, User, Trash2, Package, Newspaper, Image as ImageIcon, Tag, Gift } from 'lucide-react';
 import GoogleWalletButton from '@/components/GoogleWalletButton/GoogleWalletButton';
 import styles from './profile.module.css';
+
+function SafeAvatar({ src, fallback, className, letterClass, size = 80 }) {
+  const [failed, setFailed] = useState(false);
+  if (!src || failed) return <span className={letterClass}>{fallback}</span>;
+  return (
+    <img
+      src={src}
+      alt="Аватар"
+      width={size}
+      height={size}
+      className={className}
+      onError={() => setFailed(true)}
+      style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }}
+    />
+  );
+}
 
 // ─── Вкладки ──────────────────────────────────────────────────────────────────
 const TABS = [
@@ -227,20 +242,12 @@ export default function ProfilePage() {
         {/* Шапка профиля */}
         <header className={styles.hero}>
           <div className={styles.avatarWrap}>
-            {user?.avatarUrl || user?.avatar ? (
-              <Image
-                src={user.avatarUrl || user.avatar}
-                alt="Аватар"
-                fill
-                sizes="80px"
-                className={styles.avatarImg}
-                priority
-              />
-            ) : (
-              <span className={styles.avatarLetter}>
-                {user?.username?.[0]?.toUpperCase() ?? user?.email?.[0]?.toUpperCase() ?? '?'}
-              </span>
-            )}
+            <SafeAvatar
+              src={user?.avatarUrl || user?.avatar || null}
+              fallback={user?.username?.[0]?.toUpperCase() ?? user?.email?.[0]?.toUpperCase() ?? '?'}
+              className={styles.avatarImg}
+              letterClass={styles.avatarLetter}
+            />
           </div>
           <div className={styles.heroInfo}>
             <h1 className={styles.heroName}>{user?.username || user?.email || 'Пользователь'}</h1>

@@ -61,6 +61,8 @@ export function generateWalletJwt({ userId, username, bonuses }) {
     aud: 'google',
     typ: 'savetowallet',
     iat: Math.floor(Date.now() / 1000),
+    // origins is required for web-based "Add to Wallet" buttons
+    origins: [baseUrl || 'https://servicebox35.ru'],
     payload: {
       loyaltyObjects: [loyaltyObject],
     },
