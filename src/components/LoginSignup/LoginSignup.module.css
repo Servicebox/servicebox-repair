@@ -1,10 +1,14 @@
+/* components/LoginSignup/LoginSignup.module.css */
+
 .modalOverlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,77 +17,258 @@
 }
 
 .modalContent {
-  background: white;
-  border-radius: 12px;
+  background: #ffffff;
+  border-radius: 20px;
   width: 100%;
-  max-width: 450px;
-  max-height: 90vh;
+  max-width: 440px;
+  max-height: 92vh;
   overflow-y: auto;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.18), 0 4px 16px rgba(15, 23, 42, 0.08);
 }
 
 .modalHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px;
-  border-bottom: 1px solid #e5e7eb;
+  padding: 28px 28px 0;
 }
 
 .modalHeader h2 {
   margin: 0;
-  font-size: 24px;
-  font-weight: 600;
-  color: #1f2937;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.3px;
 }
 
 .closeButton {
-  background: none;
+  background: #f1f5f9;
   border: none;
-  font-size: 28px;
-  cursor: pointer;
-  color: #6b7280;
-  padding: 4px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 20px;
   line-height: 1;
+  cursor: pointer;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s ease, color 0.18s ease;
+  flex-shrink: 0;
 }
 
 .closeButton:hover {
-  color: #374151;
+  background: #e2e8f0;
+  color: #0f172a;
 }
 
+/* ── Form containers ── */
+.loginsignupFields,
+.resetPasswordForm,
+.forgotPasswordForm {
+  padding: 24px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Field wrapper (icon slot + input + error) ── */
+.fieldWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.fieldIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: #94a3b8;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Shift icon up when there's an error message below */
+.fieldWrapper.hasError .fieldIcon {
+  top: 24px;
+  transform: none;
+}
+
+/* ── Input ── */
 .input {
   width: 100%;
-  padding: 12px 16px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 16px;
-  margin-bottom: 16px;
+  height: 48px;
+  padding: 0 44px 0 44px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 15px;
+  color: #0f172a;
+  background: #f8fafc;
   box-sizing: border-box;
-  transition: border-color 0.2s;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  outline: none;
+}
+
+.input::placeholder {
+  color: #94a3b8;
 }
 
 .input:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
+.input.inputError {
+  border-color: #dc2626;
+  background: #fff8f8;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.input.inputValid {
+  border-color: #16a34a;
+  background: #f0fdf4;
+}
+
+/* Input without left icon */
+.inputNoIcon {
+  padding-left: 14px;
+}
+
+/* ── Password toggle ── */
+.pwToggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: color 0.18s ease;
+}
+
+.pwToggle:hover {
+  color: #6b7280;
+}
+
+.fieldWrapper.hasError .pwToggle {
+  top: 24px;
+  transform: none;
+}
+
+/* ── Per-field error text ── */
+.fieldError {
+  font-size: 12px;
+  color: #dc2626;
+  margin-top: 4px;
+  padding-left: 2px;
+  line-height: 1.4;
+}
+
+/* ── Password strength bar ── */
+.strengthBar {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
+  margin-bottom: 4px;
+}
+
+.strengthSegment {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: #e2e8f0;
+  transition: background 0.25s ease;
+}
+
+.strengthSegment.weak {
+  background: #ef4444;
+}
+
+.strengthSegment.medium {
+  background: #f59e0b;
+}
+
+.strengthSegment.strong {
+  background: #16a34a;
+}
+
+.strengthLabel {
+  font-size: 11px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+/* ── Consent row ── */
+.consentRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.consentCheckbox {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  cursor: pointer;
+  accent-color: #2563eb;
+}
+
+.consentLabel {
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.consentLink {
+  color: #2563eb;
+  text-decoration: none;
+  transition: text-decoration 0.18s ease;
+}
+
+.consentLink:hover {
+  text-decoration: underline;
+}
+
+/* ── Submit button ── */
 .submitButton {
   width: 100%;
-  padding: 12px 24px;
-  background: #3b82f6;
-  color: white;
+  height: 48px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.1px;
   cursor: pointer;
-  transition: background-color 0.2s;
-  margin-top: 8px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
 }
 
 .submitButton:hover:not(:disabled) {
-  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+}
+
+.submitButton:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .submitButton:disabled {
@@ -91,63 +276,82 @@
   cursor: not-allowed;
 }
 
-.loginsignupFields,
-.resetPassword,
-.forgotPassword {
-  padding: 24px;
-}
-
-.resetPassword h3,
-.forgotPassword h3 {
-  margin: 0 0 20px 0;
-  font-size: 20px;
-  color: #1f2937;
-}
-
-.toggleState,
-.forgotPasswordLink {
-  padding: 0 24px 24px;
-  text-align: center;
-  color: #6b7280;
-}
-
-.toggleState span,
-.forgotPasswordLink span {
-  color: #3b82f6;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.toggleState span:hover,
-.forgotPasswordLink span:hover {
-  color: #2563eb;
-}
-
+/* ── Messages ── */
 .errorMessage {
   background: #fef2f2;
   color: #dc2626;
-  padding: 12px 16px;
-  margin: 0 24px 16px;
+  padding: 10px 16px;
+  margin: 16px 28px 0;
   border-radius: 8px;
   border: 1px solid #fecaca;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .successMessage {
   background: #f0fdf4;
   color: #16a34a;
-  padding: 12px 16px;
-  margin: 0 24px 16px;
+  padding: 10px 16px;
+  margin: 16px 28px 0;
   border-radius: 8px;
   border: 1px solid #bbf7d0;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
+/* ── OAuth divider ── */
+.oauthDivider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 28px 0;
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.oauthDivider::before,
+.oauthDivider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e2e8f0;
+}
+
+.oauthButtons {
+  padding: 10px 28px 0;
+}
+
+/* ── Toggle / links ── */
+.toggleState,
+.forgotPasswordLink {
+  padding: 12px 28px 24px;
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.toggleState span,
+.forgotPasswordLink span {
+  color: #2563eb;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.18s ease;
+}
+
+.toggleState span:hover,
+.forgotPasswordLink span:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* ── Wrong password inner modal ── */
 .wrongPasswordModal {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(15, 23, 42, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -156,156 +360,94 @@
 
 .modalContentInner {
   background: white;
-  padding: 24px;
-  border-radius: 12px;
-  max-width: 400px;
+  padding: 28px;
+  border-radius: 16px;
+  max-width: 380px;
   width: 90%;
   text-align: center;
+  box-shadow: 0 16px 48px rgba(15, 23, 42, 0.2);
 }
 
 .modalContentInner h3 {
-  margin: 0 0 16px 0;
+  margin: 0 0 12px 0;
   color: #dc2626;
+  font-size: 18px;
 }
 
 .modalContentInner p {
   margin: 0 0 20px 0;
   color: #6b7280;
+  font-size: 14px;
 }
 
 .recoverLink {
-  color: #3b82f6;
+  color: #2563eb;
   cursor: pointer;
-  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.18s ease;
 }
 
 .recoverLink:hover {
-  color: #2563eb;
+  color: #1d4ed8;
+  text-decoration: underline;
 }
 
 .closeModalButton {
-  padding: 8px 20px;
+  padding: 9px 22px;
   background: #6b7280;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.18s ease;
 }
 
 .closeModalButton:hover {
   background: #4b5563;
 }
 
-/* Адаптивность */
+/* ── Mobile ── */
 @media (max-width: 768px) {
   .modalOverlay {
-    padding: 10px;
+    padding: 0;
     align-items: flex-end;
   }
-  
+
   .modalContent {
     max-width: 100%;
-    border-radius: 16px 16px 0 0;
-    max-height: 85vh;
-  }
-  
-  .modalHeader {
-    padding: 20px;
-  }
-  
-  .modalHeader h2 {
-    font-size: 20px;
-  }
-  
-  .loginsignupFields,
-  .resetPassword,
-  .forgotPassword {
-    padding: 20px;
-  }
-  
-  .input {
-    padding: 14px 16px;
-    font-size: 16px; /* Предотвращает зум в iOS */
+    border-radius: 20px 20px 0 0;
+    max-height: 88vh;
   }
 }
 
 @media (max-width: 480px) {
   .modalHeader {
-    padding: 16px;
+    padding: 22px 20px 0;
   }
-  
+
   .loginsignupFields,
-  .resetPassword,
-  .forgotPassword {
-    padding: 16px;
+  .resetPasswordForm,
+  .forgotPasswordForm {
+    padding: 20px 20px 24px;
   }
-  
+
+  .oauthDivider {
+    margin: 4px 20px 0;
+  }
+
+  .oauthButtons {
+    padding: 10px 20px 0;
+  }
+
   .toggleState,
   .forgotPasswordLink {
-    padding: 0 16px 16px;
+    padding: 12px 20px 20px;
   }
-  
+
   .errorMessage,
   .successMessage {
-    margin: 0 16px 16px;
+    margin: 14px 20px 0;
   }
-}
-/* components/LoginSignup/LoginSignup.module.css */
-.oauthSection {
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #e5e7eb;
-}
-
-.oauthDivider {
-  text-align: center;
-  margin-bottom: 1rem;
-  color: #6b7280;
-  font-size: 0.875rem;
-  position: relative;
-}
-
-.oauthDivider::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: #e5e7eb;
-  z-index: 1;
-}
-
-.oauthDivider span {
-  background: white;
-  padding: 0 1rem;
-  position: relative;
-  z-index: 2;
-}
-
-.yandexButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  width: 100%;
-  padding: 0.75rem 1rem;
-  background-color: #FC3F1D;
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 0.875rem;
-}
-
-.yandexButton:hover {
-  background-color: #e0381a;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(252, 63, 29, 0.2);
-}
-
-.yandexButton:active {
-  transform: translateY(0);
 }

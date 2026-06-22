@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import './Gallery.css';
+import LikeButton from '@/components/LikeButton/LikeButton';
 
 const PLACEHOLDER_IMAGE = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNGM0Y0RjYiLz48cGF0aCBkPSJNMjAwIDE1MEMyMTUuNDY0IDE1MCAyMjggMTM3LjQ2NCAyMjggMTIyQzIyOCAxMDYuNTM2IDIxNS40NjQgOTQgMjAwIDk0QzE4NC41MzYgOTQgMTcyIDEwNi41MzYgMTcyIDEyMkMxNzIgMTM3LjQ2NCAxODQuNTM2IDE1MCAyMDAgMTUwWk0xNjAgMjEwVjIzMEgyNDBWMjEwSDE2MFpNMTYwIDE3MFYxOTBIMjQwVjE3MEgxNjBaIiBmaWxsPSIjOUNBMEFEIi8+PC9zdmc+';
 
@@ -197,6 +198,9 @@ export default function GalleryPage() {
                   <div className="group-meta">
                     <span className="image-count">{group.images.length} фото</span>
                     <span className="upload-date">{formatDate(group.uploadedAt)}</span>
+                    <span onClick={(e) => e.stopPropagation()}>
+                      <LikeButton entityId={group.id} entityType="Image" />
+                    </span>
                   </div>
                 </div>
               </div>

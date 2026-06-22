@@ -1,9 +1,10 @@
 import { BUSINESS, BASE_URL } from '@/lib/constants';
+import Script from 'next/script';
 
 export const metadata = {
     title: 'Контакты ServiceBox в Вологде | Адрес, телефон, график работы',
     description: 'Как добраться в сервисный центр: г. Вологда, ул. Северная 7А, ТЦ КИТ. Бесплатная консультация по телефону +7 (911) 501-88-28. Ежедневно 10:00-20:00.',
-    keywords: ['ServiceBox контакты', 'адрес сервис центра Вологда', 'телефон ремонта телефонов', 'график работы ServiceBox'],
+    keywords: ['ServiceBox контакты', 'адрес сервис центра Вологда', 'телефон ремонта телефонов', 'график работы ServiceBox', 'где находится сервис центр'],
     alternates: { canonical: `${BASE_URL}/contacts` },
     openGraph: {
         title: 'Контакты ServiceBox Вологда',
@@ -13,13 +14,53 @@ export const metadata = {
     },
 };
 
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  'name': BUSINESS.shortName,
+  'description': 'Сервисный центр по ремонту электроники и техники в Вологде',
+  'url': BASE_URL,
+  'address': {
+    '@type': 'PostalAddress',
+    'streetAddress': BUSINESS.mainAddress.street,
+    'addressLocality': BUSINESS.mainAddress.city,
+    'addressRegion': BUSINESS.mainAddress.region,
+    'postalCode': BUSINESS.mainAddress.postalCode,
+    'addressCountry': BUSINESS.mainAddress.country
+  },
+  'telephone': BUSINESS.phones.primary,
+  'email': BUSINESS.email,
+  'areaServed': {
+    '@type': 'City',
+    'name': 'Вологда'
+  },
+  'openingHours': {
+    '@type': 'OpeningHoursSpecification',
+    'dayOfWeek': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    'opens': BUSINESS.hours.open,
+    'closes': BUSINESS.hours.close
+  },
+  'geo': {
+    '@type': 'GeoCoordinates',
+    'latitude': BUSINESS.coordinates.latitude,
+    'longitude': BUSINESS.coordinates.longitude
+  }
+};
 
 export default function ContactsPage() {
     const yandexMapUrl = "https://yandex.ru/map-widget/v1/?um=constructor%3Ad1892ae8340bf3eb12e962e969ca890d6706560ed5a2a082e22ac2d2c8ae16f4&source=constructor";
     const yandexProfileUrl = "https://yandex.ru/maps/org/servis_boks/58578899506/";
 
     return (
-        <section className="max-w-5xl mx-auto py-12 px-4">
+        <>
+            <Script
+                id="local-business-schema"
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(localBusinessSchema)
+                }}
+            />
+            <section className="max-w-5xl mx-auto py-12 px-4">
 
             <header className="text-center mb-12">
                 <h1 className="text-3xl md:text-4xl font-bold text-[#002147] mb-4">Контакты сервисного центра ServiceBox</h1>
@@ -93,6 +134,7 @@ export default function ContactsPage() {
                 </ul>
             </div>
         </section>
+        </>
     );
 }
 

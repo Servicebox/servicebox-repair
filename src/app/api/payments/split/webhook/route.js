@@ -1,0 +1,108 @@
+export const runtime = 'nodejs';
+
+import { NextResponse } from 'next/server';
+import { createHmac, timingSafeEqual } from 'crypto';
+import mongoose from 'mongoose';
+import dbConnect from '@/lib/db';
+import Order from '@/models/Order';
+import { awardOrderBonuses } from '@/lib/bonuses';
+
+function verifyHmac(rawBody, signature) {
+  const secret = process.env.YANDEX_SPLIT_WEBHOOK_SECRET;
+
+  if (!secret) {
+    console.warn('Yandex Split webhook: YANDEX_SPLIT_WEBHOOK_SECRET не задан — проверка подписи пропущена');
+    return true;
+  }
+
+  if (!signature) return false;
+
+  const expected = createHmac('sha256', secret)
+    .update(rawBody)
+    .digest('hex');
+
+  try {
+    return timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
+  } catch {
+    return false;
+  }
+}
+
+export async function POST(request) {
+  const rawBody = await request.text();
+
+  // Яндекс Сплит (yastore) использует X-Yandex-Signature
+  const signature = request.headers.get('x-yandex-signature')
+    ?? request.headers.get('x-ya-signature')
+    ?? request.headers.get('x-merchant-callback-signature');
+
+  if (!verifyHmac(rawBody, signature)) {
+    return NextResponse.json({ error: 'Неверная подпись' }, { status: 401 });
+  }
+
+  let event;
+  try {
+    event = JSON.parse(rawBody);
+  } catch {
+    return NextResponse.json({ error: 'Неверный JSON' }, { status: 400 });
+  }
+
+  await dbConnect();
+
+  // Яндекс Сплит (yastore) передаёт merchantOrderId и status напрямую
+  const merchantOrderId = event.merchantOrderId ?? event.orderId;
+  const status          = (event.status ?? '').toLowerCase();
+
+  if (!merchantOrderId) {
+    return NextResponse.json({ error: 'merchantOrderId отсутствует' }, { status: 400 });
+  }
+
+  if (status === 'success' || status === 'completed' || status === 'captured') {
+    const session = await mongoose.startSession();
+    try {
+      session.startTransaction();
+
+      const order = await Order.findOneAndUpdate(
+        { splitOrderId: merchantOrderId, paymentStatus: { $ne: 'paid' } },
+        { paymentStatus: 'paid', status: 'processing' },
+        { new: true, session }
+      );
+
+      if (!order) {
+        await session.abortTransaction();
+        return NextResponse.json({ ok: true, skipped: true });
+      }
+
+      if (order.userId && !order.bonusesAwarded) {
+        await awardOrderBonuses({
+          userId:      order.userId,
+          orderId:     order._id,
+          totalAmount: order.totalAmount,
+          session,
+        });
+
+        await Order.findByIdAndUpdate(order._id, { bonusesAwarded: true }, { session });
+      }
+
+      await session.commitTransaction();
+    } catch (err) {
+      await session.abortTransaction();
+      console.error('Split webhook processing error:', err);
+      return NextResponse.json({ error: 'Внутренняя ошибка' }, { status: 500 });
+    } finally {
+      session.endSession();
+    }
+  } else if (status === 'failed' || status === 'cancelled' || status === 'voided') {
+    await Order.findOneAndUpdate(
+      { splitOrderId: merchantOrderId },
+      { paymentStatus: 'failed', status: 'cancelled' }
+    );
+  } else if (status === 'refunded') {
+    await Order.findOneAndUpdate(
+      { splitOrderId: merchantOrderId },
+      { paymentStatus: 'refunded', status: 'cancelled' }
+    );
+  }
+
+  return NextResponse.json({ ok: true });
+}

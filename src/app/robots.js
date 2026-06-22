@@ -1,6 +1,6 @@
+import { BASE_URL } from '@/lib/constants';
+
 export default function robots() {
-  const BASE_URL =
-    process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://servicebox35.ru';
 
   return {
     rules: [

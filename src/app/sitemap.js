@@ -3,13 +3,13 @@ import dbConnect from '@/lib/db';
 import Product from '@/models/Product';
 import News from '@/models/News';
 import Service from '@/models/Service';
+import { BASE_URL } from '@/lib/constants';
 
 const BRAND_SLUGS = ['apple', 'samsung', 'xiaomi', 'huawei', 'asus', 'lenovo', 'hp', 'acer', 'msi', 'dell', 'sony', 'lg'];
 const PROBLEM_SLUGS = ['laptop-not-turning-on', 'phone-battery-drains-fast', 'screen-artifacts', 'laptop-overheating', 'phone-charging-issue', 'water-damage'];
 const AI_ANSWER_SLUGS = ['repair-laptop-vologda', 'phone-screen-replacement', 'videocard-repair-cost', 'water-damage-phone', 'apple-repair-warranty', 'laptop-not-turning-on', 'price-diagnostics', 'urgent-repair-vologda'];
 
 export default async function sitemap() {
-  const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://servicebox35.ru';
 
   const createEntry = (path, priority, changeFrequency = 'monthly', lastmod) => ({
     url: `${BASE_URL}${path}`,

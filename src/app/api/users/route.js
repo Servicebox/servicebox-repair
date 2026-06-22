@@ -1,68 +1,67 @@
-// app/api/users/route.js
-import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
+import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
 
 export async function GET(request) {
   try {
-    console.log('🎯 === ADMIN USERS API CALLED ===');
-
     await dbConnect();
 
-    // Получаем токен из cookies
     const token = request.cookies.get('token')?.value;
-    console.log('🔐 Token in API:', token);
-
     if (!token) {
-      console.log('❌ No token found');
       return NextResponse.json({ message: 'Не авторизован' }, { status: 401 });
     }
 
     let decoded;
     try {
       decoded = jwt.verify(token, process.env.JWT_SECRET);
-      console.log('🔓 Decoded token:', decoded);
-    } catch (jwtError) {
-      console.log('❌ Invalid token');
+    } catch {
       return NextResponse.json({ message: 'Недействительный токен' }, { status: 401 });
     }
 
-    // Проверяем, что пользователь администратор
     if (decoded.role !== 'admin') {
-      console.log('❌ User is not admin');
       return NextResponse.json({ message: 'Доступ запрещен' }, { status: 403 });
     }
 
-    // Получаем параметры пагинации из URL
     const { searchParams } = new URL(request.url);
-    const page = parseInt(searchParams.get('page')) || 1;
-    const limit = parseInt(searchParams.get('limit')) || 20;
+    const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
+    const limit = Math.min(100, Math.max(1, parseInt(searchParams.get('limit') || '20', 10)));
+    const search = searchParams.get('search') || '';
+    const role = searchParams.get('role') || '';
     const skip = (page - 1) * limit;
 
-    // Получаем пользователей
-    const users = await User.find({})
-      .select('-password -refreshToken -verificationToken -resetPasswordToken')
-      .skip(skip)
-      .limit(limit)
-      .sort({ createdAt: -1 });
+    const filter = {};
+    if (search) {
+      filter.$or = [
+        { username: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } },
+        { phone: { $regex: search, $options: 'i' } },
+      ];
+    }
+    if (role === 'admin' || role === 'user') {
+      filter.role = role;
+    }
 
-    // Общее количество пользователей
-    const total = await User.countDocuments();
-
-    console.log(`✅ Fetched ${users.length} users`);
+    const [users, total] = await Promise.all([
+      User.find(filter)
+        .select('-password -refreshToken -verificationToken -resetPasswordToken')
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+      User.countDocuments(filter),
+    ]);
 
     return NextResponse.json({
-      users,
+      users: users.map(u => ({ ...u, _id: u._id.toString() })),
       pagination: {
-        page,
-        limit,
+        currentPage: page,
+        totalPages: Math.ceil(total / limit),
         total,
-        pages: Math.ceil(total / limit)
-      }
+        limit,
+      },
     });
-
   } catch (error) {
     console.error('Users API error:', error);
     return NextResponse.json({ message: 'Ошибка сервера' }, { status: 500 });

@@ -1,6 +1,7 @@
 // components/BookingForm/BookingForm.js
 'use client';
 import { useState, useEffect } from 'react';
+import { useAuth } from '@/components/contexts/AuthContext';
 import SuccessBookingModal from '@/components/SuccessBookingModal/SuccessBookingModal';
 import PrivacyCheckbox from '../PrivacyCheckbox/PrivacyCheckbox';
 import styles from './BookingForm.module.css';
@@ -26,6 +27,7 @@ const extractDeviceModel = (serviceName) => {
 };
 
 const BookingForm = ({ service, onClose, onBookingSuccess }) => {
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
     userName: '',
     userPhone: '',
@@ -39,14 +41,15 @@ const BookingForm = ({ service, onClose, onBookingSuccess }) => {
   const [privacyAgreed, setPrivacyAgreed] = useState(false);
 
   useEffect(() => {
-    if (service) {
-      const autoDeviceModel = extractDeviceModel(service.name);
-      setFormData(prev => ({
-        ...prev,
-        deviceModel: autoDeviceModel
-      }));
-    }
-  }, [service]);
+    const autoDeviceModel = service ? extractDeviceModel(service.name) : '';
+    setFormData(prev => ({
+      ...prev,
+      deviceModel: autoDeviceModel,
+      // Предзаполняем данные авторизованного пользователя
+      userName: prev.userName || user?.username || '',
+      userEmail: prev.userEmail || user?.email || '',
+    }));
+  }, [service, user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

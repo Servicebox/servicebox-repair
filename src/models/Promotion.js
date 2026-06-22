@@ -39,7 +39,16 @@ const PromotionSchema = new mongoose.Schema({
   conditions: {
     type: String,
     maxlength: [500, 'Условия не могут быть длиннее 500 символов']
-  }
+  },
+  likesCount: {
+    type: Number,
+    default: 0,
+    min: 0
+  },
+  likedBy: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 }, {
   timestamps: true
 });

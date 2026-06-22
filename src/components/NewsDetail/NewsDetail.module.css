@@ -401,3 +401,12 @@
     flex-wrap: wrap;
   }
 }
+
+.newsActions {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e8e8e8;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}

@@ -132,7 +132,7 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                         Бесплатный онлайн-калькулятор. Точный расчёт с учётом вашей модели за 30 секунд
                     </p>
                     <p className="text-sm text-orange-600 font-semibold mt-2">
-                        ⚡ Цены ниже конкурентов на 500-2000₽
+                        ⚡ Точная цена после диагностики
                     </p>
                 </header>
                 <div className="rounded-3xl p-6 md:p-8 shadow-2xl border-2" style={{

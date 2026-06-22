@@ -190,7 +190,18 @@ const ProductSchema = new mongoose.Schema({
   sales_notes: {
     type: String,
     default: 'Минимальный заказ 1 шт. Доставка 1-3 дня.'
-  }
+  },
+
+  likesCount: {
+    type: Number,
+    default: 0,
+    min: 0
+  },
+
+  likedBy: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 
 }, {
   timestamps: true,

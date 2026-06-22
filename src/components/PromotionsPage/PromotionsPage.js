@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react';
 import styles from './PromotionsPage.module.css';
 import FormWithoutOverlay from '../FormWithoutOverlay/FormWithoutOverlay';
+import FavoriteButton from '@/components/FavoriteButton/FavoriteButton';
 
 export default function PromotionsPage() {
   const [promotions, setPromotions] = useState([]);
@@ -190,14 +191,17 @@ export default function PromotionsPage() {
                     )}
                   </div>
                   
-                  {isPromotionActive(promo.endDate) && (
-                    <button 
-                      className={styles.ctaButton}
-                      onClick={() => openForm(promo)}
-                    >
-                      Записаться
-                    </button>
-                  )}
+                  <div className={styles.promoActions}>
+                    {isPromotionActive(promo.endDate) && (
+                      <button
+                        className={styles.ctaButton}
+                        onClick={() => openForm(promo)}
+                      >
+                        Записаться
+                      </button>
+                    )}
+                    <FavoriteButton itemId={promo._id} itemType="promotion" />
+                  </div>
                 </div>
               </div>
             </div>

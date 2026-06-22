@@ -1,136 +1,314 @@
 'use client';
-import { useContext, useEffect, useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useAuth } from '@/components/contexts/AuthContext';
-import UserProfileWrapper from '@/components/UserProfile/UserProfile';
 import { ProtectedRoute } from '@/components/ProtectedRoute/ProtectedRoute';
 import UserOrders from '@/components/UserOrders/UserOrders';
 import UserBookings from '@/components/UserBookings/UserBookings';
-import { ShopContext } from '@/components/ShopContext/ShopContext';
-import { Suspense } from 'react';
+import ProfileSettings from '@/components/ProfileSettings/ProfileSettings';
+import { Bookmark, ShoppingBag, Settings, User, Trash2, Package, Newspaper, Image as ImageIcon, Tag, Gift } from 'lucide-react';
+import GoogleWalletButton from '@/components/GoogleWalletButton/GoogleWalletButton';
+import styles from './profile.module.css';
 
-export default function ProfilePage() {
-  const { currentUser, isLoggedIn } = useAuth();
-  const { userOrders } = useContext(ShopContext);
+// ─── Вкладки ──────────────────────────────────────────────────────────────────
+const TABS = [
+  { key: 'profile',   label: 'Профиль',    Icon: User },
+  { key: 'favorites', label: 'Избранное',  Icon: Bookmark },
+  { key: 'bonuses',   label: 'Бонусы',     Icon: Gift },
+  { key: 'orders',    label: 'Мои заказы', Icon: ShoppingBag },
+  { key: 'settings',  label: 'Настройки',  Icon: Settings },
+];
 
-  // Состояние для кнопки Google Wallet
-  const [isWalletLoading, setIsWalletLoading] = useState(false);
-  const [walletJwt, setWalletJwt] = useState(null);
+const FAV_TABS = [
+  { key: 'product',   label: 'Товары',  Icon: Package },
+  { key: 'news',      label: 'Новости', Icon: Newspaper },
+  { key: 'photo',     label: 'Фото',    Icon: ImageIcon },
+  { key: 'promotion', label: 'Акции',   Icon: Tag },
+];
 
-  // Получаем ID текущего пользователя (используем _id или email)
-  const userId = currentUser?._id || currentUser?.email || 'guest';
+// ─── Избранное (inline) ───────────────────────────────────────────────────────
+function FavoritesTab() {
+  const [activeType, setActiveType] = useState('product');
+  const [items, setItems] = useState([]);
+  const [pagination, setPagination] = useState({ page: 1, pages: 1, total: 0 });
+  const [loading, setLoading] = useState(false);
 
-  // Функция для генерации JWT через API
-  const addToWallet = async () => {
-    if (!currentUser) {
-      alert('Пожалуйста, авторизуйтесь, чтобы выпустить карту лояльности.');
-      return;
-    }
-
-    setIsWalletLoading(true);
+  const fetchFavorites = useCallback(async (type, page = 1) => {
+    setLoading(true);
     try {
-      const response = await fetch('/api/generate-wallet-jwt', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId }),
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || 'Не удалось получить токен');
-
-      const { jwt } = data;
-      if (!jwt) throw new Error('JWT не получен');
-
-      setWalletJwt(jwt);
-
-      // После получения JWT создаём кнопку Google Wallet
-      createWalletButton(jwt);
-    } catch (error) {
-      console.error('Ошибка добавления в кошелёк:', error);
-      alert('Не удалось выпустить карту. Попробуйте позже.');
+      const res = await fetch(
+        `/api/favorites?itemType=${type}&page=${page}&limit=12`,
+        { credentials: 'include' }
+      );
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      setItems(data.items ?? []);
+      setPagination(data.pagination ?? { page: 1, pages: 1, total: 0 });
+    } catch {
+      setItems([]);
     } finally {
-      setIsWalletLoading(false);
+      setLoading(false);
     }
+  }, []);
+
+  useEffect(() => { fetchFavorites(activeType, 1); }, [activeType, fetchFavorites]);
+
+  const handleRemove = async (item) => {
+    setItems(prev => prev.filter(i => i._id !== item._id));
+    const res = await fetch('/api/favorites', {
+      method: 'POST', // toggle
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ itemId: item._id, itemType: activeType }),
+    });
+    if (!res.ok) fetchFavorites(activeType, pagination.page);
   };
 
-  // Функция для создания кнопки Google Wallet в контейнере
-  const createWalletButton = (jwt) => {
-    const container = document.getElementById('google-wallet-button');
-    if (!container) return;
+  return (
+    <div>
+      {/* Тип избранного */}
+      <nav className={styles.favTabs} aria-label="Тип избранного">
+        {FAV_TABS.map(({ key, label, Icon }) => (
+          <button
+            key={key}
+            className={`${styles.favTab} ${activeType === key ? styles.favTabActive : ''}`}
+            onClick={() => setActiveType(key)}
+            aria-selected={activeType === key}
+          >
+            <Icon size={15} aria-hidden="true" />
+            {label}
+          </button>
+        ))}
+      </nav>
 
-    container.innerHTML = ''; // Очищаем контейнер
+      {loading ? (
+        <div className={styles.skeleton}>
+          {Array.from({ length: 6 }).map((_, i) => <div key={i} className={styles.skeletonCard} />)}
+        </div>
+      ) : items.length === 0 ? (
+        <div className={styles.empty}>
+          <Bookmark size={40} className={styles.emptyIcon} />
+          <p>В этой категории пока ничего нет</p>
+          <Link href="/" className={styles.browseLink}>Перейти на главную</Link>
+        </div>
+      ) : (
+        <div className={styles.favGrid}>
+          {items.map(item => (
+            <FavCard key={item._id} item={item} type={activeType} onRemove={handleRemove} />
+          ))}
+        </div>
+      )}
 
-    // Создаём специальный элемент кнопки Google Wallet
-    const button = document.createElement('g:savetoandroidpay');
-    button.setAttribute('jwt', jwt);
-    button.setAttribute('height', 'standard');
-    button.setAttribute('theme', 'dark');
-    button.setAttribute('onsuccess', 'onWalletSuccess');
-    button.setAttribute('onfailure', 'onWalletFailure');
-    container.appendChild(button);
+      {pagination.pages > 1 && (
+        <div className={styles.pagination}>
+          <button
+            className={styles.pageBtn}
+            disabled={pagination.page === 1}
+            onClick={() => fetchFavorites(activeType, pagination.page - 1)}
+          >← Назад</button>
+          <span className={styles.pageInfo}>{pagination.page} / {pagination.pages}</span>
+          <button
+            className={styles.pageBtn}
+            disabled={pagination.page === pagination.pages}
+            onClick={() => fetchFavorites(activeType, pagination.page + 1)}
+          >Далее →</button>
+        </div>
+      )}
+    </div>
+  );
+}
 
-    // Загружаем скрипт Google Wallet, если он ещё не загружен
-    if (!document.querySelector('script[src="https://apis.google.com/js/platform.js"]')) {
-      const script = document.createElement('script');
-      script.src = 'https://apis.google.com/js/platform.js';
-      script.async = true;
-      document.body.appendChild(script);
+function FavCard({ item, type, onRemove }) {
+  const href = {
+    product:   `/product/${item.slug}`,
+    news:      `/news/${item.slug}`,
+    photo:     `/gallery`,
+    promotion: `/promotions-page`,
+  }[type] ?? '/';
+
+  const thumb = item.images?.[0] || item.featuredImage || item.filePath || item.image || null;
+
+  return (
+    <article className={styles.favCard}>
+      {thumb && (
+        <Link href={href} className={styles.favThumb}>
+          <Image src={thumb} alt={item.name || item.title || ''} fill sizes="200px" className={styles.favImg} />
+        </Link>
+      )}
+      <div className={styles.favBody}>
+        <Link href={href} className={styles.favTitle}>
+          {item.name || item.title || 'Без названия'}
+        </Link>
+        {item.new_price != null && (
+          <p className={styles.favPrice}>{item.new_price.toLocaleString('ru-RU')} ₽</p>
+        )}
+        <button className={styles.removeBtn} onClick={() => onRemove(item)} aria-label="Удалить">
+          <Trash2 size={14} /> Удалить
+        </button>
+      </div>
+    </article>
+  );
+}
+
+// ─── Вкладка бонусов ─────────────────────────────────────────────────────────
+function BonusesTab() {
+  const [data, setData]         = useState({ balance: 0, transactions: [], pagination: { page: 1, pages: 1, total: 0 } });
+  const [loading, setLoading]   = useState(true);
+
+  const fetchBonuses = useCallback(async (page = 1) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/bonuses?page=${page}&limit=20`, { credentials: 'include' });
+      if (!res.ok) throw new Error();
+      setData(await res.json());
+    } catch {
+      // тихая ошибка
+    } finally {
+      setLoading(false);
     }
-  };
+  }, []);
 
-  // Глобальные колбэки для Google Wallet
-  useEffect(() => {
-    window.onWalletSuccess = () => {
-      alert('Карта лояльности успешно добавлена в Google Wallet!');
-    };
-    window.onWalletFailure = (error) => {
-      console.error('Ошибка Google Wallet:', error);
-      alert(`Не удалось добавить карту: ${error?.errorMessage || 'неизвестная ошибка'}`);
-    };
+  useEffect(() => { fetchBonuses(1); }, [fetchBonuses]);
 
-    // Если JWT уже был получен (например, после перезагрузки страницы), можно пересоздать кнопку
-    if (walletJwt) {
-      createWalletButton(walletJwt);
-    }
-  }, [walletJwt]);
+  const formatDate = iso => new Date(iso).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
+
+  return (
+    <div className={styles.section}>
+      {/* Баланс */}
+      <div className={styles.bonusBalance}>
+        <span className={styles.bonusBalanceLabel}>Ваш бонусный баланс</span>
+        <span className={styles.bonusBalanceValue}>{loading ? '…' : data.balance} баллов</span>
+        <p className={styles.bonusInfo}>1 балл = 1 рубль скидки. Баллы можно потратить при следующем заказе.</p>
+      </div>
+
+      <h3 className={styles.sectionSubtitle}>История начислений</h3>
+
+      {loading ? (
+        <div className={styles.skeleton} style={{ height: 200 }} />
+      ) : data.transactions.length === 0 ? (
+        <p className={styles.empty}>Операций пока нет</p>
+      ) : (
+        <ul className={styles.txList}>
+          {data.transactions.map(tx => (
+            <li key={tx._id} className={`${styles.txItem} ${tx.points > 0 ? styles.txEarn : styles.txSpend}`}>
+              <div className={styles.txIcon}>{tx.points > 0 ? '+' : '−'}</div>
+              <div className={styles.txDetails}>
+                <span className={styles.txDesc}>{tx.description}</span>
+                <time className={styles.txDate}>{formatDate(tx.createdAt)}</time>
+              </div>
+              <span className={styles.txPoints}>
+                {tx.points > 0 ? `+${tx.points}` : tx.points} б.
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {data.pagination.pages > 1 && (
+        <div className={styles.pagination}>
+          <button className={styles.pageBtn} disabled={data.pagination.page === 1} onClick={() => fetchBonuses(data.pagination.page - 1)}>← Назад</button>
+          <span className={styles.pageInfo}>{data.pagination.page} / {data.pagination.pages}</span>
+          <button className={styles.pageBtn} disabled={data.pagination.page === data.pagination.pages} onClick={() => fetchBonuses(data.pagination.page + 1)}>Далее →</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Главная страница профиля ─────────────────────────────────────────────────
+export default function ProfilePage() {
+  const { user } = useAuth();
+  const [activeTab, setActiveTab] = useState('profile');
 
   return (
     <ProtectedRoute>
-      <div className="profile-page container mx-auto px-4 py-8">
-        <Suspense fallback={
-          <div className="loading-container">
-            <div>Загрузка профиля...</div>
+      <div className={styles.page}>
+        {/* Шапка профиля */}
+        <header className={styles.hero}>
+          <div className={styles.avatarWrap}>
+            {user?.avatarUrl || user?.avatar ? (
+              <Image
+                src={user.avatarUrl || user.avatar}
+                alt="Аватар"
+                fill
+                sizes="80px"
+                className={styles.avatarImg}
+                priority
+              />
+            ) : (
+              <span className={styles.avatarLetter}>
+                {user?.username?.[0]?.toUpperCase() ?? user?.email?.[0]?.toUpperCase() ?? '?'}
+              </span>
+            )}
           </div>
-        }>
-          <div className="grid gap-8">
-            {/* Профиль пользователя */}
-            <UserProfileWrapper />
+          <div className={styles.heroInfo}>
+            <h1 className={styles.heroName}>{user?.username || user?.email || 'Пользователь'}</h1>
+            {user?.email && <p className={styles.heroEmail}>{user.email}</p>}
+          </div>
+        </header>
 
-            {/* Мои заказы (товары) */}
-            <UserOrders />
+        {/* Навигация по вкладкам */}
+        <nav className={styles.tabs} role="tablist" aria-label="Разделы профиля">
+          {TABS.map(({ key, label, Icon }) => (
+            <button
+              key={key}
+              role="tab"
+              aria-selected={activeTab === key}
+              className={`${styles.tab} ${activeTab === key ? styles.tabActive : ''}`}
+              onClick={() => setActiveTab(key)}
+            >
+              <Icon size={16} aria-hidden="true" />
+              <span>{label}</span>
+            </button>
+          ))}
+        </nav>
 
-            {/* Мои записи на услуги */}
-            <UserBookings />
+        {/* Контент вкладок */}
+        <div className={styles.content} role="tabpanel">
 
-            {/* Блок карты лояльности Google Wallet */}
-            <div className="wallet-section border-t pt-6">
-              <h2 className="text-xl font-semibold mb-4">Карта лояльности</h2>
-              <p className="text-gray-600 mb-4">
-                Добавьте цифровую карту лояльности ServiceBox в Google Wallet.
-                Это даст вам доступ к накопительным скидкам, бонусам и специальным предложениям.
-              </p>
-              <button
-                onClick={addToWallet}
-                disabled={isWalletLoading}
-                className={`px-6 py-2 rounded-lg transition ${isWalletLoading
-                  ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-blue-600 hover:bg-blue-700 text-white'
-                  }`}
-              >
-                {isWalletLoading ? 'Генерация карты...' : 'Выпустить карту лояльности'}
-              </button>
-              <div id="google-wallet-button" className="mt-4"></div>
+          {activeTab === 'profile' && (
+            <div className={styles.section}>
+              <h2 className={styles.sectionTitle}>Информация о профиле</h2>
+              <dl className={styles.infoList}>
+                <div className={styles.infoRow}>
+                  <dt>Имя пользователя</dt>
+                  <dd>{user?.username || '—'}</dd>
+                </div>
+                <div className={styles.infoRow}>
+                  <dt>Email</dt>
+                  <dd>{user?.email || '—'}</dd>
+                </div>
+                <div className={styles.infoRow}>
+                  <dt>Роль</dt>
+                  <dd>{user?.role === 'admin' ? 'Администратор' : 'Пользователь'}</dd>
+                </div>
+              </dl>
+
+              {/* Google Wallet */}
+              <div className={styles.walletBlock}>
+                <h3 className={styles.walletTitle}>Карта лояльности</h3>
+                <p className={styles.walletDesc}>
+                  Добавьте цифровую карту лояльности ServiceBox в Google Wallet.
+                </p>
+                <GoogleWalletButton className={styles.walletBtnWrap} />
+              </div>
             </div>
-          </div>
-        </Suspense>
+          )}
+
+          {activeTab === 'favorites' && <FavoritesTab />}
+
+          {activeTab === 'bonuses' && <BonusesTab />}
+
+          {activeTab === 'orders' && (
+            <div className={styles.section}>
+              <UserOrders />
+              <UserBookings />
+            </div>
+          )}
+
+          {activeTab === 'settings' && <ProfileSettings />}
+        </div>
       </div>
     </ProtectedRoute>
   );

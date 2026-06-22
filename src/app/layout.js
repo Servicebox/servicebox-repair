@@ -1,7 +1,7 @@
 import './globals.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
-import Script from 'next/script';
+import ChatwootScript from '@/components/ChatwootScript/ChatwootScript';
 
 import Header from '../components/Header/Header';
 import BubbleBackground from '../components/BubbleBackground/BubbleBackground';
@@ -115,8 +115,12 @@ export default function RootLayout({ children }) {
             })(window,document,'script','dataLayer','GTM-WNT2RHZJ');`,
           }}
         />
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="preconnect" href="https://mc.yandex.ru" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://mc.yandex.ru" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://yastatic.net" />
+        <link rel="dns-prefetch" href="https://api-maps.yandex.ru" />
+        {/* Reserve Chatwoot widget space to prevent CLS */}
+        <style>{`.chatwoot-widget-holder{position:fixed;bottom:0;right:0;z-index:9999;pointer-events:none}`}</style>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
@@ -152,35 +156,8 @@ export default function RootLayout({ children }) {
 
         <Analytics />
 
-        {/* ✅ ЕДИНЫЙ СКРИПТ CHATWOOT: ЗАГРУЗКА + СКРЫТИЕ БРЕНДИНГА */}
-        <Script id="chatwoot-integration" strategy="afterInteractive">
-          {`(function(d,t) {
-            var BASE_URL="https://service-box-35.ru";
-            var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=BASE_URL+"/packs/js/sdk.js";
-            g.defer=true; g.async=true;
-            s.parentNode.insertBefore(g,s);
-            g.onload=function(){
-              window.chatwootSDK.run({
-                websiteToken: 'dPQfRWS8ASmV5yq6tZkAPubu',
-                baseUrl: BASE_URL
-              });
-
-              // Ждем инициализации Shadow DOM и скрываем футер с логотипом
-              var checkInterval = setInterval(function() {
-                var widget = document.querySelector('[class*="woot-widget"]') || document.querySelector('#chatwoot');
-                if (widget && widget.shadowRoot && !widget.shadowRoot.querySelector('#cw-brand-hide')) {
-                  var style = d.createElement('style');
-                  style.id = 'cw-brand-hide';
-                  style.textContent = "div[class*='justify-center']:has(img[class*='max-w-3']), div.px-0.py-3.flex.justify-center { display: none !important; height: 0 !important; padding: 0 !important; margin: 0 !important; }";
-                  widget.shadowRoot.appendChild(style);
-                  clearInterval(checkInterval);
-                }
-              }, 500);
-              setTimeout(function() { clearInterval(checkInterval); }, 10000);
-            }
-          })(document,"script");`}
-        </Script>
+        {/* CHATWOOT */}
+        <ChatwootScript />
       </body>
     </html>
   );

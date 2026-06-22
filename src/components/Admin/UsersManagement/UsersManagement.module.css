@@ -296,6 +296,16 @@
   transform: translateY(-1px);
 }
 
+.bonusButton {
+  background: #8b5cf6;
+  color: white;
+}
+
+.bonusButton:hover {
+  background: #7c3aed;
+  transform: translateY(-1px);
+}
+
 .deleteButton {
   background: #ef4444;
   color: white;
@@ -414,8 +424,8 @@
     gap: 6px;
   }
   
-  .editButton, .saveButton, .cancelButton, 
-  .promoteButton, .demoteButton, .deleteButton {
+  .editButton, .saveButton, .cancelButton,
+  .promoteButton, .demoteButton, .deleteButton, .bonusButton {
     width: 100%;
     justify-content: center;
     padding: 10px;
@@ -532,8 +542,8 @@
     gap: 4px;
   }
   
-  .editButton, .saveButton, .cancelButton, 
-  .promoteButton, .demoteButton, .deleteButton {
+  .editButton, .saveButton, .cancelButton,
+  .promoteButton, .demoteButton, .deleteButton, .bonusButton {
     font-size: 11px;
     padding: 8px 10px;
     min-height: 36px;
@@ -606,8 +616,8 @@
     gap: 3px;
   }
   
-  .editButton, .saveButton, .cancelButton, 
-  .promoteButton, .demoteButton, .deleteButton {
+  .editButton, .saveButton, .cancelButton,
+  .promoteButton, .demoteButton, .deleteButton, .bonusButton {
     font-size: 10px;
     padding: 6px 8px;
     min-height: 32px;
@@ -644,8 +654,8 @@
     gap: 10px;
   }
   
-  .editButton, .saveButton, .cancelButton, 
-  .promoteButton, .demoteButton, .deleteButton {
+  .editButton, .saveButton, .cancelButton,
+  .promoteButton, .demoteButton, .deleteButton, .bonusButton {
     padding: 10px 18px;
     font-size: 13px;
   }
@@ -682,8 +692,8 @@
     flex-direction: row;
   }
   
-  .editButton, .saveButton, .cancelButton, 
-  .promoteButton, .demoteButton, .deleteButton {
+  .editButton, .saveButton, .cancelButton,
+  .promoteButton, .demoteButton, .deleteButton, .bonusButton {
     width: auto;
     flex: 1;
   }
@@ -713,6 +723,73 @@
   }
 }
 
+/* ── Модальное окно ── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal {
+  background: white;
+  border-radius: 14px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.2);
+  animation: modalIn 0.2s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(-8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modalTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+}
+
+.modalField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+
+.modalLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.modalActions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  justify-content: flex-end;
+}
+
+.isActiveToggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  user-select: none;
+}
+
 /* Уменьшенное движение */
 @media (prefers-reduced-motion: reduce) {
   .notification,
@@ -724,6 +801,7 @@
   .promoteButton,
   .demoteButton,
   .deleteButton,
+  .bonusButton,
   .pageButton {
     transition: none;
     animation: none;

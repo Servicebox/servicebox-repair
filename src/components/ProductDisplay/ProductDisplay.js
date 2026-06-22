@@ -5,6 +5,8 @@ import { useState, useEffect, useContext } from 'react';
 import Image from 'next/image';
 import { BreadcrumbContext } from '@/components/contexts/BreadcrumbContext';
 import styles from './ProductDisplay.module.css';
+import LikeButton from '@/components/LikeButton/LikeButton';
+import FavoriteButton from '@/components/FavoriteButton/FavoriteButton';
 
 // Контекст корзины без авторизации
 const useCart = () => {
@@ -250,6 +252,11 @@ export default function ProductDisplay({ product }) {
                 >
                   💳 Купить сейчас
                 </button>
+              </div>
+
+              <div className={styles.socialActions}>
+                <LikeButton entityId={product._id} entityType="Product" />
+                <FavoriteButton itemId={product._id} itemType="product" />
               </div>
             </div>
 

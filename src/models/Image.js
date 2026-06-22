@@ -9,7 +9,16 @@ const ImageSchema = new mongoose.Schema({
   originalName: String,
   size: Number,
   type: String,
-  uploadedAt: { type: Date, default: Date.now }
+  uploadedAt: { type: Date, default: Date.now },
+  likesCount: {
+    type: Number,
+    default: 0,
+    min: 0
+  },
+  likedBy: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 });
 
 export default mongoose.models.Image || mongoose.model('Image', ImageSchema);

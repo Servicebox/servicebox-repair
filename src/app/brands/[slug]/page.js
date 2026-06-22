@@ -412,7 +412,6 @@ export async function generateMetadata({ params }) {
   const brand = BRANDS[slug];
   if (!brand) return { title: 'Бренд не найден' };
 
-  const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
   const pageUrl = `${BASE_URL}/brands/${slug}`;
 
   return {
@@ -437,8 +436,6 @@ export default async function BrandPage({ params }) {
   const { slug } = await params;
   const brand = BRANDS[slug];
   if (!brand) notFound();
-
-  const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
   // JSON-LD разметка
   const jsonLd = {

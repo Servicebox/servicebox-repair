@@ -17,10 +17,10 @@ export default function CalculatorConfigEditor() {
         portType: ''
     });
 
-    // Загрузка данных
+    // Загрузка данных (admin-protected endpoint)
     useEffect(() => {
-        fetch('/api/calculator-config')
-            .then(res => res.json())
+        fetch('/api/admin/calculator-config', { credentials: 'include' })
+            .then(res => res.ok ? res.json() : Promise.reject(res.status))
             .then(data => {
                 if (data.success && data.pricingData) {
                     setPricingData(data.pricingData);
@@ -31,18 +31,19 @@ export default function CalculatorConfigEditor() {
             .finally(() => setLoading(false));
     }, []);
 
-    // Сохранение
+    // Сохранение через защищённый admin endpoint
     const handleSave = async () => {
         setSaving(true);
         try {
-            const res = await fetch('/api/calculator-config', {
-                method: 'POST',
+            const res = await fetch('/api/admin/calculator-config', {
+                method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify({ pricingData }),
             });
             const result = await res.json();
             if (result.success) setStatus('✅ Успешно сохранено!');
-            else setStatus('❌ Ошибка: ' + result.message);
+            else setStatus('❌ Ошибка: ' + (result.error ?? result.message));
         } catch (e) {
             setStatus('❌ Ошибка сохранения');
         } finally {
