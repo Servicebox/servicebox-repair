@@ -69,7 +69,7 @@ function TinkoffPayForm({ amount, receiptData, onPaymentSuccess }) {
     const receipt = {
       Email: email,
       Phone: phone,
-      EmailCompany: "your@shop.com",
+      EmailCompany: process.env.NEXT_PUBLIC_SHOP_EMAIL || "508828@bk.ru",
       Taxation: "patent",
       FfdVersion: "1.2",
       Items: receiptData.map(item => ({

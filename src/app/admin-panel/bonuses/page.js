@@ -42,6 +42,13 @@ export default function AdminBonusesPage() {
   const handleAdjust = async (e) => {
     e.preventDefault();
     if (!selectedUser || !form.points || !form.description) return;
+
+    const points = Number(form.points);
+    if (form.type === 'spend' && points > (selectedUser.bonuses ?? 0)) {
+      setFormMsg({ text: `Недостаточно бонусов: у пользователя ${selectedUser.bonuses ?? 0} б., попытка списать ${points}`, ok: false });
+      return;
+    }
+
     setSubmitting(true);
     setFormMsg({ text: '', ok: false });
 

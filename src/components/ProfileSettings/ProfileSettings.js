@@ -1,10 +1,23 @@
 'use client';
 import { useState, useRef } from 'react';
-import Image from 'next/image';
 import { useAuth } from '@/components/contexts/AuthContext';
 import { Camera, Lock, Bookmark, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import styles from './ProfileSettings.module.css';
+
+function AvatarImg({ src, fallback, className, placeholderClass }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) return <span className={placeholderClass}>{fallback}</span>;
+  return (
+    <img
+      src={src}
+      alt="Аватар"
+      className={className}
+      onError={() => setFailed(true)}
+      style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }}
+    />
+  );
+}
 
 export default function ProfileSettings() {
   const { user, logout, checkAuth } = useAuth();
@@ -26,7 +39,10 @@ export default function ProfileSettings() {
     const file = e.target.files?.[0];
     if (!file) return;
     setAvatarFile(file);
-    setAvatarPreview(URL.createObjectURL(file));
+    // Use FileReader to produce a data: URL instead of blob: to satisfy CSP img-src
+    const reader = new FileReader();
+    reader.onload = (ev) => setAvatarPreview(ev.target.result);
+    reader.readAsDataURL(file);
     setAvatarMsg('');
   };
 
@@ -109,7 +125,12 @@ export default function ProfileSettings() {
         <div className={styles.avatarRow}>
           <div className={styles.avatarWrap}>
             {avatarSrc ? (
-              <Image src={avatarSrc} alt="Аватар" fill sizes="96px" className={styles.avatarImg} />
+              <AvatarImg
+                src={avatarSrc}
+                fallback={user?.username?.[0]?.toUpperCase() ?? '?'}
+                className={styles.avatarImg}
+                placeholderClass={styles.avatarPlaceholder}
+              />
             ) : (
               <span className={styles.avatarPlaceholder}>
                 {user?.username?.[0]?.toUpperCase() ?? '?'}
