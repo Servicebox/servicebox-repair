@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/contexts/AuthContext';
 import SplitPayButton from '@/components/SplitPayButton/SplitPayButton';
+import YandexPayButton from '@/components/YandexPayButton/YandexPayButton';
 import styles from './CheckoutForm.module.css';
 
 const CheckoutForm = () => {
@@ -610,6 +611,24 @@ const CheckoutForm = () => {
                 `Подтвердить заказ — ${formatPrice(finalTotal)} ₽`
               )}
             </button>
+
+            <YandexPayButton
+              items={visibleProducts.map(p => ({
+                productId: p._id ?? p.slug,
+                name:      p.name,
+                price:     p.new_price,
+                quantity:  cart[p.slug] || 1,
+                image:     p.images?.[0] ?? '',
+                slug:      p.slug,
+              }))}
+              customer={{
+                name:  formData.name,
+                email: formData.email,
+                phone: formData.phone,
+              }}
+              totalAmount={totalAmount}
+              onError={msg => alert(msg)}
+            />
 
             <SplitPayButton
               items={visibleProducts.map(p => ({

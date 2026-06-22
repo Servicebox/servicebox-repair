@@ -17,6 +17,13 @@ export default function SplitPayButton({ items, customer, className = '', onErro
 
   const handleClick = async () => {
     if (loading) return;
+
+    const phoneDigits = (customer.phone ?? '').replace(/\D/g, '');
+    if (phoneDigits.length < 7) {
+      onError?.('Для оплаты долями укажите номер телефона в форме выше');
+      return;
+    }
+
     setLoading(true);
 
     try {

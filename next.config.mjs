@@ -55,6 +55,30 @@ const nextConfig = {
   httpAgentOptions: {
     keepAlive: true,
   },
+
+  // CSP-заголовки для Yandex Pay WebSDK
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-eval' https://pay.yandex.ru",
+              "frame-src https://pay.yandex.ru",
+              "img-src 'self' data: blob: https: https://pay.yandex.ru",
+              "connect-src 'self' https://pay.yandex.ru https://sandbox.pay.yandex.ru https://servicebox35.ru",
+              "style-src 'self' 'unsafe-inline'",
+              "font-src 'self' data:",
+              "media-src 'self'",
+            ].join('; '),
+          },
+        ],
+      },
+    ];
+  },
 };
 
 // Анализ бандла (опционально, запускается через ANALYZE=true npm run build)

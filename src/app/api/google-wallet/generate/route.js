@@ -32,8 +32,8 @@ export async function GET(request) {
     return NextResponse.json({ error: 'Ошибка генерации пропуска' }, { status: 500 });
   }
 
-  // Сохраняем objectId в профиле если ещё не сохранён
-  if (!user.googleWalletPassId) {
+  // Всегда обновляем objectId — формат изменился (issuerId.suffix вместо classId.suffix)
+  if (user.googleWalletPassId !== objectId) {
     await User.findByIdAndUpdate(caller.id, { googleWalletPassId: objectId });
   }
 
