@@ -1,5 +1,6 @@
 'use client';
 import { useState, useCallback, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useAuth } from '@/components/contexts/AuthContext';
 import { ProtectedRoute } from '@/components/ProtectedRoute/ProtectedRoute';
