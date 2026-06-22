@@ -1,6 +1,4 @@
-/* src/app/admin-panel/AdminPanel.module.css */
-
-/* Контейнер всей админки */
+/* === КОНТЕЙНЕР === */
 .adminContainer {
   min-height: 100vh;
   background: #f9fafb;
@@ -8,66 +6,65 @@
   flex-direction: column;
 }
 
-/* ========== МОБИЛЬНЫЙ ХЕДЕР ========== */
-.mobileHeader {
-  display: none;
+/* === ВЕРХНЯЯ ПАНЕЛЬ (ТОГГЛ) === */
+.topBar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   height: 60px;
   background: white;
+  display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
   z-index: 1009;
-  border-bottom: 1px solid #edf2f7;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-.mobileMenuButton {
+.menuButton {
   background: none;
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 0.375rem;
-  color: #718096;
-  transition: all 0.2s ease;
+  color: #475569;
+  transition: all 0.2s;
 }
 
-.mobileMenuButton:hover {
-  background: #f7fafc;
+.menuButton:hover {
+  background: #f1f5f9;
 }
 
-.mobileTitle {
-  font-size: 1.2rem;
+.topTitle {
+  font-size: 1.1rem;
   font-weight: 600;
-  color: #2d3748;
+  color: #0f172a;
   margin: 0;
 }
 
-/* ========== БОКОВОЕ МЕНЮ (САЙДБАР) ========== */
+/* === САЙДБАР === */
 .sidebar {
   position: fixed;
-  top: 0;
+  top: 60px;
+  /* Отступ под топ-бар */
   left: 0;
   width: 280px;
-  height: 100vh;
+  height: calc(100vh - 60px);
   background: white;
-  border-right: 1px solid #edf2f7;
+  border-right: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1003;
-  transform: translateX(-100%);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
 }
 
 .sidebarHeader {
   padding: 1.5rem;
-  border-bottom: 1px solid #edf2f7;
-  background: white;
+  border-bottom: 1px solid #e2e8f0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -76,14 +73,14 @@
 .sidebarTitle {
   font-size: 1.25rem;
   font-weight: 700;
-  margin: 0 0 0.25rem 0;
-  color: #2d3748;
+  color: #1e293b;
+  margin: 0;
 }
 
 .adminWelcome {
   font-size: 0.8rem;
-  color: #718096;
-  margin: 0;
+  color: #64748b;
+  margin: 0.25rem 0 0;
 }
 
 .closeSidebar {
@@ -92,15 +89,13 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: #718096;
-  padding: 0.5rem;
-  margin: -0.5rem;
+  color: #64748b;
+  padding: 0.25rem;
   border-radius: 0.375rem;
-  transition: all 0.2s ease;
 }
 
 .closeSidebar:hover {
-  background: #f7fafc;
+  background: #f1f5f9;
 }
 
 .sidebarNav {
@@ -114,23 +109,23 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem 1.5rem;
-  color: #718096;
+  color: #475569;
   text-decoration: none;
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: all 0.2s;
   border-left: 3px solid transparent;
 }
 
 .navLink:hover {
-  background: #f7fafc;
-  color: #2d3748;
-  border-left-color: #edf2f7;
+  background: #f8fafc;
+  color: #0f172a;
+  border-left-color: #cbd5e1;
 }
 
 .navLinkActive {
-  background: #ebf8ff;
-  color: #3182ce;
-  border-left-color: #3182ce;
+  background: #eff6ff;
+  color: #2563eb;
+  border-left-color: #2563eb;
 }
 
 .navIcon {
@@ -145,51 +140,90 @@
 
 .sidebarFooter {
   padding: 1rem 1.5rem;
-  border-top: 1px solid #edf2f7;
+  border-top: 1px solid #e2e8f0;
   font-size: 0.8rem;
-  color: #718096;
+  color: #64748b;
 }
 
-/* ========== ОСНОВНОЙ КОНТЕНТ ========== */
+/* === ОСНОВНОЙ КОНТЕНТ === */
 .mainContent {
-  margin-left: 150px;
-  padding: 2rem;
+  padding: 1.5rem;
   min-height: 100vh;
-  transition: margin-left 0.3s ease;
+  transition: margin-left 0.3s ease, padding 0.3s ease;
 }
 
-/* ========== АДАПТИВНОСТЬ ========== */
-@media (max-width: 1023px) {
-  .sidebar {
-    transform: translateX(-100%);
+/* === ОВЕРЛЕЙ (ЗАТЕМНЕНИЕ) === */
+.overlay {
+  position: fixed;
+  inset: 0;
+  top: 60px;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1002;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  backdrop-filter: blur(3px);
+}
+
+/* =========================================
+   🖥 DESKTOP (>1023px)
+   ========================================= */
+@media (min-width: 1024px) {
+  .topBar {
+    display: flex;
   }
 
-  .sidebarOpen {
+  .sidebar {
     transform: translateX(0);
   }
 
-  .closeSidebar {
-    display: block;
+  .sidebar--closed {
+    transform: translateX(-100%);
+  }
+
+  .mainContent {
+    margin-left: 280px;
+  }
+
+  .mainContent--expanded {
+    margin-left: 0;
+  }
+
+  .overlay {
+    display: none;
+  }
+}
+
+/* =========================================
+   📱 MOBILE (<1024px)
+   ========================================= */
+@media (max-width: 1023px) {
+  .topBar {
+    display: flex;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+    top: 60px;
+  }
+
+  .sidebar--open {
+    transform: translateX(0);
   }
 
   .mainContent {
     margin-left: 0;
-    padding-top: calc(60px + 1rem);
+    padding-top: 80px;
   }
 
-  .mobileHeader {
-    display: flex;
-  }
-}
-
-@media (max-width: 768px) {
-  .mainContent {
-    padding: 1rem;
-    padding-top: calc(60px + 1rem);
+  .overlay--visible {
+    opacity: 1;
+    pointer-events: auto;
   }
 }
 
-/* ========== ОБЩИЕ СТИЛИ ДЛЯ СТРАНИЦ ========== */
+/* === ВАШИ ОСТАЛЬНЫЕ СТИЛИ (таблицы, формы, статусы) === */
+/* (Здесь оставлены без изменений, чтобы не ломать логику админки) */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -439,7 +473,6 @@
   }
 }
 
-/* ========== СТИЛИ ДЛЯ ТАБЛИЦ ТОВАРОВ ========== */
 .productsTable {
   width: 100%;
   background: white;
@@ -646,7 +679,6 @@
   background: #e2e8f0;
 }
 
-/* Режим редактирования */
 .editInput,
 .editTextarea,
 .editSelect {
@@ -688,7 +720,6 @@
   height: 50px;
 }
 
-/* Формы добавления товара */
 .formSection,
 .productsSection {
   background: white;
@@ -750,7 +781,6 @@
   min-height: 80px;
 }
 
-/* Upload */
 .uploadArea {
   border: 2px dashed #edf2f7;
   border-radius: 0.5rem;
@@ -916,7 +946,6 @@
   }
 }
 
-/* Специфичные адаптации для таблиц */
 @media (max-width: 2000px) {
 
   .tableHeader,
@@ -998,7 +1027,6 @@
   }
 }
 
-/* Состояния загрузки и ошибок */
 .loadingState,
 .emptyState {
   text-align: center;
@@ -1048,23 +1076,6 @@
 
 .homeLink:hover {
   background: #2c5aa0;
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1002;
-  display: none;
-}
-
-@media (max-width: 1023px) {
-  .overlay {
-    display: block;
-  }
 }
 
 .welcomeMessage {

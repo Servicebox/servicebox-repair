@@ -67,6 +67,17 @@ const NewsSchema = new mongoose.Schema({
   allowVideos: { type: Boolean, default: true },
   views: { type: Number, default: 0 },
 
+  likesCount: {
+    type: Number,
+    default: 0,
+    min: 0
+  },
+
+  likedBy: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
+
   // === Временные метки ===
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }

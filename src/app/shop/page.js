@@ -8,7 +8,7 @@ const Shop = () => {
 
   return (
     <div className={styles.shop}>
-      <a href="https://servicebox35.ru/parts" className={styles.link} />
+      <a href="/parts" className={styles.link} />
     </div>
   );
 }

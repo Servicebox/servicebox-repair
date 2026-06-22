@@ -270,9 +270,16 @@
     gap: 10px;
     align-items: flex-start;
   }
-  
+
   .modalContent {
     margin: 10px;
     max-height: 95vh;
   }
+}
+
+.promoActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }

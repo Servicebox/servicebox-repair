@@ -119,6 +119,44 @@ export function stripHtml(html) {
     return html.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
 }
 
+// ✅ FAQPage schema для Яндекс ИКС / Google Rich Results
+export function generateFAQSchema(items) {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: items.map(({ question, answer }) => ({
+            '@type': 'Question',
+            name: question,
+            acceptedAnswer: { '@type': 'Answer', text: answer },
+        })),
+    };
+}
+
+// ✅ Канонические метаданные для статических страниц сервисов
+export function generateServiceMetadata({ title, description, path, keywords = [] }) {
+    return {
+        title,
+        description,
+        keywords,
+        alternates: { canonical: `${BASE_URL}${path}` },
+        openGraph: {
+            title,
+            description,
+            url: `${BASE_URL}${path}`,
+            siteName: BUSINESS.shortName,
+            locale: 'ru_RU',
+            type: 'website',
+            images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: title }],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title,
+            description,
+            images: ['/og-image.jpg'],
+        },
+    };
+}
+
 // ✅ Генерация метаданных страницы
 export function generatePageMetadata(pathname, customMeta = {}) {
     const cleanPath = pathname.split('?')[0];

@@ -3,6 +3,45 @@
 
 import Link from 'next/link';
 import RepairCalculator from '@/components/RepairCalculator/RepairCalculator';
+
+const RELATED_CATEGORIES = {
+    phones: ['laptops', 'tablets', 'consoles'],
+    laptops: ['phones', 'videocards', 'tablets'],
+    tablets: ['phones', 'laptops', 'tv'],
+    tv: ['consoles', 'tablets', 'phones'],
+    videocards: ['laptops', 'consoles', 'phones'],
+    consoles: ['videocards', 'tv', 'phones'],
+};
+
+const GEO_ANCHORS = {
+    phones: [
+        { label: 'Цена замены экрана iPhone в Вологде', href: '/services/phones#repair-calculator' },
+        { label: 'Ремонт Samsung Galaxy в Вологде', href: '/services/phones#repair-calculator' },
+        { label: 'Ремонт Xiaomi Redmi в Вологде', href: '/brands/xiaomi' },
+    ],
+    laptops: [
+        { label: 'Ремонт MacBook в Вологде', href: '/brands/apple' },
+        { label: 'Чистка ноутбука в Вологде — цена', href: '/services/laptops#repair-calculator' },
+        { label: 'Замена матрицы ноутбука в Вологде', href: '/services/laptops#repair-calculator' },
+    ],
+    tablets: [
+        { label: 'Замена экрана iPad в Вологде', href: '/services/tablets#repair-calculator' },
+        { label: 'Ремонт Samsung Galaxy Tab в Вологде', href: '/brands/samsung' },
+    ],
+    tv: [
+        { label: 'Замена подсветки телевизора в Вологде', href: '/services/tv#repair-calculator' },
+        { label: 'Ремонт OLED LG в Вологде', href: '/brands/lg' },
+    ],
+    videocards: [
+        { label: 'Реболл GPU в Вологде — цена', href: '/services/videocards#repair-calculator' },
+        { label: 'Ремонт NVIDIA RTX в Вологде', href: '/services/videocards#repair-calculator' },
+    ],
+    consoles: [
+        { label: 'Чистка PlayStation 5 в Вологде', href: '/services/consoles#repair-calculator' },
+        { label: 'Ремонт Xbox Series X в Вологде', href: '/services/consoles#repair-calculator' },
+    ],
+};
+
 const CALCULATOR_KEY_MAP = {
     phones: 'phone',
     laptops: 'laptop',
@@ -333,6 +372,61 @@ export default function CategoryTemplate({ categorySlug }) {
                     </div>
                 </div>
             </section>
+
+            {/* Гео-якоря: быстрый доступ к популярным запросам */}
+            {GEO_ANCHORS[categorySlug] && (
+                <section className="py-8 bg-white border-t border-gray-100">
+                    <div className="max-w-4xl mx-auto px-4">
+                        <p className="text-sm text-gray-500 mb-3 font-medium uppercase tracking-wide">
+                            Популярные запросы в Вологде:
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                            {GEO_ANCHORS[categorySlug].map((item, i) => (
+                                <Link
+                                    key={i}
+                                    href={item.href}
+                                    className="text-sm px-4 py-2 rounded-full border border-blue-200 text-blue-800 hover:bg-blue-50 hover:border-blue-400 transition-colors"
+                                >
+                                    {item.label}
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* Смотрите также */}
+            {RELATED_CATEGORIES[categorySlug] && (
+                <section className="py-16 bg-gray-50">
+                    <div className="max-w-7xl mx-auto px-4">
+                        <h2 className="text-2xl md:text-3xl font-bold text-center mb-10" style={{ color: '#002147' }}>
+                            Смотрите также
+                        </h2>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {RELATED_CATEGORIES[categorySlug].map((slug) => {
+                                const related = CATEGORIES_DATA[slug];
+                                if (!related) return null;
+                                return (
+                                    <Link
+                                        key={slug}
+                                        href={`/services/${slug}`}
+                                        className="flex items-center gap-4 bg-white rounded-2xl p-5 border-2 border-gray-100 hover:border-blue-300 hover:-translate-y-1 hover:shadow-lg transition-all"
+                                    >
+                                        <span className="text-4xl flex-shrink-0">{related.icon}</span>
+                                        <div>
+                                            <p className="font-bold text-base" style={{ color: '#002147' }}>
+                                                {related.title}
+                                            </p>
+                                            <p className="text-sm text-gray-500 mt-0.5">{related.subtitle}</p>
+                                        </div>
+                                        <span className="ml-auto text-gray-400 text-xl flex-shrink-0">→</span>
+                                    </Link>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </section>
+            )}
 
             {/* CTA */}
             <section className="py-16" style={{ background: BRAND_GRADIENT }}>

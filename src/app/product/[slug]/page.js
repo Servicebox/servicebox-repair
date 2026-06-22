@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import dbConnect from '@/lib/db';
 import Product from '@/models/Product';
 import ClientProductDisplay from '@/components/ProductDisplay/ProductDisplay';
+import { BASE_URL } from '@/lib/constants';
 
 // ============================================
 // ⚙️ НАСТРОЙКИ КЭШИРОВАНИЯ И СТАТИЗАЦИИ
@@ -63,15 +64,11 @@ export async function generateMetadata({ params }) {
       };
     }
 
-    const baseUrl =
-      process.env.NEXT_PUBLIC_BASE_URL ||
-      process.env.NEXT_PUBLIC_API_URL ||
-      'https://servicebox35.ru';
-    const pageUrl = `${baseUrl}/product/${product.slug}`;
+    const pageUrl = `${BASE_URL}/product/${product.slug}`;
     const mainImage = product.images?.[0] || '/images/placeholder.jpg';
     const imageUrl = mainImage.startsWith('http')
       ? mainImage
-      : `${baseUrl}${mainImage}`;
+      : `${BASE_URL}${mainImage}`;
     const description =
       product.description?.substring(0, 155) ||
       `Купить ${product.name} в Вологде — Сервис Бокс. Гарантия качества, быстрая доставка.`;
@@ -163,15 +160,11 @@ export default async function ProductPage({ params }) {
       })
     );
 
-    const baseUrl =
-      process.env.NEXT_PUBLIC_BASE_URL ||
-      process.env.NEXT_PUBLIC_API_URL ||
-      'https://servicebox35.ru';
-    const pageUrl = `${baseUrl}/product/${productWithVirtuals.slug}`;
+    const pageUrl = `${BASE_URL}/product/${productWithVirtuals.slug}`;
     const productImages =
       productWithVirtuals.images?.map(img =>
-        img.startsWith('http') ? img : `${baseUrl}${img}`
-      ) || [`${baseUrl}/images/placeholder.jpg`];
+        img.startsWith('http') ? img : `${BASE_URL}${img}`
+      ) || [`${BASE_URL}/images/placeholder.jpg`];
 
     // Цена (число, без символов — требование Schema.org)
     const price =
@@ -193,8 +186,8 @@ export default async function ProductPage({ params }) {
           '@id': pageUrl,
           url: pageUrl,
           name: productWithVirtuals.name,
-          isPartOf: { '@id': `${baseUrl}#website` },
-          about: { '@id': `${baseUrl}#business` },
+          isPartOf: { '@id': `${BASE_URL}#website` },
+          about: { '@id': `${BASE_URL}#business` },
           primaryImageOfPage: {
             '@type': 'ImageObject',
             url: productImages[0],
@@ -262,7 +255,7 @@ export default async function ProductPage({ params }) {
             itemCondition: 'https://schema.org/NewCondition',
 
             // Продавец – только ссылка на глобальный бизнес
-            seller: { '@id': `${baseUrl}#business` },
+            seller: { '@id': `${BASE_URL}#business` },
 
             // Доставка
             shippingDetails: {
@@ -294,7 +287,7 @@ export default async function ProductPage({ params }) {
             },
 
             // Самовывоз – только ссылка на глобальный бизнес
-            availableAtOrFrom: { '@id': `${baseUrl}#business` },
+            availableAtOrFrom: { '@id': `${BASE_URL}#business` },
           },
         },
 
@@ -302,11 +295,11 @@ export default async function ProductPage({ params }) {
         {
           '@type': 'BreadcrumbList',
           itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Главная', item: baseUrl },
-            { '@type': 'ListItem', position: 2, name: 'Каталог', item: `${baseUrl}/parts` },
+            { '@type': 'ListItem', position: 1, name: 'Главная', item: BASE_URL },
+            { '@type': 'ListItem', position: 2, name: 'Каталог', item: `${BASE_URL}/parts` },
             ...(productWithVirtuals.category
               ? [
-                { '@type': 'ListItem', position: 3, name: productWithVirtuals.category, item: `${baseUrl}/parts?category=${encodeURIComponent(productWithVirtuals.category)}` },
+                { '@type': 'ListItem', position: 3, name: productWithVirtuals.category, item: `${BASE_URL}/parts?category=${encodeURIComponent(productWithVirtuals.category)}` },
                 { '@type': 'ListItem', position: 4, name: productWithVirtuals.name, item: pageUrl },
               ]
               : [

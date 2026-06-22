@@ -1,0 +1,95 @@
+.tableContainer {
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table thead {
+  background: #f3f4f6;
+}
+
+.table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #1f2937;
+}
+
+.table tbody tr:hover {
+  background: #f9fafb;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.editBtn,
+.deleteBtn,
+.actionBtn {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.editBtn {
+  background: #3b82f6;
+  color: white;
+}
+
+.editBtn:hover {
+  background: #2563eb;
+}
+
+.deleteBtn {
+  background: #ef4444;
+  color: white;
+}
+
+.deleteBtn:hover {
+  background: #dc2626;
+}
+
+.actionBtn {
+  background: #10b981;
+  color: white;
+}
+
+.actionBtn:hover {
+  background: #059669;
+}
+
+@media (max-width: 768px) {
+  .table {
+    font-size: 12px;
+  }
+
+  .table th,
+  .table td {
+    padding: 8px;
+  }
+
+  .editBtn,
+  .deleteBtn,
+  .actionBtn {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+}

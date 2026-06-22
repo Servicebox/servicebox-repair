@@ -25,7 +25,7 @@ export async function GET(request) {
       
       // Находим пользователя
       const user = await User.findById(decoded.userId).select('-password');
-      
+
       if (!user) {
         return NextResponse.json(
           { message: 'Пользователь не найден' },
@@ -40,7 +40,10 @@ export async function GET(request) {
           email: user.email,
           phone: user.phone,
           role: user.role,
-          emailVerified: user.emailVerified
+          emailVerified: user.emailVerified,
+          avatar: user.avatar || '',
+          avatarUrl: user.avatarUrl || '',
+          bonuses: user.bonuses ?? 0,
         }
       });
 

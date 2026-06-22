@@ -1,282 +1,181 @@
 // components/Admin/UsersManagement/UsersManagement.jsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/components/contexts/AuthContext';
 import styles from './UsersManagement.module.css';
 
+const EMPTY_FORM = { role: 'user', email: '', isActive: true, newPassword: '' };
+const EMPTY_BONUS = { type: 'earn', points: '', description: '' };
+
 export default function UsersManagement() {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const [editingUser, setEditingUser] = useState(null);
-  const [editForm, setEditForm] = useState({
-    username: '',
-    email: '',
-    role: 'user',
-    phone: ''
-  });
-  const [searchTerm, setSearchTerm] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  
   const { user: currentUser } = useAuth();
 
-  // Загрузка пользователей
-// В компоненте UsersManagement обновите fetchUsers:
-const fetchUsers = async (page = 1, search = '') => {
-  try {
+  const [users, setUsers]         = useState([]);
+  const [loading, setLoading]     = useState(true);
+  const [error, setError]         = useState('');
+  const [success, setSuccess]     = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [roleFilter, setRoleFilter] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages]   = useState(1);
+  const [showPassword, setShowPassword] = useState(false);
+
+  // Модалка редактирования
+  const [editTarget, setEditTarget] = useState(null);
+  const [editForm, setEditForm]     = useState(EMPTY_FORM);
+  const [saving, setSaving]         = useState(false);
+
+  // Модалка бонусов
+  const [bonusTarget, setBonusTarget] = useState(null);
+  const [bonusForm, setBonusForm]     = useState(EMPTY_BONUS);
+  const [bonusSaving, setBonusSaving] = useState(false);
+  const [bonusMsg, setBonusMsg]       = useState('');
+
+  const fetchUsers = useCallback(async (page = 1, search = '', role = '') => {
     setLoading(true);
     setError('');
-
-    console.log('🔄 === CLIENT: Starting fetchUsers ===');
-    console.log('📋 Current user:', currentUser);
-    
-    const params = new URLSearchParams({
-      page: page.toString(),
-      limit: '20',
-      ...(search && { search })
-    });
-
-    const apiUrl = `${window.location.origin}/api/users?${params}`;
-    console.log('🌐 Making request to:', apiUrl);
-
-    const startTime = Date.now();
-    const response = await fetch(apiUrl, {
-      credentials: 'include',
-      headers: {
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache'
-      }
-    });
-
-    const endTime = Date.now();
-    console.log('⏱️ Request took:', endTime - startTime, 'ms');
-    console.log('📨 Response status:', response.status);
-    console.log('📨 Response ok:', response.ok);
-    
-    if (response.ok) {
-      const data = await response.json();
-      console.log('✅ Success! Data received:', data);
-      setUsers(data.users || []);
-      setTotalPages(data.pagination?.totalPages || 1);
-      setCurrentPage(data.pagination?.currentPage || 1);
-    } else {
-      console.log('❌ Error response received');
-      
-      let errorMessage = 'Ошибка при загрузке пользователей';
-      let errorDetails = '';
-      
-      try {
-        const errorText = await response.text();
-        console.log('📄 Raw error response:', errorText);
-        
-        if (errorText) {
-          try {
-            const errorData = JSON.parse(errorText);
-            errorMessage = errorData.error || errorMessage;
-            errorDetails = JSON.stringify(errorData, null, 2);
-          } catch (e) {
-            errorMessage = errorText || `HTTP Error: ${response.status}`;
-          }
-        } else {
-          errorMessage = `HTTP Error: ${response.status} ${response.statusText}`;
-        }
-      } catch (parseError) {
-        console.error('📄 Error parsing response:', parseError);
-        errorMessage = `Network Error: ${parseError.message}`;
-      }
-      
-      console.log('🚫 Final error message:', errorMessage);
-      if (errorDetails) {
-        console.log('📋 Error details:', errorDetails);
-      }
-      
-      setError(errorMessage);
+    try {
+      const params = new URLSearchParams({
+        page: String(page),
+        limit: '20',
+        ...(search && { search }),
+        ...(role && { role }),
+      });
+      const res = await fetch(`/api/users?${params}`, {
+        credentials: 'include',
+        headers: { 'Cache-Control': 'no-cache' }
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      setUsers(data.users ?? []);
+      setTotalPages(data.pagination?.totalPages ?? 1);
+      setCurrentPage(data.pagination?.currentPage ?? 1);
+    } catch (err) {
+      setError('Ошибка загрузки: ' + err.message);
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    console.error('💥 Fetch users network error:', err);
-    setError('Ошибка сети при загрузке пользователей: ' + err.message);
-  } finally {
-    setLoading(false);
-  }
-};
+  }, []);
 
   useEffect(() => {
-    console.log('🎯 === CLIENT: useEffect triggered ===', { 
-      currentUser, 
-      hasUser: !!currentUser,
-      userRole: currentUser?.role 
-    });
-    
-    if (currentUser?.role === 'admin') {
-      console.log('✅ User is admin, fetching users...');
-      fetchUsers();
-    } else if (currentUser) {
-      console.log('❌ User is not admin:', currentUser.role);
-      setError('У вас нет прав администратора');
-      setLoading(false);
-    } else {
-      console.log('⏳ User not loaded yet...');
-    }
-  }, [currentUser]);
+    if (currentUser?.role === 'admin') fetchUsers();
+    else if (currentUser) { setError('Нет прав администратора'); setLoading(false); }
+  }, [currentUser, fetchUsers]);
 
-
-  // Поиск пользователей
-  const handleSearch = (e) => {
-    e.preventDefault();
-    fetchUsers(1, searchTerm);
+  const openModal = (user) => {
+    setEditTarget(user);
+    setEditForm({ role: user.role ?? 'user', email: user.email ?? '', isActive: user.isActive ?? true, newPassword: '' });
+    setShowPassword(false);
+    setError('');
   };
 
-  // Начать редактирование пользователя
-  const startEdit = (user) => {
-    setEditingUser(user._id);
-    setEditForm({
-      username: user.username || '',
-      email: user.email || '',
-      role: user.role || 'user',
-      phone: user.phone || ''
-    });
+  const closeModal = () => { setEditTarget(null); setEditForm(EMPTY_FORM); setShowPassword(false); };
+
+  const openBonusModal = (user) => {
+    setBonusTarget(user);
+    setBonusForm(EMPTY_BONUS);
+    setBonusMsg('');
   };
 
-  // Отменить редактирование
-  const cancelEdit = () => {
-    setEditingUser(null);
-    setEditForm({
-      username: '',
-      email: '',
-      role: 'user',
-      phone: ''
-    });
-  };
+  const closeBonusModal = () => { setBonusTarget(null); setBonusForm(EMPTY_BONUS); setBonusMsg(''); };
 
-  // Сохранить изменения
-  const saveUser = async (userId) => {
+  const handleBonusSave = async () => {
+    if (!bonusTarget) return;
+    const pts = Number(bonusForm.points);
+    if (!pts || pts <= 0) { setBonusMsg('Введите положительное количество баллов'); return; }
+    if (!bonusForm.description.trim()) { setBonusMsg('Укажите причину начисления'); return; }
+
+    setBonusSaving(true);
+    setBonusMsg('');
     try {
-      setError('');
-      
-      const response = await fetch(`/api/users/${userId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(editForm),
-        credentials: 'include'
+      const res = await fetch('/api/bonuses', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ userId: bonusTarget._id, type: bonusForm.type, points: pts, description: bonusForm.description }),
       });
-
-      if (response.ok) {
-        setSuccess('Пользователь успешно обновлен');
-        setEditingUser(null);
-        fetchUsers(currentPage, searchTerm);
-        setTimeout(() => setSuccess(''), 3000);
+      const data = await res.json();
+      if (res.ok) {
+        setBonusMsg(`Готово! Новый баланс: ${data.balance} баллов`);
+        setBonusForm(EMPTY_BONUS);
+        fetchUsers(currentPage, searchTerm, roleFilter);
       } else {
-        const data = await response.json();
-        setError(data.error || 'Ошибка при обновлении пользователя');
+        setBonusMsg(data.error ?? 'Ошибка');
+      }
+    } catch {
+      setBonusMsg('Ошибка сети');
+    } finally {
+      setBonusSaving(false);
+    }
+  };
+
+  const handleSave = async () => {
+    if (!editTarget) return;
+    setSaving(true);
+    setError('');
+    try {
+      const body = { role: editForm.role, email: editForm.email, isActive: editForm.isActive };
+      if (editForm.newPassword) body.newPassword = editForm.newPassword;
+
+      const res = await fetch(`/api/admin/users/${editTarget._id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setSuccess('Пользователь обновлён');
+        setTimeout(() => setSuccess(''), 3000);
+        closeModal();
+        fetchUsers(currentPage, searchTerm, roleFilter);
+      } else {
+        setError(data.error ?? 'Ошибка обновления');
       }
     } catch (err) {
-      console.error('Save user error:', err);
-      setError('Ошибка сети при обновлении пользователя');
+      setError('Ошибка сети: ' + err.message);
+    } finally {
+      setSaving(false);
     }
   };
 
-  // Удалить пользователя
-  const deleteUser = async (userId, userEmail) => {
-    if (!confirm(`Вы уверены, что хотите удалить пользователя ${userEmail}?`)) {
-      return;
-    }
-
+  const deleteUser = async (userId, email) => {
+    if (!confirm(`Удалить пользователя ${email}?`)) return;
+    setError('');
     try {
-      setError('');
-      
-      const response = await fetch(`/api/users/${userId}`, {
-        method: 'DELETE',
-        credentials: 'include'
+      const res = await fetch(`/api/admin/users/${userId}`, {
+        method: 'DELETE', credentials: 'include'
       });
-
-      if (response.ok) {
-        setSuccess('Пользователь успешно удален');
-        fetchUsers(currentPage, searchTerm);
+      if (res.ok) {
+        setSuccess('Пользователь удалён');
         setTimeout(() => setSuccess(''), 3000);
+        fetchUsers(currentPage, searchTerm, roleFilter);
       } else {
-        const data = await response.json();
-        setError(data.error || 'Ошибка при удалении пользователя');
+        const data = await res.json();
+        setError(data.error ?? 'Ошибка удаления');
       }
     } catch (err) {
-      console.error('Delete user error:', err);
-      setError('Ошибка сети при удалении пользователя');
+      setError('Ошибка сети: ' + err.message);
     }
-  };
-
-  // Изменить роль пользователя
-  const changeRole = async (userId, newRole, currentEmail) => {
-    if (!confirm(`Вы уверены, что хотите ${newRole === 'admin' ? 'назначить администратором' : 'снять права администратора'} пользователя ${currentEmail}?`)) {
-      return;
-    }
-
-    try {
-      setError('');
-      
-      const response = await fetch(`/api/users/${userId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ role: newRole }),
-        credentials: 'include'
-      });
-
-      if (response.ok) {
-        setSuccess('Роль пользователя успешно изменена');
-        fetchUsers(currentPage, searchTerm);
-        setTimeout(() => setSuccess(''), 3000);
-      } else {
-        const data = await response.json();
-        setError(data.error || 'Ошибка при изменении роли');
-      }
-    } catch (err) {
-      console.error('Change role error:', err);
-      setError('Ошибка сети при изменении роли');
-    }
-  };
-
-  // Обработчик изменения формы
-  const handleEditChange = (e) => {
-    const { name, value } = e.target;
-    setEditForm(prev => ({
-      ...prev,
-      [name]: value
-    }));
   };
 
   if (!currentUser) {
     return (
       <div className={styles.container}>
-        <div className={styles.loading}>
-          <div className={styles.spinner}></div>
-          <p>Загрузка...</p>
-        </div>
+        <div className={styles.loading}><div className={styles.spinner} /><p>Загрузка...</p></div>
       </div>
     );
   }
 
   if (currentUser.role !== 'admin') {
-    return (
-      <div className={styles.container}>
-        <div className={styles.error}>
-          У вас нет доступа к этой странице
-        </div>
-      </div>
-    );
+    return <div className={styles.container}><div className={styles.error}>Нет доступа</div></div>;
   }
 
   if (loading) {
     return (
       <div className={styles.container}>
-        <div className={styles.loading}>
-          <div className={styles.spinner}></div>
-          <p>Загрузка пользователей...</p>
-        </div>
+        <div className={styles.loading}><div className={styles.spinner} /><p>Загрузка пользователей...</p></div>
       </div>
     );
   }
@@ -285,31 +184,41 @@ const fetchUsers = async (page = 1, search = '') => {
     <div className={styles.container}>
       <div className={styles.header}>
         <h1>Управление пользователями</h1>
-        <p>Всего пользователей: {users.length}</p>
+        <p>Всего: {users.length}</p>
       </div>
 
-      {/* Поиск */}
+      {/* Поиск + фильтр роли */}
       <div className={styles.searchSection}>
-        <form onSubmit={handleSearch} className={styles.searchForm}>
+        <form
+          onSubmit={e => { e.preventDefault(); fetchUsers(1, searchTerm, roleFilter); }}
+          className={styles.searchForm}
+        >
           <input
             type="text"
             placeholder="Поиск по имени, email или телефону..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={e => setSearchTerm(e.target.value)}
             className={styles.searchInput}
           />
-          <button type="submit" className={styles.searchButton}>
-            Поиск
-          </button>
-          {searchTerm && (
-            <button 
-              type="button" 
-              onClick={() => {
-                setSearchTerm('');
-                fetchUsers(1, '');
-              }}
-              className={styles.clearButton}
-            >
+          <select
+            className={styles.select}
+            style={{ width: 'auto', minWidth: 160 }}
+            value={roleFilter}
+            onChange={e => {
+              const r = e.target.value;
+              setRoleFilter(r);
+              fetchUsers(1, searchTerm, r);
+            }}
+            aria-label="Фильтр по роли"
+          >
+            <option value="">Все роли</option>
+            <option value="user">Пользователи</option>
+            <option value="admin">Администраторы</option>
+          </select>
+          <button type="submit" className={styles.searchButton}>Поиск</button>
+          {(searchTerm || roleFilter) && (
+            <button type="button" className={styles.clearButton}
+              onClick={() => { setSearchTerm(''); setRoleFilter(''); fetchUsers(1, '', ''); }}>
               Сбросить
             </button>
           )}
@@ -322,7 +231,6 @@ const fetchUsers = async (page = 1, search = '') => {
           <button onClick={() => setError('')} className={styles.closeButton}>×</button>
         </div>
       )}
-
       {success && (
         <div className={styles.success}>
           <span>{success}</span>
@@ -330,6 +238,7 @@ const fetchUsers = async (page = 1, search = '') => {
         </div>
       )}
 
+      {/* Таблица */}
       <div className={styles.tableContainer}>
         <table className={styles.table}>
           <thead>
@@ -338,161 +247,218 @@ const fetchUsers = async (page = 1, search = '') => {
               <th>Email</th>
               <th>Телефон</th>
               <th>Роль</th>
-              <th>Дата регистрации</th>
+              <th>Статус</th>
+              <th>Регистрация</th>
               <th>Действия</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
-              <tr key={user._id} className={styles.userRow}>
-                {editingUser === user._id ? (
-                  <>
-                    <td>
-                      <input
-                        type="text"
-                        name="username"
-                        value={editForm.username}
-                        onChange={handleEditChange}
-                        className={styles.input}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="email"
-                        name="email"
-                        value={editForm.email}
-                        onChange={handleEditChange}
-                        className={styles.input}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={editForm.phone}
-                        onChange={handleEditChange}
-                        className={styles.input}
-                      />
-                    </td>
-                    <td>
-                      <select
-                        name="role"
-                        value={editForm.role}
-                        onChange={handleEditChange}
-                        className={styles.select}
-                      >
-                        <option value="user">Пользователь</option>
-                        <option value="admin">Администратор</option>
-                      </select>
-                    </td>
-                    <td>
-                      {user.createdAt ? new Date(user.createdAt).toLocaleDateString('ru-RU') : 'Не указана'}
-                    </td>
-                    <td>
-                      <div className={styles.actionButtons}>
-                        <button
-                          onClick={() => saveUser(user._id)}
-                          className={styles.saveButton}
-                        >
-                          Сохранить
-                        </button>
-                        <button
-                          onClick={cancelEdit}
-                          className={styles.cancelButton}
-                        >
-                          Отмена
-                        </button>
-                      </div>
-                    </td>
-                  </>
-                ) : (
-                  <>
-                    <td>{user.username || 'Не указано'}</td>
-                    <td>{user.email}</td>
-                    <td>{user.phone || 'Не указан'}</td>
-                    <td>
-                      <span className={`${styles.role} ${styles[user.role]}`}>
-                        {user.role === 'admin' ? 'Администратор' : 'Пользователь'}
-                      </span>
-                    </td>
-                    <td>
-                      {user.createdAt ? new Date(user.createdAt).toLocaleDateString('ru-RU') : 'Не указана'}
-                    </td>
-                    <td>
-                      <div className={styles.actionButtons}>
-                        <button
-                          onClick={() => startEdit(user)}
-                          className={styles.editButton}
-                        >
-                          Редактировать
-                        </button>
-                        
-                        {user.role !== 'admin' && (
-                          <button
-                            onClick={() => changeRole(user._id, 'admin', user.email)}
-                            className={styles.promoteButton}
-                          >
-                            Сделать админом
-                          </button>
-                        )}
-                        
-                        {user.role === 'admin' && user._id !== currentUser.id && (
-                          <button
-                            onClick={() => changeRole(user._id, 'user', user.email)}
-                            className={styles.demoteButton}
-                          >
-                            Убрать админку
-                          </button>
-                        )}
-                        
-                        {user._id !== currentUser.id && (
-                          <button
-                            onClick={() => deleteUser(user._id, user.email)}
-                            className={styles.deleteButton}
-                          >
-                            Удалить
-                          </button>
-                        )}
-                      </div>
-                    </td>
-                  </>
-                )}
+            {users.map(u => (
+              <tr key={u._id} className={styles.userRow}>
+                <td>{u.username || '—'}</td>
+                <td>{u.email}</td>
+                <td>{u.phone || '—'}</td>
+                <td>
+                  <span className={`${styles.role} ${styles[u.role]}`}>
+                    {u.role === 'admin' ? 'Администратор' : 'Пользователь'}
+                  </span>
+                </td>
+                <td>
+                  <span style={{ color: u.isActive === false ? '#dc2626' : '#059669', fontWeight: 600, fontSize: 12 }}>
+                    {u.isActive === false ? 'Заблокирован' : 'Активен'}
+                  </span>
+                </td>
+                <td>{u.createdAt ? new Date(u.createdAt).toLocaleDateString('ru-RU') : '—'}</td>
+                <td>
+                  <div className={styles.actionButtons}>
+                    <button className={styles.editButton} onClick={() => openModal(u)}>
+                      Редактировать
+                    </button>
+                    <button className={styles.bonusButton} onClick={() => openBonusModal(u)}>
+                      Бонусы {u.bonuses != null ? `(${u.bonuses})` : ''}
+                    </button>
+                    {u._id !== currentUser._id && (
+                      <button className={styles.deleteButton} onClick={() => deleteUser(u._id, u.email)}>
+                        Удалить
+                      </button>
+                    )}
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
 
-        {users.length === 0 && !loading && (
+        {users.length === 0 && (
           <div className={styles.empty}>
-            <p>{searchTerm ? 'Пользователи по вашему запросу не найдены' : 'Пользователи не найдены'}</p>
+            <p>{searchTerm ? 'Пользователи не найдены' : 'Список пуст'}</p>
           </div>
         )}
 
-        {/* Пагинация */}
         {totalPages > 1 && (
           <div className={styles.pagination}>
-            <button
-              onClick={() => fetchUsers(currentPage - 1, searchTerm)}
-              disabled={currentPage === 1}
-              className={styles.pageButton}
-            >
-              Назад
-            </button>
-            
-            <span className={styles.pageInfo}>
-              Страница {currentPage} из {totalPages}
-            </span>
-            
-            <button
-              onClick={() => fetchUsers(currentPage + 1, searchTerm)}
-              disabled={currentPage === totalPages}
-              className={styles.pageButton}
-            >
-              Вперед
-            </button>
+            <button className={styles.pageButton} disabled={currentPage === 1}
+              onClick={() => fetchUsers(currentPage - 1, searchTerm, roleFilter)}>Назад</button>
+            <span className={styles.pageInfo}>Страница {currentPage} из {totalPages}</span>
+            <button className={styles.pageButton} disabled={currentPage === totalPages}
+              onClick={() => fetchUsers(currentPage + 1, searchTerm, roleFilter)}>Вперёд</button>
           </div>
         )}
       </div>
+
+      {/* Модальное окно бонусов */}
+      {bonusTarget && (
+        <div className={styles.overlay} onClick={e => e.target === e.currentTarget && closeBonusModal()}>
+          <div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="bonus-modal-title">
+            <h2 id="bonus-modal-title" className={styles.modalTitle}>
+              Бонусы: {bonusTarget.username || bonusTarget.email}
+            </h2>
+            <p style={{ marginBottom: 16, color: '#64748b', fontSize: 14 }}>
+              Текущий баланс: <strong>{bonusTarget.bonuses ?? 0} баллов</strong>
+            </p>
+
+            <div className={styles.modalField}>
+              <label className={styles.modalLabel} htmlFor="bonus-type">Операция</label>
+              <select
+                id="bonus-type"
+                className={styles.select}
+                value={bonusForm.type}
+                onChange={e => setBonusForm(f => ({ ...f, type: e.target.value }))}
+              >
+                <option value="earn">Начислить</option>
+                <option value="spend">Списать</option>
+                <option value="adjust">Корректировка</option>
+              </select>
+            </div>
+
+            <div className={styles.modalField}>
+              <label className={styles.modalLabel} htmlFor="bonus-points">Количество баллов</label>
+              <input
+                id="bonus-points"
+                type="number"
+                min="1"
+                className={styles.input}
+                placeholder="Например: 100"
+                value={bonusForm.points}
+                onChange={e => setBonusForm(f => ({ ...f, points: e.target.value }))}
+              />
+            </div>
+
+            <div className={styles.modalField}>
+              <label className={styles.modalLabel} htmlFor="bonus-desc">Причина</label>
+              <input
+                id="bonus-desc"
+                type="text"
+                className={styles.input}
+                placeholder="Например: за загрузку фото"
+                value={bonusForm.description}
+                onChange={e => setBonusForm(f => ({ ...f, description: e.target.value }))}
+              />
+            </div>
+
+            {bonusMsg && (
+              <p style={{ color: bonusMsg.startsWith('Готово') ? '#059669' : '#dc2626', fontSize: 13, marginTop: 4 }}>
+                {bonusMsg}
+              </p>
+            )}
+
+            <div className={styles.modalActions}>
+              <button className={styles.cancelButton} onClick={closeBonusModal} disabled={bonusSaving}>
+                Закрыть
+              </button>
+              <button className={styles.saveButton} onClick={handleBonusSave} disabled={bonusSaving}>
+                {bonusSaving ? 'Сохранение...' : 'Применить'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Модальное окно редактирования */}
+      {editTarget && (
+        <div className={styles.overlay} onClick={e => e.target === e.currentTarget && closeModal()}>
+          <div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <h2 id="modal-title" className={styles.modalTitle}>
+              Редактирование: {editTarget.username || editTarget.email}
+            </h2>
+
+            <div className={styles.modalField}>
+              <label className={styles.modalLabel} htmlFor="modal-email">Email</label>
+              <input
+                id="modal-email"
+                type="email"
+                className={styles.input}
+                value={editForm.email}
+                onChange={e => setEditForm(f => ({ ...f, email: e.target.value }))}
+              />
+            </div>
+
+            <div className={styles.modalField}>
+              <label className={styles.modalLabel} htmlFor="modal-role">Роль</label>
+              <select
+                id="modal-role"
+                className={styles.select}
+                value={editForm.role}
+                onChange={e => setEditForm(f => ({ ...f, role: e.target.value }))}
+              >
+                <option value="user">Пользователь</option>
+                <option value="admin">Администратор</option>
+              </select>
+            </div>
+
+            <div className={styles.modalField}>
+              <label className={styles.isActiveToggle}>
+                <input
+                  type="checkbox"
+                  checked={editForm.isActive}
+                  onChange={e => setEditForm(f => ({ ...f, isActive: e.target.checked }))}
+                />
+                Аккаунт активен
+              </label>
+            </div>
+
+            <div className={styles.modalField}>
+              <label className={styles.modalLabel} htmlFor="modal-password">
+                Новый пароль <span style={{ fontWeight: 400, textTransform: 'none' }}>(оставьте пустым, чтобы не менять)</span>
+              </label>
+              <div style={{ position: 'relative' }}>
+                <input
+                  id="modal-password"
+                  type={showPassword ? 'text' : 'password'}
+                  className={styles.input}
+                  placeholder="Минимум 8 символов"
+                  value={editForm.newPassword}
+                  onChange={e => setEditForm(f => ({ ...f, newPassword: e.target.value }))}
+                  autoComplete="new-password"
+                  style={{ paddingRight: '3rem' }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(s => !s)}
+                  style={{
+                    position: 'absolute', right: '0.6rem', top: '50%', transform: 'translateY(-50%)',
+                    background: 'none', border: 'none', cursor: 'pointer', color: '#64748b', fontSize: 13
+                  }}
+                  aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
+                >
+                  {showPassword ? 'Скрыть' : 'Показать'}
+                </button>
+              </div>
+            </div>
+
+            {error && <p style={{ color: '#dc2626', fontSize: 13, marginTop: 4 }}>{error}</p>}
+
+            <div className={styles.modalActions}>
+              <button className={styles.cancelButton} onClick={closeModal} disabled={saving}>
+                Отмена
+              </button>
+              <button className={styles.saveButton} onClick={handleSave} disabled={saving}>
+                {saving ? 'Сохранение...' : 'Сохранить'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

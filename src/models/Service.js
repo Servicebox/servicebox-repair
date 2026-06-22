@@ -79,7 +79,19 @@ const serviceSchema = new mongoose.Schema({
   popularity: {
     type: Number,
     default: 0
-  }
+  },
+
+  likesCount: {
+    type: Number,
+    default: 0,
+    min: 0
+  },
+
+  likedBy: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }]
+
 }, {
   timestamps: true,
   toJSON: { virtuals: true },

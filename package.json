@@ -59,7 +59,8 @@
     "socket.io": "^4.0.0",
     "use-debounce": "^10.0.6",
     "uuid": "^13.0.0",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^16.2.6",

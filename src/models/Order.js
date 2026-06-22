@@ -126,8 +126,17 @@ const OrderSchema = new mongoose.Schema({
   // Оплата
   paymentMethod: {
     type: String,
-    enum: ['cash', 'card', 'online'],
+    enum: ['cash', 'card', 'online', 'yandex_split'],
     default: 'cash'
+  },
+  splitOrderId: {
+    type: String,
+    index: true,
+    sparse: true
+  },
+  bonusesAwarded: {
+    type: Boolean,
+    default: false
   },
   
   // Статусы

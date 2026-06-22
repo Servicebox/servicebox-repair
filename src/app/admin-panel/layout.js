@@ -1,4 +1,3 @@
-// src/app/admin-panel/layout.js
 'use client';
 
 import Link from 'next/link';
@@ -11,45 +10,37 @@ export default function AdminLayout({ children }) {
   const pathname = usePathname();
   const router = useRouter();
   const { user, loading } = useAuth();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const navItems = [
-    { href: '/admin-panel/listservice', label: 'Услуги', icon: '⚙️' },
-    { href: '/admin-panel/listproduct', label: 'Товары', icon: '📦' },
-    { href: '/admin-panel/calculator-config', label: 'Цены калькулятора', icon: '🧮' },
-    { href: '/admin-panel/imagelist', label: 'Фотогалерея', icon: '🖼️' },
-    { href: '/admin-panel/addnews', label: 'Добавить новость', icon: '📝' },
-    { href: '/admin-panel/listnews', label: 'Новости', icon: '📰' },
-    { href: '/admin-panel/promotions', label: 'Акции', icon: '🔥' },
-    { href: '/admin-panel/users', label: 'Пользователи', icon: '👥' },
-    { href: '/admin-panel/orders', label: 'Заказы', icon: '📋' },
-    { href: '/admin-panel/bookings', label: 'Бронирования', icon: '📅' },
-    { href: '/admin-panel/tracking', label: 'Отслеживание', icon: '📍' },
-    { href: '/admin-panel/depository', label: 'Файлы', icon: '📁' },
-    { href: '/admin-panel/price', label: 'Прайс-лист', icon: '📊' },
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
-    { href: '/admin-panel/ai-traffic', label: 'ИИ-трафик', icon: '🤖' },
-  ];
-
+  // Отслеживаем ширину экрана
   useEffect(() => {
-    if (!loading && user && user.role !== 'admin') {
-      router.push('/');
-    }
-  }, [user, loading, router]);
+    const checkScreen = () => {
+      const mobile = window.innerWidth < 1024;
+      setIsMobile(mobile);
+      // На мобильных сайдбар по умолчанию закрыт
+      if (mobile) setIsSidebarOpen(false);
+    };
+
+    checkScreen();
+    window.addEventListener('resize', checkScreen);
+    return () => window.removeEventListener('resize', checkScreen);
+  }, []);
 
   // Закрытие меню при смене маршрута
   useEffect(() => {
-    setIsMobileMenuOpen(false);
+    setIsSidebarOpen(false);
   }, [pathname]);
 
   // Закрытие по Escape
   useEffect(() => {
     const handleEsc = (e) => {
-      if (e.key === 'Escape') setIsMobileMenuOpen(false);
+      if (e.key === 'Escape' && isSidebarOpen) setIsSidebarOpen(false);
     };
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
-  }, []);
+  }, [isSidebarOpen]);
 
   if (loading) {
     return (
@@ -65,54 +56,62 @@ export default function AdminLayout({ children }) {
       <div className={styles.accessDenied}>
         <h1>Доступ запрещен</h1>
         <p>Требуются права администратора</p>
-        <Link href="/" className={styles.homeLink}>
-          На главную
-        </Link>
+        <Link href="/" className={styles.homeLink}>На главную</Link>
       </div>
     );
   }
 
+  // Динамические классы
+  const sidebarClass = `${styles.sidebar} ${isMobile ? (isSidebarOpen ? styles['sidebar--open'] : '') : (isSidebarOpen ? '' : styles['sidebar--closed'])}`;
+  const mainClass = `${styles.mainContent} ${!isMobile && !isSidebarOpen ? styles['mainContent--expanded'] : ''}`;
+  const overlayClass = `${styles.overlay} ${isMobile && isSidebarOpen ? styles['overlay--visible'] : ''}`;
+
   return (
     <div className={styles.adminContainer}>
-      {/* Мобильный хедер */}
-      <div className={styles.mobileHeader}>
-        <button
-          className={styles.mobileMenuButton}
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Открыть меню"
-        >
-          ☰
+      {/* Верхняя панель с кнопкой меню */}
+      <header className={styles.topBar}>
+        <button className={styles.menuButton} onClick={() => setIsSidebarOpen(!isSidebarOpen)} aria-label="Меню">
+          {isSidebarOpen && !isMobile ? '✕' : '☰'}
         </button>
-        <div className={styles.mobileTitle}>Админ-панель</div>
-        <div style={{ width: '32px' }} /> {/* Пустой элемент для центрирования */}
-      </div>
+        <div className={styles.topTitle}>Админ-панель</div>
+        <div style={{ width: '32px' }} />
+      </header>
 
       {/* Сайдбар */}
-      <aside
-        className={`${styles.sidebar} ${isMobileMenuOpen ? styles.sidebarOpen : ''}`}
-        aria-label="Боковое меню администратора"
-      >
+      <aside className={sidebarClass} aria-label="Боковое меню">
         <div className={styles.sidebarHeader}>
           <div>
-            <div className={styles.sidebarTitle}>Админ-панель</div>
-            <div className={styles.adminWelcome}>ServiceBox</div>
+            <div className={styles.sidebarTitle}>ServiceBox</div>
+            <div className={styles.adminWelcome}>Управление</div>
           </div>
-          <button
-            className={styles.closeSidebar}
-            onClick={() => setIsMobileMenuOpen(false)}
-            aria-label="Закрыть меню"
-          >
-            ×
-          </button>
+          <button className={styles.closeSidebar} onClick={() => setIsSidebarOpen(false)}>×</button>
         </div>
 
         <nav className={styles.sidebarNav}>
-          {navItems.map((item) => (
+          {[
+            { href: '/admin-panel/orders', label: 'Заказы', icon: '📋' },
+            { href: '/admin-panel/bookings', label: 'Бронирования', icon: '📅' },
+            { href: '/admin-panel/listservice', label: 'Услуги', icon: '⚙️' },
+            { href: '/admin-panel/listproduct', label: 'Товары', icon: '📦' },
+            { href: '/admin-panel/listnews', label: 'Новости', icon: '📰' },
+            { href: '/admin-panel/addnews', label: 'Добавить новость', icon: '📝' },
+            { href: '/admin-panel/promotions', label: 'Акции', icon: '🔥' },
+            { href: '/admin-panel/users', label: 'Пользователи', icon: '👥' },
+            { href: '/admin-panel/tracking', label: 'Отслеживание', icon: '📍' },
+            { href: '/admin-panel/depository', label: 'Файлы', icon: '📁' },
+            { href: '/admin-panel/price', label: 'Прайс-лист', icon: '📊' },
+            { href: '/admin-panel/calculator-config', label: 'Цены калькулятора', icon: '🧮' },
+            { href: '/admin-panel/imagelist', label: 'Фотогалерея', icon: '🖼️' },
+            { href: '/admin-panel/ai-traffic', label: 'ИИ-трафик', icon: '🤖' },
+            { href: '/admin-panel/reviews',  label: 'Отзывы',     icon: '⭐' },
+            { href: '/admin-panel/bonuses',  label: 'Бонусы',     icon: '🎁' },
+            { href: '/admin-panel/payments', label: 'Оплата',     icon: '💳' },
+          ].map((item) => (
             <Link
               key={item.href}
               href={item.href}
               className={`${styles.navLink} ${pathname === item.href ? styles.navLinkActive : ''}`}
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => setIsSidebarOpen(false)}
             >
               <span className={styles.navIcon}>{item.icon}</span>
               <span className={styles.navLabel}>{item.label}</span>
@@ -126,17 +125,11 @@ export default function AdminLayout({ children }) {
         </div>
       </aside>
 
-      {/* Оверлей для мобильных */}
-      {isMobileMenuOpen && (
-        <div
-          className={styles.overlay}
-          onClick={() => setIsMobileMenuOpen(false)}
-          aria-hidden="true"
-        />
-      )}
+      {/* Оверлей */}
+      <div className={overlayClass} onClick={() => setIsSidebarOpen(false)} aria-hidden="true" />
 
       {/* Основной контент */}
-      <main className={styles.mainContent}>{children}</main>
+      <main className={mainClass}>{children}</main>
     </div>
   );
 }

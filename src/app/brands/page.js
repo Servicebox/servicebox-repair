@@ -1,5 +1,6 @@
 // app/brands/page.js
 import Link from 'next/link';
+import { BASE_URL, BUSINESS } from '@/lib/constants';
 
 // === БАЗА БРЕНДОВ (должна совпадать с [slug]/page.js) ===
 const BRANDS = [
@@ -23,21 +24,26 @@ export const metadata = {
     description: 'Ремонт Apple, Samsung, Xiaomi, Huawei, ASUS, Lenovo, HP, Acer, MSI, Dell, Sony, LG в Вологде. Гарантия до 24 месяцев, срочный ремонт от 30 минут. Бесплатная диагностика.',
     keywords: 'ремонт техники вологда, ремонт apple, ремонт samsung, ремонт xiaomi, сервисный центр всех брендов',
     alternates: {
-        canonical: 'https://servicebox35.ru/brands',
+        canonical: `${BASE_URL}/brands`,
     },
     openGraph: {
         title: 'Ремонт техники всех брендов в Вологде | ServiceBox',
         description: 'Apple, Samsung, Xiaomi, Huawei, ASUS, Lenovo, HP и другие. Гарантия до 24 месяцев.',
-        url: 'https://servicebox35.ru/brands',
-        siteName: 'ServiceBox Вологда',
+        url: `${BASE_URL}/brands`,
+        siteName: BUSINESS.shortName,
         type: 'website',
         locale: 'ru_RU',
+        images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'Ремонт техники всех брендов в Вологде' }],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Ремонт техники всех брендов в Вологде | ServiceBox',
+        description: 'Apple, Samsung, Xiaomi, Huawei, ASUS, Lenovo, HP и другие. Гарантия до 24 месяцев.',
+        images: ['/og-image.jpg'],
     },
 };
 
 export default function BrandsPage() {
-    const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
-
     // JSON-LD разметка
     const jsonLd = {
         '@context': 'https://schema.org',

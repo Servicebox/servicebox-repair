@@ -9,6 +9,16 @@ const userSchema = new mongoose.Schema({
     trim: true,
     minlength: [2, 'Имя должно содержать минимум 2 символа']
   },
+  firstName: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  lastName: {
+    type: String,
+    default: '',
+    trim: true
+  },
   email: {
     type: String,
     required: [true, 'Email обязателен'],
@@ -19,18 +29,56 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'Пароль обязателен'],
     minlength: [6, 'Пароль должен содержать минимум 6 символов']
+  },
+  yandexId: {
+    type: String,
+    sparse: true,
+    unique: true,
+    index: true
+  },
+  bonuses: {
+    type: Number,
+    default: 0,
+    min: [0, 'Баланс бонусов не может быть отрицательным']
+  },
+  googleWalletPassId: {
+    type: String,
+    default: ''
   },
   phone: {
     type: String,
     default: '',
     trim: true
   },
+  avatar: {
+    type: String,
+    default: ''
+  },
+  avatarUrl: {
+    type: String,
+    default: ''
+  },
+  city: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  bio: {
+    type: String,
+    default: '',
+    trim: true,
+    maxlength: [500, 'Биография не может превышать 500 символов']
+  },
   role: {
     type: String,
     enum: ['user', 'admin'],
     default: 'user'
+  },
+  isActive: {
+    type: Boolean,
+    default: true,
+    index: true
   },
   emailVerified: {
     type: Boolean,
@@ -40,14 +88,29 @@ const userSchema = new mongoose.Schema({
   verificationTokenExpires: Date,
   resetPasswordToken: String,
   resetPasswordExpires: Date,
-  lastLogin: Date
+  lastLogin: Date,
+  onlineStatus: {
+    type: String,
+    enum: ['online', 'offline', 'away'],
+    default: 'offline'
+  },
+  lastSeenAt: Date,
+  likes: [{ type: mongoose.Schema.Types.ObjectId, refPath: 'likeTypes' }],
+  likeTypes: [{ type: String, default: 'Product' }],
+  favorites: [{ type: mongoose.Schema.Types.ObjectId, refPath: 'favoriteTypes' }],
+  favoriteTypes: [{ type: String, default: 'Product' }],
+  notificationSettings: {
+    emailNotifications: { type: Boolean, default: true },
+    chatNotifications: { type: Boolean, default: true },
+    pushNotifications: { type: Boolean, default: true }
+  }
 }, {
   timestamps: true
 });
 
-// Хеширование пароля перед сохранением
+// Хеширование пароля перед сохранением (пропускаем OAuth-юзеров без пароля)
 userSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) return next();
+  if (!this.password || !this.isModified('password')) return next();
   
   try {
     const salt = await bcrypt.genSalt(12);

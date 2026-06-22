@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Booking from '@/models/Booking';
 import Service from '@/models/Service';
+import { verifyToken } from '@/lib/auth-helpers';
 
 export async function POST(request) {
   await dbConnect();
@@ -84,16 +85,20 @@ export async function POST(request) {
   }
 }
 
-// GET - получение всех бронирований
-export async function GET() {
+// GET - для пользователя: только свои заявки; для admin: все
+export async function GET(request) {
   await dbConnect();
 
   try {
-    const bookings = await Booking.find()
-      .populate('serviceId')
-      .sort({ createdAt: -1 });
+    const user = verifyToken(request);
+    if (!user) {
+      return NextResponse.json({ success: false, message: 'Не авторизован' }, { status: 401 });
+    }
 
-    // Фронтенд ожидает формат { success: true, data: [...] }
+    // Admin видит все бронирования, обычный пользователь — только свои
+    const query = user.role === 'admin' ? {} : { userEmail: user.email };
+    const bookings = await Booking.find(query).sort({ createdAt: -1 });
+
     return NextResponse.json({
       success: true,
       data: bookings

@@ -1,0 +1,224 @@
+.section { margin-top: 2.5rem; }
+
+/* Заголовок */
+.heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 1.25rem;
+}
+.count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #2563eb;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+/* Форма */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 1.75rem;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 14px;
+}
+.textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  resize: vertical;
+  min-height: 80px;
+  background: #fff;
+  color: #1e293b;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+  outline: none;
+}
+.textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,.12);
+}
+.textarea::placeholder { color: #94a3b8; }
+
+.formFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.charCount { font-size: 0.72rem; color: #94a3b8; }
+.submitBtn {
+  padding: 8px 22px;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.submitBtn:hover:not(:disabled) { background: #1d4ed8; }
+.submitBtn:active:not(:disabled) { transform: scale(0.97); }
+.submitBtn:disabled { opacity: 0.5; cursor: default; }
+
+.error {
+  color: #ef4444;
+  font-size: 0.8rem;
+  margin-top: 2px;
+}
+
+/* Ссылка для незарегистрированных */
+.authNote {
+  color: #64748b;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+  padding: 12px 16px;
+  background: #f1f5f9;
+  border-radius: 10px;
+  border: 1px dashed #cbd5e1;
+}
+.authLink {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* Скелетон загрузки */
+.skeleton { display: flex; flex-direction: column; gap: 12px; }
+.skeletonItem {
+  height: 76px;
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  border-radius: 12px;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0%  { background-position: 200% 0; }
+  100%{ background-position: -200% 0; }
+}
+
+/* Пустое состояние */
+.empty {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.875rem;
+  padding: 2.5rem 0;
+}
+
+/* Список комментариев */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  padding: 14px 16px;
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.item:hover {
+  border-color: #bfdbfe;
+  box-shadow: 0 2px 10px rgba(37,99,235,.06);
+}
+
+.itemHeader {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 9px;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1.5px solid #e2e8f0;
+}
+
+.avatarLetter {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+  color: #1d4ed8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  border: 1.5px solid #bfdbfe;
+}
+
+.username {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.date {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.text {
+  font-size: 0.875rem;
+  color: #334155;
+  line-height: 1.6;
+  white-space: pre-line;
+  word-break: break-word;
+}
+
+/* Пагинация */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 1.5rem;
+}
+.pageBtn {
+  padding: 7px 16px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #475569;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.pageBtn:hover:not(:disabled) {
+  background: #f1f5f9;
+  border-color: #93c5fd;
+  color: #2563eb;
+}
+.pageBtn:disabled { opacity: 0.4; cursor: default; }
+.pageInfo { font-size: 0.8rem; color: #64748b; min-width: 50px; text-align: center; }

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/contexts/AuthContext';
+import SplitPayButton from '@/components/SplitPayButton/SplitPayButton';
 import styles from './CheckoutForm.module.css';
 
 const CheckoutForm = () => {
@@ -21,6 +22,8 @@ const CheckoutForm = () => {
     address: 'самовывоз',
     comment: ''
   });
+  const [errors, setErrors]   = useState({});
+  const [touched, setTouched] = useState({});
 
   useEffect(() => {
     loadCartAndProducts();
@@ -53,6 +56,43 @@ const CheckoutForm = () => {
       .then(data => {
         if (data.success) setProducts(data.products);
       });
+  };
+
+  const validateField = (name, value) => {
+    switch (name) {
+      case 'name':
+        if (!value || value.trim().length < 2) return 'Введите имя (минимум 2 символа)';
+        return '';
+      case 'phone': {
+        const digits = (value || '').replace(/\D/g, '');
+        if (digits.length < 10) return 'Введите корректный номер телефона';
+        return '';
+      }
+      case 'email':
+        if (value && value.trim()) {
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()))
+            return 'Введите корректный email';
+        }
+        return '';
+      case 'address':
+        if (deliveryMethod === 'delivery' && (!value || value.trim().length < 5))
+          return 'Укажите адрес доставки';
+        return '';
+      default:
+        return '';
+    }
+  };
+
+  const handleBlur = (fieldName) => {
+    setTouched(prev => ({ ...prev, [fieldName]: true }));
+    setErrors(prev => ({ ...prev, [fieldName]: validateField(fieldName, formData[fieldName]) }));
+  };
+
+  const handleFieldChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (touched[field]) {
+      setErrors(prev => ({ ...prev, [field]: validateField(field, value) }));
+    }
   };
 
   // Функция удаления позиции из корзины
@@ -135,11 +175,19 @@ const CheckoutForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Валидация
-    if (!formData.phone || formData.phone.trim().length < 5) {
-      alert('Пожалуйста, укажите корректный номер телефона');
-      return;
+    // Валидация всех полей
+    const fieldsToValidate = ['name', 'phone', 'email', 'address'];
+    const newErrors = {};
+    const newTouched = {};
+    let hasErrors = false;
+    for (const field of fieldsToValidate) {
+      newTouched[field] = true;
+      const err = validateField(field, formData[field]);
+      if (err) { newErrors[field] = err; hasErrors = true; }
     }
+    setTouched(prev => ({ ...prev, ...newTouched }));
+    setErrors(prev => ({ ...prev, ...newErrors }));
+    if (hasErrors) return;
 
     if (visibleProducts.length === 0) {
       alert('Ваша корзина пуста!');
@@ -405,9 +453,14 @@ const CheckoutForm = () => {
               type="text"
               required
               value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              onChange={(e) => handleFieldChange('name', e.target.value)}
+              onBlur={() => handleBlur('name')}
+              className={touched.name && errors.name ? styles.inputInvalid : ''}
               placeholder="Как к вам обращаться?"
             />
+            {touched.name && errors.name && (
+              <span className={styles.fieldError}>{errors.name}</span>
+            )}
           </div>
 
           <div className={styles.formGroup}>
@@ -416,9 +469,14 @@ const CheckoutForm = () => {
               type="tel"
               required
               value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              onChange={(e) => handleFieldChange('phone', e.target.value)}
+              onBlur={() => handleBlur('phone')}
+              className={touched.phone && errors.phone ? styles.inputInvalid : ''}
               placeholder="+7 (900) 123-45-67"
             />
+            {touched.phone && errors.phone && (
+              <span className={styles.fieldError}>{errors.phone}</span>
+            )}
           </div>
 
           <div className={styles.formGroup}>
@@ -426,9 +484,14 @@ const CheckoutForm = () => {
             <input
               type="email"
               value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              onChange={(e) => handleFieldChange('email', e.target.value)}
+              onBlur={() => handleBlur('email')}
+              className={touched.email && errors.email ? styles.inputInvalid : ''}
               placeholder="example@mail.ru"
             />
+            {touched.email && errors.email && (
+              <span className={styles.fieldError}>{errors.email}</span>
+            )}
           </div>
 
           <div className={styles.formSection}>
@@ -478,9 +541,14 @@ const CheckoutForm = () => {
                   type="text"
                   required
                   value={formData.address}
-                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  onChange={(e) => handleFieldChange('address', e.target.value)}
+                  onBlur={() => handleBlur('address')}
+                  className={touched.address && errors.address ? styles.inputInvalid : ''}
                   placeholder="Улица, дом, квартира"
                 />
+                {touched.address && errors.address && (
+                  <span className={styles.fieldError}>{errors.address}</span>
+                )}
               </div>
             )}
           </div>
@@ -542,6 +610,23 @@ const CheckoutForm = () => {
                 `Подтвердить заказ — ${formatPrice(finalTotal)} ₽`
               )}
             </button>
+
+            <SplitPayButton
+              items={visibleProducts.map(p => ({
+                productId: p._id ?? p.slug,
+                name:      p.name,
+                price:     p.new_price,
+                quantity:  cart[p.slug] || 1,
+                image:     p.images?.[0] ?? '',
+                slug:      p.slug,
+              }))}
+              customer={{
+                name:  formData.name,
+                email: formData.email,
+                phone: formData.phone,
+              }}
+              onError={msg => alert(msg)}
+            />
 
             <button
               type="button"

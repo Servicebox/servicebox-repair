@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import styles from './NewsDetail.module.css';
+import LikeButton from '@/components/LikeButton/LikeButton';
+import CommentSection from '@/components/CommentSection/CommentSection';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
@@ -198,6 +200,13 @@ export default function NewsDetail({ newsSlug }) {
 
       <ContentBlockRenderer blocks={news.contentBlocks} onImageClick={openLightbox} />
 
+      {news._id && (
+        <CommentSection
+          targetId={news._id.toString()}
+          targetType="news"
+        />
+      )}
+
       <footer className={styles.footer}>
         {news.keywords?.length > 0 && (
           <div className={styles.tags}>
@@ -212,6 +221,11 @@ export default function NewsDetail({ newsSlug }) {
               target="_blank" rel="noopener noreferrer" className={styles.shareButton}>ВКонтакте</a>
           </div>
         </div>
+        {news._id && (
+          <div className={styles.newsActions}>
+            <LikeButton entityId={news._id.toString()} entityType="News" initialCount={news.likesCount || 0} />
+          </div>
+        )}
       </footer>
 
       <nav className={styles.navigation}>

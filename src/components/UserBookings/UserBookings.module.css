@@ -1,0 +1,205 @@
+.wrap { margin-top: 2rem; }
+
+.title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+/* Скелетон */
+.skeleton { display: flex; flex-direction: column; gap: 12px; }
+.skeletonCard {
+  height: 72px;
+  background: #f1f5f9;
+  border-radius: 12px;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
+
+.error {
+  color: #ef4444;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.875rem;
+}
+
+/* Пустое состояние */
+.empty {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+.emptyText {
+  font-size: 1rem;
+  color: #475569;
+  margin-bottom: 6px;
+}
+.emptyHint {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-bottom: 1rem;
+}
+.emptyLink {
+  display: inline-block;
+  background: #2563eb;
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.emptyLink:hover { background: #1d4ed8; }
+
+/* Список */
+.list { display: flex; flex-direction: column; gap: 12px; list-style: none; padding: 0; margin: 0; }
+
+/* Карточка */
+.card {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  transition: box-shadow 0.2s;
+}
+.card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.07); }
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  background: #f8fafc;
+  user-select: none;
+}
+.cardHeader:hover { background: #f1f5f9; }
+
+.cardMeta { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
+
+.serviceName {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e293b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tracking {
+  font-size: 0.78rem;
+  color: #64748b;
+}
+.tracking strong { font-family: monospace; color: #334155; }
+
+.cardRight { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+.expandIcon { font-size: 10px; color: #94a3b8; }
+
+/* Статус-бадж */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.statusPending    { background: #fef9c3; color: #854d0e; }
+.statusConfirmed  { background: #dbeafe; color: #1d4ed8; }
+.statusInProgress { background: #e0f2fe; color: #0369a1; }
+.statusCompleted  { background: #dcfce7; color: #166534; }
+.statusCanceled   { background: #fee2e2; color: #991b1b; }
+
+/* Тело карточки */
+.cardBody {
+  padding: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* Детали */
+.details { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1rem; }
+.detailRow { display: flex; gap: 8px; font-size: 0.875rem; }
+.detailRow dt { color: #64748b; min-width: 110px; flex-shrink: 0; }
+.detailRow dd { color: #1e293b; font-weight: 500; }
+
+/* Таймлайн */
+.timeline { margin-top: 1rem; }
+.timelineTitle {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+.timelineList { display: flex; flex-direction: column; gap: 0; list-style: none; padding: 0; margin: 0; }
+.timelineItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  position: relative;
+  padding-bottom: 14px;
+}
+.timelineItem:last-child { padding-bottom: 0; }
+.timelineItem:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 14px;
+  bottom: 0;
+  width: 1.5px;
+  background: #e2e8f0;
+}
+.timelineDot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.timelineBody { display: flex; flex-direction: column; gap: 2px; }
+.timelineStatus { font-size: 0.875rem; font-weight: 600; color: #1e293b; }
+.timelineNote { font-size: 0.78rem; color: #64748b; }
+.timelineDate { font-size: 0.75rem; color: #94a3b8; }
+
+/* Действия */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+  flex-wrap: wrap;
+}
+.trackLink {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #2563eb;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.trackLink:hover { color: #1d4ed8; text-decoration: underline; }
+.cancelBtn {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #dc2626;
+  background: none;
+  border: 1.5px solid #fca5a5;
+  border-radius: 6px;
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.cancelBtn:hover { background: #fef2f2; }
+
+@media (max-width: 480px) {
+  .cardHeader { flex-wrap: wrap; }
+  .detailRow { flex-direction: column; gap: 2px; }
+  .detailRow dt { min-width: unset; }
+}
