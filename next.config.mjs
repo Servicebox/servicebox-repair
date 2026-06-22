@@ -69,9 +69,9 @@ const nextConfig = {
               // 'unsafe-inline' нужен для GTM inline-скрипта и JSON-LD в layout.js;
               // service-box-35.ru — Chatwoot SDK; googletagmanager.com — GTM
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pay.yandex.ru https://service-box-35.ru https://www.googletagmanager.com https://mc.yandex.ru https://yastatic.net",
-              "frame-src https://pay.yandex.ru https://www.googletagmanager.com",
+              "frame-src https://pay.yandex.ru https://www.googletagmanager.com https://service-box-35.ru https://yandex.ru",
               "img-src 'self' data: blob: https:",
-              "connect-src 'self' https://pay.yandex.ru https://sandbox.pay.yandex.ru https://servicebox35.ru https://service-box-35.ru https://www.googletagmanager.com https://mc.yandex.ru https://yastatic.net wss://service-box-35.ru",
+              "connect-src 'self' https://pay.yandex.ru https://sandbox.pay.yandex.ru https://servicebox35.ru https://service-box-35.ru https://www.googletagmanager.com https://mc.yandex.ru https://yastatic.net https://yandex.ru wss://service-box-35.ru",
               "style-src 'self' 'unsafe-inline'",
               "font-src 'self' data: https://service-box-35.ru",
               "media-src 'self'",
