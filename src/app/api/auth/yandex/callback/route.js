@@ -53,6 +53,7 @@ function setAuthCookie(response, token) {
 }
 
 export async function GET(request) {
+  const BASE = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://servicebox35.ru';
   const { searchParams } = new URL(request.url);
   const code = searchParams.get('code');
   const state = searchParams.get('state');
@@ -60,11 +61,11 @@ export async function GET(request) {
 
   // CSRF-проверка
   if (!state || !storedState || state !== storedState) {
-    return NextResponse.redirect(new URL('/auth/login?error=csrf', request.url));
+    return NextResponse.redirect(`${BASE}/auth/login?error=csrf`);
   }
 
   if (!code) {
-    return NextResponse.redirect(new URL('/auth/login?error=no_code', request.url));
+    return NextResponse.redirect(`${BASE}/auth/login?error=no_code`);
   }
 
   try {
@@ -106,7 +107,7 @@ export async function GET(request) {
     }
 
     const token = issueJwt(user);
-    const response = NextResponse.redirect(new URL('/profile', request.url));
+    const response = NextResponse.redirect(`${BASE}/profile`);
     setAuthCookie(response, token);
 
     // Удаляем CSRF-cookie
@@ -115,6 +116,6 @@ export async function GET(request) {
     return response;
   } catch (error) {
     console.error('Yandex OAuth callback error:', error);
-    return NextResponse.redirect(new URL('/auth/login?error=oauth_failed', request.url));
+    return NextResponse.redirect(`${BASE}/auth/login?error=oauth_failed`);
   }
 }

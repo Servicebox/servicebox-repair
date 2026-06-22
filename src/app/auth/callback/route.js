@@ -5,6 +5,6 @@ import { NextResponse } from 'next/server';
 // Forward to the actual OAuth handler preserving all query params.
 export async function GET(request) {
   const { search } = new URL(request.url);
-  const target = new URL(`/api/auth/yandex/callback${search}`, request.url);
-  return NextResponse.redirect(target);
+  const BASE = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://servicebox35.ru';
+  return NextResponse.redirect(`${BASE}/api/auth/yandex/callback${search}`);
 }
