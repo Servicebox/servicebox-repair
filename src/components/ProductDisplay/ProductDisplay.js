@@ -189,8 +189,8 @@ export default function ProductDisplay({ product }) {
 
             <div className={styles.priceSection}>
               <div className={styles.currentPrice}>
-                {product.new_price.toLocaleString('ru-RU')} ₽
-                {product.old_price > product.new_price && (
+                {(product.new_price ?? 0).toLocaleString('ru-RU')} ₽
+                {product.old_price != null && product.new_price != null && product.old_price > product.new_price && (
                   <span className={styles.oldPrice}>
                     {product.old_price.toLocaleString('ru-RU')} ₽
                   </span>
