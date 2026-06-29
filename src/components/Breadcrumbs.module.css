@@ -1,8 +1,8 @@
 /* components/Breadcrumbs.module.css */
 .breadcrumbs {
   padding: 1rem 0;
-  background: linear-gradient(to right, #f8f9fa, #ffffff);
-  border-bottom: 1px solid #e9ecef;
+  background: linear-gradient(to right, var(--color-bg), var(--color-bg-dark));
+  border-bottom: 1px solid var(--color-bg-elevated);
 }
 
 .breadcrumbsList {
@@ -43,7 +43,7 @@
 }
 
 .breadcrumbLink:hover {
-  color: #007bff;
+  color: var(--color-accent);
   text-decoration: underline;
 }
 
@@ -60,7 +60,7 @@
 }
 
 .currentPage svg {
-  color: #007bff;
+  color: var(--color-accent);
 }
 
 /* Для мобильных устройств */
@@ -68,15 +68,15 @@
   .breadcrumbs {
     padding: 0.75rem 0;
   }
-  
+
   .breadcrumbsList {
     padding: 0 0.75rem;
   }
-  
+
   .breadcrumbItem {
     font-size: 0.8125rem;
   }
-  
+
   .breadcrumbLink,
   .currentPage {
     max-width: 150px;
@@ -87,12 +87,12 @@
   .breadcrumbsList {
     font-size: 0.75rem;
   }
-  
+
   .breadcrumbLink,
   .currentPage {
     max-width: 120px;
   }
-  
+
   .separator {
     margin: 0 0.375rem;
   }
