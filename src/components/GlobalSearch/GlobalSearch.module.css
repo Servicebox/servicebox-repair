@@ -26,7 +26,7 @@
   z-index: 1000;
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  color: #4b5563;
+  color: var(--color-text-muted);
   font-weight: 500;
 }
 
@@ -88,7 +88,7 @@
 }
 
 .searchInputWrapper:focus-within {
-  background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+  background: linear-gradient(135deg, var(--color-bg-dark) 0%, #f0f4ff 100%);
   border-color: rgba(99, 102, 241, 0.5);
   box-shadow: 
     0 8px 25px rgba(99, 102, 241, 0.15),
@@ -166,7 +166,7 @@
   font-size: 15px;
   background: transparent;
   outline: none;
-  color: #1f2937;
+  color: var(--color-text);
   font-weight: 500;
   letter-spacing: 0.3px;
   transition: all 0.3s ease;
@@ -190,11 +190,11 @@
 .clearButton {
   position: absolute;
   right: 44px;
-  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-border) 100%);
   border: none;
   padding: 6px;
   cursor: pointer;
-  color: #6b7280;
+  color: var(--color-text-muted);
   font-size: 0.9rem;
   border-radius: 50%;
   width: 28px;
@@ -207,8 +207,8 @@
 }
 
 .clearButton:hover {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--color-danger) 0%, #dc2626 100%);
+  color: var(--color-bg-dark);
   transform: scale(1.1) rotate(90deg);
 }
 
@@ -255,9 +255,9 @@
   top: calc(100% + 10px);
   left: 0;
   right: 0;
-  background: white;
+  background: var(--color-bg-dark);
   border-radius: 20px;
-  box-shadow: 
+  box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.15),
     0 0 0 1px rgba(255, 255, 255, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
@@ -346,7 +346,7 @@
   border: none;
   text-align: left;
   cursor: pointer;
-  color: #374151;
+  color: var(--color-text-muted);
   font-size: 14px;
   font-weight: 500;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -425,8 +425,8 @@
 }
 
 .removeRecentButton:hover {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--color-danger) 0%, #dc2626 100%);
+  color: var(--color-bg-dark);
   transform: rotate(90deg);
 }
 
@@ -446,7 +446,7 @@
   border: 1px solid rgba(99, 102, 241, 0.2);
   border-radius: 12px;
   font-size: 13px;
-  color: #4b5563;
+  color: var(--color-text-muted);
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: 500;
@@ -545,20 +545,20 @@
 
 .resultTitle {
   font-weight: 600;
-  color: #1f2937;
+  color: var(--color-text);
   font-size: 14px;
   margin-bottom: 4px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  background: linear-gradient(90deg, #1f2937 0%, #374151 100%);
+  background: linear-gradient(90deg, var(--color-text) 0%, var(--color-text-muted) 100%);
   background-clip: content-box;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .resultDescription {
-  color: #6b7280;
+  color: var(--color-text-muted);
   font-size: 13px;
   line-height: 1.5;
   display: -webkit-box;
@@ -579,7 +579,7 @@
   border: none;
   text-align: left;
   cursor: pointer;
-  color: #374151;
+  color: var(--color-text-muted);
   font-size: 14px;
   font-weight: 500;
   transition: all 0.3s ease;
@@ -671,7 +671,7 @@
 }
 
 .noResultsText {
-  color: #6b7280;
+  color: var(--color-text-muted);
   font-size: 14px;
   line-height: 1.6;
 }
