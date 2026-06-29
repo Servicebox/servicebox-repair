@@ -105,6 +105,18 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ru" suppressHydrationWarning>
       <head>
+        {/* Anti-flash: apply theme before hydration to prevent flicker */}
+        <script dangerouslySetInnerHTML={{ __html: `(function(){
+    try {
+      var t = localStorage.getItem('theme');
+      var pref = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t || pref);
+      var fs = localStorage.getItem('fontSize');
+      if (fs && fs !== 'normal') document.documentElement.setAttribute('data-font-size', fs);
+      var hc = localStorage.getItem('highContrast');
+      if (hc === 'true') document.documentElement.setAttribute('data-contrast', 'high');
+    } catch(e) {}
+  })();` }} />
         <meta charSet="utf-8" />
         <script
           dangerouslySetInnerHTML={{
@@ -126,7 +138,11 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
-      <body className="bg-gray-50 text-slate-900">
+      <body>
+        <a href="#main-content" className="skip-to-content">
+          Перейти к основному содержимому
+        </a>
+
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
@@ -145,7 +161,7 @@ export default function RootLayout({ children }) {
                 <BubbleBackground />
                 <div className="page__wrapper flex-grow">
                   <BreadcrumbsWithContext />
-                  <main>{children}</main>
+                  <main id="main-content">{children}</main>
                 </div>
                 <Footer />
                 <CookieConsent />
