@@ -3,9 +3,7 @@
 
 import { useEffect } from 'react';
 import { useCookieConsent } from '../hooks/useCookieConsent';
-import Script from 'next/script';
-
-const YANDEX_ID = 97888825;
+import YandexMetrika from '../YandexMetrika/YandexMetrika';
 // ⚠️ GTM удалён отсюда — он теперь размещён в layout.js
 
 // Список ИИ-ботов для отслеживания (опционально, для аналитики)
@@ -62,48 +60,5 @@ export default function Analytics() {
     return null;
   }
 
-  return (
-    <>
-      {/* === Яндекс.Метрика === */}
-      <Script
-        id="yandex-metrika"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            (function(m,e,t,r,i,k,a){
-              m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-              m[i].l=1*new Date();
-              k=e.createElement(t),a=e.getElementsByTagName(t)[0];
-              k.async=1;
-              k.src=r;
-              k.onload = function() {
-                ym(${YANDEX_ID}, 'init', {
-                  clickmap: true,
-                  trackLinks: true,
-                  accurateTrackBounce: true,
-                  webvisor: true,
-                  ecommerce: 'dataLayer',
-                  trackHash: true,
-                  ut: 'noindex'
-                });
-              };
-              a.parentNode.insertBefore(k,a);
-            })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-          `,
-        }}
-      />
-
-      {/* NoScript для Яндекс.Метрики */}
-      <noscript>
-        <div>
-          <img
-            src={`https://mc.yandex.ru/watch/${YANDEX_ID}`}
-            style={{ position: 'absolute', left: '-9999px' }}
-            alt="Yandex.Metrika counter"
-            loading="lazy"
-          />
-        </div>
-      </noscript>
-    </>
-  );
+  return <YandexMetrika />;
 }

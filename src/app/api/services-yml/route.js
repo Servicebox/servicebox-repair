@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Service from '@/models/Service';
+import Review from '@/models/Review';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -67,7 +68,7 @@ const findRootCategory = (service, categories) => {
   return category || categories[0];
 };
 
-const generateYmlFeed = (services, categories) => {
+const generateYmlFeed = (services, categories, ratingStats) => {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
   const dateStr = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
@@ -155,8 +156,8 @@ const generateYmlFeed = (services, categories) => {
       xml += `        <param name="Время работы">Пн-Пт 10:00-19:00, Сб и Вскр- выходной</param>\n`;
       xml += `        <param name="Адрес сервисного центра">г. Вологда, ул. Северная, д.7а</param>\n`;
 
-      xml += `        <param name="Рейтинг">5.0</param>\n`;
-      xml += `        <param name="Число отзывов">127</param>\n`;
+      xml += `        <param name="Рейтинг">${ratingStats.rating}</param>\n`;
+      xml += `        <param name="Число отзывов">${ratingStats.count}</param>\n`;
       xml += `        <param name="Регион">Вологодская область, Вологда</param>\n`;
       xml += `        <param name="Конверсия">15</param>\n`;
       xml += `        <param name="Годы опыта">9</param>\n`;
@@ -193,16 +194,35 @@ export async function GET(request) {
 
     await dbConnect();
 
-    const categories = await Service.find({ isCategory: true, parent: null })
-      .sort({ order: 1, name: 1 })
-      .lean();
+    const [categories, services, reviewAgg] = await Promise.all([
+      Service.find({ isCategory: true, parent: null })
+        .sort({ order: 1, name: 1 })
+        .lean(),
+      Service.find({ isCategory: false })
+        .sort({ order: 1, name: 1 })
+        .limit(200)
+        .lean(),
+      Review.aggregate([
+        { $match: { status: 'approved' } },
+        { $group: { _id: null, avg: { $avg: '$rating' }, count: { $sum: 1 } } },
+      ]),
+    ]);
 
-    const services = await Service.find({ isCategory: false })
-      .sort({ order: 1, name: 1 })
-      .limit(200)
-      .lean();
+    // Вычисляем реальный рейтинг из базы
+    const rawAvg = reviewAgg[0]?.avg ?? 0;
+    const reviewCount = reviewAgg[0]?.count ?? 0;
+    const computedRating = reviewCount > 0 ? Math.round(rawAvg * 10) / 10 : 0;
 
-    console.log(`📊 Найдено ${services.length} услуг и ${categories.length} категорий`);
+    // Логируем расхождение, если рейтинг ненормальный
+    const EXPECTED_RATING = 5.0;
+    if (computedRating !== EXPECTED_RATING) {
+      console.warn(
+        `⚠️  Расхождение рейтинга в YML: в базе ${computedRating} (${reviewCount} отз.), ранее было ${EXPECTED_RATING}`
+      );
+    }
+    console.log(`📊 Найдено ${services.length} услуг, ${categories.length} категорий, рейтинг ${computedRating} (${reviewCount} отзывов)`);
+
+    const ratingStats = { rating: computedRating.toFixed(1), count: reviewCount };
 
     if (!services.length) {
       return new Response(getEmptyXml(), {
@@ -211,7 +231,7 @@ export async function GET(request) {
       });
     }
 
-    const xml = generateYmlFeed(services, categories);
+    const xml = generateYmlFeed(services, categories, ratingStats);
     cache.data = xml;
     cache.timestamp = now;
 
