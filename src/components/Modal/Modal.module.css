@@ -17,6 +17,6 @@
   padding: 23px 18px 20px;
   min-width: 240px;
   max-width: 320px;
-  box-shadow: 0 8px 26px var(--color-shadow);
+  box-shadow: 0 8px 26px rgba(50, 50, 90, 0.16);
   position: relative;
 }
