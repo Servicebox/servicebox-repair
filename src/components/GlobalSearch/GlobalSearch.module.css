@@ -203,7 +203,7 @@
   align-items: center;
   justify-content: center;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px var(--color-shadow);
 }
 
 .clearButton:hover {
@@ -361,7 +361,7 @@
   top: 0;
   bottom: 0;
   width: 4px;
-  background: linear-gradient(135deg, #002147 0%, #0F52BA 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
   transform: scaleY(0);
   transition: transform 0.3s ease;
 }
@@ -400,7 +400,7 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(135deg, #002147 0%, #0F52BA 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
   transition: width 0.3s ease;
 }
 
@@ -409,7 +409,7 @@
 }
 
 .removeRecentButton {
-  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-border) 100%);
   border: none;
   padding: 4px;
   cursor: pointer;
@@ -469,8 +469,8 @@
 }
 
 .popularTag:hover {
-  background: linear-gradient(135deg, #002147 0%, #0F52BA 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
+  color: var(--color-bg-dark);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
   border-color: transparent;
@@ -607,10 +607,10 @@
 .viewAllResults {
   width: 100%;
   padding: 14px 20px;
-  background: linear-gradient(135deg, #002147 0%, #0F52BA 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
   border: none;
   border-radius: 14px;
-  color: white;
+  color: var(--color-bg-dark);
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
@@ -825,12 +825,12 @@
 }
 
 .resultsDropdown::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #002147 0%, #0F52BA 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
   border-radius: 4px;
 }
 
 .resultsDropdown::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #002147 0%, #0F52BA 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
 }
 
 /* Анимация появления иконок */

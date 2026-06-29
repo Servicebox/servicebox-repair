@@ -65,7 +65,7 @@
   top: 5px;
   right: 5px;
   background-color: rgba(220, 53, 69, 0.8);
-  color: white;
+  color: var(--color-bg-dark);
   border: none;
   border-radius: 50%;
   width: 24px;
@@ -116,7 +116,7 @@
 
 .saveButton {
   background-color: #0070f3;
-  color: white;
+  color: var(--color-bg-dark);
   border: none;
   padding: 12px 30px;
   border-radius: 4px;
