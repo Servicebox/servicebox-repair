@@ -58,12 +58,12 @@
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   margin-bottom: 15px;
-  background: white;
+  background: var(--color-bg-dark);
   transition: all 0.3s;
 }
 
 .orderItem:hover {
-  border-color: #007bff;
+  border-color: var(--color-accent);
   box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
 }
 
@@ -103,7 +103,7 @@
   display: block;
   margin-bottom: 5px;
   font-size: 15px;
-  color: #333;
+  color: var(--color-text-muted);
 }
 
 .productName small {
@@ -132,17 +132,17 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #f8f9fa;
+  background: var(--color-bg);
   padding: 6px 12px;
   border-radius: 6px;
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--color-border);
 }
 
 .quantityButton {
   width: 28px;
   height: 28px;
   border: 1px solid #ced4da;
-  background: white;
+  background: var(--color-bg-dark);
   border-radius: 4px;
   font-size: 16px;
   font-weight: bold;
@@ -154,9 +154,9 @@
 }
 
 .quantityButton:hover:not(:disabled) {
-  background: #007bff;
-  color: white;
-  border-color: #007bff;
+  background: var(--color-accent);
+  color: var(--color-bg-dark);
+  border-color: var(--color-accent);
 }
 
 .quantityButton:disabled {
@@ -172,7 +172,7 @@
 
 .removeButton {
   background: #fff3f3;
-  color: #dc3545;
+  color: var(--color-danger);
   border: 1px solid #f8d7da;
   width: 36px;
   height: 36px;
@@ -211,15 +211,15 @@
 .itemTotal {
   font-size: 18px;
   font-weight: bold;
-  color: #333;
+  color: var(--color-text-muted);
 }
 
 .priceBreakdown {
-  background: #f8f9fa;
+  background: var(--color-bg);
   padding: 20px;
   border-radius: 8px;
   margin-top: 20px;
-  border: 1px solid #e9ecef;
+  border: 1px solid var(--color-bg-elevated);
 }
 
 .priceRow {
@@ -227,7 +227,7 @@
   justify-content: space-between;
   margin-bottom: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px dashed #dee2e6;
+  border-bottom: 1px dashed var(--color-border);
 }
 
 .priceRow:last-child {
@@ -237,7 +237,7 @@
 }
 
 .totalRow {
-  border-top: 2px solid #dee2e6;
+  border-top: 2px solid var(--color-border);
   padding-top: 15px;
   margin-top: 10px;
   font-size: 18px;
@@ -259,7 +259,7 @@
 
 /* Форма заказа */
 .orderForm {
-  background: white;
+  background: var(--color-bg-dark);
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
@@ -289,18 +289,18 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s;
-  background: white;
+  background: var(--color-bg-dark);
 }
 
 .radioLabel:hover {
-  border-color: #007bff;
+  border-color: var(--color-accent);
   background: #f0f8ff;
 }
 
 .radioLabel input {
   margin-right: 15px;
   margin-top: 3px;
-  accent-color: #007bff;
+  accent-color: var(--color-accent);
 }
 
 .radioText {
@@ -312,7 +312,7 @@
 
 .radioText strong {
   font-size: 15px;
-  color: #333;
+  color: var(--color-text-muted);
 }
 
 .radioText small {
@@ -330,7 +330,7 @@
 
 .submitButton {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  color: var(--color-bg-dark);
   border: none;
   padding: 18px 30px;
   border-radius: 10px;
@@ -355,9 +355,9 @@
 }
 
 .continueButton {
-  background: #f8f9fa;
+  background: var(--color-bg);
   color: #666;
-  border: 2px solid #dee2e6;
+  border: 2px solid var(--color-border);
   padding: 15px;
   border-radius: 8px;
   cursor: pointer;
@@ -366,8 +366,8 @@
 }
 
 .continueButton:hover {
-  background: #e9ecef;
-  color: #333;
+  background: var(--color-bg-elevated);
+  color: var(--color-text-muted);
   border-color: #adb5bd;
 }
 
@@ -384,7 +384,7 @@
   height: 20px;
   border: 3px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
-  border-top-color: white;
+  border-top-color: var(--color-bg-dark);
   animation: spin 1s ease-in-out infinite;
 }
 
@@ -406,8 +406,8 @@
 }
 
 .continueShopping {
-  background: #007bff;
-  color: white;
+  background: var(--color-accent);
+  color: var(--color-bg-dark);
   border: none;
   padding: 15px 40px;
   border-radius: 8px;
@@ -418,7 +418,7 @@
 }
 
 .continueShopping:hover {
-  background: #0056b3;
+  background: var(--color-accent);
   transform: translateY(-2px);
 }
 
@@ -446,7 +446,7 @@
   display: block;
   margin-bottom: 6px;
   font-weight: 500;
-  color: #374151;
+  color: var(--color-text-muted);
   font-size: 14px;
 }
 
@@ -454,7 +454,7 @@
 .formGroup textarea {
   width: 100%;
   padding: 10px 14px;
-  border: 1.5px solid #d1d5db;
+  border: 1.5px solid var(--color-border);
   border-radius: 6px;
   font-size: 1rem;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -464,7 +464,7 @@
 .formGroup input:focus,
 .formGroup textarea:focus {
   outline: none;
-  border-color: #2563eb;
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
@@ -486,25 +486,25 @@
     flex-direction: column;
     gap: 10px;
   }
-  
+
   .productActions {
     width: 100%;
     justify-content: space-between;
   }
-  
+
   .quantityControls {
     flex: 1;
   }
-  
+
   .orderItem {
     flex-direction: column;
   }
-  
+
   .productImage {
     width: 100%;
     height: 200px;
   }
-  
+
   .submitButton {
     padding: 15px;
     font-size: 16px;

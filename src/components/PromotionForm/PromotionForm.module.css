@@ -18,7 +18,7 @@
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text-muted);
 }
 
 .input, .textarea {
@@ -78,7 +78,7 @@
 }
 
 .removeImageButton:hover {
-  background-color: #dc3545;
+  background-color: var(--color-danger);
 }
 
 .checkboxLabel {
@@ -127,7 +127,7 @@
 }
 
 .saveButton:hover:not(:disabled) {
-  background-color: #0056b3;
+  background-color: var(--color-accent);
 }
 
 .saveButton:disabled {
