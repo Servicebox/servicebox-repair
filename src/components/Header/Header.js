@@ -14,13 +14,23 @@ import {
   faMobilePhone,
   faUser,
   faChevronDown,
+  faSun,
+  faMoon,
+  faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import { faVk } from "@fortawesome/free-brands-svg-icons";
 import styles from "./Header.module.css";
+import { useTheme } from '@/hooks/useTheme';
+import { useFontSize } from '@/hooks/useFontSize';
+import { useHighContrast } from '@/hooks/useHighContrast';
 
 function Header() {
   const pathname = usePathname();
   const { user, logout } = useAuth();
+
+  const { theme, toggleTheme } = useTheme();
+  const { fontSize, cycleFontSize } = useFontSize();
+  const { isHighContrast, toggleHighContrast } = useHighContrast();
 
   const [menu, setMenu] = useState("home");
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -191,6 +201,41 @@ function Header() {
               <FontAwesomeIcon icon={faBasketShopping} />
               {/* Счётчик корзины можно добавить позже, когда подключишь реальную логику */}
             </Link>
+
+            <div
+              role="group"
+              aria-label="Настройки отображения"
+              className={styles.a11yControls}
+            >
+              <button
+                type="button"
+                className={styles.themeToggle}
+                onClick={toggleTheme}
+                aria-label={theme === 'dark' ? 'Включить светлую тему' : 'Включить тёмную тему'}
+                aria-pressed={theme === 'dark'}
+              >
+                <FontAwesomeIcon icon={theme === 'dark' ? faSun : faMoon} />
+              </button>
+
+              <button
+                type="button"
+                className={styles.fontSizeBtn}
+                onClick={cycleFontSize}
+                aria-label={`Размер текста: ${fontSize === 'normal' ? 'нормальный' : fontSize === 'lg' ? 'большой' : 'очень большой'}`}
+              >
+                {fontSize === 'normal' ? 'A' : fontSize === 'lg' ? 'A+' : 'A++'}
+              </button>
+
+              <button
+                type="button"
+                className={styles.contrastToggle}
+                onClick={toggleHighContrast}
+                aria-label="Высокий контраст"
+                aria-pressed={isHighContrast}
+              >
+                <FontAwesomeIcon icon={faEye} />
+              </button>
+            </div>
 
             <BurgerMenu />
           </div>
