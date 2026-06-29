@@ -3,7 +3,7 @@
   padding-top: 70px;
   position: relative;
   z-index: 1;
-  background-color: #002147;
+  background-color: var(--color-primary-dark);
   clip-path: polygon(0% -4%, 29% 5%, 58% 2%, 100% 12%, 101% 78%, 100% 100%, 12% 98%, 0% 100%);
 }
 
@@ -22,7 +22,7 @@
 }
 
 .navTitle {
-  color: #ffffff;
+  color: var(--color-bg-dark);
   font-size: 1rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -51,7 +51,7 @@
 }
 
 .footerLink:hover {
-  color: #ff8c00;
+  color: var(--color-warning);
 }
 
 /* Contacts */
@@ -96,8 +96,8 @@
 }
 
 .socialLink:hover {
-  color: #ffffff;
-  border-color: #ff8c00;
+  color: var(--color-bg-dark);
+  border-color: var(--color-warning);
   background: rgba(255, 140, 0, 0.1);
 }
 
@@ -112,11 +112,11 @@
 .privacyLink {
   font-size: 0.8rem;
   margin-top: 0.25rem;
-  color: rgba(255, 255, 255, 0.5) !important;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .privacyLink:hover {
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 /* Payment */

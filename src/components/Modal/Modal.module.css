@@ -12,11 +12,11 @@
 }
 
 .modalContent {
-  background: #fff;
+  background: var(--color-bg-dark);
   border-radius: 10px;
   padding: 23px 18px 20px;
   min-width: 240px;
   max-width: 320px;
-  box-shadow: 0 8px 26px rgba(50, 50, 90, 0.16);
+  box-shadow: 0 8px 26px var(--color-shadow);
   position: relative;
 }
