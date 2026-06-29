@@ -28,7 +28,7 @@
 
 .besplatnaya {
   background: linear-gradient(90deg, #fb2c5c, #f99f0e);
-  color: #ffffff;
+  color: var(--color-bg-dark);
   border-radius: 3px;
   padding: 0 6px;
   font-weight: 600;
@@ -45,6 +45,9 @@
   flex-direction: column;
   gap: 19px;
   margin-top: 7px;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1rem;
 }
 
 .formLabel {
@@ -119,7 +122,7 @@
 
 .active {
   background: linear-gradient(90deg, #2884fa, #09decb);
-  color: #ffffff;
+  color: var(--color-bg-dark);
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(19, 189, 199, 0.53);
 }

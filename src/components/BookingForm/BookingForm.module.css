@@ -14,7 +14,7 @@
 }
 
 .bookingForm {
-  background: white;
+  background: var(--color-bg-dark);
   border-radius: 16px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
   max-width: 500px;
@@ -41,13 +41,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .formTitle {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #002147;
+  color: var(--color-primary);
   margin: 0;
 }
 
@@ -62,7 +62,7 @@
 }
 
 .closeButton:hover {
-  color: #002147;
+  color: var(--color-primary);
   background: #f7fafc;
 }
 
@@ -71,7 +71,7 @@
   border-radius: 8px;
   padding: 1rem;
   margin: 1.5rem;
-  border-left: 4px solid #0F52BA;
+  border-left: 4px solid var(--color-primary);
 }
 
 .serviceInfo h3 {
@@ -110,7 +110,7 @@
   display: block;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #002147;
+  color: var(--color-primary);
   margin-bottom: 0.5rem;
 }
 
@@ -122,17 +122,17 @@
 .formInput {
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--color-border);
   border-radius: 8px;
   font-size: 1rem;
-  color: #002147;
+  color: var(--color-primary);
   transition: all 0.3s ease;
-  background: white;
+  background: var(--color-bg-dark);
 }
 
 .formInput:focus {
   outline: none;
-  border-color: #ff8c00;
+  border-color: var(--color-warning);
   box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
 }
 
@@ -153,8 +153,8 @@
 
 .submitButton {
   flex: 1;
-  background: linear-gradient(135deg, #0F52BA, #002147);
-  color: white;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary));
+  color: var(--color-bg-dark);
   border: none;
   padding: 0.875rem 1.5rem;
   border-radius: 8px;
@@ -178,8 +178,8 @@
 
 .cancelButton {
   padding: 0.875rem 1.5rem;
-  border: 2px solid #e2e8f0;
-  background: white;
+  border: 2px solid var(--color-border);
+  background: var(--color-bg-dark);
   color: #4D4D4D;
   border-radius: 8px;
   font-weight: 600;
@@ -274,7 +274,7 @@
   height: 20px;
   margin: -10px 0 0 -10px;
   border: 2px solid transparent;
-  border-top: 2px solid white;
+  border-top: 2px solid var(--color-bg-dark);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }

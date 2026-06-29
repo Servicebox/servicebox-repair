@@ -10,7 +10,7 @@
   cursor: pointer;
   font-size: 0.875rem;
   line-height: 1.4;
-  color: #374151;
+  color: var(--color-text-muted);
 }
 
 .checkboxInput {
@@ -20,9 +20,9 @@
 .checkboxCustom {
   width: 1.25rem;
   height: 1.25rem;
-  border: 2px solid #d1d5db;
+  border: 2px solid var(--color-border);
   border-radius: 4px;
-  background: white;
+  background: var(--color-bg-dark);
   flex-shrink: 0;
   margin-top: 0.125rem;
   position: relative;
@@ -30,8 +30,8 @@
 }
 
 .checkboxInput:checked + .checkboxCustom {
-  background: #2563eb;
-  border-color: #2563eb;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
 }
 
 .checkboxInput:checked + .checkboxCustom::after {
@@ -41,7 +41,7 @@
   top: 50%;
   width: 0.5rem;
   height: 0.25rem;
-  border: solid white;
+  border: solid var(--color-bg-dark);
   border-width: 0 0 2px 2px;
   transform: translate(-50%, -60%) rotate(-45deg);
 }
@@ -51,13 +51,13 @@
 }
 
 .link {
-  color: #2563eb;
+  color: var(--color-primary);
   text-decoration: underline;
   transition: color 0.2s ease;
 }
 
 .link:hover {
-  color: #1d4ed8;
+  color: var(--color-primary);
 }
 
 .error {
