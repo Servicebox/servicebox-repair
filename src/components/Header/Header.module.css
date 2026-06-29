@@ -356,7 +356,7 @@
 }
 
 .logoutBtn:hover {
-  background: #5a6472;
+  background: var(--color-text-muted);
 }
 
 .logoutBtn:disabled {
