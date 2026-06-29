@@ -8,8 +8,8 @@
 /* Фиксированная кнопка бургера */
 .burgerToggle {
   position: relative;
-  background: #002147;
-  border: 2px solid #ffffff;
+  background: var(--color-primary-dark);
+  border: 2px solid var(--color-bg-dark);
   padding: 10px;
   border-radius: 6px;
   cursor: pointer;
@@ -26,7 +26,7 @@
 }
 
 .burgerToggle:hover {
-  background: #002147;
+  background: var(--color-primary-dark);
   transform: scale(1.05);
 }
 
@@ -34,7 +34,7 @@
 .burgerIcon,
 .closeIcon {
   position: absolute;
-  color: white;
+  color: var(--color-bg-dark);
   font-size: 20px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -87,7 +87,7 @@
   width: 85%;
   max-width: 380px;
   height: 100vh;
-background: #ff8c00;
+background: var(--color-warning);
   box-shadow: -2px 0 20px rgba(0, 0, 0, 0.3);
   transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 30px 25px;
@@ -147,7 +147,7 @@ background: #ff8c00;
 }
 
 .menuLink {
-  color: white;
+  color: var(--color-bg-dark);
   text-decoration: none;
   padding: 14px 20px;
   border-radius: 10px;
@@ -176,8 +176,8 @@ background: #ff8c00;
 
 .statusButton {
   display: block;
-  background: #002147;
-  color: white;
+  background: var(--color-primary-dark);
+  color: var(--color-bg-dark);
   padding: 14px 20px;
   border-radius: 10px;
   text-decoration: none;
@@ -188,12 +188,12 @@ background: #ff8c00;
 }
 
 .statusButton:hover {
-  background: #0056b3;
+  background: var(--color-accent);
   transform: translateY(-2px);
 }
 
 .contactInfo {
-  color: white;
+  color: var(--color-bg-dark);
   margin-bottom: 25px;
 }
 
@@ -242,7 +242,7 @@ background: #ff8c00;
 }
 
 .socialLink {
-  color: white;
+  color: var(--color-bg-dark);
   font-size: 26px;
   transition: var(--transition);
   padding: 10px;
@@ -276,32 +276,32 @@ background: #ff8c00;
     height: 42px;
     padding: 9px;
   }
-  
+
   .burgerIcon,
   .closeIcon {
     font-size: 18px;
   }
-  
+
   .menuContent {
     width: 90%;
     max-width: none;
     padding: 25px 10px;
   }
-  
+
   .menuHeader {
     margin-bottom: 25px;
   }
-  
+
   .menuLogo {
     width: 90px;
     height: 90px;
   }
-  
+
   .menuLink {
     padding: 12px 18px;
     font-size: 0.95rem;
   }
-  
+
   .socialLink {
     width: 44px;
     height: 44px;
@@ -314,7 +314,7 @@ background: #ff8c00;
     width: 95%;
     padding: 20px 5px;
   }
-  
+
   .menuLink {
     padding: 10px 15px;
     font-size: 0.9rem;
