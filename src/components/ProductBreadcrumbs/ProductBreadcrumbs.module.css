@@ -17,17 +17,17 @@
 .breadcrumbItem {
   display: flex;
   align-items: center;
-  color: #666;
+  color: var(--color-text-muted);
 }
 
 .separator {
   margin: 0 0.5rem;
-  color: #999;
+  color: var(--color-text-muted);
   font-size: 0.75rem;
 }
 
 .breadcrumbLink {
-  color: #0066cc;
+  color: var(--color-accent);
   text-decoration: none;
   transition: color 0.2s;
   display: flex;
@@ -36,12 +36,12 @@
 }
 
 .breadcrumbLink:hover {
-  color: #004499;
+  color: var(--color-primary);
   text-decoration: underline;
 }
 
 .currentPage {
-  color: #333;
+  color: var(--color-text-muted);
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -49,5 +49,5 @@
 }
 
 .currentPage svg {
-  color: #999;
+  color: var(--color-text-muted);
 }

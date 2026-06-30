@@ -14,19 +14,19 @@
 
 .gallery-header h1 {
   margin: 0 0 8px 0;
-  color: #1a1a1a;
+  color: var(--color-text);
   font-size: 2.5rem;
   font-weight: 700;
 }
 
 .gallery-header p {
   margin: 0 0 16px 0;
-  color: #666;
+  color: var(--color-text-muted);
   font-size: 1.1rem;
 }
 
 .gallery-stats {
-  color: #888;
+  color: var(--color-text-muted);
   font-size: 0.9rem;
 }
 
@@ -43,13 +43,13 @@
 }
 
 .group-card {
-  background: white;
+  background: var(--color-bg-dark);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   cursor: pointer;
   transition: all 0.3s ease;
-  border: 1px solid #f0f0f0;
+  border: 1px solid var(--color-bg-elevated);
 }
 
 .group-card:hover {
@@ -61,7 +61,7 @@
   position: relative;
   width: 100%;
   height: 200px;
-  background: #f8f9fa;
+  background: var(--color-bg);
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -102,7 +102,7 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.7);
-  color: white;
+  color: var(--color-text-inverse);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -116,7 +116,7 @@
 
 .group-title {
   margin: 0 0 8px 0;
-  color: #1a1a1a;
+  color: var(--color-text);
   font-size: 1.1rem;
   font-weight: 600;
   line-height: 1.4;
@@ -131,7 +131,7 @@
   justify-content: space-between;
   align-items: center;
   font-size: 0.85rem;
-  color: #666;
+  color: var(--color-text-muted);
 }
 
 .image-count {
@@ -139,7 +139,7 @@
 }
 
 .upload-date {
-  color: #888;
+  color: var(--color-text-muted);
 }
 
 /* Modal Styles */
@@ -163,7 +163,7 @@
   max-height: 90vh;
   width: 100%;
   height: 100%;
-  background: white;
+  background: var(--color-bg-dark);
   border-radius: 12px;
   overflow: hidden;
   display: flex;
@@ -187,7 +187,7 @@
   top: 16px;
   right: 16px;
   background: rgba(0, 0, 0, 0.8);
-  color: white;
+  color: var(--color-text-inverse);
   border: none;
   width: 40px;
   height: 40px;
@@ -206,13 +206,13 @@
 
 .modal-header {
   padding: 20px 24px 16px;
-  border-bottom: 1px solid #f0f0f0;
-  background: white;
+  border-bottom: 1px solid var(--color-bg-elevated);
+  background: var(--color-bg-dark);
 }
 
 .modal-header h2 {
   margin: 0 0 8px 0;
-  color: #1a1a1a;
+  color: var(--color-text);
   font-size: 1.25rem;
   font-weight: 600;
 }
@@ -221,7 +221,7 @@
   display: flex;
   gap: 16px;
   font-size: 0.9rem;
-  color: #666;
+  color: var(--color-text-muted);
 }
 
 .modal-image-container {
@@ -230,7 +230,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f8f9fa;
+  background: var(--color-bg);
   min-height: 0;
   overflow: hidden;
 }
@@ -246,7 +246,7 @@
   top: 50%;
   transform: translateY(-50%);
   background: rgba(0, 0, 0, 0.7);
-  color: white;
+  color: var(--color-text-inverse);
   border: none;
   width: 48px;
   height: 48px;
@@ -279,8 +279,8 @@
 
 .modal-footer {
   padding: 16px 24px;
-  border-top: 1px solid #f0f0f0;
-  background: white;
+  border-top: 1px solid var(--color-bg-elevated);
+  background: var(--color-bg-dark);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -288,20 +288,20 @@
 
 .image-counter {
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--color-text);
 }
 
 .image-info {
   display: flex;
   gap: 16px;
   font-size: 0.85rem;
-  color: #666;
+  color: var(--color-text-muted);
 }
 
 .thumbnail-strip {
   padding: 16px 24px;
-  border-top: 1px solid #f0f0f0;
-  background: #fafafa;
+  border-top: 1px solid var(--color-bg-elevated);
+  background: var(--color-bg);
   display: flex;
   gap: 8px;
   overflow-x: auto;
@@ -323,7 +323,7 @@
 }
 
 .thumbnail.active {
-  border-color: #0070f3;
+  border-color: var(--color-accent);
 }
 
 .thumbnail img {
@@ -336,14 +336,14 @@
 .gallery-loading {
   text-align: center;
   padding: 80px 20px;
-  color: #666;
+  color: var(--color-text-muted);
 }
 
 .loading-spinner {
   width: 40px;
   height: 40px;
-  border: 3px solid #f0f0f0;
-  border-top: 3px solid #0070f3;
+  border: 3px solid var(--color-bg-elevated);
+  border-top: 3px solid var(--color-accent);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 16px;
@@ -360,19 +360,19 @@
 }
 
 .gallery-error h2 {
-  color: #d32f2f;
+  color: var(--color-danger);
   margin: 0 0 16px 0;
 }
 
 .gallery-error p {
-  color: #666;
+  color: var(--color-text-muted);
   margin: 0 0 24px 0;
 }
 
 .gallery-error button {
   padding: 12px 24px;
-  background-color: #0070f3;
-  color: white;
+  background-color: var(--color-accent);
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -381,13 +381,13 @@
 }
 
 .gallery-error button:hover {
-  background-color: #005bbd;
+  background-color: var(--color-primary);
 }
 
 .empty-gallery {
   text-align: center;
   padding: 80px 20px;
-  color: #666;
+  color: var(--color-text-muted);
 }
 
 .empty-gallery div {
@@ -398,7 +398,7 @@
 
 .empty-gallery h3 {
   margin: 0 0 8px 0;
-  color: #1a1a1a;
+  color: var(--color-text);
 }
 
 .empty-gallery p {

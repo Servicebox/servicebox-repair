@@ -3,25 +3,25 @@
   align-items: center;
   gap: 6px;
   padding: 7px 14px;
-  background: white;
-  border: 2px solid #e5e7eb;
+  background: var(--color-bg-dark);
+  border: 2px solid var(--color-border);
   border-radius: 6px;
   cursor: pointer;
   transition: border-color 0.2s, background 0.2s, color 0.2s;
   font-size: 13px;
   font-weight: 600;
-  color: #6b7280;
+  color: var(--color-text-muted);
   white-space: nowrap;
 }
 
 .btn:hover:not(:disabled) {
-  border-color: #f59e0b;
+  border-color: var(--color-warning);
   color: #b45309;
   background: #fffbeb;
 }
 
 .btn.saved {
-  border-color: #f59e0b;
+  border-color: var(--color-warning);
   color: #b45309;
   background: #fef3c7;
 }

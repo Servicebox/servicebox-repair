@@ -3,25 +3,25 @@
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: white;
-  border: 2px solid #e5e7eb;
+  background: var(--color-bg-dark);
+  border: 2px solid var(--color-border);
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 14px;
   font-weight: 600;
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 .likeButton:hover:not(:disabled) {
-  border-color: #ef4444;
-  color: #ef4444;
+  border-color: var(--color-danger);
+  color: var(--color-danger);
   background: #fef2f2;
 }
 
 .likeButton.liked {
-  border-color: #ef4444;
-  color: #ef4444;
+  border-color: var(--color-danger);
+  color: var(--color-danger);
   background: #fee2e2;
 }
 

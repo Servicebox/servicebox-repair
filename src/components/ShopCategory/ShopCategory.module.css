@@ -14,7 +14,7 @@
 .shopcategorySidebar {
   width: 280px;
   flex-shrink: 0;
-  background: #f9fafb;
+  background: var(--color-bg);
   border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -28,7 +28,7 @@
   font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: 1.25rem;
-  color: #002147;
+  color: var(--color-primary-dark);
 }
 
 .shopcategoryMenu {
@@ -48,24 +48,24 @@
   padding: 0.75rem 1rem;
   border: none;
   border-radius: 8px;
-  background: #fff;
+  background: var(--color-bg-dark);
   text-align: left;
   font-size: 1rem;
   font-weight: 500;
-  color: #374151;
+  color: var(--color-text-muted);
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .shopcategoryBtn:hover {
-  background: #e5e7eb;
+  background: var(--color-border);
   transform: translateY(-1px);
 }
 
 .shopcategoryBtnActive {
-  background: #002147;
-  color: white;
+  background: var(--color-primary-dark);
+  color: var(--color-text-inverse);
   box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
 }
 
@@ -84,7 +84,7 @@
   list-style: none;
   padding: 0.5rem 0 0 1rem;
   margin: 0;
-  border-left: 2px solid #e5e7eb;
+  border-left: 2px solid var(--color-border);
 }
 
 .shopcategorySubmenu li {
@@ -111,15 +111,15 @@
 .shopcategoryTitle {
   font-size: 1.75rem;
   font-weight: 700;
-  color: #002147;
+  color: var(--color-primary-dark);
   margin: 0;
 }
 
 .shopcategoryMobileFiltersBtn {
   display: none;
   padding: 0.5rem 1rem;
-  background: #002147;
-  color: white;
+  background: var(--color-primary-dark);
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 8px;
   font-weight: 600;
@@ -128,7 +128,7 @@
 }
 
 .shopcategoryMobileFiltersBtn:hover {
-  background: #002147;
+  background: var(--color-primary-dark);
 }
 
 .shopcategoryControls {
@@ -148,16 +148,16 @@
 .shopcategorySearchInput {
   width: 90%;
   padding: 0.75rem 1rem 0.75rem 2.5rem;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   font-size: 1rem;
-  background: #fff;
+  background: var(--color-bg-dark);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .shopcategorySearchInput:focus {
   outline: none;
-  border-color: #002147;
+  border-color: var(--color-primary-dark);
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 
@@ -169,14 +169,14 @@
   background: none;
   border: none;
   font-size: 1.25rem;
-  color: #4D4D4D;
+  color: var(--color-text-muted);
   cursor: pointer;
   padding: 0;
 }
 
 .shopcategoryResultsInfo {
   font-size: 0.95rem;
-  color: #4D4D4D;
+  color: var(--color-text-muted);
 }
 
 .shopcategoryViewControls {
@@ -187,9 +187,9 @@
 
 .shopcategorySortSelect {
   padding: 0.5rem 0.75rem;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  background: white;
+  background: var(--color-bg-dark);
   font-size: 0.95rem;
   min-width: 180px;
 }
@@ -202,9 +202,9 @@
 .shopcategoryViewBtn {
   width: 36px;
   height: 36px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  background: white;
+  background: var(--color-bg-dark);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -214,9 +214,9 @@
 }
 
 .shopcategoryViewBtnActive {
-  background: #002147;
-  color: white;
-  border-color: #002147;
+  background: var(--color-primary-dark);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary-dark);
 }
 
 /* ИСПРАВЛЕННЫЕ СТИЛИ ДЛЯ СЕТКИ */
@@ -258,13 +258,13 @@
   justify-content: center;
     flex-direction: column;
     align-items: center;
-    border-bottom: 7px solid #3498db;
+    border-bottom: 7px solid var(--color-accent);
 }
 
 .shopcategorySectionTitle {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #002147;
+  color: var(--color-primary-dark);
   margin-bottom: 1.25rem;
 }
 
@@ -290,15 +290,15 @@
 .shopcategoryEmpty {
   text-align: center;
   padding: 3rem 1rem;
-  color: #4D4D4D;
+  color: var(--color-text-muted);
   font-size: 1.1rem;
 }
 
 .shopcategoryResetBtn {
   margin-top: 1rem;
   padding: 0.5rem 1.5rem;
-  background: #002147;
-  color: white;
+  background: var(--color-primary-dark);
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 6px;
   font-weight: 600;
@@ -306,7 +306,7 @@
 }
 
 .shopcategoryResetBtn:hover {
-  background: #002147;
+  background: var(--color-primary-dark);
 }
 
 /* Пагинация */
@@ -330,23 +330,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #d1d5db;
-  background: white;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-dark);
   border-radius: 6px;
   font-weight: 600;
-  color: #374151;
+  color: var(--color-text-muted);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .shopcategoryPaginationBtn:hover:not(:disabled) {
-  background: #f3f4f6;
+  background: var(--color-bg-elevated);
 }
 
 .shopcategoryPaginationBtnActive {
-  background: #002147;
-  color: white;
-  border-color: #002147;
+  background: var(--color-primary-dark);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary-dark);
 }
 
 .shopcategoryPaginationBtn:disabled {
@@ -360,7 +360,7 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  color: #4D4D4D;
+  color: var(--color-text-muted);
 }
 
 /* Мобильные фильтры */
@@ -377,7 +377,7 @@
 }
 
 .shopcategoryMobileFiltersContent {
-  background: white;
+  background: var(--color-bg-dark);
   width: 100%;
   max-width: 320px;
   margin: auto;
@@ -401,7 +401,7 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: #4D4D4D;
+  color: var(--color-text-muted);
 }
 
 .visuallyHidden {
@@ -509,7 +509,7 @@
   .shopcategorySidebar {
     position: static;
     width: 90%;
-    background: white;
+    background: var(--color-bg-dark);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
@@ -726,7 +726,7 @@
 .shopcategoryResetBtn:focus,
 .shopcategoryMobileFiltersBtn:focus,
 .shopcategorySortSelect:focus {
-  outline: 2px solid #002147;
+  outline: 2px solid var(--color-primary-dark);
   outline-offset: 2px;
   border-radius: 6px;
 }
