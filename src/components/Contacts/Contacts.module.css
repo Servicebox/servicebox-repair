@@ -24,7 +24,7 @@
   margin-bottom: 60px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 33, 71, 0.3);
+  box-shadow: 0 20px 60px rgba(26, 26, 46, 0.3);
 }
 
 .hero::before {
@@ -249,7 +249,7 @@
 
 .contactCard:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0, 33, 71, 0.12);
+  box-shadow: 0 12px 40px rgba(26, 26, 46, 0.12);
   border-color: var(--color-primary-dark);
 }
 
@@ -357,7 +357,7 @@
 
 .socialLink:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 33, 71, 0.12);
+  box-shadow: 0 6px 16px rgba(26, 26, 46, 0.12);
   border-color: var(--color-primary-dark);
 }
 
@@ -393,7 +393,7 @@
 
 .locationCard:hover {
   transform: translateY(-4px);
-  box-shadow: 0 16px 50px rgba(0, 33, 71, 0.15);
+  box-shadow: 0 16px 50px rgba(26, 26, 46, 0.15);
   border-color: var(--color-primary-dark);
 }
 
@@ -474,12 +474,12 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 16px rgba(0, 33, 71, 0.3);
+  box-shadow: 0 4px 16px rgba(26, 26, 46, 0.3);
 }
 
 .mapButton:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 33, 71, 0.4);
+  box-shadow: 0 8px 24px rgba(26, 26, 46, 0.4);
 }
 
 .buttonArrow {
@@ -527,7 +527,7 @@
   margin-bottom: 60px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 33, 71, 0.3);
+  box-shadow: 0 20px 60px rgba(26, 26, 46, 0.3);
 }
 
 .ctaBlock::before {
@@ -727,7 +727,7 @@
 .navLink:hover {
   border-color: var(--color-primary-dark);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 33, 71, 0.12);
+  box-shadow: 0 6px 16px rgba(26, 26, 46, 0.12);
 }
 
 /* ============================================================

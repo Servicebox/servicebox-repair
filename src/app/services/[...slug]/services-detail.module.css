@@ -158,7 +158,7 @@
     border-radius: 1.5rem;
     padding: 2rem;
     border: 2px solid #e2e8f0;
-    box-shadow: 0 10px 30px rgba(0, 33, 71, 0.08);
+    box-shadow: 0 10px 30px rgba(26, 26, 46, 0.08);
 }
 
 .priceCardContent {
@@ -191,12 +191,12 @@
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 8px 20px rgba(0, 33, 71, 0.25);
+    box-shadow: 0 8px 20px rgba(26, 26, 46, 0.25);
 }
 
 .bookingButton:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 28px rgba(0, 33, 71, 0.35);
+    box-shadow: 0 12px 28px rgba(26, 26, 46, 0.35);
 }
 
 .bookingButton:active {
@@ -304,7 +304,7 @@
     border-color: var(--color-primary-dark);
     background: white;
     transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0, 33, 71, 0.12);
+    box-shadow: 0 12px 28px rgba(26, 26, 46, 0.12);
 }
 
 .serviceCardHeader {
@@ -740,7 +740,7 @@
 
 .notFoundLink:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 33, 71, 0.25);
+    box-shadow: 0 8px 20px rgba(26, 26, 46, 0.25);
 }
 
 /* === АНИМАЦИИ === */

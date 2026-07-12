@@ -50,7 +50,7 @@
   color: var(--color-text-inverse);
   padding: 30px 40px;
   border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 33, 71, 0.3);
+  box-shadow: 0 20px 60px rgba(26, 26, 46, 0.3);
   position: relative;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -58,7 +58,7 @@
 
 .locationCard:hover {
   transform: translateY(-4px);
-  box-shadow: 0 25px 70px rgba(0, 33, 71, 0.4);
+  box-shadow: 0 25px 70px rgba(26, 26, 46, 0.4);
 }
 
 .locationCard::before {
@@ -161,7 +161,7 @@
   background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
   border-color: var(--color-primary-dark);
   color: var(--color-text-inverse);
-  box-shadow: 0 4px 12px rgba(0, 33, 71, 0.3);
+  box-shadow: 0 4px 12px rgba(26, 26, 46, 0.3);
   transform: scale(1.15);
 }
 
@@ -196,7 +196,7 @@
   color: var(--color-text-inverse);
   border-color: var(--color-primary-dark);
   transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 6px 16px rgba(0, 33, 71, 0.3);
+  box-shadow: 0 6px 16px rgba(26, 26, 46, 0.3);
 }
 
 .scrollButton.left {
@@ -255,7 +255,7 @@
 
 .workStepCard:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 40px rgba(0, 33, 71, 0.15);
+  box-shadow: 0 12px 40px rgba(26, 26, 46, 0.15);
   border-color: var(--color-primary-dark);
 }
 
@@ -292,7 +292,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
-  box-shadow: 0 8px 20px rgba(0, 33, 71, 0.2);
+  box-shadow: 0 8px 20px rgba(26, 26, 46, 0.2);
   transition: transform 0.3s ease;
 }
 
@@ -402,7 +402,7 @@
 
 .advantageItem:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 40px rgba(0, 33, 71, 0.15);
+  box-shadow: 0 12px 40px rgba(26, 26, 46, 0.15);
   border-color: var(--color-primary-dark);
 }
 
@@ -475,7 +475,7 @@
 
 .faqItem:hover {
   border-color: var(--color-primary-dark);
-  box-shadow: 0 6px 20px rgba(0, 33, 71, 0.12);
+  box-shadow: 0 6px 20px rgba(26, 26, 46, 0.12);
 }
 
 .faqQuestion {

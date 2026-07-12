@@ -29,14 +29,14 @@ export default function Consent() {
             margin: 0 auto;
           }
           h1 {
-            color: #2c3e50;
+            color: var(--color-primary-dark);
             text-align: center;
-            border-bottom: 2px solid #3498db;
+            border-bottom: 2px solid var(--color-accent);
             padding-bottom: 10px;
             margin-bottom: 30px;
           }
           h2 {
-            color: #2c3e50;
+            color: var(--color-primary-dark);
             margin-top: 30px;
             padding-bottom: 5px;
             border-bottom: 1px solid #eee;
@@ -44,7 +44,7 @@ export default function Consent() {
           .company-info {
             background: #f8f9fa;
             padding: 15px;
-            border-left: 4px solid #3498db;
+            border-left: 4px solid var(--color-accent);
             margin-bottom: 20px;
             border-radius: 4px;
           }

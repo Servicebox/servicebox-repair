@@ -142,13 +142,13 @@
 }
 
 .nameInput:focus {
-  border-color: #3498db;
+  border-color: var(--color-accent);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  box-shadow: 0 0 0 3px rgba(24, 183, 89, 0.2);
 }
 
 .nameSaveBtn {
-  background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary-dark) 100%);
   color: white;
   border: none;
   border-radius: 12px;
@@ -171,7 +171,7 @@
 }
 
 .chatHeader {
-  background: linear-gradient(135deg, #2c3e50 0%, #1a2530 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, #1a2530 100%);
   color: white;
   padding: 15px 20px;
   display: flex;
@@ -257,7 +257,7 @@
 .editNameBtn {
   background: none;
   border: none;
-  color: #3498db;
+  color: var(--color-accent);
   font-size: 0.8rem;
   margin-left: auto;
   cursor: pointer;
@@ -397,7 +397,7 @@
 }
 
 .userMsg .chatBubble {
-  background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary-dark) 100%);
   color: white;
   border-bottom-right-radius: 5px;
 }
@@ -415,7 +415,7 @@
   width: 0;
   height: 0;
   border: 10px solid transparent;
-  border-top-color: #3498db;
+  border-top-color: var(--color-accent);
   border-bottom: 0;
   border-right: 0;
   margin-bottom: -10px;
@@ -438,7 +438,7 @@
 .messageUserName {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #3498db;
+  color: var(--color-accent);
   margin-bottom: 4px;
 }
 
@@ -557,9 +557,9 @@
 }
 
 .chatInput:focus {
-  border-color: #3498db;
+  border-color: var(--color-accent);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  box-shadow: 0 0 0 3px rgba(24, 183, 89, 0.2);
 }
 
 .chatInput:disabled {
@@ -567,7 +567,7 @@
 }
 
 .chatSendBtn {
-  background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary-dark) 100%);
   border: none;
   border-radius: 50%;
   width: 45px;

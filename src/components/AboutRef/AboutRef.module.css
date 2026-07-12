@@ -56,7 +56,7 @@
 
 .featureCard:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 25px -5px rgba(0, 33, 71, 0.1);
+  box-shadow: 0 20px 25px -5px rgba(26, 26, 46, 0.1);
   border-color: var(--color-primary-dark);
 }
 

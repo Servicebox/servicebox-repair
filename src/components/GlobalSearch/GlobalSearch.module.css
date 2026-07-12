@@ -14,7 +14,7 @@
   width: 90%;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
   align-items: center;
-  border: 1px solid rgba(0, 33, 71, 0.2);
+  border: 1px solid rgba(26, 26, 46, 0.2);
   border-radius: 20px;
   justify-content: start;
   padding: 10px 16px;
@@ -33,7 +33,7 @@
 .searchToggle:hover {
   transform: scale(1.02);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-  border-color: rgba(0, 33, 71, 0.3);
+  border-color: rgba(26, 26, 46, 0.3);
 }
 
 .searchToggle:active {
