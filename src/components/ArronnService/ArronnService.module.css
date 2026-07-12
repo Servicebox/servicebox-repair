@@ -29,7 +29,7 @@
   transform: translateX(-50%);
   width: 80px;
   height: 3px;
-  background: linear-gradient(135deg, #0F52BA, #002147);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
   border-radius: 2px;
 }
 
@@ -64,7 +64,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(135deg, #0F52BA, #002147);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
@@ -147,7 +147,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(135deg, #0F52BA 0%, #002147);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark));
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
