@@ -47,7 +47,7 @@
 .formTitle {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   margin: 0;
 }
 
@@ -62,7 +62,7 @@
 }
 
 .closeButton:hover {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   background: #f7fafc;
 }
 
@@ -110,7 +110,7 @@
   display: block;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   margin-bottom: 0.5rem;
 }
 
@@ -125,7 +125,7 @@
   border: 2px solid var(--color-border);
   border-radius: 8px;
   font-size: 1rem;
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   transition: all 0.3s ease;
   background: var(--color-bg-dark);
 }

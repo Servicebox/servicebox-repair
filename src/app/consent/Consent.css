@@ -50,7 +50,7 @@
 }
 
 .downloadBtn:hover {
-  background: #2980b9;
+  background: var(--color-primary-dark);
 }
 
 .downloadBtn.disabled {

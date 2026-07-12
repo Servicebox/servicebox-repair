@@ -460,7 +460,7 @@ export default async function ProblemPage({ params }) {
             {/* CTA */}
             <div style={{
                 padding: '2rem',
-                background: 'linear-gradient(135deg, #0066cc 0%, var(--color-primary-dark) 100%)',
+                background: 'linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%)',
                 borderRadius: '16px',
                 color: 'white',
                 textAlign: 'center',

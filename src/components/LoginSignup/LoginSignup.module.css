@@ -238,7 +238,7 @@
 }
 
 .consentLink {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   text-decoration: none;
   transition: text-decoration 0.18s ease;
 }
@@ -333,7 +333,7 @@
 
 .toggleState span,
 .forgotPasswordLink span {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   cursor: pointer;
   font-weight: 500;
   transition: color 0.18s ease;
@@ -341,7 +341,7 @@
 
 .toggleState span:hover,
 .forgotPasswordLink span:hover {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   text-decoration: underline;
 }
 
@@ -382,14 +382,14 @@
 }
 
 .recoverLink {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   cursor: pointer;
   font-weight: 500;
   transition: color 0.18s ease;
 }
 
 .recoverLink:hover {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   text-decoration: underline;
 }
 

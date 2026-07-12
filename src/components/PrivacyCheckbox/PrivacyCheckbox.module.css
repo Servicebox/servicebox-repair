@@ -51,13 +51,13 @@
 }
 
 .link {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   text-decoration: underline;
   transition: color 0.2s ease;
 }
 
 .link:hover {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 .error {

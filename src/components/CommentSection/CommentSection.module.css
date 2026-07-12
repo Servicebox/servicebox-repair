@@ -19,7 +19,7 @@
   padding: 0 7px;
   border-radius: 999px;
   background: #dbeafe;
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-size: 0.72rem;
   font-weight: 700;
 }
@@ -95,7 +95,7 @@
   border: 1px dashed #cbd5e1;
 }
 .authLink {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-weight: 600;
   text-decoration: underline;
 }
@@ -165,7 +165,7 @@
   height: 34px;
   border-radius: 50%;
   background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -218,7 +218,7 @@
 .pageBtn:hover:not(:disabled) {
   background: var(--color-bg-elevated);
   border-color: #93c5fd;
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 .pageBtn:disabled { opacity: 0.4; cursor: default; }
 .pageInfo { font-size: 0.8rem; color: var(--color-text-muted); min-width: 50px; text-align: center; }
