@@ -125,7 +125,7 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                 <meta itemProp="operatingSystem" content="All" />
                 <meta itemProp="isAccessibleForFree" content="true" />
                 <header className="text-center mb-8">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-3" itemProp="name" style={{ color: '#002147' }}>
+                    <h2 className="text-3xl md:text-4xl font-bold mb-3" itemProp="name" style={{ color: 'var(--color-primary-dark)' }}>
                         🧮 Калькулятор стоимости ремонта
                     </h2>
                     <p className="text-gray-600 text-lg" itemProp="description">
@@ -136,12 +136,12 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                     </p>
                 </header>
                 <div className="rounded-3xl p-6 md:p-8 shadow-2xl border-2" style={{
-                    background: 'transparent', borderColor: '#002147', backdropFilter: 'blur(10px)'
+                    background: 'transparent', borderColor: 'var(--color-primary-dark)', backdropFilter: 'blur(10px)'
                 }}>
                     <div className="mb-8">
                         <div className="flex items-center gap-2 mb-4">
-                            <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: '#002147' }}>1</div>
-                            <h3 className="text-xl font-bold" style={{ color: '#002147' }}>Что ремонтируем?</h3>
+                            <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: 'var(--color-primary-dark)' }}>1</div>
+                            <h3 className="text-xl font-bold" style={{ color: 'var(--color-primary-dark)' }}>Что ремонтируем?</h3>
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3" role="radiogroup" aria-label="Категории техники">
                             {Object.entries(activePricing).map(([key, cat]) => (
@@ -152,7 +152,7 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                                     role="radio"
                                     aria-checked={deviceType === key}
                                     aria-label={`Категория: ${cat.label}`}
-                                    style={{ background: deviceType === key ? 'linear-gradient(135deg, #002147 0%, #003d7a 100%)' : 'white', borderColor: deviceType === key ? '#002147' : '#e2e8f0', color: deviceType === key ? 'white' : '#002147' }}
+                                    style={{ background: deviceType === key ? 'linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%)' : 'white', borderColor: deviceType === key ? 'var(--color-primary-dark)' : '#e2e8f0', color: deviceType === key ? 'white' : 'var(--color-primary-dark)' }}
                                 >
                                     <div className="text-4xl mb-2" aria-hidden="true">{cat.icon}</div>
                                     <div className="font-bold text-sm">{cat.label}</div>
@@ -163,8 +163,8 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                     {deviceType && (
                         <div className="mb-8 animate-fadeIn">
                             <div className="flex items-center gap-2 mb-4">
-                                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: '#002147' }}>2</div>
-                                <h3 className="text-xl font-bold" style={{ color: '#002147' }}>Выберите бренд / серию</h3>
+                                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: 'var(--color-primary-dark)' }}>2</div>
+                                <h3 className="text-xl font-bold" style={{ color: 'var(--color-primary-dark)' }}>Выберите бренд / серию</h3>
                             </div>
                             <div className="grid grid-cols-2 md:grid-cols-3 gap-3" role="radiogroup" aria-label="Бренды">
                                 {Object.entries(activePricing[deviceType].brands).map(([key, b]) => (
@@ -175,7 +175,7 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                                         role="radio"
                                         aria-checked={brand === key}
                                         aria-label={`Бренд: ${b.name}`}
-                                        style={{ background: brand === key ? 'linear-gradient(135deg, #ff8c00 0%, #ff6b00 100%)' : 'white', borderColor: brand === key ? '#ff8c00' : '#e2e8f0', color: brand === key ? 'white' : '#002147' }}
+                                        style={{ background: brand === key ? 'linear-gradient(135deg, #ff8c00 0%, #ff6b00 100%)' : 'white', borderColor: brand === key ? '#ff8c00' : '#e2e8f0', color: brand === key ? 'white' : 'var(--color-primary-dark)' }}
                                     >
                                         <div className="font-bold text-sm mb-1">{b.name}</div>
                                         <div className="text-xs opacity-80">{b.models.length} {b.models.length === 1 ? 'модель' : b.models.length < 5 ? 'модели' : 'моделей'}</div>
@@ -187,8 +187,8 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                     {brand && (
                         <div className="mb-8 animate-fadeIn">
                             <div className="flex items-center gap-2 mb-4">
-                                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: '#002147' }}>3</div>
-                                <h3 className="text-xl font-bold" style={{ color: '#002147' }}>Выберите точную модель</h3>
+                                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: 'var(--color-primary-dark)' }}>3</div>
+                                <h3 className="text-xl font-bold" style={{ color: 'var(--color-primary-dark)' }}>Выберите точную модель</h3>
                             </div>
                             <div className="max-h-64 overflow-y-auto pr-2">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3" role="radiogroup" aria-label="Модели устройств">
@@ -200,7 +200,7 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                                             role="radio"
                                             aria-checked={modelId === m.id}
                                             aria-label={`Модель: ${m.name}`}
-                                            style={{ background: modelId === m.id ? 'linear-gradient(135deg, #002147 0%, #003d7a 100%)' : 'white', borderColor: modelId === m.id ? '#002147' : '#e2e8f0', color: modelId === m.id ? 'white' : '#002147' }}
+                                            style={{ background: modelId === m.id ? 'linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%)' : 'white', borderColor: modelId === m.id ? 'var(--color-primary-dark)' : '#e2e8f0', color: modelId === m.id ? 'white' : 'var(--color-primary-dark)' }}
                                         >
                                             <div className="font-semibold">{m.name}</div>
                                         </button>
@@ -212,8 +212,8 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                     {modelId && (
                         <div className="mb-8 animate-fadeIn">
                             <div className="flex items-center gap-2 mb-4">
-                                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: '#002147' }}>4</div>
-                                <h3 className="text-xl font-bold" style={{ color: '#002147' }}>Какие работы нужны?</h3>
+                                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: 'var(--color-primary-dark)' }}>4</div>
+                                <h3 className="text-xl font-bold" style={{ color: 'var(--color-primary-dark)' }}>Какие работы нужны?</h3>
                             </div>
                             <div className="space-y-3" role="group" aria-label="Список услуг">
                                 {getFilteredServices().map(([key, svc]) => {
@@ -235,7 +235,7 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                                                 <div className="flex-1">
                                                     <div className="flex items-center gap-2 mb-1">
                                                         {isSelected && <span style={{ color: '#ff8c00' }} aria-hidden="true">✓</span>}
-                                                        <h4 className="font-bold text-lg" style={{ color: '#002147' }}>{svc.name}</h4>
+                                                        <h4 className="font-bold text-lg" style={{ color: 'var(--color-primary-dark)' }}>{svc.name}</h4>
                                                     </div>
                                                     <p className="text-sm text-gray-600 mb-1">{svc.desc}</p>
                                                     <div className="text-xs text-gray-500">⏱️ {svc.minTime} — {svc.maxTime}</div>
@@ -256,7 +256,7 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                             <meta itemProp="priceCurrency" content="RUB" />
                             <meta itemProp="lowPrice" content={calculatePrice.minTotal} />
                             <meta itemProp="highPrice" content={calculatePrice.maxTotal} />
-                            <div className="rounded-3xl p-6 md:p-8 text-white shadow-2xl" style={{ background: 'linear-gradient(135deg, #002147 0%, #003d7a 100%)' }}>
+                            <div className="rounded-3xl p-6 md:p-8 text-white shadow-2xl" style={{ background: 'linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%)' }}>
                                 <div className="text-center mb-6">
                                     <div className="text-sm opacity-80 mb-2">Для {calculatePrice.modelName}</div>
                                     <h3 className="text-2xl font-bold mb-2">💰 Стоимость работ</h3>
@@ -279,7 +279,7 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                                     <a href={`tel:${BUSINESS.phones.primary.replace(/-/g, '')}`} className="flex items-center justify-center py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform" style={{ background: '#28a745', color: 'white' }}>
                                         📞 {BUSINESS.phonesFormatted.primary}
                                     </a>
-                                    <Link href="/contacts" className="flex items-center justify-center py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform" style={{ background: 'white', color: '#002147' }}>
+                                    <Link href="/contacts" className="flex items-center justify-center py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform" style={{ background: 'white', color: 'var(--color-primary-dark)' }}>
                                         📍 Приехать
                                     </Link>
                                 </div>

@@ -3,7 +3,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: #002147;
+  background: var(--color-primary-dark);
   color: white;
   border: none;
   border-radius: 8px;
@@ -15,7 +15,7 @@
 }
 
 .trackingButton:hover {
-  background: #002147;
+  background: var(--color-primary-dark);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
@@ -67,7 +67,7 @@
   align-items: center;
   padding: 24px;
   border-bottom: 1px solid #e5e7eb;
-  background: #002147;
+  background: var(--color-primary-dark);
   color: white;
   border-radius: 12px 12px 0 0;
 }
@@ -115,12 +115,12 @@
 
 .trackingInput:focus {
   outline: none;
-  border-color: #002147;
+  border-color: var(--color-primary-dark);
 }
 
 .trackButton {
   padding: 12px 24px;
-  background: #002147;
+  background: var(--color-primary-dark);
   color: white;
   border: none;
   border-radius: 8px;
@@ -132,7 +132,7 @@
 }
 
 .trackButton:hover:not(:disabled) {
-  background: #002147;
+  background: var(--color-primary-dark);
 }
 
 .trackButton:disabled {
@@ -318,7 +318,7 @@
 
 .detailsButton {
   padding: 10px 20px;
-  background: #002147;
+  background: var(--color-primary-dark);
   color: white;
   border: none;
   border-radius: 8px;
@@ -329,7 +329,7 @@
 }
 
 .detailsButton:hover {
-  background: #002147;
+  background: var(--color-primary-dark);
 }
 
 /* Адаптивность */

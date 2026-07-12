@@ -696,7 +696,7 @@ export default async function AiAnswerPage({ params }) {
             {/* CTA */}
             <div style={{
                 padding: '2rem',
-                background: 'linear-gradient(135deg, #0066cc 0%, #004499 100%)',
+                background: 'linear-gradient(135deg, #0066cc 0%, var(--color-primary-dark) 100%)',
                 borderRadius: '16px',
                 color: 'white',
                 marginBottom: '3rem',

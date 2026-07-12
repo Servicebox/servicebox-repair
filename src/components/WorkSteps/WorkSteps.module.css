@@ -21,7 +21,7 @@
   color: var(--color-primary-dark);
   margin-bottom: 16px;
   line-height: 1.2;
-  background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -46,7 +46,7 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
   color: var(--color-text-inverse);
   padding: 30px 40px;
   border-radius: 20px;
@@ -122,7 +122,7 @@
 
 .progressFill {
   height: 100%;
-  background: linear-gradient(90deg, #002147 0%, #ff8c00 100%);
+  background: linear-gradient(90deg, var(--color-primary-dark) 0%, #ff8c00 100%);
   border-radius: 2px;
   transition: width 0.5s ease;
   box-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
@@ -158,7 +158,7 @@
 }
 
 .stepIndicator.active {
-  background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
   border-color: var(--color-primary-dark);
   color: var(--color-text-inverse);
   box-shadow: 0 4px 12px rgba(0, 33, 71, 0.3);
@@ -247,7 +247,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #002147 0%, #ff8c00 100%);
+  background: linear-gradient(90deg, var(--color-primary-dark) 0%, #ff8c00 100%);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.4s ease;
@@ -287,7 +287,7 @@
   width: 70px;
   height: 70px;
   border-radius: 16px;
-  background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -395,7 +395,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #002147 0%, #ff8c00 100%);
+  background: linear-gradient(90deg, var(--color-primary-dark) 0%, #ff8c00 100%);
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }

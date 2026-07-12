@@ -200,7 +200,7 @@ const CATEGORIES_DATA = {
     }
 };
 
-const BRAND_GRADIENT = 'linear-gradient(135deg, #002147 0%, #003d7a 50%, #001a38 100%)';
+const BRAND_GRADIENT = 'linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 50%, #001a38 100%)';
 
 export default function CategoryTemplate({ categorySlug }) {
     const data = CATEGORIES_DATA[categorySlug];
@@ -284,7 +284,7 @@ export default function CategoryTemplate({ categorySlug }) {
             {/* Преимущества */}
             <section className="py-16 bg-white">
                 <div className="max-w-7xl mx-auto px-4">
-                    <h2 className="text-3xl md:text-4xl font-bold text-center mb-12" style={{ color: '#002147' }}>
+                    <h2 className="text-3xl md:text-4xl font-bold text-center mb-12" style={{ color: 'var(--color-primary-dark)' }}>
                         Почему выбирают нас
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -294,7 +294,7 @@ export default function CategoryTemplate({ categorySlug }) {
                                 className="bg-gray-50 rounded-2xl p-6 border-2 border-gray-100 hover:border-blue-300 transition-all hover:-translate-y-1 hover:shadow-lg"
                             >
                                 <div className="text-5xl mb-4">{adv.icon}</div>
-                                <h3 className="font-bold text-lg mb-2" style={{ color: '#002147' }}>
+                                <h3 className="font-bold text-lg mb-2" style={{ color: 'var(--color-primary-dark)' }}>
                                     {adv.title}
                                 </h3>
                                 <p className="text-gray-600 text-sm">{adv.desc}</p>
@@ -307,7 +307,7 @@ export default function CategoryTemplate({ categorySlug }) {
             {/* Популярные услуги */}
             <section className="py-16 bg-gray-50">
                 <div className="max-w-7xl mx-auto px-4">
-                    <h2 className="text-3xl md:text-4xl font-bold text-center mb-4" style={{ color: '#002147' }}>
+                    <h2 className="text-3xl md:text-4xl font-bold text-center mb-4" style={{ color: 'var(--color-primary-dark)' }}>
                         Популярные услуги
                     </h2>
                     <p className="text-center text-gray-600 mb-12">
@@ -320,7 +320,7 @@ export default function CategoryTemplate({ categorySlug }) {
                                 className="bg-white rounded-2xl p-6 border-2 border-gray-200 hover:border-orange-400 transition-all hover:-translate-y-1 hover:shadow-lg"
                             >
                                 <div className="flex items-start justify-between mb-3">
-                                    <h3 className="font-bold text-lg flex-1" style={{ color: '#002147' }}>
+                                    <h3 className="font-bold text-lg flex-1" style={{ color: 'var(--color-primary-dark)' }}>
                                         {svc.name}
                                     </h3>
                                 </div>
@@ -346,7 +346,7 @@ export default function CategoryTemplate({ categorySlug }) {
             {/* FAQ */}
             <section className="py-16 bg-gray-50">
                 <div className="max-w-4xl mx-auto px-4">
-                    <h2 className="text-3xl md:text-4xl font-bold text-center mb-12" style={{ color: '#002147' }}>
+                    <h2 className="text-3xl md:text-4xl font-bold text-center mb-12" style={{ color: 'var(--color-primary-dark)' }}>
                         ❓ Часто задаваемые вопросы
                     </h2>
                     <div className="space-y-4">
@@ -355,7 +355,7 @@ export default function CategoryTemplate({ categorySlug }) {
                                 key={i}
                                 className="group bg-white rounded-2xl p-6 border-2 border-gray-200 hover:border-blue-300 transition-all"
                             >
-                                <summary className="flex items-center justify-between cursor-pointer font-bold text-lg" style={{ color: '#002147' }}>
+                                <summary className="flex items-center justify-between cursor-pointer font-bold text-lg" style={{ color: 'var(--color-primary-dark)' }}>
                                     <span>{item.q}</span>
                                     <svg
                                         className="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform flex-shrink-0 ml-4"
@@ -399,7 +399,7 @@ export default function CategoryTemplate({ categorySlug }) {
             {RELATED_CATEGORIES[categorySlug] && (
                 <section className="py-16 bg-gray-50">
                     <div className="max-w-7xl mx-auto px-4">
-                        <h2 className="text-2xl md:text-3xl font-bold text-center mb-10" style={{ color: '#002147' }}>
+                        <h2 className="text-2xl md:text-3xl font-bold text-center mb-10" style={{ color: 'var(--color-primary-dark)' }}>
                             Смотрите также
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -414,7 +414,7 @@ export default function CategoryTemplate({ categorySlug }) {
                                     >
                                         <span className="text-4xl flex-shrink-0">{related.icon}</span>
                                         <div>
-                                            <p className="font-bold text-base" style={{ color: '#002147' }}>
+                                            <p className="font-bold text-base" style={{ color: 'var(--color-primary-dark)' }}>
                                                 {related.title}
                                             </p>
                                             <p className="text-sm text-gray-500 mt-0.5">{related.subtitle}</p>

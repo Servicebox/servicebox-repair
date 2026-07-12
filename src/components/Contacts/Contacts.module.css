@@ -18,7 +18,7 @@
    HERO СЕКЦИЯ (ГЛАВНЫЙ ПРИЗЫВ К ДЕЙСТВИЮ)
    ============================================================ */
 .hero {
-  background: linear-gradient(135deg, #002147 0%, #003d7a 50%, #001a38 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 50%, #001a38 100%);
   border-radius: 32px;
   padding: 60px 40px;
   margin-bottom: 60px;
@@ -203,7 +203,7 @@
 .sectionTitle {
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 800;
-  color: #002147;
+  color: var(--color-primary-dark);
   margin-bottom: 12px;
   line-height: 1.2;
 }
@@ -241,7 +241,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #002147 0%, #ff8c00 100%);
+  background: linear-gradient(90deg, var(--color-primary-dark) 0%, #ff8c00 100%);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
@@ -250,7 +250,7 @@
 .contactCard:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 40px rgba(0, 33, 71, 0.12);
-  border-color: #002147;
+  border-color: var(--color-primary-dark);
 }
 
 .contactCard:hover::before {
@@ -292,7 +292,7 @@
 .contactValue {
   font-size: 1.125rem;
   font-weight: 700;
-  color: #002147;
+  color: var(--color-primary-dark);
   margin-bottom: 4px;
   line-height: 1.3;
 }
@@ -304,7 +304,7 @@
 }
 
 .contactArrow {
-  color: #002147;
+  color: var(--color-primary-dark);
   font-size: 1.25rem;
   opacity: 0;
   transform: translateX(-10px);
@@ -330,7 +330,7 @@
 .socialTitle {
   font-size: 1.125rem;
   font-weight: 700;
-  color: #002147;
+  color: var(--color-primary-dark);
   margin-bottom: 16px;
 }
 
@@ -348,7 +348,7 @@
   background: white;
   border-radius: 12px;
   text-decoration: none;
-  color: #002147;
+  color: var(--color-primary-dark);
   font-weight: 600;
   font-size: 0.95rem;
   border: 2px solid #e2e8f0;
@@ -358,12 +358,12 @@
 .socialLink:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 33, 71, 0.12);
-  border-color: #002147;
+  border-color: var(--color-primary-dark);
 }
 
 .socialIcon {
   font-size: 1.25rem;
-  color: #002147;
+  color: var(--color-primary-dark);
 }
 
 /* ============================================================
@@ -388,13 +388,13 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #002147 0%, #ff8c00 100%);
+  background: linear-gradient(90deg, var(--color-primary-dark) 0%, #ff8c00 100%);
 }
 
 .locationCard:hover {
   transform: translateY(-4px);
   box-shadow: 0 16px 50px rgba(0, 33, 71, 0.15);
-  border-color: #002147;
+  border-color: var(--color-primary-dark);
 }
 
 .locationHeader {
@@ -421,7 +421,7 @@
 .locationTitle {
   font-size: 1.375rem;
   font-weight: 700;
-  color: #002147;
+  color: var(--color-primary-dark);
   margin-bottom: 4px;
 }
 
@@ -442,7 +442,7 @@
 .addressText {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #002147;
+  color: var(--color-primary-dark);
   margin-bottom: 4px;
 }
 
@@ -466,7 +466,7 @@
   gap: 10px;
   width: 100%;
   padding: 16px;
-  background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
   color: white;
   border: none;
   border-radius: 12px;
@@ -521,7 +521,7 @@
    CTA БЛОК
    ============================================================ */
 .ctaBlock {
-  background: linear-gradient(135deg, #002147 0%, #003d7a 50%, #001a38 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 50%, #001a38 100%);
   border-radius: 32px;
   padding: 60px 40px;
   margin-bottom: 60px;
@@ -627,7 +627,7 @@
 .seoTitle {
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 800;
-  color: #002147;
+  color: var(--color-primary-dark);
   margin-bottom: 20px;
   line-height: 1.3;
 }
@@ -642,7 +642,7 @@
 .seoSubtitle {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #002147;
+  color: var(--color-primary-dark);
   margin-bottom: 16px;
 }
 
@@ -662,7 +662,7 @@
   padding: 14px 18px;
   background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
   border-radius: 12px;
-  color: #002147;
+  color: var(--color-primary-dark);
   font-size: 0.95rem;
   line-height: 1.5;
   border: 1px solid #e0f2fe;
@@ -714,7 +714,7 @@
   gap: 10px;
   padding: 14px 28px;
   background: white;
-  color: #002147;
+  color: var(--color-primary-dark);
   text-decoration: none;
   border-radius: 12px;
   font-weight: 600;
@@ -725,7 +725,7 @@
 }
 
 .navLink:hover {
-  border-color: #002147;
+  border-color: var(--color-primary-dark);
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 33, 71, 0.12);
 }

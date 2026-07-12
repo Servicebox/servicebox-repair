@@ -24,7 +24,7 @@ const defaultIcon = '/images/Devices.webp';
 const geoKeywords = ['Вологда'];
 
 // Основные цвета
-const PRIMARY_COLOR = '#002147'; // Темно-синий для кнопок
+const PRIMARY_COLOR = 'var(--color-primary-dark)'; // Темно-синий для кнопок
 const TEXT_COLOR = 'text-gray-800'; // Темно-серый для текста
 const BORDER_COLOR = 'border-gray-200'; // Светло-серый для границ
 

@@ -543,7 +543,7 @@ export default async function BrandPage({ params }) {
     }
 
     .brand-content thead {
-      background: linear-gradient(135deg, #002147 0%, #004499 100%);
+      background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
       color: white;
     }
 
@@ -607,7 +607,7 @@ export default async function BrandPage({ params }) {
     }
 
     .brand-content li strong {
-      color: #002147;
+      color: var(--color-primary-dark);
     }
 
     /* === Адаптивность для мобильных === */
@@ -674,9 +674,9 @@ export default async function BrandPage({ params }) {
 
       {/* Хлебные крошки */}
       <nav style={{ marginBottom: '1.5rem', fontSize: '0.9rem', color: '#64748b' }}>
-        <Link href="/" style={{ color: '#002147', textDecoration: 'none' }}>Главная</Link>
+        <Link href="/" style={{ color: 'var(--color-primary-dark)', textDecoration: 'none' }}>Главная</Link>
         <span style={{ margin: '0 0.5rem' }}>›</span>
-        <Link href="/services" style={{ color: '#002147', textDecoration: 'none' }}>Услуги</Link>
+        <Link href="/services" style={{ color: 'var(--color-primary-dark)', textDecoration: 'none' }}>Услуги</Link>
         <span style={{ margin: '0 0.5rem' }}>›</span>
         <span>{brand.name}</span>
       </nav>
@@ -719,7 +719,7 @@ export default async function BrandPage({ params }) {
       <div style={{
         padding: '1.5rem',
         background: 'linear-gradient(135deg, #dbeafe 0%, #e0f2fe 100%)',
-        borderLeft: '4px solid #002147',
+        borderLeft: '4px solid var(--color-primary-dark)',
         borderRadius: '8px',
         fontSize: '1.1rem',
         marginBottom: '2rem',
@@ -794,7 +794,7 @@ export default async function BrandPage({ params }) {
       {/* CTA */}
       <div style={{
         padding: '2rem',
-        background: 'linear-gradient(135deg, #002147 0%, #004499 100%)',
+        background: 'linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%)',
         borderRadius: '16px',
         color: 'white',
         textAlign: 'center',
@@ -816,7 +816,7 @@ export default async function BrandPage({ params }) {
           <a href="/contacts" style={{
             padding: '0.85rem 1.75rem',
             background: 'white',
-            color: '#002147',
+            color: 'var(--color-primary-dark)',
             borderRadius: '10px',
             textDecoration: 'none',
             fontWeight: 600,
@@ -871,7 +871,7 @@ export default async function BrandPage({ params }) {
       }}>
         <p>© {new Date().getFullYear()} ServiceBox Вологда · Ремонт цифровой техники с 2016 года</p>
         <p>
-          <a href="tel:+7-911-501-88-28" style={{ color: '#002147', textDecoration: 'none' }}>+7 (911) 501-88-28</a>
+          <a href="tel:+7-911-501-88-28" style={{ color: 'var(--color-primary-dark)', textDecoration: 'none' }}>+7 (911) 501-88-28</a>
           {' · '}
           ул. Северная, 7А, ТЦ КИТ · Ежедневно 10:00–20:00
         </p>

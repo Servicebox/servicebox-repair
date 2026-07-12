@@ -77,9 +77,9 @@
 }
 
 .resetButton {
-  background: #002147;
+  background: var(--color-primary-dark);
   color: white;
-  border: 1px solid #002147;
+  border: 1px solid var(--color-primary-dark);
   border-radius: 8px;
   padding: 8px 16px;
   font-size: 0.85rem;
@@ -104,8 +104,8 @@
 
 .closeButton {
   background: transparent;
-  color: #002147;
-  border: 1px solid #002147;
+  color: var(--color-primary-dark);
+  border: 1px solid var(--color-primary-dark);
   border-radius: 8px;
   padding: 8px 12px;
   font-size: 1rem;
@@ -120,7 +120,7 @@
 }
 
 .closeButton:hover {
-  background: #002147;
+  background: var(--color-primary-dark);
   color: white;
 }
 
@@ -174,13 +174,13 @@
 
 .categoryToggle:hover {
   background: rgba(0, 33, 71, 0.05);
-  border-color: #002147;
+  border-color: var(--color-primary-dark);
 }
 
 .categoryToggle.active {
   background: rgba(0, 33, 71, 0.1);
-  color: #002147;
-  border-color: #002147;
+  color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
   font-weight: 600;
 }
 
@@ -280,13 +280,13 @@
 
 .subcategoryButton:hover {
   background: rgba(0, 33, 71, 0.05);
-  border-color: #002147;
+  border-color: var(--color-primary-dark);
 }
 
 .subcategoryButton.active {
-  background: #002147;
+  background: var(--color-primary-dark);
   color: white;
-  border-color: #002147;
+  border-color: var(--color-primary-dark);
 }
 
 .subcategoryButton.active::before {
@@ -331,13 +331,13 @@
 
 .filterChip:hover {
   background: rgba(0, 33, 71, 0.05);
-  border-color: #002147;
+  border-color: var(--color-primary-dark);
 }
 
 .filterChip.active {
-  background: #002147;
+  background: var(--color-primary-dark);
   color: white;
-  border-color: #002147;
+  border-color: var(--color-primary-dark);
 }
 
 .filterChip.active::before {
@@ -347,9 +347,9 @@
 
 .filterToggle {
   display: none;
-  background: #002147;
+  background: var(--color-primary-dark);
   color: white;
-  border: 1px solid #002147;
+  border: 1px solid var(--color-primary-dark);
 }
 
 /* Информация о товарах */
@@ -381,7 +381,7 @@
 }
 
 .productCount span {
-  color: #002147;
+  color: var(--color-primary-dark);
   font-weight: 700;
 }
 
@@ -418,12 +418,12 @@
 }
 
 .sortSelect:hover {
-  border-color: #002147;
+  border-color: var(--color-primary-dark);
 }
 
 .sortSelect:focus {
   outline: none;
-  border-color: #002147;
+  border-color: var(--color-primary-dark);
   box-shadow: 0 0 0 2px rgba(0, 33, 71, 0.1);
 }
 
@@ -449,7 +449,7 @@
   font-size: 3rem;
   margin-bottom: 20px;
   opacity: 0.5;
-  color: #002147;
+  color: var(--color-primary-dark);
 }
 
 .emptyState h3 {
@@ -476,7 +476,7 @@
 
 .emptyStateButton {
   padding: 12px 24px;
-  background: #002147;
+  background: var(--color-primary-dark);
   color: white;
   border: none;
   border-radius: 8px;
@@ -496,8 +496,8 @@
 
 .emptyStateButton.secondary {
   background: transparent;
-  border: 1px solid #002147;
-  color: #002147;
+  border: 1px solid var(--color-primary-dark);
+  color: var(--color-primary-dark);
 }
 
 .emptyStateButton.secondary:hover {
@@ -535,7 +535,7 @@
 
 .retryButton {
   padding: 12px 32px;
-  background: #002147;
+  background: var(--color-primary-dark);
   color: white;
   border: none;
   border-radius: 8px;
@@ -574,7 +574,7 @@
   height: 100%;
   border: 3px solid transparent;
   border-radius: 50%;
-  border-top-color: #002147;
+  border-top-color: var(--color-primary-dark);
   animation: spin 1.2s linear infinite;
 }
 
@@ -1103,7 +1103,7 @@
   z-index: 999;
   width: 56px;
   height: 56px;
-  background: #002147;
+  background: var(--color-primary-dark);
   color: white;
   border: none;
   border-radius: 50%;

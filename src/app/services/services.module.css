@@ -22,7 +22,7 @@
 .animatedTitle h1 {
     font-size: clamp(1.75rem, 4vw, 2.5rem);
     font-weight: 800;
-    color: #002147;
+    color: var(--color-primary-dark);
     margin-bottom: 12px;
 }
 
@@ -53,7 +53,7 @@
 
 .searchInput:focus {
     outline: none;
-    border-color: #002147;
+    border-color: var(--color-primary-dark);
     box-shadow: 0 0 0 3px rgba(0, 33, 71, 0.1);
 }
 
@@ -82,7 +82,7 @@
 
 .categoryCard:hover {
     transform: translateY(-4px);
-    border-color: #002147;
+    border-color: var(--color-primary-dark);
     box-shadow: 0 12px 24px -8px rgba(0, 33, 71, 0.15);
 }
 
@@ -104,7 +104,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #0ea5e9, #002147);
+    background: linear-gradient(90deg, #0ea5e9, var(--color-primary-dark));
 }
 
 /* Иконка категории */
@@ -133,7 +133,7 @@
 .categoryName {
     font-size: 1.25rem;
     font-weight: 700;
-    color: #002147;
+    color: var(--color-primary-dark);
     margin-bottom: 8px;
 }
 
@@ -176,7 +176,7 @@
 
 .noResults h3 {
     font-size: 1.5rem;
-    color: #002147;
+    color: var(--color-primary-dark);
     margin-bottom: 8px;
 }
 
@@ -187,7 +187,7 @@
 
 .clearSearchButton {
     padding: 10px 20px;
-    background: #002147;
+    background: var(--color-primary-dark);
     color: white;
     border: none;
     border-radius: 8px;
@@ -197,7 +197,7 @@
 }
 
 .clearSearchButton:hover {
-    background: #003d7a;
+    background: var(--color-primary-dark);
 }
 
 /* Загрузка */
@@ -208,7 +208,7 @@
 
 /* ✅ Информационный блок внизу */
 .infoBlock {
-    background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
     color: white;
     padding: 40px;
     border-radius: 20px;

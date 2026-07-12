@@ -59,7 +59,7 @@ export default function PopularServices() {
             <div className="max-w-7xl mx-auto px-4">
                 {/* Заголовок */}
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: '#002147' }}>
+                    <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--color-primary-dark)' }}>
                         🔥 Популярные услуги
                     </h2>
                     <p className="text-gray-600 text-lg max-w-2xl mx-auto">
@@ -91,7 +91,7 @@ export default function PopularServices() {
                             </div>
 
                             {/* Название и описание */}
-                            <h3 className="font-bold text-lg mb-2" style={{ color: '#002147' }}>
+                            <h3 className="font-bold text-lg mb-2" style={{ color: 'var(--color-primary-dark)' }}>
                                 {svc.name}
                             </h3>
                             <p className="text-gray-600 text-sm mb-4">

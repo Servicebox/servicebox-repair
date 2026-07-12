@@ -59,7 +59,7 @@ export default function CategoriesGrid() {
             <div className="max-w-7xl mx-auto px-4">
                 {/* Заголовок */}
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: '#002147' }}>
+                    <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--color-primary-dark)' }}>
                         🔧 Что нужно отремонтировать?
                     </h2>
                     <p className="text-gray-600 text-lg max-w-2xl mx-auto">
@@ -82,7 +82,7 @@ export default function CategoriesGrid() {
                                 <div className="text-5xl mb-3 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
                                     {cat.icon}
                                 </div>
-                                <h3 className="font-bold text-lg mb-1" style={{ color: '#002147' }}>
+                                <h3 className="font-bold text-lg mb-1" style={{ color: 'var(--color-primary-dark)' }}>
                                     {cat.name}
                                 </h3>
                                 <p className="text-xs text-gray-600 mb-2">

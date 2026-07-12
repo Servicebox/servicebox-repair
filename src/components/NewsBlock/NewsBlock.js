@@ -56,7 +56,7 @@ const NewsBlock = ({ limit = 3 }) => {
             <section className="py-16 bg-transparent">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: '#002147' }}>
+                        <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--color-primary-dark)' }}>
                             📰 Последние новости
                         </h2>
                         <p className="text-gray-600 text-lg">Загрузка новостей...</p>
@@ -86,7 +86,7 @@ const NewsBlock = ({ limit = 3 }) => {
                 {/* Заголовок */}
                 <div className="flex items-center justify-between mb-12">
                     <div>
-                        <h2 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: '#002147' }}>
+                        <h2 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: 'var(--color-primary-dark)' }}>
                             📰 Последние новости
                         </h2>
                         <p className="text-gray-600 text-lg">
@@ -96,7 +96,7 @@ const NewsBlock = ({ limit = 3 }) => {
                     <Link
                         href="/news"
                         className="hidden md:flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white transition-all hover:scale-105 shadow-lg"
-                        style={{ background: '#002147' }}
+                        style={{ background: 'var(--color-primary-dark)' }}
                     >
                         Все новости
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -162,7 +162,7 @@ const NewsBlock = ({ limit = 3 }) => {
                                     </div>
 
                                     {/* Заголовок */}
-                                    <h3 className="text-lg font-bold mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors" style={{ color: '#002147' }}>
+                                    <h3 className="text-lg font-bold mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors" style={{ color: 'var(--color-primary-dark)' }}>
                                         {item.title}
                                     </h3>
 
@@ -189,7 +189,7 @@ const NewsBlock = ({ limit = 3 }) => {
                     <Link
                         href="/news"
                         className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-white transition-all hover:scale-105 shadow-lg"
-                        style={{ background: '#002147' }}
+                        style={{ background: 'var(--color-primary-dark)' }}
                     >
                         Все новости
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">

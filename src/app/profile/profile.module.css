@@ -11,7 +11,7 @@
   align-items: center;
   gap: 1.25rem;
   padding: 1.5rem;
-  background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
   border-radius: 16px;
   margin-bottom: 1.75rem;
   color: #fff;
@@ -92,11 +92,11 @@
   transition: color 0.2s, border-color 0.2s;
 }
 
-.tab:hover { color: #002147; }
+.tab:hover { color: var(--color-primary-dark); }
 
 .tabActive {
-  color: #002147;
-  border-bottom-color: #002147;
+  color: var(--color-primary-dark);
+  border-bottom-color: var(--color-primary-dark);
 }
 
 /* ── Content ── */
@@ -171,7 +171,7 @@
 
 .walletBtn {
   padding: 0.6rem 1.25rem;
-  background: #002147;
+  background: var(--color-primary-dark);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -181,7 +181,7 @@
   transition: background 0.2s;
 }
 
-.walletBtn:hover:not(:disabled) { background: #003d7a; }
+.walletBtn:hover:not(:disabled) { background: var(--color-primary-dark); }
 .walletBtn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .walletContainer { margin-top: 0.75rem; min-height: 0; }
@@ -209,12 +209,12 @@
   transition: all 0.2s;
 }
 
-.favTab:hover { background: #e2e8f0; color: #002147; }
+.favTab:hover { background: #e2e8f0; color: var(--color-primary-dark); }
 
 .favTabActive {
-  background: #002147;
+  background: var(--color-primary-dark);
   color: #fff;
-  border-color: #002147;
+  border-color: var(--color-primary-dark);
 }
 
 /* ── Favorites grid ── */
@@ -269,7 +269,7 @@
   line-height: 1.4;
 }
 
-.favTitle:hover { color: #002147; }
+.favTitle:hover { color: var(--color-primary-dark); }
 
 .favPrice {
   font-size: 0.9rem;
@@ -329,7 +329,7 @@
 
 .browseLink {
   padding: 0.5rem 1.25rem;
-  background: #002147;
+  background: var(--color-primary-dark);
   color: #fff;
   border-radius: 8px;
   text-decoration: none;
@@ -338,7 +338,7 @@
   transition: background 0.2s;
 }
 
-.browseLink:hover { background: #003d7a; }
+.browseLink:hover { background: var(--color-primary-dark); }
 
 /* ── Pagination ── */
 .pagination {
@@ -359,7 +359,7 @@
   transition: all 0.2s;
 }
 
-.pageBtn:hover:not(:disabled) { border-color: #002147; color: #002147; }
+.pageBtn:hover:not(:disabled) { border-color: var(--color-primary-dark); color: var(--color-primary-dark); }
 .pageBtn:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .pageInfo { font-size: 0.875rem; color: #64748b; font-weight: 600; }

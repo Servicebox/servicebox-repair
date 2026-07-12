@@ -90,7 +90,7 @@
 .serviceTitleBlock h1 {
     font-size: clamp(1.75rem, 4vw, 2.5rem);
     font-weight: 800;
-    color: #002147;
+    color: var(--color-primary-dark);
     margin: 0 0 0.25rem 0;
     line-height: 1.2;
 }
@@ -169,7 +169,7 @@
 .priceValue {
     font-size: 2.5rem;
     font-weight: 800;
-    color: #002147;
+    color: var(--color-primary-dark);
     margin-bottom: 0.5rem;
     line-height: 1;
 }
@@ -183,7 +183,7 @@
 .bookingButton {
     width: 100%;
     padding: 1rem 2rem;
-    background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
     color: white;
     border: none;
     border-radius: 1rem;
@@ -220,14 +220,14 @@
     display: block;
     font-size: 1.5rem;
     font-weight: 800;
-    color: #002147;
+    color: var(--color-primary-dark);
     text-decoration: none;
     transition: color 0.3s ease;
     margin-top: 0.25rem;
 }
 
 .phoneNumber:hover {
-    color: #003d7a;
+    color: var(--color-primary-dark);
 }
 
 /* === MAIN CONTENT === */
@@ -255,7 +255,7 @@
 .categoryTitle {
     font-size: 2rem;
     font-weight: 800;
-    color: #002147;
+    color: var(--color-primary-dark);
     margin: 0 0 1rem 0;
 }
 
@@ -278,7 +278,7 @@
 .servicesTitle {
     font-size: 1.75rem;
     font-weight: 800;
-    color: #002147;
+    color: var(--color-primary-dark);
     margin: 0 0 1.5rem 0;
 }
 
@@ -301,7 +301,7 @@
 }
 
 .serviceCard:hover {
-    border-color: #002147;
+    border-color: var(--color-primary-dark);
     background: white;
     transform: translateY(-4px);
     box-shadow: 0 12px 28px rgba(0, 33, 71, 0.12);
@@ -318,7 +318,7 @@
 .serviceCardTitle {
     font-size: 1.125rem;
     font-weight: 700;
-    color: #002147;
+    color: var(--color-primary-dark);
     margin: 0;
     line-height: 1.3;
     flex: 1;
@@ -327,7 +327,7 @@
 .serviceCardPrice {
     font-size: 1rem;
     font-weight: 800;
-    color: #002147;
+    color: var(--color-primary-dark);
     white-space: nowrap;
     flex-shrink: 0;
 }
@@ -359,12 +359,12 @@
 .serviceCardLink {
     font-size: 0.875rem;
     font-weight: 600;
-    color: #002147;
+    color: var(--color-primary-dark);
     transition: color 0.3s ease;
 }
 
 .serviceCard:hover .serviceCardLink {
-    color: #003d7a;
+    color: var(--color-primary-dark);
 }
 
 .serviceCardArrow {
@@ -375,7 +375,7 @@
 
 .serviceCard:hover .serviceCardArrow {
     transform: translateX(4px);
-    color: #002147;
+    color: var(--color-primary-dark);
 }
 
 /* === СТРАНИЦА УСЛУГИ === */
@@ -421,13 +421,13 @@
 }
 
 .tabButton:hover {
-    color: #002147;
+    color: var(--color-primary-dark);
     background: #f8fafc;
 }
 
 .tabButtonActive {
-    color: #002147;
-    border-bottom-color: #002147;
+    color: var(--color-primary-dark);
+    border-bottom-color: var(--color-primary-dark);
 }
 
 .tabContent {
@@ -454,7 +454,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
     color: white;
     border-radius: 0.75rem;
     font-size: 1.25rem;
@@ -465,7 +465,7 @@
 .processStepTitle {
     font-size: 1.125rem;
     font-weight: 700;
-    color: #002147;
+    color: var(--color-primary-dark);
     margin: 0 0 0.5rem 0;
 }
 
@@ -488,7 +488,7 @@
 .featuresTitle {
     font-size: 1.75rem;
     font-weight: 800;
-    color: #002147;
+    color: var(--color-primary-dark);
     margin: 0 0 1.5rem 0;
 }
 
@@ -540,7 +540,7 @@
 .faqQuestion {
     font-size: 1rem;
     font-weight: 700;
-    color: #002147;
+    color: var(--color-primary-dark);
     margin: 0 0 0.75rem 0;
 }
 
@@ -569,7 +569,7 @@
 .sidebarTitle {
     font-size: 1.125rem;
     font-weight: 700;
-    color: #002147;
+    color: var(--color-primary-dark);
     margin: 0 0 1rem 0;
     display: flex;
     align-items: center;
@@ -596,7 +596,7 @@
 .geoDot {
     width: 0.5rem;
     height: 0.5rem;
-    background: #002147;
+    background: var(--color-primary-dark);
     border-radius: 50%;
     flex-shrink: 0;
 }
@@ -620,7 +620,7 @@
 
 .scheduleTime {
     font-weight: 600;
-    color: #002147;
+    color: var(--color-primary-dark);
 }
 
 /* === SEO БЛОК === */
@@ -639,7 +639,7 @@
 .seoTitle {
     font-size: 1.75rem;
     font-weight: 800;
-    color: #002147;
+    color: var(--color-primary-dark);
     margin: 0 0 1.5rem 0;
 }
 
@@ -695,7 +695,7 @@
     width: 4rem;
     height: 4rem;
     border: 4px solid #e2e8f0;
-    border-top-color: #002147;
+    border-top-color: var(--color-primary-dark);
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
@@ -721,7 +721,7 @@
 .notFoundTitle {
     font-size: 2rem;
     font-weight: 800;
-    color: #002147;
+    color: var(--color-primary-dark);
     margin: 0 0 1rem 0;
 }
 
@@ -730,7 +730,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1.5rem;
-    background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
     color: white;
     text-decoration: none;
     border-radius: 0.75rem;
