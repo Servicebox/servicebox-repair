@@ -1,0 +1,88 @@
+/* components/PhosphorCube/PhosphorCube.module.css */
+
+.scene {
+  position: relative;
+  perspective: 800px;
+  flex-shrink: 0;
+}
+
+.sizeSm { width: 48px; height: 48px; }
+.sizeMd { width: 96px; height: 96px; }
+.sizeLg { width: 200px; height: 200px; }
+
+.halo {
+  position: absolute;
+  inset: -40%;
+  background: var(--cube-halo);
+  filter: blur(24px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.cube {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: spin 80s linear infinite;
+  z-index: 1;
+}
+
+@keyframes spin {
+  from { transform: rotateX(0deg) rotateY(0deg); }
+  to { transform: rotateX(360deg) rotateY(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cube {
+    animation: none;
+  }
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cube-gradient);
+  color: var(--color-primary-dark);
+  font-family: var(--font-display);
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.sizeSm .face { font-size: 0.9rem; }
+.sizeMd .face { font-size: 1.1rem; }
+.sizeLg .face { font-size: 1.6rem; }
+
+.right, .left {
+  font-size: 0.6em;
+  letter-spacing: 0.05em;
+}
+
+.sizeMd .right, .sizeMd .left,
+.sizeLg .right, .sizeLg .left {
+  writing-mode: vertical-rl;
+}
+
+/* Face placement — half of the scene's own width/height, using currentColor-independent transforms */
+.sizeSm .front  { transform: translateZ(24px); }
+.sizeSm .back   { transform: rotateY(180deg) translateZ(24px); }
+.sizeSm .right  { transform: rotateY(90deg) translateZ(24px); }
+.sizeSm .left   { transform: rotateY(-90deg) translateZ(24px); }
+.sizeSm .top    { transform: rotateX(90deg) translateZ(24px); }
+.sizeSm .bottom { transform: rotateX(-90deg) translateZ(24px); }
+
+.sizeMd .front  { transform: translateZ(48px); }
+.sizeMd .back   { transform: rotateY(180deg) translateZ(48px); }
+.sizeMd .right  { transform: rotateY(90deg) translateZ(48px); }
+.sizeMd .left   { transform: rotateY(-90deg) translateZ(48px); }
+.sizeMd .top    { transform: rotateX(90deg) translateZ(48px); }
+.sizeMd .bottom { transform: rotateX(-90deg) translateZ(48px); }
+
+.sizeLg .front  { transform: translateZ(100px); }
+.sizeLg .back   { transform: rotateY(180deg) translateZ(100px); }
+.sizeLg .right  { transform: rotateY(90deg) translateZ(100px); }
+.sizeLg .left   { transform: rotateY(-90deg) translateZ(100px); }
+.sizeLg .top    { transform: rotateX(90deg) translateZ(100px); }
+.sizeLg .bottom { transform: rotateX(-90deg) translateZ(100px); }
