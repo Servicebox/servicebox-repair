@@ -19,7 +19,7 @@
   transition: transform 3s ease-out;
   animation: bubbleWaving 5s ease-in-out infinite;
   opacity: 0.95;
-  box-shadow: 2rem 2rem 1rem 1rem rgba(65, 145, 151, 0.3);
+  box-shadow: 2rem 2rem 1rem 1rem rgba(37, 99, 235, 0.3);
   overflow: hidden;
   pointer-events: none;
   z-index: -99;
@@ -83,7 +83,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(150deg, transparent, #78d6c6, transparent, #d44a6f);
+  background: linear-gradient(150deg, transparent, var(--color-primary), transparent, var(--color-accent));
 }
 
 .bubbleWhite {
@@ -92,7 +92,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 20% 20%, transparent, var(--color-bg-dark));
+  background: radial-gradient(circle at 20% 20%, transparent, rgba(255, 255, 255, 0.95));
 }
 
 .bubbleBrightCircle {
@@ -106,7 +106,7 @@
   left: 5%;
   width: 100%;
   height: 90%;
-  background: linear-gradient(45deg, var(--color-bg-dark) -50%, transparent, var(--color-bg-dark) 150%);
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.95) -50%, transparent, rgba(255, 255, 255, 0.95) 150%);
 }
 
 .bubbleBrightCircleSecond {
@@ -114,14 +114,14 @@
   left: 10%;
   width: 80%;
   height: 80%;
-  background: linear-gradient(120deg, var(--color-bg-dark) -50%, transparent, var(--color-bg-dark) 150%);
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.95) -50%, transparent, rgba(255, 255, 255, 0.95) 150%);
   animation-delay: -1s;
 }
 
 .bubbleBrightness {
   position: absolute;
   border-radius: 50%;
-  background: linear-gradient(0deg, var(--color-bg-dark), transparent);
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.95), transparent);
   transform-origin: center;
 }
 

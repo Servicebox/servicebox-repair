@@ -17,6 +17,13 @@
   filter: blur(24px);
   z-index: 0;
   pointer-events: none;
+  opacity: 0.8;
+  transition: opacity 0.4s var(--ease-out-expo), filter 0.4s var(--ease-out-expo);
+}
+
+.scene:hover .halo {
+  opacity: 1;
+  filter: blur(28px);
 }
 
 .cube {
@@ -25,6 +32,10 @@
   transform-style: preserve-3d;
   animation: spin 80s linear infinite;
   z-index: 1;
+}
+
+.scene:hover .cube {
+  animation-play-state: paused;
 }
 
 @keyframes spin {

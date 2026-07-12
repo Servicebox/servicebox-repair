@@ -25,7 +25,7 @@
 
 .leadText {
   font-size: 1.2rem;
-  color: #475569;
+  color: var(--color-text-muted);
   max-width: 800px;
   margin: 0 auto;
   line-height: 1.6;
@@ -48,7 +48,7 @@
   background: transparent;
   padding: 32px 24px;
   border-radius: 20px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--color-border);
   text-align: center;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -56,13 +56,13 @@
 
 .featureCard:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 25px -5px rgba(26, 26, 46, 0.1);
+  box-shadow: 0 20px 25px -5px rgba(30, 58, 138, 0.1);
   border-color: var(--color-primary-dark);
 }
 
 .featureIcon {
   font-size: 2.5rem;
-  color: #ff8c00;
+  color: var(--color-warning);
   margin-bottom: 16px;
 }
 
@@ -75,7 +75,7 @@
 
 .featureCard p {
   font-size: 0.95rem;
-  color: #64748b;
+  color: var(--color-text-muted);
   line-height: 1.5;
 }
 
@@ -85,7 +85,7 @@
   border-radius: 24px;
   padding: 48px 32px;
   margin-bottom: 60px;
-  color: white;
+  color: var(--color-text-inverse);
 }
 
 .sectionTitle {
@@ -97,12 +97,12 @@
 }
 
 .equipmentBlock .sectionTitle {
-  color: white;
+  color: var(--color-text-inverse);
 }
 
 .sectionSubtitle {
   text-align: center;
-  color: #94a3b8;
+  color: var(--color-text-muted);
   margin-bottom: 32px;
   font-size: 1.05rem;
 }
@@ -125,14 +125,14 @@
 
 .equipIcon {
   font-size: 1.8rem;
-  color: #ff8c00;
+  color: var(--color-warning);
   flex-shrink: 0;
 }
 
 .equipItem span {
   font-size: 0.95rem;
   line-height: 1.4;
-  color: #f8fafc;
+  color: var(--color-bg);
 }
 
 /* Блок услуг */
@@ -154,10 +154,10 @@
 .categoryTitle {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #ff8c00;
+  color: var(--color-warning);
   margin-bottom: 20px;
   padding-bottom: 10px;
-  border-bottom: 2px solid #e2e8f0;
+  border-bottom: 2px solid var(--color-border);
 }
 
 .servicesGrid {
@@ -170,14 +170,14 @@
   display: flex;
   gap: 16px;
   padding: 20px;
-  background: white;
+  background: var(--color-bg-dark);
   border-radius: 16px;
-  border: 1px solid #f1f5f9;
+  border: 1px solid var(--color-bg-elevated);
   transition: all 0.2s ease;
 }
 
 .serviceCard:hover {
-  border-color: #cbd5e1;
+  border-color: var(--color-border);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
 }
 
@@ -187,7 +187,7 @@
   justify-content: center;
   width: 48px;
   height: 48px;
-  background: #f1f5f9;
+  background: var(--color-bg-elevated);
   border-radius: 12px;
   color: var(--color-primary-dark);
   font-size: 1.3rem;
@@ -197,12 +197,12 @@
 .serviceTitle {
   font-size: 1.05rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--color-text);
   margin-bottom: 4px;
 }
 
 .serviceText {
   font-size: 0.875rem;
-  color: #64748b;
+  color: var(--color-text-muted);
   line-height: 1.5;
 }

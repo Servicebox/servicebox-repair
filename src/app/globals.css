@@ -37,6 +37,9 @@
   /* Theme transition applied to all color-sensitive properties */
   --transition-theme: background 200ms ease, color 200ms ease, border-color 200ms ease;
 
+  /* Плавный easing для hover/интерактивных переходов */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
   /* Layout */
   --sidebar-width: 280px;
   --header-height: 60px;
@@ -231,11 +234,16 @@ button {
   border-radius: 4px;
   cursor: pointer;
   font-family: inherit;
-  transition: box-shadow 0.2s ease;
+  transition: box-shadow 0.3s var(--ease-out-expo), transform 0.3s var(--ease-out-expo);
 }
 
 button:hover:not(:disabled) {
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25), 0 8px 20px -6px rgba(37, 99, 235, 0.45);
+  transform: translateY(-1px);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 button:disabled {
@@ -252,10 +260,16 @@ button:disabled {
   border-radius: 4px;
   cursor: pointer;
   font-family: inherit;
+  transition: background 0.3s var(--ease-out-expo), transform 0.3s var(--ease-out-expo);
 }
 
 .btnGhost:hover:not(:disabled) {
   background: rgba(37, 99, 235, 0.08);
+  transform: translateY(-1px);
+}
+
+.btnGhost:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .pill {
