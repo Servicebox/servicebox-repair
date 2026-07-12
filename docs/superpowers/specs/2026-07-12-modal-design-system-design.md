@@ -28,7 +28,10 @@
 --color-text-inverse: #ffffff;
 --color-primary: #7fee64;       /* было #0F52BA */
 --color-primary-dark: #1a1a2e;  /* новый токен: тёмный фон/текст для Primary-кнопки */
---color-accent: #7fee64;        /* было #3498db, синхронизируем с primary */
+--color-accent: #18b759;        /* было #3498db. НЕ равно --color-primary: ~15 компонентов (ServicePricePage и др.)
+                                    строят двухцветный linear-gradient(var(--color-accent), var(--color-primary)) —
+                                    одинаковые значения превратили бы его в плоскую заливку. #18b759 — средняя точка
+                                    --cube-gradient, остаётся в той же цветовой семье */
 --color-border: #e0e0e0;        /* было #e2e8f0 */
 /* --color-success/--color-danger/--color-warning не трогаем — семантика важнее бренда */
 
@@ -38,28 +41,31 @@
 --tracking-tight: -0.03em;
 --cube-gradient: linear-gradient(135deg, #80ee64 0%, #18b759 50%, #09af58 100%);
 --cube-halo: radial-gradient(circle, rgba(127, 238, 100, 0.35), transparent 70%);
+--color-header-bg: rgba(255, 255, 255, 0.82); /* для стеклянного хедера с backdrop-filter: blur */
 ```
 
 ### `[data-theme="dark"]`
-Приводим к "истинному" phosphor-terminal виду вместо нынешнего почти-чёрного:
+Приводим фон к "истинному" phosphor-terminal виду. **Важно:** `--color-primary-dark` и `--color-accent` в этой теме используются не только как фон/градиент, но и как `color:` (цвет текста/заголовков) в десятках компонентов (`Header`, `AboutMe`, `Breadcrumbs`, `WorkSteps`, `CartItems` и др. — обнаружено грепом при подготовке плана). Их нельзя делать тёмными — это сделает текст нечитаемым на чёрном фоне. Меняем только фон, accent-токены оставляем как есть:
 ```css
 --color-bg: #0a0a0a;      /* было #000000 */
 --color-bg-dark: #141414; /* было #111111 */
 --color-bg-elevated: #1a1a1a; /* без изменений */
 --color-text: #e8ffe0;    /* phosphor-mint вместо нейтрального #f0f0f0 */
---color-primary: #7fee64; /* без изменений — уже верно */
---color-primary-dark: #0a0a0a;
-/* остальное (accent/success/danger/warning/border) — без изменений, уже согласовано */
+--color-primary: #7fee64;      /* без изменений — уже верно */
+--color-primary-dark: #ddffdc; /* БЕЗ ИЗМЕНЕНИЙ — светлый, используется как текст поверх чёрного фона */
+--color-accent: #ddffdc;       /* без изменений, та же причина */
+--color-header-bg: rgba(10, 10, 10, 0.82);
+/* success/danger/warning/border — без изменений */
 ```
 
 ### `[data-contrast="high"]`
-WCAG 7:1 приоритетнее бренда. Меняем **только** там, где `#7fee64` на чёрном/белом фоне проходит контраст (он проходит на `#000000`: контраст ~13:1 — ок):
+WCAG 7:1 приоритетнее бренда. Меняем **только** `primary`/`primary-dark`/`accent` (были все три жёлтыми `#ffff00`, эквивалентны друг другу — замена 1:1 без потери смысла). `#7fee64` на `#000000` даёт контраст ~13:1 — проходит с запасом. `--color-success` (`#00ff00`) **не трогаем** — он и раньше был самостоятельным семантическим цветом, отличным от primary (жёлтый ≠ зелёный), и должен остаться отличимым от brand-акцента:
 ```css
---color-primary: #7fee64;   /* было #ffff00 */
---color-primary-dark: #7fee64;
---color-accent: #7fee64;
---color-success: #7fee64;   /* совпадает с primary в этом режиме — ранее тоже совпадало (жёлтый=жёлтый) */
-/* warning оставляем #ffff00 — иначе success и warning визуально сольются */
+--color-primary: #7fee64;      /* было #ffff00 */
+--color-primary-dark: #7fee64; /* было #ffff00 */
+--color-accent: #7fee64;       /* было #ffff00 */
+--color-header-bg: #000000;    /* непрозрачный, БЕЗ blur — прозрачность/размытие вредят читаемости в режиме высокой контрастности */
+/* success (#00ff00), danger, warning (#ffff00) — без изменений */
 ```
 
 ## Шрифты (`src/app/layout.js`)
@@ -100,10 +106,11 @@ const inter = Inter({
 
 ## Хедер (`src/components/Header/Header.js`, `Header.module.css`)
 
+Проверено по факту: `Header.module.css` уже **полностью** на токенах (`--color-primary-dark`, `--color-accent`, `--color-bg-dark`, `--color-text-inverse`, `--color-warning`) — ни одного хардкод-цвета. Значит смена значений токенов в `globals.css` (раздел выше) автоматически перекрашивает `.headerTopBar` (навигационный бар), `.headerLogoMain`, `.headerNavLink`, состояние `.active` и dropdown — без единой правки цвета в этом файле. Точечно меняются только:
+
 - `<PhosphorCube size="sm" />` добавляется в `.headerLogoLink`, рядом с существующим `<img favicon>` и текстовым лого (файл лого не удаляется).
 - Текст лого (`.headerLogoMain`/`.headerLogoSub`) получает `font-family: var(--font-display); letter-spacing: var(--tracking-tight);`.
-- `.header`, `.headerTopBar`: `background: rgba(255,255,255,0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-border);` (сейчас непрозрачный фон — меняется на полупрозрачный + blur).
-- `.headerNavItem.active`, `.headerNavLink:hover` — цвет/подчёркивание через `var(--color-primary)` вместо текущего синего (наследуется автоматически там, где уже используется `var(--color-primary)`; проверяется на этапе реализации, есть ли хардкод-синий в этих правилах).
+- `.header`, `.headerTopBar`: `background: var(--color-header-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-border);` — новый токен `--color-header-bg` (описан в разделе токенов) даёт полупрозрачный фон в светлой/тёмной темах и непрозрачный чёрный в high-contrast (там `backdrop-filter` не отключается явно — `background` там уже 100%-непрозрачный, так что блюрить нечего, эффекта не будет, что и требуется для a11y).
 - `BubbleBackground` не трогается.
 
 ## Кнопки
@@ -154,6 +161,7 @@ theme: {
 ## Страница логина (`LoginSignup.js`, `.module.css`)
 
 - `<PhosphorCube size="md" />` добавляется в `.modalHeader`, рядом с `<h2>` (не вместо него) — модалка компактна (`.modalOverlay`/`.modalContent`, flex-колонка), полноразмерный hero-куб не помещается без переверстки, что выходит за рамки задачи ("не менять структуру страниц").
+- Попутный фикс в том же файле: `.modalHeader h2` сейчас хардкодит `color: #0f172a`, а `.modalContent` уже переключает фон по теме через `var(--color-bg-dark)` — в тёмной теме получится тёмный текст на тёмном фоне (нечитаемо). Меняю на `color: var(--color-text);`, раз всё равно редактирую этот блок для куба.
 - Форма (валидация, `YandexLoginButton`, состояние) не трогается.
 
 ## Что не входит в эту итерацию
