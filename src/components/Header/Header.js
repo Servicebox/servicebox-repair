@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useAuth } from '@/components/contexts/AuthContext';
 import headerLogo from "../../../public/favicon.webp";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
+import PhosphorCube from "../PhosphorCube/PhosphorCube";
 import LoginSignup from "../LoginSignup/LoginSignup";
 import GlobalSearch from '../GlobalSearch/GlobalSearch';
 import HeaderTracking from "../HeaderTracking/HeaderTracking";
@@ -116,6 +117,7 @@ function Header() {
           {/* Логотип */}
           <Link href="/" className={styles.headerLogoLink} aria-label="На главную страницу ServiceBox">
             <img src={headerLogo.src} alt="Логотип ServiceBox" className={styles.headerLogo} width="65" height="45" />
+            <PhosphorCube size="sm" />
             <span className={styles.headerLogoText}>
               <span className={styles.headerLogoMain}>Сервис Бокс</span>
               <span className={styles.headerLogoSub}>Вологда</span>

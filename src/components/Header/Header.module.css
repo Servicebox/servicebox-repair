@@ -98,7 +98,10 @@
 
 /* Main Header */
 .header {
-  background: var(--color-bg-dark);
+  background: var(--color-header-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
   box-shadow: 0 2px 10px var(--color-shadow);
   position: sticky;
   top: 0;
@@ -147,6 +150,8 @@
   font-weight: 700;
   color: var(--color-primary-dark);
   line-height: 1;
+  font-family: var(--font-display);
+  letter-spacing: var(--tracking-tight);
 }
 
 .headerLogoSub {
