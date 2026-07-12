@@ -1,7 +1,21 @@
 import './globals.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import { Inter, Inter_Tight } from 'next/font/google';
 import ChatwootScript from '@/components/ChatwootScript/ChatwootScript';
+
+const interTight = Inter_Tight({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['500', '600', '700'],
+  variable: '--font-inter-tight',
+  display: 'swap',
+});
+const inter = Inter({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '600'],
+  variable: '--font-inter',
+  display: 'swap',
+});
 
 import Header from '../components/Header/Header';
 import BubbleBackground from '../components/BubbleBackground/BubbleBackground';
@@ -103,7 +117,7 @@ const structuredData = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ru" suppressHydrationWarning>
+    <html lang="ru" suppressHydrationWarning className={`${interTight.variable} ${inter.variable}`}>
       <head>
         {/* Anti-flash: apply theme before hydration to prevent flicker */}
         <script dangerouslySetInnerHTML={{ __html: `(function(){
