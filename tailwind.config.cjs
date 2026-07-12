@@ -7,6 +7,20 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        bg: 'var(--color-bg)',
+        surface: 'var(--color-bg-elevated)',
+        primary: 'var(--color-primary)',
+        primaryDark: 'var(--color-primary-dark)',
+        border: 'var(--color-border)',
+      },
+      fontFamily: {
+        display: ['var(--font-display)'],
+        ui: ['var(--font-ui)'],
+      },
+      letterSpacing: {
+        tightest: '-0.03em',
+      },
       animation: {
         'in': 'in 0.3s ease-out',
         'slide-in-from-bottom': 'slide-in-from-bottom 0.3s ease-out',
