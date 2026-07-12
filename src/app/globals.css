@@ -13,14 +13,14 @@
   --color-bg-elevated: #f8f9fa;
 
   /* Text */
-  --color-text: #1a1a2e;
-  --color-text-muted: #2d2d3f;
+  --color-text: #1e293b;
+  --color-text-muted: #475569;
   --color-text-inverse: #ffffff;
 
   /* Brand */
-  --color-primary: #7fee64;
-  --color-primary-dark: #1a1a2e;
-  --color-accent: #18b759;
+  --color-primary: #2563eb;
+  --color-primary-dark: #1e3a8a;
+  --color-accent: #f97316;
 
   /* Semantic */
   --color-success: #28a745;
@@ -59,8 +59,8 @@
   --tracking-tight: -0.03em;
 
   /* Modal design system — cube + header glass */
-  --cube-gradient: linear-gradient(135deg, #80ee64 0%, #18b759 50%, #09af58 100%);
-  --cube-halo: radial-gradient(circle, rgba(127, 238, 100, 0.35), transparent 70%);
+  --cube-gradient: linear-gradient(135deg, #2563eb 0%, #7c6bef 50%, #f97316 100%);
+  --cube-halo: radial-gradient(circle, rgba(37, 99, 235, 0.3), transparent 70%);
   --color-header-bg: rgba(255, 255, 255, 0.82);
 }
 
@@ -71,12 +71,12 @@
   --color-bg: #0a0a0a;
   --color-bg-dark: #141414;
   --color-bg-elevated: #1a1a1a;
-  --color-text: #e8ffe0;
+  --color-text: #e2e8f0;
   --color-text-muted: #a0a0a0;
   --color-text-inverse: #000000;
-  --color-primary: #7fee64;
-  --color-primary-dark: #ddffdc;
-  --color-accent: #ddffdc;
+  --color-primary: #38bdf8;
+  --color-primary-dark: #bfdbfe;
+  --color-accent: #fdba74;
   --color-success: #7fee64;
   --color-danger: #ff5555;
   --color-warning: #ffcc00;
@@ -95,9 +95,9 @@
   --color-text: #ffffff;
   --color-text-muted: #ffffff;
   --color-text-inverse: #000000;
-  --color-primary: #7fee64;
-  --color-primary-dark: #7fee64;
-  --color-accent: #7fee64;
+  --color-primary: #38bdf8;
+  --color-primary-dark: #38bdf8;
+  --color-accent: #38bdf8;
   --color-success: #00ff00;
   --color-danger: #ff0000;
   --color-warning: #ffff00;
@@ -235,7 +235,7 @@ button {
 }
 
 button:hover:not(:disabled) {
-  box-shadow: 0 0 0 3px rgba(127, 238, 100, 0.25);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
 }
 
 button:disabled {
@@ -255,19 +255,52 @@ button:disabled {
 }
 
 .btnGhost:hover:not(:disabled) {
-  background: rgba(127, 238, 100, 0.08);
+  background: rgba(37, 99, 235, 0.08);
 }
 
 .pill {
   display: inline-flex;
   align-items: center;
   background: var(--color-primary);
-  color: var(--color-primary-dark);
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 999px;
   padding: 0.25rem 0.75rem;
   font-weight: 600;
   font-size: 0.875rem;
+}
+
+.glassCard {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .glassCard {
+  background: rgba(20, 20, 20, 0.75);
+}
+
+/* Появление блоков при скролле — см. src/components/ScrollReveal */
+.scrollReveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.scrollReveal.scrollReveal--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollReveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 button,

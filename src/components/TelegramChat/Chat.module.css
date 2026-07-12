@@ -144,7 +144,7 @@
 .nameInput:focus {
   border-color: var(--color-accent);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(24, 183, 89, 0.2);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
 }
 
 .nameSaveBtn {
@@ -559,7 +559,7 @@
 .chatInput:focus {
   border-color: var(--color-accent);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(24, 183, 89, 0.2);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
 }
 
 .chatInput:disabled {
