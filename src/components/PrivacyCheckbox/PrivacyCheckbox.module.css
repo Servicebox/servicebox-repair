@@ -61,11 +61,11 @@
 }
 
 .error {
-  color: #dc2626;
+  color: var(--color-danger);
   font-size: 0.75rem;
   margin-top: 0.5rem;
   padding: 0.5rem;
-  background: #fef2f2;
+  background: var(--color-danger-bg);
   border: 1px solid #fecaca;
   border-radius: 4px;
 }

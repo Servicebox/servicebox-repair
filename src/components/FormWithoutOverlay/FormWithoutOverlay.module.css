@@ -22,7 +22,7 @@
 }
 
 .highlight {
-  color: #0070f3;
+  color: var(--color-primary);
   font-weight: bold;
 }
 
@@ -58,7 +58,7 @@
 
 .formInput:focus, .formTextarea:focus {
   outline: none;
-  border-color: #0070f3;
+  border-color: var(--color-primary);
   background-color: var(--color-bg-dark);
   box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
 }
@@ -87,7 +87,7 @@
   top: -10px;
   left: 10px;
   font-size: 12px;
-  color: #0070f3;
+  color: var(--color-primary);
   font-weight: 500;
 }
 
@@ -105,7 +105,7 @@
 .submitBtn {
   width: 100%;
   padding: 15px;
-  background-color: #6c757d;
+  background-color: var(--color-text-muted);
   color: var(--color-bg-dark);
   border: none;
   border-radius: 8px;
@@ -117,7 +117,7 @@
 }
 
 .submitBtn.active {
-  background: linear-gradient(135deg, #0070f3, #0051a8);
+  background: linear-gradient(135deg, var(--color-primary), #0051a8);
   cursor: pointer;
 }
 
@@ -149,7 +149,7 @@
 }
 
 .privacyText a {
-  color: #0070f3;
+  color: var(--color-primary);
   text-decoration: none;
 }
 
@@ -197,7 +197,7 @@
 }
 
 .modalCloseBtn {
-  background-color: #0070f3;
+  background-color: var(--color-primary);
   color: var(--color-bg-dark);
   border: none;
   padding: 10px 20px;
@@ -306,18 +306,18 @@
 .successMessage {
   text-align: center;
   padding: 2rem;
-  background: #f0f9ff;
+  background: var(--color-primary-bg);
   border-radius: 8px;
   border: 1px solid #bae6fd;
 }
 
 .successIcon {
   font-size: 3rem;
-  color: #059669;
+  color: var(--color-success);
   margin-bottom: 1rem;
 }
 
 .successMessage h4 {
-  color: #059669;
+  color: var(--color-success);
   margin-bottom: 0.5rem;
 }

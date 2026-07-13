@@ -1,7 +1,7 @@
 .select {
   width: 100%;
   padding: 12px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   background-color: white;
   font-size: 14px;
@@ -12,12 +12,12 @@
 
 .select:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
 }
 
 .select:hover {
-  border-color: #9ca3af;
+  border-color: var(--color-text-muted);
 }
 
 .select option {

@@ -1,5 +1,5 @@
 .fileCard {
-  border: 1px solid #e9ecef;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 20px;
   background: white;
@@ -29,13 +29,13 @@
 
 .fileName {
   margin: 0 0 5px 0;
-  color: #212529;
+  color: var(--color-text);
   font-size: 1.1rem;
   word-break: break-word;
 }
 
 .fileMeta {
-  color: #6c757d;
+  color: var(--color-text-muted);
   font-size: 13px;
 }
 
@@ -55,7 +55,7 @@
 }
 
 .detailRow strong {
-  color: #495057;
+  color: var(--color-text-muted);
 }
 
 .editingSection {
@@ -70,7 +70,7 @@
   display: block;
   margin-bottom: 5px;
   font-weight: 600;
-  color: #495057;
+  color: var(--color-text-muted);
 }
 
 .formGroup textarea {
@@ -88,7 +88,7 @@
 }
 
 .saveButton {
-  background: #28a745;
+  background: var(--color-success);
   color: white;
   border: none;
   padding: 8px 16px;
@@ -101,7 +101,7 @@
 }
 
 .cancelButton {
-  background: #6c757d;
+  background: var(--color-text-muted);
   color: white;
   border: none;
   padding: 8px 16px;
@@ -110,7 +110,7 @@
 }
 
 .cancelButton:hover {
-  background: #545b62;
+  background: var(--color-text-muted);
 }
 
 .contentSection {
@@ -122,12 +122,12 @@
 }
 
 .description strong {
-  color: #495057;
+  color: var(--color-text-muted);
 }
 
 .description p {
   margin: 5px 0 0 0;
-  color: #6c757d;
+  color: var(--color-text-muted);
   line-height: 1.4;
 }
 
@@ -137,7 +137,7 @@
 }
 
 .downloadButton {
-  background: #007bff;
+  background: var(--color-primary);
   color: white;
   border: none;
   padding: 8px 16px;
@@ -151,8 +151,8 @@
 }
 
 .editButton {
-  background: #ff8c00;
-  color: #212529;
+  background: var(--color-warning);
+  color: var(--color-text);
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
@@ -164,7 +164,7 @@
 }
 
 .deleteButton {
-  background: #dc3545;
+  background: var(--color-danger);
   color: white;
   border: none;
   padding: 8px 16px;

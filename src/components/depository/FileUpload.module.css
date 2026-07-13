@@ -4,10 +4,10 @@
 }
 
 .uploadForm {
-  background: #f8f9fa;
+  background: var(--color-bg-elevated);
   padding: 25px;
   border-radius: 12px;
-  border: 1px solid #e9ecef;
+  border: 1px solid var(--color-border);
 }
 
 .formGroup {
@@ -18,7 +18,7 @@
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #495057;
+  color: var(--color-text-muted);
 }
 
 .formGroup input,
@@ -36,7 +36,7 @@
 .formGroup select:focus,
 .formGroup textarea:focus {
   outline: none;
-  border-color: #007bff;
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
 }
 
@@ -49,7 +49,7 @@
   padding: 12px;
   border-radius: 6px;
   margin: 15px 0;
-  border-left: 4px solid #007bff;
+  border-left: 4px solid var(--color-primary);
 }
 
 .filePreview p {
@@ -60,7 +60,7 @@
 .uploadButton {
   width: 100%;
   padding: 14px;
-  background: #007bff;
+  background: var(--color-primary);
   color: white;
   border: none;
   border-radius: 6px;
@@ -75,7 +75,7 @@
 }
 
 .uploadButton:disabled {
-  background: #6c757d;
+  background: var(--color-text-muted);
   cursor: not-allowed;
 }
 
