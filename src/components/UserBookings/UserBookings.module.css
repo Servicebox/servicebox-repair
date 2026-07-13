@@ -94,7 +94,7 @@
   font-size: 0.78rem;
   color: var(--color-text-muted);
 }
-.tracking strong { font-family: monospace; color: #334155; }
+.tracking strong { font-family: monospace; color: var(--color-text); }
 
 .cardRight { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 
@@ -109,11 +109,11 @@
   font-weight: 600;
   white-space: nowrap;
 }
-.statusPending    { background: var(--color-warning-bg); color: #854d0e; }
+.statusPending    { background: var(--color-warning-bg); color: var(--color-warning); }
 .statusConfirmed  { background: var(--color-primary-bg); color: var(--color-primary); }
 .statusInProgress { background: var(--color-primary-bg); color: var(--color-primary); }
-.statusCompleted  { background: var(--color-success-bg); color: #166534; }
-.statusCanceled   { background: #fee2e2; color: #991b1b; }
+.statusCompleted  { background: var(--color-success-bg); color: var(--color-success); }
+.statusCanceled   { background: var(--color-danger-bg); color: var(--color-danger); }
 
 /* Тело карточки */
 .cardBody {
@@ -188,9 +188,9 @@
 .cancelBtn {
   font-size: 0.8rem;
   font-weight: 500;
-  color: #dc2626;
+  color: var(--color-danger);
   background: none;
-  border: 1.5px solid #fca5a5;
+  border: 1.5px solid var(--color-danger);
   border-radius: 6px;
   padding: 4px 12px;
   cursor: pointer;

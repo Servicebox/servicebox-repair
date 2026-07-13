@@ -177,7 +177,7 @@
 .table td {
   padding: 20px;
   border-bottom: 1px solid var(--color-bg-elevated);
-  color: #334155;
+  color: var(--color-text);
   font-size: 14px;
 }
 
@@ -247,12 +247,12 @@
 }
 
 .editButton {
-  background: #fbbf24;
-  color: #78350f;
+  background: var(--color-warning);
+  color: var(--color-text-inverse);
 }
 
 .editButton:hover {
-  background: #f59e0b;
+  background: var(--color-warning);
   transform: translateY(-1px);
 }
 
@@ -785,7 +785,7 @@
   gap: 0.5rem;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #374151;
+  color: var(--color-text);
   cursor: pointer;
   user-select: none;
 }

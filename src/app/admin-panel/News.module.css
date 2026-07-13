@@ -61,13 +61,13 @@
 .alert.success {
   background: var(--color-success-bg);
   color: var(--color-success);
-  border-color: #bbf7d0;
+  border-color: var(--color-success);
 }
 
 .alert.error {
   background: var(--color-danger-bg);
   color: var(--color-danger);
-  border-color: #fecaca;
+  border-color: var(--color-danger);
 }
 
 /* Карточка акции */
@@ -116,19 +116,19 @@
 .status.published {
   background: var(--color-success-bg);
   color: var(--color-success);
-  border: 1px solid #bbf7d0;
+  border: 1px solid var(--color-success);
 }
 
 .status.draft {
-  background: #fefce8;
-  color: #854d0e;
-  border: 1px solid #fef08a;
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  border: 1px solid var(--color-warning);
 }
 
 .status.expired {
   background: var(--color-danger-bg);
-  color: #991b1b;
-  border: 1px solid #fecaca;
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger);
 }
 
 /* Мета-информация */
@@ -586,21 +586,21 @@
   .newsItem,
   .empty {
     background: transparent;
-    border-color: #374151;
+    border-color: var(--color-border);
   }
   
   .header h1,
   .itemHeader h3 {
-    color: #3a3a3a;
+    color: var(--color-text);
   }
   
   .excerpt,
   .date,
   .empty p {
-    color: #303030;
+    color: var(--color-text-muted);
   }
   
   .imagePreview {
-    background: #374151;
+    background: var(--color-bg-elevated);
   }
 }

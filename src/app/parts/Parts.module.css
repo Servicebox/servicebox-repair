@@ -30,7 +30,7 @@
 
 .header p {
   font-size: 1.1rem;
-  color: #1d1d1d;
+  color: var(--color-text);
   max-width: 600px;
   line-height: 1.5;
 }
@@ -93,8 +93,8 @@
 }
 
 .resetButton:hover {
-  background: #003366;
-  border-color: #003366;
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
   transform: translateY(-1px);
 }
 
@@ -218,7 +218,7 @@
 .categoryArrow {
   font-size: 0.75rem;
   transition: transform 0.2s ease;
-  color: #353535;
+  color: var(--color-text);
   flex-shrink: 0;
   padding: 4px;
   display: flex;
@@ -256,7 +256,7 @@
   background: transparent;
   border: 1px solid rgba(26, 26, 46, 0.1);
   border-radius: 6px;
-  color: #323232;
+  color: var(--color-text);
   font-weight: 400;
   font-size: 0.9rem;
   cursor: pointer;
@@ -394,7 +394,7 @@
 
 .sortLabel {
   font-weight: 500;
-  color: #2f2f2f;
+  color: var(--color-text);
   font-size: 0.9rem;
   white-space: nowrap;
 }
@@ -405,7 +405,7 @@
   border-radius: 8px;
   background: transparent;
   font-size: 0.9rem;
-  color: #797979;
+  color: var(--color-text-muted);
   cursor: pointer;
   transition: all 0.2s ease;
   min-width: 160px;
@@ -490,7 +490,7 @@
 }
 
 .emptyStateButton:hover {
-  background: #003366;
+  background: var(--color-primary-dark);
   transform: translateY(-1px);
 }
 
@@ -518,7 +518,7 @@
 .errorIcon {
   font-size: 4rem;
   margin-bottom: 20px;
-  color: #ff6b6b;
+  color: var(--color-danger);
 }
 
 .errorContainer h2 {
@@ -546,7 +546,7 @@
 }
 
 .retryButton:hover {
-  background: #003366;
+  background: var(--color-primary-dark);
   transform: translateY(-1px);
 }
 
@@ -1116,7 +1116,7 @@
 }
 
 .mobileMenuToggle:hover {
-  background: #003366;
+  background: var(--color-primary-dark);
   transform: scale(1.05);
 }
 

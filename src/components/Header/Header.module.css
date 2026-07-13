@@ -344,7 +344,7 @@
 }
 
 .adminPanelBtn:hover {
-  background: #a93226;
+  background: var(--color-danger);
 }
 
 .logoutBtn {

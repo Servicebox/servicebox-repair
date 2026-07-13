@@ -50,7 +50,7 @@
 /* Ошибка */
 .errorCard {
   background: var(--color-danger-bg);
-  border: 1px solid #ffcdd2;
+  border: 1px solid var(--color-danger);
   border-radius: 12px;
   padding: 24px;
   margin: 20px 0;
@@ -71,7 +71,7 @@
 
 .errorCard p {
   margin: 0 0 16px;
-  color: #7f1d1d;
+  color: var(--color-danger);
 }
 
 .retryButton {
@@ -220,7 +220,7 @@
   gap: 20px;
   padding: 20px;
   background: var(--color-success-bg);
-  border: 1px solid #c3e6cb;
+  border: 1px solid var(--color-success);
   border-radius: 8px;
 }
 
@@ -231,12 +231,12 @@
 
 .successMessage h3 {
   margin: 0 0 8px;
-  color: #155724;
+  color: var(--color-success);
 }
 
 .successMessage p {
   margin: 0;
-  color: #0c4128;
+  color: var(--color-success);
 }
 
 /* Ошибки валидации */
@@ -450,7 +450,7 @@
   align-items: center;
   padding: 16px 20px;
   background: var(--color-bg-elevated);
-  border-top: 1px solid #dee2e6;
+  border-top: 1px solid var(--color-border);
 }
 
 .xmlFooter p {

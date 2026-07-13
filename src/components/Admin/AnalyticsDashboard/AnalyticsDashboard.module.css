@@ -14,7 +14,7 @@
 .header h1 {
   margin: 0;
   font-size: 24px;
-  color: #1f2937;
+  color: var(--color-text);
 }
 
 .periodSelector {
@@ -25,7 +25,7 @@
 
 .periodSelector select {
   padding: 8px 12px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   font-size: 14px;
 }
@@ -39,21 +39,21 @@
 
 .card {
   padding: 20px;
-  background: #f3f4f6;
+  background: var(--color-bg-elevated);
   border-radius: 8px;
   border-left: 4px solid var(--color-primary);
 }
 
 .label {
   font-size: 12px;
-  color: #6b7280;
+  color: var(--color-text-muted);
   margin-bottom: 8px;
 }
 
 .value {
   font-size: 32px;
   font-weight: 700;
-  color: #1f2937;
+  color: var(--color-text);
 }
 
 .section {
@@ -62,7 +62,7 @@
 
 .section h2 {
   font-size: 16px;
-  color: #1f2937;
+  color: var(--color-text);
   margin-bottom: 15px;
 }
 
@@ -79,11 +79,11 @@
   padding: 12px;
   background: var(--color-bg-elevated);
   border-radius: 4px;
-  border-left: 3px solid #e5e7eb;
+  border-left: 3px solid var(--color-border);
 }
 
 .item:hover {
-  background: #f3f4f6;
+  background: var(--color-bg-elevated);
   border-left-color: var(--color-primary);
 }
 
@@ -95,7 +95,7 @@
 
 .count {
   font-weight: 600;
-  color: #1f2937;
+  color: var(--color-text);
   min-width: 50px;
   text-align: right;
 }
@@ -104,7 +104,7 @@
 .error {
   padding: 40px;
   text-align: center;
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 .error {

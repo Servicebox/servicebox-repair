@@ -96,32 +96,32 @@
 
 .confirmed {
   background: var(--color-primary-bg);
-  color: #0c5460;
+  color: var(--color-primary-dark);
 }
 
 .processing {
   background: var(--color-primary-bg);
-  color: #004085;
+  color: var(--color-primary-dark);
 }
 
 .shipped {
   background: var(--color-success-bg);
-  color: #155724;
+  color: var(--color-success);
 }
 
 .delivered {
   background: var(--color-success-bg);
-  color: #0f5132;
+  color: var(--color-success);
 }
 
 .cancelled {
   background: var(--color-danger-bg);
-  color: #721c24;
+  color: var(--color-danger);
 }
 
 .refunded {
-  background: #e2e3e5;
-  color: #383d41;
+  background: var(--color-bg-elevated);
+  color: var(--color-text-muted);
 }
 
 .orderTotal {
