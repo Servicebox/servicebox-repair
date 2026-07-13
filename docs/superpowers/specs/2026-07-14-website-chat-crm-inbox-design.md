@@ -31,6 +31,14 @@ bots, etc. — with its own `CLAUDE.md` documenting conventions. That document e
 So this is a real, previously-scoped-but-unbuilt module in the CRM, not a workaround. This spec
 builds the "website" channel of that module as an MVP — Telegram/MAX channels remain out of scope.
 
+One correction found while digging into the "Создать лид" part of that quote: the CRM's
+**Sales Funnel (Воронка продаж) module — which "Создать лид" would target — doesn't actually
+exist either**, despite `CLAUDE.md` describing it in full (stages, kanban, manager assignment) as
+if it were built. There's no `Lead` model anywhere in the codebase, and `/funnel` is a 62-line
+stub that just renders `/api/stats`. So `CLAUDE.md` is accurate about the Inbox being unbuilt but
+optimistic about the Funnel. "Создать лид" is dropped from this spec's scope as a result — see
+Out of Scope.
+
 The site already talks to this CRM for order tracking (`src/app/api/tracking/search/route.js`),
 via `CRM_API_URL`/`CRM_API_KEY` env vars, hitting `https://koznova.site/api/v1/orders` with a
 `Bearer` token. The CRM resolves that API key to a `Company` and its own isolated tenant MongoDB
@@ -49,7 +57,7 @@ servicebox-repair backend
 CRM koznova.site (Servicebox's own isolated tenant DB)
         │  stores conversation/messages, sends push notification to the owner
         ▼
-"Инбокс" section in the CRM (list → thread → reply → "Создать заказ" / "Создать лид")
+"Инбокс" section in the CRM (list → thread → reply → "Создать заказ")
         │  staff reply flows back through the same path in reverse
         ▼
 Widget on the site (polls ~3.5s, same as today) shows the reply
@@ -81,7 +89,7 @@ don't fit a customer-facing inbox).
 - `status` (`'open' | 'closed'`)
 - `lastMessageAt` (Date)
 - `unreadCount` (number, staff-facing)
-- `orderId` / `leadId` (optional refs, set once converted via the buttons below)
+- `orderId` (optional ref, set once converted via the "Создать заказ" button below)
 
 **`InboxMessage`**
 - `conversationId` (ref `InboxConversation`)
@@ -106,10 +114,6 @@ don't fit a customer-facing inbox).
 - `POST /api/inbox/conversations/[id]/reply`
 - `POST /api/inbox/conversations/[id]/convert-to-order` — pre-fills a new Order from
   `visitorName`/`visitorPhone`/first message text.
-- `POST /api/inbox/conversations/[id]/convert-to-lead` — same, into the Sales Funnel (Воронка
-  продаж) module at its initial stage. (Tom is the CRM's founder/owner — tariff gating on this
-  module is not a concern for his own company; other tenants would still need the feature flag,
-  but that's an existing CRM concern, not new work here.)
 
 **In `servicebox-repair`** (unchanged surface, re-pointed implementation):
 - `POST/GET /api/chat/messages` — the widget's existing contract stays the same; the
@@ -119,8 +123,8 @@ don't fit a customer-facing inbox).
 ## UI
 
 - **CRM "Инбокс"** (`/(dashboard)/inbox`): two-pane — conversation list (name, last-message
-  preview, unread badge) on the left, thread + reply box on the right, with "Создать заказ" /
-  "Создать лид" buttons above the thread. Largely a TypeScript/RSC port of the already-built
+  preview, unread badge) on the left, thread + reply box on the right, with a "Создать заказ"
+  button above the thread. Largely a TypeScript/RSC port of the already-built
   (uncommitted) `AdminChatPanel.js` from servicebox-repair, adapted to the CRM's data and
   conventions (RSC by default, `error.tsx`/`loading.tsx` per route segment, per the CRM's own
   `CLAUDE.md`).
@@ -148,6 +152,9 @@ don't fit a customer-facing inbox).
 
 ## Out of Scope
 
+- **"Создать лид" / Sales Funnel module.** No `Lead` model or real pipeline exists in the CRM
+  today (see the correction in Background) — building it is a separate project. Only "Создать
+  заказ" ships in this MVP.
 - Telegram/MAX as additional Инбокс channels (the `channel` field is added now so this doesn't
   require a schema migration later, but building those channels is separate work).
 - A local durable message queue on the site for CRM-downtime resilience (see the accepted
