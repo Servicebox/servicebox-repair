@@ -117,7 +117,7 @@
 }
 
 .submitBtn.active {
-  background: linear-gradient(135deg, var(--color-primary), #0051a8);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary));
   cursor: pointer;
 }
 

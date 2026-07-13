@@ -26,7 +26,7 @@
 .formGroup textarea {
   width: 100%;
   padding: 12px;
-  border: 1px solid #ced4da;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   font-size: 14px;
   transition: border-color 0.2s;
@@ -45,7 +45,7 @@
 }
 
 .filePreview {
-  background: #e7f3ff;
+  background: var(--color-primary-bg);
   padding: 12px;
   border-radius: 6px;
   margin: 15px 0;
@@ -54,7 +54,7 @@
 
 .filePreview p {
   margin: 0;
-  color: #0056b3;
+  color: var(--color-primary);
 }
 
 .uploadButton {
@@ -71,7 +71,7 @@
 }
 
 .uploadButton:hover:not(:disabled) {
-  background: #0056b3;
+  background: var(--color-primary-dark);
 }
 
 .uploadButton:disabled {

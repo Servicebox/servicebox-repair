@@ -76,7 +76,7 @@
 .formGroup textarea {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ced4da;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   resize: vertical;
   min-height: 80px;
@@ -97,7 +97,7 @@
 }
 
 .saveButton:hover {
-  background: #1e7e34;
+  background: var(--color-success);
 }
 
 .cancelButton {
@@ -147,7 +147,7 @@
 }
 
 .downloadButton:hover {
-  background: #0056b3;
+  background: var(--color-primary-dark);
 }
 
 .editButton {
@@ -173,7 +173,7 @@
 }
 
 .deleteButton:hover {
-  background: #bd2130;
+  background: var(--color-danger);
 }
 
 @media (max-width: 480px) {

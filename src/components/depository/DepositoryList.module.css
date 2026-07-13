@@ -38,7 +38,7 @@
 }
 
 .refreshButton:hover {
-  background: #1e7e34;
+  background: var(--color-success);
 }
 
 .stats {
@@ -54,7 +54,7 @@
 }
 
 .spinner {
-  border: 3px solid #f3f3f3;
+  border: 3px solid var(--color-bg-elevated);
   border-top: 3px solid var(--color-primary);
   border-radius: 50%;
   width: 40px;
