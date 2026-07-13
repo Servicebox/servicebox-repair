@@ -12,7 +12,7 @@
 
 .spinner {
   border: 4px solid #f3f3f3;
-  border-top: 4px solid #007bff;
+  border-top: 4px solid var(--color-primary);
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -43,7 +43,7 @@
 }
 
 .orderCard {
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   overflow: hidden;
   background: white;
@@ -54,13 +54,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
-  background: #f8f9fa;
+  background: var(--color-bg-elevated);
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .orderHeader:hover {
-  background: #e9ecef;
+  background: var(--color-border);
 }
 
 .orderInfo {
@@ -90,32 +90,32 @@
 }
 
 .pending {
-  background: #fff3cd;
+  background: var(--color-warning-bg);
   color: #856404;
 }
 
 .confirmed {
-  background: #d1ecf1;
+  background: var(--color-primary-bg);
   color: #0c5460;
 }
 
 .processing {
-  background: #cce7ff;
+  background: var(--color-primary-bg);
   color: #004085;
 }
 
 .shipped {
-  background: #d4edda;
+  background: var(--color-success-bg);
   color: #155724;
 }
 
 .delivered {
-  background: #d1e7dd;
+  background: var(--color-success-bg);
   color: #0f5132;
 }
 
 .cancelled {
-  background: #f8d7da;
+  background: var(--color-danger-bg);
   color: #721c24;
 }
 
@@ -138,7 +138,7 @@
 
 .orderDetails {
   padding: 20px;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--color-border);
 }
 
 .section {
@@ -172,7 +172,7 @@
   align-items: center;
   gap: 12px;
   padding: 12px;
-  background: #f8f9fa;
+  background: var(--color-bg-elevated);
   border-radius: 6px;
 }
 
@@ -204,7 +204,7 @@
 }
 
 .pricing {
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--color-border);
   padding-top: 16px;
 }
 
@@ -215,7 +215,7 @@
 }
 
 .pricingRow.total {
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--color-border);
   font-weight: bold;
   font-size: 18px;
   color: #333;
