@@ -26,13 +26,13 @@
   align-items: center;
   margin-bottom: 20px;
   padding-bottom: 15px;
-  border-bottom: 2px solid #f0f0f0;
+  border-bottom: 2px solid var(--color-bg-elevated);
 }
 
 .clearCartButton {
   background: var(--color-danger-bg);
-  color: #c62828;
-  border: 1px solid #ffcdd2;
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger-bg);
   padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
@@ -41,8 +41,8 @@
 }
 
 .clearCartButton:hover {
-  background: #ffcdd2;
-  color: #b71c1c;
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
 }
 
 .orderItems {
@@ -107,7 +107,7 @@
 }
 
 .productName small {
-  color: #666;
+  color: var(--color-text-muted);
   font-size: 12px;
   display: block;
 }
@@ -115,7 +115,7 @@
 .stockWarning {
   display: inline-block;
   background: var(--color-warning-bg);
-  color: #856404;
+  color: var(--color-warning);
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 11px;
@@ -171,9 +171,9 @@
 }
 
 .removeButton {
-  background: #fff3f3;
+  background: var(--color-danger-bg);
   color: var(--color-danger);
-  border: 1px solid #f8d7da;
+  border: 1px solid var(--color-danger-bg);
   width: 36px;
   height: 36px;
   border-radius: 6px;
@@ -186,8 +186,8 @@
 }
 
 .removeButton:hover {
-  background: #f8d7da;
-  color: #c82333;
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
   transform: scale(1.1);
 }
 
@@ -204,7 +204,7 @@
 }
 
 .unitPrice {
-  color: #666;
+  color: var(--color-text-muted);
   font-size: 14px;
 }
 
@@ -246,14 +246,14 @@
 .cartSummary {
   margin-top: 15px;
   padding: 12px;
-  background: #e3f2fd;
+  background: var(--color-primary-bg);
   border-radius: 6px;
-  border-left: 4px solid #2196f3;
+  border-left: 4px solid var(--color-primary);
 }
 
 .cartSummary p {
   margin: 0;
-  color: #1565c0;
+  color: var(--color-primary);
   font-size: 14px;
 }
 
@@ -269,7 +269,7 @@
 .formSection {
   margin: 25px 0;
   padding: 20px;
-  background: #f9f9f9;
+  background: var(--color-bg-elevated);
   border-radius: 8px;
   border: 1px solid var(--color-border);
 }
@@ -294,7 +294,7 @@
 
 .radioLabel:hover {
   border-color: var(--color-accent);
-  background: #f0f8ff;
+  background: var(--color-primary-bg);
 }
 
 .radioLabel input {
@@ -316,7 +316,7 @@
 }
 
 .radioText small {
-  color: #666;
+  color: var(--color-text-muted);
   font-size: 13px;
   line-height: 1.4;
 }
@@ -329,7 +329,7 @@
 }
 
 .submitButton {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, #764ba2 100%);
   color: var(--color-bg-dark);
   border: none;
   padding: 18px 30px;
@@ -356,7 +356,7 @@
 
 .continueButton {
   background: var(--color-bg);
-  color: #666;
+  color: var(--color-text-muted);
   border: 2px solid var(--color-border);
   padding: 15px;
   border-radius: 8px;
@@ -368,15 +368,15 @@
 .continueButton:hover {
   background: var(--color-bg-elevated);
   color: var(--color-text-muted);
-  border-color: #adb5bd;
+  border-color: var(--color-border);
 }
 
 .securityNote {
   text-align: center;
   margin-top: 20px;
   padding-top: 15px;
-  border-top: 1px solid #eee;
-  color: #999;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-muted);
 }
 
 .spinner {
@@ -402,7 +402,7 @@
 .emptyCart h1 {
   font-size: 36px;
   margin-bottom: 20px;
-  color: #666;
+  color: var(--color-text-muted);
 }
 
 .continueShopping {
