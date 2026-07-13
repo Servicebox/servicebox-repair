@@ -144,8 +144,6 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://mc.yandex.ru" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://yastatic.net" />
         <link rel="dns-prefetch" href="https://api-maps.yandex.ru" />
-        {/* Reserve Chatwoot widget space to prevent CLS */}
-        <style>{`.chatwoot-widget-holder{position:fixed;bottom:0;right:0;z-index:9999;pointer-events:none}`}</style>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
