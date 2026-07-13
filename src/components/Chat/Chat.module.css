@@ -318,7 +318,7 @@
 /* Бейдж имени пользователя */
 .userNameBadge {
   padding: 16px 24px;
-  background: linear-gradient(90deg, #f0f9ff 0%, #f8fafc 100%);
+  background: linear-gradient(90deg, var(--color-primary-bg) 0%, var(--color-bg-elevated) 100%);
   border-bottom: 1px solid rgba(226, 232, 240, 0.6);
   display: flex;
   align-items: center;

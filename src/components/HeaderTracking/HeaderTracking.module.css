@@ -66,7 +66,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 24px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--color-border);
   background: var(--color-primary-dark);
   color: white;
   border-radius: 12px 12px 0 0;
@@ -96,7 +96,7 @@
 /* Форма отслеживания */
 .trackingForm {
   padding: 24px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .inputGroup {
@@ -107,7 +107,7 @@
 .trackingInput {
   flex: 1;
   padding: 12px 16px;
-  border: 2px solid #e5e7eb;
+  border: 2px solid var(--color-border);
   border-radius: 8px;
   font-size: 16px;
   transition: border-color 0.3s;
@@ -136,14 +136,14 @@
 }
 
 .trackButton:disabled {
-  background: #9ca3af;
+  background: var(--color-text-muted);
   cursor: not-allowed;
 }
 
 /* Сообщения об ошибках и помощи */
 .errorMessage {
   background: var(--color-danger-bg);
-  border: 1px solid #fecaca;
+  border: 1px solid var(--color-danger-bg);
   color: var(--color-danger);
   padding: 12px 16px;
   border-radius: 8px;
@@ -153,7 +153,7 @@
 .helpText {
   padding: 0 24px 24px;
   text-align: center;
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 .helpExample {
@@ -169,19 +169,19 @@
 .bookingHeader {
   margin-bottom: 20px;
   padding-bottom: 16px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .bookingTitle {
   font-size: 18px;
   font-weight: 600;
   margin: 0 0 8px 0;
-  color: #1f2937;
+  color: var(--color-text);
 }
 
 .trackingCode {
   font-size: 14px;
-  color: #6b7280;
+  color: var(--color-text-muted);
   margin: 0;
 }
 
@@ -196,7 +196,7 @@
   font-size: 16px;
   font-weight: 600;
   margin: 0 0 12px 0;
-  color: #374151;
+  color: var(--color-text);
 }
 
 .detailItem {
@@ -204,17 +204,17 @@
   justify-content: space-between;
   margin-bottom: 8px;
   padding-bottom: 8px;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--color-bg-elevated);
 }
 
 .detailLabel {
   font-weight: 500;
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 .detailValue {
   font-weight: 500;
-  color: #1f2937;
+  color: var(--color-text);
   text-align: right;
 }
 
@@ -222,7 +222,7 @@
 .statusSection {
   margin-bottom: 20px;
   padding: 16px;
-  background: #f8fafc;
+  background: var(--color-bg-elevated);
   border-radius: 8px;
 }
 
@@ -251,13 +251,13 @@
 }
 
 .statusConfirmed {
-  background: #dbeafe;
-  color: #1d4ed8;
+  background: var(--color-primary-bg);
+  color: var(--color-primary);
 }
 
 .statusInProgress {
-  background: #dbeafe;
-  color: #1d4ed8;
+  background: var(--color-primary-bg);
+  color: var(--color-primary);
 }
 
 .statusCompleted {
@@ -274,21 +274,21 @@
 .notesSection {
   margin-bottom: 20px;
   padding: 16px;
-  background: #f0f9ff;
+  background: var(--color-primary-bg);
   border-radius: 8px;
-  border-left: 4px solid #0ea5e9;
+  border-left: 4px solid var(--color-primary);
 }
 
 .notesSection h4 {
   margin: 0 0 8px 0;
   font-size: 16px;
   font-weight: 600;
-  color: #0369a1;
+  color: var(--color-primary);
 }
 
 .notesText {
   margin: 0;
-  color: #0c4a6e;
+  color: var(--color-primary);
   font-size: 14px;
   line-height: 1.5;
 }
@@ -302,7 +302,7 @@
 
 .closeActionButton {
   padding: 10px 20px;
-  background: #6b7280;
+  background: var(--color-text-muted);
   color: white;
   border: none;
   border-radius: 8px;
@@ -313,7 +313,7 @@
 }
 
 .closeActionButton:hover {
-  background: #4b5563;
+  background: var(--color-text-muted);
 }
 
 .detailsButton {

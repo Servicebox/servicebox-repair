@@ -120,12 +120,12 @@
 .ctaPrimary {
   background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success) 100%);
   color: white;
-  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 8px 24px rgba(22, 163, 74, 0.4);
 }
 
 .ctaPrimary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(16, 185, 129, 0.5);
+  box-shadow: 0 12px 32px rgba(22, 163, 74, 0.5);
 }
 
 .ctaSecondary {
@@ -433,10 +433,10 @@
 
 .locationAddress {
   padding: 20px;
-  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  background: linear-gradient(135deg, var(--color-warning-bg) 0%, var(--color-warning-bg) 100%);
   border-radius: 16px;
   margin-bottom: 20px;
-  border-left: 4px solid #f59e0b;
+  border-left: 4px solid var(--color-warning);
 }
 
 .addressText {
@@ -503,12 +503,12 @@
   align-items: center;
   gap: 12px;
   padding: 14px 18px;
-  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  background: linear-gradient(135deg, var(--color-success-bg) 0%, var(--color-success-bg) 100%);
   border-radius: 12px;
-  color: #065f46;
+  color: var(--color-success);
   font-weight: 600;
   font-size: 0.95rem;
-  border: 1px solid #a7f3d0;
+  border: 1px solid var(--color-success-bg);
 }
 
 .miniIcon {
@@ -583,12 +583,12 @@
   font-weight: 700;
   font-size: 1.0625rem;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 8px 24px rgba(22, 163, 74, 0.4);
 }
 
 .ctaBlockPrimary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(16, 185, 129, 0.5);
+  box-shadow: 0 12px 32px rgba(22, 163, 74, 0.5);
 }
 
 .ctaBlockSecondary {
@@ -660,7 +660,7 @@
   align-items: flex-start;
   gap: 12px;
   padding: 14px 18px;
-  background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
+  background: linear-gradient(135deg, var(--color-primary-bg) 0%, #ffffff 100%);
   border-radius: 12px;
   color: var(--color-primary-dark);
   font-size: 0.95rem;
@@ -683,20 +683,20 @@
 
 .seoDisclaimer {
   padding: 20px 24px;
-  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  background: linear-gradient(135deg, var(--color-danger-bg) 0%, var(--color-danger-bg) 100%);
   border-left: 4px solid var(--color-danger);
   border-radius: 12px;
-  color: #7f1d1d;
+  color: var(--color-danger);
   font-size: 0.95rem;
   line-height: 1.7;
 }
 
 .seoDisclaimer strong {
-  color: #991b1b;
+  color: var(--color-danger);
 }
 
 .seoDisclaimer em {
-  color: #991b1b;
+  color: var(--color-danger);
   font-style: italic;
 }
 

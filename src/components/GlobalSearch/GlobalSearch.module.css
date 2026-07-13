@@ -207,7 +207,7 @@
 }
 
 .clearButton:hover {
-  background: linear-gradient(135deg, var(--color-danger) 0%, #dc2626 100%);
+  background: linear-gradient(135deg, var(--color-danger) 0%, var(--color-danger) 100%);
   color: var(--color-bg-dark);
   transform: scale(1.1) rotate(90deg);
 }
@@ -425,7 +425,7 @@
 }
 
 .removeRecentButton:hover {
-  background: linear-gradient(135deg, var(--color-danger) 0%, #dc2626 100%);
+  background: linear-gradient(135deg, var(--color-danger) 0%, var(--color-danger) 100%);
   color: var(--color-bg-dark);
   transform: rotate(90deg);
 }

@@ -141,6 +141,14 @@
   margin-bottom: 15px;
 }
 
+.editNameInput {
+  flex-grow: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
 .nameInput:focus {
   border-color: var(--color-accent);
   outline: none;
@@ -238,7 +246,7 @@
 .userNameBadge {
   background: var(--color-bg-elevated);
   padding: 10px 15px;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   font-size: 0.9rem;
@@ -274,17 +282,10 @@
   display: flex;
   padding: 10px 15px;
   background: var(--color-bg-elevated);
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid var(--color-border);
   gap: 8px;
 }
 
-.editNameInput {
-  flex-grow: 1;
-  padding: 8px 12px;
-  border: 1px solid #ced4da;
-  border-radius: 8px;
-  font-size: 0.9rem;
-}
 
 .saveNameBtn, .cancelNameBtn {
   padding: 8px 12px;
@@ -312,11 +313,11 @@
 .cancelNameBtn {
   background: var(--color-bg-elevated);
   color: var(--color-text-muted);
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--color-border);
 }
 
 .cancelNameBtn:hover {
-  background: #e9ecef;
+  background: var(--color-border);
 }
 
 .chatMessages {
@@ -489,7 +490,7 @@
   flex-direction: row;
   padding: 15px;
   background: white;
-  border-top: 1px solid #e9ecef;
+  border-top: 1px solid var(--color-border);
   position: relative;
   gap: 8px;
   align-items: center;
