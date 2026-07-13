@@ -2,7 +2,6 @@ import './globals.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { Inter, Inter_Tight } from 'next/font/google';
-import ChatwootScript from '@/components/ChatwootScript/ChatwootScript';
 
 const interTight = Inter_Tight({
   subsets: ['latin', 'cyrillic'],
@@ -185,9 +184,6 @@ export default function RootLayout({ children }) {
         </AuthProvider>
 
         <Analytics />
-
-        {/* CHATWOOT */}
-        <ChatwootScript />
       </body>
     </html>
   );
