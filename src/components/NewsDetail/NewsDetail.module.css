@@ -4,14 +4,14 @@
   max-width: 960px;
   margin: 0 auto;
   padding: 2rem 1.5rem;
-  background: #f9fafb;
+  background: var(--color-bg-elevated);
 }
 
 /* Хлебные крошки */
 .breadcrumbs {
   margin-bottom: 2rem;
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 .breadcrumbs ol {
@@ -26,17 +26,17 @@
 .breadcrumbs li:not(:last-child)::after {
   content: '/';
   margin-left: 0.5rem;
-  color: #9ca3af;
+  color: var(--color-text-muted);
 }
 
 .breadcrumbs a {
-  color: #3b82f6;
+  color: var(--color-primary);
   text-decoration: none;
   transition: color 0.2s;
 }
 
 .breadcrumbs a:hover {
-  color: #2563eb;
+  color: var(--color-primary);
   text-decoration: underline;
 }
 
@@ -49,7 +49,7 @@
   font-size: 2.5rem;
   font-weight: 800;
   line-height: 1.2;
-  color: #111827;
+  color: var(--color-text);
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
 }
@@ -65,7 +65,7 @@
   flex-wrap: wrap;
   gap: 1rem;
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--color-text-muted);
   border-bottom: 1px solid #e5e7eb;
   padding-bottom: 1rem;
   margin-bottom: 1.5rem;
@@ -85,7 +85,7 @@
   border-radius: 1rem;
   overflow: hidden;
   box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.1);
-  background: #f3f4f6;
+  background: var(--color-bg-elevated);
 }
 
 .mainImage {
@@ -103,11 +103,11 @@
 .excerpt {
   font-size: 1.25rem;
   line-height: 1.5;
-  color: #374151;
-  background: #eff6ff;
+  color: #1e293b;
+  background: var(--color-primary-bg);
   padding: 1.25rem;
   border-radius: 0.75rem;
-  border-left: 4px solid #3b82f6;
+  border-left: 4px solid var(--color-primary);
   margin: 1.5rem 0;
 }
 
@@ -122,15 +122,15 @@
   font-size: 1.8rem;
   font-weight: 700;
   margin: 1.5rem 0 0.5rem;
-  color: #1f2937;
-  border-left: 4px solid #3b82f6;
+  color: #0f172a;
+  border-left: 4px solid var(--color-primary);
   padding-left: 1rem;
 }
 
 .textBlock {
   font-size: 1.125rem;
   line-height: 1.7;
-  color: #1f2937;
+  color: #0f172a;
 }
 
 .textBlock p {
@@ -168,9 +168,9 @@
 .imageCaption {
   padding: 0.75rem 1rem;
   font-size: 0.875rem;
-  color: #6b7280;
-  background: #f9fafb;
-  border-top: 1px solid #e5e7eb;
+  color: var(--color-text-muted);
+  background: var(--color-bg-elevated);
+  border-top: 1px solid var(--color-border);
 }
 
 /* Видеоблоки */
@@ -202,7 +202,7 @@
   padding: 0.75rem 1rem;
   font-size: 0.875rem;
   color: #e5e7eb;
-  background: #111827;
+  background: #0f172a;
   text-align: center;
 }
 
@@ -222,7 +222,7 @@
 .footer {
   margin-top: 3rem;
   padding-top: 2rem;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid var(--color-border);
 }
 
 .tags {
@@ -234,16 +234,16 @@
 }
 
 .tag {
-  background: #f3f4f6;
+  background: var(--color-bg-elevated);
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
   font-size: 0.75rem;
-  color: #4b5563;
+  color: var(--color-text-muted);
   transition: background 0.2s;
 }
 
 .tag:hover {
-  background: #e5e7eb;
+  background: var(--color-border);
 }
 
 .share {
@@ -259,18 +259,18 @@
 }
 
 .shareButton {
-  background: #f3f4f6;
+  background: var(--color-bg-elevated);
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #1f2937;
+  color: #0f172a;
   text-decoration: none;
   transition: all 0.2s;
 }
 
 .shareButton:hover {
-  background: #e5e7eb;
+  background: var(--color-border);
   transform: translateY(-2px);
 }
 
@@ -287,10 +287,10 @@
   background: white;
   padding: 0.75rem 1.5rem;
   border-radius: 2rem;
-  color: #3b82f6;
+  color: var(--color-primary);
   font-weight: 600;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
   transition: all 0.2s;
 }
 
@@ -405,7 +405,7 @@
 .newsActions {
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px solid #e8e8e8;
+  border-top: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   gap: 12px;
