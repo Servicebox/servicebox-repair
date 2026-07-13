@@ -54,7 +54,7 @@
 .closeButton {
   background: none;
   border: none;
-  color: #4D4D4D;
+  color: var(--color-text-muted);
   cursor: pointer;
   padding: 0.25rem;
   border-radius: 4px;
@@ -63,11 +63,11 @@
 
 .closeButton:hover {
   color: var(--color-primary-dark);
-  background: #f7fafc;
+  background: var(--color-bg-elevated);
 }
 
 .serviceInfo {
-  background: #ebf8ff;
+  background: var(--color-primary-bg);
   border-radius: 8px;
   padding: 1rem;
   margin: 1.5rem;
@@ -77,25 +77,25 @@
 .serviceInfo h3 {
   font-size: 1rem;
   font-weight: 600;
-  color: #2b6cb0;
+  color: var(--color-primary-dark);
   margin: 0 0 0.5rem 0;
 }
 
 .serviceInfo p {
   font-size: 0.875rem;
-  color: #4D4D4D;
+  color: var(--color-text-muted);
   margin: 0;
   line-height: 1.4;
 }
 
 .errorMessage {
-  background: #fed7d7;
-  color: #c53030;
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
   padding: 0.75rem 1rem;
   border-radius: 8px;
   margin: 0 1.5rem 1rem;
   font-size: 0.875rem;
-  border-left: 4px solid #f56565;
+  border-left: 4px solid var(--color-danger);
 }
 
 .formContent {
@@ -116,7 +116,7 @@
 
 .required::after {
   content: " *";
-  color: #C21E56;
+  color: var(--color-danger);
 }
 
 .formInput {
@@ -137,7 +137,7 @@
 }
 
 .formInput::placeholder {
-  color: #a0aec0;
+  color: var(--color-text-muted);
 }
 
 .formTextarea {
@@ -154,7 +154,7 @@
 .submitButton {
   flex: 1;
   background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-  color: var(--color-bg-dark);
+  color: white;
   border: none;
   padding: 0.875rem 1.5rem;
   border-radius: 8px;
@@ -180,7 +180,7 @@
   padding: 0.875rem 1.5rem;
   border: 2px solid var(--color-border);
   background: var(--color-bg-dark);
-  color: #4D4D4D;
+  color: var(--color-text-muted);
   border-radius: 8px;
   font-weight: 600;
   font-size: 1rem;
@@ -189,8 +189,8 @@
 }
 
 .cancelButton:hover {
-  background: #f7fafc;
-  border-color: #4D4D4D;
+  background: var(--color-bg-elevated);
+  border-color: var(--color-text-muted);
 }
 
 /* Responsive Design */

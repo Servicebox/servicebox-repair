@@ -3,7 +3,7 @@
 /* Базовые стили страницы */
 .servicesPage {
     min-height: 100vh;
-    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    background: linear-gradient(180deg, var(--color-bg-elevated) 0%, #ffffff 100%);
     padding: 40px 0;
 }
 
@@ -28,7 +28,7 @@
 
 .animatedTitle p {
     font-size: 1.125rem;
-    color: #64748b;
+    color: var(--color-text-muted);
 }
 
 /* Поиск */
@@ -44,7 +44,7 @@
 .searchInput {
     width: 100%;
     padding: 14px 20px;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--color-border);
     border-radius: 12px;
     font-size: 1rem;
     transition: all 0.2s ease;
@@ -72,7 +72,7 @@
     flex-direction: column;
     padding: 24px;
     background: white;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--color-border);
     border-radius: 16px;
     text-decoration: none;
     color: inherit;
@@ -88,7 +88,7 @@
 
 /* ✅ Выделение категорий-калькуляторов */
 .calculatorCategory {
-    background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
+    background: linear-gradient(135deg, var(--color-primary-bg) 0%, #ffffff 100%);
     border-color: #0ea5e9;
 }
 
@@ -114,13 +114,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f1f5f9;
+    background: var(--color-bg-elevated);
     border-radius: 12px;
     margin-bottom: 16px;
 }
 
 .calculatorCategory .categoryIcon {
-    background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+    background: linear-gradient(135deg, var(--color-primary-bg), var(--color-primary-bg));
 }
 
 .categoryImg {
@@ -140,7 +140,7 @@
 /* Описание */
 .categoryDescription {
     font-size: 0.95rem;
-    color: #64748b;
+    color: var(--color-text-muted);
     line-height: 1.5;
     margin-bottom: 16px;
     flex: 1;
@@ -151,8 +151,8 @@
     display: inline-flex;
     align-items: center;
     padding: 6px 12px;
-    background: #f1f5f9;
-    color: #475569;
+    background: var(--color-bg-elevated);
+    color: var(--color-text-muted);
     border-radius: 20px;
     font-size: 0.875rem;
     font-weight: 600;
@@ -171,7 +171,7 @@
     padding: 60px 20px;
     background: white;
     border-radius: 16px;
-    border: 2px dashed #e2e8f0;
+    border: 2px dashed var(--color-border);
 }
 
 .noResults h3 {
@@ -181,7 +181,7 @@
 }
 
 .noResults p {
-    color: #64748b;
+    color: var(--color-text-muted);
     margin-bottom: 20px;
 }
 
@@ -234,7 +234,7 @@
 .infoButton {
     display: inline-block;
     padding: 14px 32px;
-    background: #10b981;
+    background: var(--color-success);
     color: white;
     border-radius: 12px;
     font-weight: 700;
@@ -244,7 +244,7 @@
 }
 
 .infoButton:hover {
-    background: #059669;
+    background: var(--color-success);
     transform: scale(1.05);
 }
 

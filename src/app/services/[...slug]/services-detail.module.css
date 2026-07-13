@@ -4,14 +4,14 @@
 
 .servicesDetailPage {
     min-height: 100vh;
-    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+    background: linear-gradient(135deg, var(--color-bg-elevated) 0%, var(--color-border) 100%);
 }
 
 /* === HERO SECTION === */
 .heroSection {
     padding: 3rem 0;
     background: white;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--color-border);
 }
 
 .heroContainer {
@@ -44,7 +44,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
-    background: #f0f4f8;
+    background: var(--color-bg-elevated);
     border-radius: 100px;
     margin-bottom: 1.5rem;
 }
@@ -52,13 +52,13 @@
 .geoBadgeIcon {
     width: 1rem;
     height: 1rem;
-    color: #64748b;
+    color: var(--color-text-muted);
 }
 
 .geoBadgeText {
     font-size: 0.875rem;
     font-weight: 500;
-    color: #475569;
+    color: var(--color-text-muted);
 }
 
 /* Заголовок услуги */
@@ -75,9 +75,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+    background: linear-gradient(135deg, var(--color-bg-elevated) 0%, var(--color-border) 100%);
     border-radius: 1rem;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-border);
     flex-shrink: 0;
 }
 
@@ -97,7 +97,7 @@
 
 .serviceTitleBlock p {
     font-size: 1.125rem;
-    color: #64748b;
+    color: var(--color-text-muted);
     margin: 0;
 }
 
@@ -105,7 +105,7 @@
 .serviceDescription {
     font-size: 1.125rem;
     line-height: 1.7;
-    color: #475569;
+    color: var(--color-text-muted);
     margin-bottom: 2rem;
     max-width: 56rem;
 }
@@ -130,14 +130,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f0f4f8;
+    background: var(--color-bg-elevated);
     border-radius: 0.5rem;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-border);
 }
 
 .heroFeatureText {
     font-size: 0.95rem;
-    color: #475569;
+    color: var(--color-text-muted);
     font-weight: 500;
 }
 
@@ -154,10 +154,10 @@
 }
 
 .priceCard {
-    background: linear-gradient(135deg, #f8fafc 0%, #f0f4f8 100%);
+    background: linear-gradient(135deg, var(--color-bg-elevated) 0%, var(--color-bg-elevated) 100%);
     border-radius: 1.5rem;
     padding: 2rem;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--color-border);
     box-shadow: 0 10px 30px rgba(26, 26, 46, 0.08);
 }
 
@@ -176,7 +176,7 @@
 
 .priceLabel {
     font-size: 0.95rem;
-    color: #64748b;
+    color: var(--color-text-muted);
     margin: 0;
 }
 
@@ -207,12 +207,12 @@
     text-align: center;
     margin-top: 1.5rem;
     padding-top: 1.5rem;
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid var(--color-border);
 }
 
 .phoneLabel {
     font-size: 0.875rem;
-    color: #64748b;
+    color: var(--color-text-muted);
     margin-bottom: 0.5rem;
 }
 
@@ -248,7 +248,7 @@
     background: white;
     border-radius: 1.5rem;
     padding: 2rem;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-border);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
@@ -262,7 +262,7 @@
 .categoryDescription {
     font-size: 1.125rem;
     line-height: 1.7;
-    color: #475569;
+    color: var(--color-text-muted);
     margin: 0;
 }
 
@@ -271,7 +271,7 @@
     background: white;
     border-radius: 1.5rem;
     padding: 2rem;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-border);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
@@ -292,9 +292,9 @@
     display: flex;
     flex-direction: column;
     padding: 1.5rem;
-    background: #f8fafc;
+    background: var(--color-bg-elevated);
     border-radius: 1rem;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--color-border);
     text-decoration: none;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     min-height: 200px;
@@ -335,7 +335,7 @@
 .serviceCardDescription {
     font-size: 0.875rem;
     line-height: 1.6;
-    color: #64748b;
+    color: var(--color-text-muted);
     margin: 0 0 1rem 0;
     flex-grow: 1;
 
@@ -352,7 +352,7 @@
     justify-content: space-between;
     align-items: center;
     padding-top: 1rem;
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid var(--color-border);
     margin-top: auto;
 }
 
@@ -368,7 +368,7 @@
 }
 
 .serviceCardArrow {
-    color: #94a3b8;
+    color: var(--color-text-muted);
     font-size: 1.25rem;
     transition: transform 0.3s ease;
 }
@@ -395,13 +395,13 @@
     background: white;
     border-radius: 1.5rem;
     overflow: hidden;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-border);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .tabsNav {
     display: flex;
-    border-bottom: 2px solid #e2e8f0;
+    border-bottom: 2px solid var(--color-border);
     overflow-x: auto;
     scrollbar-width: thin;
 }
@@ -413,7 +413,7 @@
     border-bottom: 3px solid transparent;
     font-size: 0.95rem;
     font-weight: 600;
-    color: #64748b;
+    color: var(--color-text-muted);
     cursor: pointer;
     transition: all 0.3s ease;
     white-space: nowrap;
@@ -422,7 +422,7 @@
 
 .tabButton:hover {
     color: var(--color-primary-dark);
-    background: #f8fafc;
+    background: var(--color-bg-elevated);
 }
 
 .tabButtonActive {
@@ -442,10 +442,10 @@
 }
 
 .processStep {
-    background: #f8fafc;
+    background: var(--color-bg-elevated);
     border-radius: 1rem;
     padding: 1.5rem;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-border);
 }
 
 .processStepNumber {
@@ -471,17 +471,17 @@
 
 .processStepDesc {
     font-size: 0.875rem;
-    color: #64748b;
+    color: var(--color-text-muted);
     line-height: 1.6;
     margin: 0;
 }
 
 /* Особенности */
 .featuresSection {
-    background: #f8fafc;
+    background: var(--color-bg-elevated);
     border-radius: 1.5rem;
     padding: 2rem;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-border);
     margin-top: 2rem;
 }
 
@@ -510,7 +510,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #dbeafe;
+    background: var(--color-primary-bg);
     border-radius: 50%;
     flex-shrink: 0;
     margin-top: 0.125rem;
@@ -518,7 +518,7 @@
 
 .featureText {
     font-size: 0.95rem;
-    color: #475569;
+    color: var(--color-text-muted);
     line-height: 1.6;
     margin: 0;
 }
@@ -531,10 +531,10 @@
 }
 
 .faqItem {
-    background: #f8fafc;
+    background: var(--color-bg-elevated);
     border-radius: 1rem;
     padding: 1.5rem;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-border);
 }
 
 .faqQuestion {
@@ -546,7 +546,7 @@
 
 .faqAnswer {
     font-size: 0.95rem;
-    color: #64748b;
+    color: var(--color-text-muted);
     line-height: 1.6;
     margin: 0;
 }
@@ -562,7 +562,7 @@
     background: white;
     border-radius: 1.5rem;
     padding: 1.5rem;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-border);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
@@ -590,7 +590,7 @@
     align-items: center;
     gap: 0.5rem;
     font-size: 0.95rem;
-    color: #475569;
+    color: var(--color-text-muted);
 }
 
 .geoDot {
@@ -615,7 +615,7 @@
 }
 
 .scheduleDay {
-    color: #64748b;
+    color: var(--color-text-muted);
 }
 
 .scheduleTime {
@@ -626,7 +626,7 @@
 /* === SEO БЛОК === */
 .seoSection {
     padding: 3rem 0;
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid var(--color-border);
     background: white;
 }
 
@@ -646,7 +646,7 @@
 .seoText {
     font-size: 1rem;
     line-height: 1.7;
-    color: #475569;
+    color: var(--color-text-muted);
     margin: 0 0 2rem 0;
     max-width: 56rem;
 }
@@ -670,14 +670,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f0f4f8;
+    background: var(--color-bg-elevated);
     border-radius: 0.5rem;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-border);
 }
 
 .seoFeatureText {
     font-size: 0.95rem;
-    color: #475569;
+    color: var(--color-text-muted);
     font-weight: 500;
 }
 
@@ -694,7 +694,7 @@
 .loadingSpinner {
     width: 4rem;
     height: 4rem;
-    border: 4px solid #e2e8f0;
+    border: 4px solid var(--color-border);
     border-top-color: var(--color-primary-dark);
     border-radius: 50%;
     animation: spin 1s linear infinite;
@@ -702,7 +702,7 @@
 
 .loadingText {
     font-size: 1.125rem;
-    color: #475569;
+    color: var(--color-text-muted);
     font-weight: 500;
     margin: 0;
 }
