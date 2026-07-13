@@ -173,7 +173,7 @@
 }
 
 .searchInput::placeholder {
-  color: #9ca3af;
+  color: var(--color-text-muted);
   font-weight: 400;
   transition: color 0.3s ease;
 }
@@ -319,7 +319,7 @@
 }
 
 .clearAllButton {
-  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  background: linear-gradient(135deg, var(--color-warning-bg) 0%, #fde68a 100%);
   border: none;
   color: #92400e;
   font-size: 11px;
@@ -413,7 +413,7 @@
   border: none;
   padding: 4px;
   cursor: pointer;
-  color: #9ca3af;
+  color: var(--color-text-muted);
   border-radius: 50%;
   width: 24px;
   height: 24px;
@@ -588,10 +588,10 @@
 }
 
 .suggestionItem:hover {
-  background: linear-gradient(90deg, 
+  background: linear-gradient(90deg,
     rgba(34, 197, 94, 0.1) 0%,
     rgba(21, 128, 61, 0.1) 100%);
-  color: #059669;
+  color: var(--color-success);
   transform: translateX(8px);
 }
 

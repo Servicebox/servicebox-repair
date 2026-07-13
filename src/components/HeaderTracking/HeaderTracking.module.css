@@ -142,9 +142,9 @@
 
 /* Сообщения об ошибках и помощи */
 .errorMessage {
-  background: #fef2f2;
+  background: var(--color-danger-bg);
   border: 1px solid #fecaca;
-  color: #dc2626;
+  color: var(--color-danger);
   padding: 12px 16px;
   border-radius: 8px;
   margin: 16px 24px;
@@ -246,7 +246,7 @@
 }
 
 .statusPending {
-  background: #fef3c7;
+  background: var(--color-warning-bg);
   color: #d97706;
 }
 
@@ -261,13 +261,13 @@
 }
 
 .statusCompleted {
-  background: #dcfce7;
+  background: var(--color-success-bg);
   color: #166534;
 }
 
 .statusCanceled {
-  background: #fee2e2;
-  color: #dc2626;
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
 }
 
 /* Заметки */

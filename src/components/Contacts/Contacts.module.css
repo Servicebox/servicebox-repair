@@ -61,7 +61,7 @@
   display: inline-block;
   padding: 8px 20px;
   background: rgba(255, 140, 0, 0.15);
-  color: #ff8c00;
+  color: var(--color-warning);
   border: 1px solid rgba(255, 140, 0, 0.3);
   border-radius: 20px;
   font-size: 0.875rem;
@@ -79,7 +79,7 @@
 }
 
 .heroAccent {
-  background: linear-gradient(135deg, #ff8c00 0%, #fbbf24 100%);
+  background: linear-gradient(135deg, var(--color-warning) 0%, #fbbf24 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -118,7 +118,7 @@
 }
 
 .ctaPrimary {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success) 100%);
   color: white;
   box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
 }
@@ -210,7 +210,7 @@
 
 .sectionSubtitle {
   font-size: 1.0625rem;
-  color: #64748b;
+  color: var(--color-text-muted);
   margin-bottom: 32px;
   line-height: 1.6;
 }
@@ -241,7 +241,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--color-primary-dark) 0%, #ff8c00 100%);
+  background: linear-gradient(90deg, var(--color-primary-dark) 0%, var(--color-warning) 100%);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
@@ -283,7 +283,7 @@
 .contactTitle {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #64748b;
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 6px;
@@ -299,7 +299,7 @@
 
 .contactNote {
   font-size: 0.875rem;
-  color: #94a3b8;
+  color: var(--color-text-muted);
   margin-top: 4px;
 }
 
@@ -324,7 +324,7 @@
   padding: 28px;
   background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
   border-radius: 20px;
-  border: 2px solid #e0f2fe;
+  border: 2px solid var(--color-border);
 }
 
 .socialTitle {
@@ -351,7 +351,7 @@
   color: var(--color-primary-dark);
   font-weight: 600;
   font-size: 0.95rem;
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--color-border);
   transition: all 0.3s ease;
 }
 
@@ -388,7 +388,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--color-primary-dark) 0%, #ff8c00 100%);
+  background: linear-gradient(90deg, var(--color-primary-dark) 0%, var(--color-warning) 100%);
 }
 
 .locationCard:hover {
@@ -408,7 +408,7 @@
   width: 60px;
   height: 60px;
   border-radius: 16px;
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  background: linear-gradient(135deg, var(--color-danger) 0%, var(--color-danger) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -427,7 +427,7 @@
 
 .locationLandmark {
   font-size: 0.95rem;
-  color: #64748b;
+  color: var(--color-text-muted);
   font-style: italic;
 }
 
@@ -454,7 +454,7 @@
 
 .locationDescription {
   font-size: 1rem;
-  color: #64748b;
+  color: var(--color-text-muted);
   line-height: 1.7;
   margin-bottom: 24px;
 }
@@ -512,7 +512,7 @@
 }
 
 .miniIcon {
-  color: #10b981;
+  color: var(--color-success);
   font-size: 1.125rem;
   flex-shrink: 0;
 }
@@ -576,7 +576,7 @@
   align-items: center;
   gap: 10px;
   padding: 16px 32px;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success) 100%);
   color: white;
   text-decoration: none;
   border-radius: 12px;
@@ -665,18 +665,18 @@
   color: var(--color-primary-dark);
   font-size: 0.95rem;
   line-height: 1.5;
-  border: 1px solid #e0f2fe;
+  border: 1px solid var(--color-border);
 }
 
 .benefitIcon {
-  color: #10b981;
+  color: var(--color-success);
   font-size: 1.125rem;
   flex-shrink: 0;
   margin-top: 2px;
 }
 
 .paidMark {
-  color: #ef4444;
+  color: var(--color-danger);
   font-weight: 700;
   margin-left: 4px;
 }
@@ -684,7 +684,7 @@
 .seoDisclaimer {
   padding: 20px 24px;
   background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-  border-left: 4px solid #ef4444;
+  border-left: 4px solid var(--color-danger);
   border-radius: 12px;
   color: #7f1d1d;
   font-size: 0.95rem;
@@ -719,7 +719,7 @@
   border-radius: 12px;
   font-weight: 600;
   font-size: 1rem;
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--color-border);
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
@@ -920,6 +920,6 @@
   .contactCard,
   .locationCard {
     box-shadow: none;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-border);
   }
 }
