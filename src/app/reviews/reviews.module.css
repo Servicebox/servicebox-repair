@@ -24,7 +24,7 @@
   padding: 0; transition: color 0.15s;
 }
 .star:disabled { cursor: default; }
-.starFilled { color: #f59e0b; }
+.starFilled { color: var(--color-warning); }
 
 .textarea {
   width: 100%;
@@ -52,7 +52,7 @@
   cursor: pointer;
   transition: background 0.2s;
 }
-.submitBtn:hover:not(:disabled) { background: #1d4ed8; }
+.submitBtn:hover:not(:disabled) { background: var(--color-primary-dark); }
 .submitBtn:disabled { opacity: 0.55; cursor: default; }
 
 .success { color: var(--color-success); font-size: 0.85rem; }

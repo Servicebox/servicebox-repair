@@ -217,7 +217,7 @@
   border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 1.25rem;
-  background: #fafafa;
+  background: var(--color-bg-elevated);
   transition: border-color 0.2s;
 }
 

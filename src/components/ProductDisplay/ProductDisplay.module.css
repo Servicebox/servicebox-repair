@@ -282,13 +282,13 @@
 }
 
 .status.inStock {
-  background: #e8f5e9;
-  color: #2e7d32;
+  background: var(--color-success-bg);
+  color: var(--color-success);
 }
 
 .status.outOfStock {
   background: var(--color-danger-bg);
-  color: #c62828;
+  color: var(--color-danger);
 }
 
 .inCart {

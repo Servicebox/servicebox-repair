@@ -80,7 +80,7 @@
 }
 
 .uploading {
-  background: #17a2b8 !important;
+  background: var(--color-primary) !important;
 }
 
 @media (max-width: 768px) {

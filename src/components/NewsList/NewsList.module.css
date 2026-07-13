@@ -230,7 +230,7 @@
 }
 
 .newsCard:hover .readMore {
-  color: #1e40af;
+  color: var(--color-primary-dark);
   transform: translateX(4px);
 }
 

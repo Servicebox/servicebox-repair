@@ -54,17 +54,17 @@
 }
 
 .downloadBtn.disabled {
-  background: #95a5a6;
+  background: var(--color-text-muted);
   cursor: not-allowed;
 }
 
 .printBtn {
-  background: #2ecc71;
+  background: var(--color-success);
   color: white;
 }
 
 .printBtn:hover {
-  background: #27ae60;
+  background: var(--color-success);
 }
 
 .icon {
@@ -211,7 +211,7 @@
 }
 
 .acknowledgment {
-  background: #fff8e1;
+  background: var(--color-warning-bg);
   padding: 20px;
   border-radius: 4px;
   margin: 30px 0;

@@ -3,7 +3,7 @@
 /* Базовые стили страницы */
 .servicesPage {
     min-height: 100vh;
-    background: linear-gradient(180deg, var(--color-bg-elevated) 0%, #ffffff 100%);
+    background: linear-gradient(180deg, var(--color-bg-elevated) 0%, var(--color-bg) 100%);
     padding: 40px 0;
 }
 
@@ -88,7 +88,7 @@
 
 /* ✅ Выделение категорий-калькуляторов */
 .calculatorCategory {
-    background: linear-gradient(135deg, var(--color-primary-bg) 0%, #ffffff 100%);
+    background: linear-gradient(135deg, var(--color-primary-bg) 0%, var(--color-bg) 100%);
     border-color: var(--color-primary);
 }
 

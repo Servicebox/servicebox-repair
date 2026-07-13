@@ -390,7 +390,7 @@
 }
 
 .edit:hover {
-  background: #2c5aa0;
+  background: var(--color-primary-dark);
 }
 
 .delete {
@@ -400,7 +400,7 @@
 }
 
 .delete:hover {
-  background: #c53030;
+  background: var(--color-danger);
 }
 
 .publish {
@@ -607,7 +607,7 @@
 .inStock {
   color: var(--color-success);
   font-weight: 600;
-  background: #e6fffa;
+  background: var(--color-success-bg);
   padding: 0.25rem 0.5rem;
   border-radius: 20px;
   display: inline-block;

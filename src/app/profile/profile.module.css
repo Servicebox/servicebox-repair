@@ -107,7 +107,7 @@
 .sectionTitle {
   font-size: 1.15rem;
   font-weight: 700;
-  color: #0a1929;
+  color: var(--color-text);
   margin: 0;
   padding-bottom: 0.75rem;
   border-bottom: 2px solid var(--color-border);
@@ -160,7 +160,7 @@
   font-size: 1rem;
   font-weight: 700;
   margin: 0 0 0.5rem;
-  color: #0a1929;
+  color: var(--color-text);
 }
 
 .walletDesc {

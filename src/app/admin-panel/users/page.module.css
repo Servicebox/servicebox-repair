@@ -34,7 +34,7 @@
 
 .tab:hover {
   color: #333;
-  background-color: #f5f5f5;
+  background-color: var(--color-bg-elevated);
 }
 
 .tab.active {
@@ -66,6 +66,6 @@
   
   .tab.active {
     border-bottom: 2px solid var(--color-primary);
-    background-color: #e3f2fd;
+    background-color: var(--color-primary-bg);
   }
 }

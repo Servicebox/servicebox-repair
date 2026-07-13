@@ -26,7 +26,7 @@
 }
 
 .likeButton.liked:hover:not(:disabled) {
-  background: #fecaca;
+  background: var(--color-danger);
 }
 
 .likeButton:disabled {

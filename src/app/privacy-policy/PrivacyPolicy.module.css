@@ -51,7 +51,7 @@
 }
 
 .companyInfo {
-  background: #f8fafc;
+  background: var(--color-bg-elevated);
   padding: 1.5rem;
   border-radius: 8px;
   margin-top: 1rem;

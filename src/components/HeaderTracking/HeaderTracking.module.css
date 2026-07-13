@@ -247,7 +247,7 @@
 
 .statusPending {
   background: var(--color-warning-bg);
-  color: #d97706;
+  color: var(--color-warning);
 }
 
 .statusConfirmed {
@@ -262,7 +262,7 @@
 
 .statusCompleted {
   background: var(--color-success-bg);
-  color: #166534;
+  color: var(--color-success);
 }
 
 .statusCanceled {

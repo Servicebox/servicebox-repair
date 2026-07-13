@@ -160,7 +160,7 @@
 }
 
 .editButton:hover {
-  background: #e0a800;
+  background: var(--color-warning);
 }
 
 .deleteButton {

@@ -17,7 +17,7 @@
   gap: 0.5rem;
   font-size: 1rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--color-text);
   margin-bottom: 1.25rem;
 }
 
@@ -71,7 +71,7 @@
   font-weight: 500;
   transition: background 0.15s;
 }
-.chooseBtn:hover { background: #f9fafb; }
+.chooseBtn:hover { background: var(--color-bg-elevated); }
 
 .uploadBtn {
   padding: 0.45rem 1rem;
@@ -101,7 +101,7 @@
   gap: 0.3rem;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #374151;
+  color: var(--color-text);
 }
 
 .input {
@@ -150,14 +150,14 @@
   border: 1px solid var(--color-border);
   border-radius: 6px;
   background: white;
-  color: #374151;
+  color: var(--color-text);
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 500;
   transition: background 0.15s;
   margin-right: 0.75rem;
 }
-.favLink:hover { background: #f9fafb; }
+.favLink:hover { background: var(--color-bg-elevated); }
 
 .logoutBtn {
   display: inline-flex;
@@ -173,4 +173,4 @@
   cursor: pointer;
   transition: background 0.15s;
 }
-.logoutBtn:hover { background: #fef2f2; }
+.logoutBtn:hover { background: var(--color-danger-bg); }

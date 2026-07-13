@@ -16,13 +16,13 @@
 
 .btn:hover:not(:disabled) {
   border-color: var(--color-warning);
-  color: #b45309;
+  color: var(--color-warning);
   background: var(--color-warning-bg);
 }
 
 .btn.saved {
   border-color: var(--color-warning);
-  color: #b45309;
+  color: var(--color-warning);
   background: var(--color-warning-bg);
 }
 
