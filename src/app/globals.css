@@ -31,6 +31,12 @@
   --color-border: #e0e0e0;
   --color-shadow: rgba(0, 0, 0, 0.08);
 
+  /* Тонированные подложки для алертов/бейджей/статусов (премиальные soft-badges) */
+  --color-primary-bg: #eff6ff;
+  --color-success-bg: #f0fdf4;
+  --color-danger-bg: #fef2f2;
+  --color-warning-bg: #fff7ed;
+
   /* Font scale (modified by data-font-size attribute) */
   --font-scale: 1;
 
@@ -86,6 +92,10 @@
   --color-border: #2a2a2a;
   --color-shadow: rgba(0, 0, 0, 0.4);
   --color-header-bg: rgba(10, 10, 10, 0.82);
+  --color-primary-bg: rgba(56, 189, 248, 0.12);
+  --color-success-bg: rgba(127, 238, 100, 0.12);
+  --color-danger-bg: rgba(255, 85, 85, 0.12);
+  --color-warning-bg: rgba(255, 204, 0, 0.12);
 }
 
 /* ═══════════════════════════════════════════════════
@@ -107,6 +117,10 @@
   --color-border: #ffffff;
   --color-shadow: none;
   --color-header-bg: #000000;
+  --color-primary-bg: #000000;
+  --color-success-bg: #000000;
+  --color-danger-bg: #000000;
+  --color-warning-bg: #000000;
 }
 
 /* ═══════════════════════════════════════════════════
