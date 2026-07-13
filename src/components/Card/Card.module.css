@@ -14,7 +14,7 @@
 .cartSummary {
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 2px solid #eaeaea;
+  border-top: 2px solid var(--color-border);
 }
 
 .total {
@@ -186,7 +186,7 @@
   background: var(--color-warning);
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(78, 115, 223, 0.4);
-  outline: 2px solid #1ad1ff;
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 

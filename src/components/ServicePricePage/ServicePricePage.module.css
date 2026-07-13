@@ -133,7 +133,7 @@
 
  .backButton:hover {
      background: var(--color-bg);
-     border-color: #d1d5db;
+     border-color: var(--color-border);
      color: var(--color-text);
      transform: translateX(-2px);
  }
