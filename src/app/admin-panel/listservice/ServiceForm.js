@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { generateSlug as slugifyText } from '@/lib/slugify';
 
 // Категории из калькулятора (соответствуют ключам в PRICING)
 const CALCULATOR_CATEGORIES = [
@@ -25,7 +26,19 @@ const ServiceForm = ({ service, onClose, onSuccess }) => {
     h1: '',
     content: '',
     features: [''],
-    order: 0
+    order: 0,
+    basePrice: '',
+    minTime: '',
+    maxTime: '',
+    compatFlags: {
+      appleOnly: false,
+      portType: '',
+      requiresSeparateGlass: false,
+      requiresThermalPads: false,
+      requiresBga: false,
+      requiresFaceId: false,
+      requiresTvType: []
+    }
   });
 
   const [loading, setLoading] = useState(false);
@@ -46,7 +59,19 @@ const ServiceForm = ({ service, onClose, onSuccess }) => {
         h1: service.h1 || '',
         content: service.content || '',
         features: service.features && service.features.length > 0 ? service.features : [''],
-        order: service.order || 0
+        order: service.order || 0,
+        basePrice: service.basePrice ?? '',
+        minTime: service.minTime || '',
+        maxTime: service.maxTime || '',
+        compatFlags: {
+          appleOnly: service.compatFlags?.appleOnly || false,
+          portType: service.compatFlags?.portType || '',
+          requiresSeparateGlass: service.compatFlags?.requiresSeparateGlass || false,
+          requiresThermalPads: service.compatFlags?.requiresThermalPads || false,
+          requiresBga: service.compatFlags?.requiresBga || false,
+          requiresFaceId: service.compatFlags?.requiresFaceId || false,
+          requiresTvType: service.compatFlags?.requiresTvType || []
+        }
       });
     }
 
@@ -98,7 +123,8 @@ const ServiceForm = ({ service, onClose, onSuccess }) => {
       const submitData = {
         ...formData,
         features: formData.features.filter(f => f.trim() !== ''),
-        price: formData.isCategory ? '' : formData.price
+        price: formData.isCategory ? '' : formData.price,
+        basePrice: formData.isCategory || formData.basePrice === '' ? undefined : Number(formData.basePrice)
       };
 
       const url = service && service._id
@@ -159,15 +185,24 @@ const ServiceForm = ({ service, onClose, onSuccess }) => {
   };
 
   const generateSlug = () => {
-    const slug = formData.name
-      .toLowerCase()
-      .replace(/[^\w\u0400-\u04FF\s-]+/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-+/, '')
-      .replace(/-+$/, '');
+    setFormData(prev => ({ ...prev, slug: slugifyText(prev.name) }));
+  };
 
-    setFormData(prev => ({ ...prev, slug }));
+  const handleCompatFlagChange = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      compatFlags: { ...prev.compatFlags, [field]: value }
+    }));
+  };
+
+  const toggleTvType = (tvType) => {
+    setFormData(prev => {
+      const current = prev.compatFlags.requiresTvType;
+      const next = current.includes(tvType)
+        ? current.filter(t => t !== tvType)
+        : [...current, tvType];
+      return { ...prev, compatFlags: { ...prev.compatFlags, requiresTvType: next } };
+    });
   };
 
   return (
@@ -242,6 +277,7 @@ const ServiceForm = ({ service, onClose, onSuccess }) => {
                     name="slug"
                     value={formData.slug}
                     onChange={handleChange}
+                    onBlur={() => setFormData(prev => ({ ...prev, slug: slugifyText(prev.slug) }))}
                     required
                     className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="remont-telefonov"
@@ -306,6 +342,105 @@ const ServiceForm = ({ service, onClose, onSuccess }) => {
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="2990 ₽ или Бесплатно"
                 />
+              </div>
+            )}
+
+            {/* Калькулятор: базовая цена для авто-оценки + метаданные ремонтной работы */}
+            {!formData.isCategory && (
+              <div className="space-y-4 p-4 bg-blue-50 rounded-lg border border-blue-100">
+                <h3 className="text-sm font-semibold text-gray-700">🧮 Параметры калькулятора</h3>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Базовая цена (для авто-оценки по модели)
+                    </label>
+                    <input
+                      type="number"
+                      name="basePrice"
+                      value={formData.basePrice}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Например: 3500"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">Мин. время</label>
+                    <input
+                      type="text"
+                      name="minTime"
+                      value={formData.minTime}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="30 мин"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">Макс. время</label>
+                    <input
+                      type="text"
+                      name="maxTime"
+                      value={formData.maxTime}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="2 часа"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">Порт (если применимо)</label>
+                  <select
+                    value={formData.compatFlags.portType}
+                    onChange={e => handleCompatFlagChange('portType', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">— Не важно —</option>
+                    <option value="type_c">USB Type-C</option>
+                    <option value="lightning">Lightning</option>
+                    <option value="micro_usb">Micro-USB</option>
+                    <option value="30pin">Apple 30-pin</option>
+                  </select>
+                </div>
+
+                <div className="flex flex-wrap gap-4 text-sm">
+                  <label className="flex items-center gap-2">
+                    <input type="checkbox" checked={formData.compatFlags.appleOnly} onChange={e => handleCompatFlagChange('appleOnly', e.target.checked)} />
+                    Только Apple
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input type="checkbox" checked={formData.compatFlags.requiresSeparateGlass} onChange={e => handleCompatFlagChange('requiresSeparateGlass', e.target.checked)} />
+                    Нужно раздельное стекло
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input type="checkbox" checked={formData.compatFlags.requiresThermalPads} onChange={e => handleCompatFlagChange('requiresThermalPads', e.target.checked)} />
+                    Термопрокладки
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input type="checkbox" checked={formData.compatFlags.requiresBga} onChange={e => handleCompatFlagChange('requiresBga', e.target.checked)} />
+                    BGA-пайка
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input type="checkbox" checked={formData.compatFlags.requiresFaceId} onChange={e => handleCompatFlagChange('requiresFaceId', e.target.checked)} />
+                    Face ID
+                  </label>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">Тип ТВ-панели (если применимо)</label>
+                  <div className="flex flex-wrap gap-4 text-sm">
+                    {['led', 'qled', 'mini_led', 'oled'].map(type => (
+                      <label key={type} className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={formData.compatFlags.requiresTvType.includes(type)}
+                          onChange={() => toggleTvType(type)}
+                        />
+                        {type.toUpperCase()}
+                      </label>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
 

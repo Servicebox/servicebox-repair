@@ -6,7 +6,25 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import BookingForm from '@/components/BookingForm/BookingForm';
+import RepairCalculator from '@/components/RepairCalculator/RepairCalculator';
 import { useBreadcrumbs } from '@/hooks/useBreadcrumbs';
+
+// Дублирует DEVICE_TYPE_ROOT_CANDIDATES из src/lib/pricing-matrix.js (тот модуль —
+// серверный, сюда, в клиентский компонент, не импортируется). Определяет тип
+// устройства калькулятора по названию корневой категории из breadcrumbs услуги.
+const DEVICE_TYPE_BY_ROOT_NAME = {
+  'Ремонт телефонов': 'phone',
+  'Техника Apple': 'phone',
+  'Ремонт ноутбуков': 'laptop',
+  'Ремонт планшетов': 'tablet',
+  'Ремонт телевизоров': 'tv',
+  'Ремонт видеокарт': 'videocard',
+  'Игровые консоли': 'console',
+};
+
+// breadcrumbs, как их строит GET /api/services/[slug]: [<корневая категория>, ..., <сама услуга>]
+// (без префикса "Главная/Услуги" — тот добавляется отдельно, только для хука useBreadcrumbs)
+const getCalculatorDeviceType = (breadcrumbs) => DEVICE_TYPE_BY_ROOT_NAME[breadcrumbs?.[0]?.name] ?? null;
 
 // Иконки для категорий
 const categoryIcons = {
@@ -286,6 +304,7 @@ export default function ServiceDetailPage() {
               setActiveTab={setActiveTab}
               handleBookingClick={handleBookingClick}
               formatPrice={formatPrice}
+              calculatorDeviceType={getCalculatorDeviceType(service.breadcrumbs)}
             />
           )}
         </div>
@@ -402,7 +421,9 @@ function CategoryPage({ service, formatPrice }) {
 }
 
 // Компонент страницы услуги
-function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, formatPrice }) {
+function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, formatPrice, calculatorDeviceType }) {
+  const [showCalculator, setShowCalculator] = useState(false);
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
       {/* Основной контент */}
@@ -480,6 +501,16 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
             Записаться на ремонт
           </button>
 
+          {calculatorDeviceType && (
+            <button
+              onClick={() => setShowCalculator(prev => !prev)}
+              className="w-full py-3 rounded-lg transition-colors font-semibold mb-4 border-2"
+              style={{ borderColor: PRIMARY_COLOR, color: PRIMARY_COLOR, background: 'white' }}
+            >
+              🧮 {showCalculator ? 'Скрыть калькулятор' : 'Точный расчёт по вашей модели'}
+            </button>
+          )}
+
           <div className="text-center">
             <p className="text-gray-600 text-sm mb-2">или позвоните</p>
             <a href="tel:+79115018828" className="text-lg font-bold text-gray-900 hover:text-blue-600 transition-colors block">
@@ -531,6 +562,12 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
           </button>
         </div>
       </div>
+
+      {showCalculator && calculatorDeviceType && (
+        <div className="lg:col-span-3">
+          <RepairCalculator initialDeviceType={calculatorDeviceType} initialServiceId={service._id} />
+        </div>
+      )}
     </div>
   );
 }

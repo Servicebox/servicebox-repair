@@ -1,0 +1,281 @@
+.wrapper {
+    padding: 1.5rem;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem;
+}
+
+.title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin: 0.25rem 0 0;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.status {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+.saveButton {
+    padding: 0.65rem 1.25rem;
+    border: none;
+    border-radius: var(--radius-md);
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition-theme), opacity 150ms ease;
+}
+
+.saveButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    background: var(--color-bg-elevated);
+    padding: 0.4rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+}
+
+.tab {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition-theme);
+}
+
+.tabActive {
+    background: var(--color-bg);
+    color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.loading,
+.empty {
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--color-text-muted);
+}
+
+.warning {
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    background: var(--color-warning-bg);
+    color: var(--color-warning);
+    border: 1px solid var(--color-warning);
+    font-size: 0.9rem;
+}
+
+.brandsPanel {
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem;
+}
+
+.panelTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 0.75rem;
+}
+
+.brandAddRow,
+.modelAddRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.input {
+    flex: 1;
+    min-width: 10rem;
+    padding: 0.45rem 0.65rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    color: var(--color-text);
+}
+
+.inputSmall {
+    width: 6rem;
+    padding: 0.45rem 0.65rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    color: var(--color-text);
+}
+
+.addButton {
+    padding: 0.45rem 0.9rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: var(--color-success);
+    color: var(--color-text-inverse);
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.brandsList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: 0.75rem;
+}
+
+.brandCard {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 0.75rem;
+    background: var(--color-bg);
+}
+
+.brandCardHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.brandName {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.brandMultiplier {
+    font-family: monospace;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+}
+
+.deleteLink {
+    margin-left: auto;
+    border: none;
+    background: transparent;
+    color: var(--color-danger);
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.modelList {
+    list-style: none;
+    margin: 0 0 0.5rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    max-height: 8rem;
+    overflow-y: auto;
+}
+
+.modelItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    color: var(--color-text);
+}
+
+.modelItem em {
+    color: var(--color-text-muted);
+    font-style: normal;
+    font-size: 0.75rem;
+}
+
+.matrixScroll {
+    overflow-x: auto;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+}
+
+.matrixTable {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.82rem;
+}
+
+.matrixTable th,
+.matrixTable td {
+    border: 1px solid var(--color-border);
+    padding: 0.4rem;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.stickyCol {
+    position: sticky;
+    left: 0;
+    background: var(--color-bg-elevated);
+    text-align: left !important;
+    z-index: 1;
+    min-width: 12rem;
+}
+
+.rowBrand {
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+}
+
+.serviceHeader {
+    min-width: 6.5rem;
+}
+
+.serviceName {
+    max-width: 8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.3rem;
+}
+
+.basePriceInput,
+.priceInput {
+    width: 5.5rem;
+    padding: 0.3rem 0.4rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    color: var(--color-text);
+    text-align: center;
+}
