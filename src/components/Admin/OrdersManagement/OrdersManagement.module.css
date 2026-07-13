@@ -34,7 +34,7 @@
 }
 
 .orderCard {
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   overflow: hidden;
   background: white;
@@ -45,7 +45,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
-  background: #f8f9fa;
+  background: var(--color-bg-elevated);
   cursor: pointer;
   transition: background-color 0.2s;
 }
@@ -126,7 +126,7 @@
 
 .orderDetails {
   padding: 20px;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--color-border);
 }
 
 .detailsGrid {
@@ -165,7 +165,7 @@
   display: flex;
   gap: 15px;
   padding: 10px;
-  background: #f8f9fa;
+  background: var(--color-bg-elevated);
   border-radius: 6px;
 }
 
@@ -204,7 +204,7 @@
 }
 
 .pricingSummary {
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--color-border);
   padding-top: 15px;
   margin-bottom: 20px;
 }
@@ -220,7 +220,7 @@
   font-weight: bold;
   font-size: 1.1em;
   color: #333;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--color-border);
   padding-top: 8px;
 }
 

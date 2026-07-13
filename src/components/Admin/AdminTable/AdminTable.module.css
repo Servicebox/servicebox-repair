@@ -29,7 +29,7 @@
 }
 
 .table tbody tr:hover {
-  background: #f9fafb;
+  background: var(--color-bg-elevated);
 }
 
 .actions {
@@ -50,30 +50,30 @@
 }
 
 .editBtn {
-  background: #3b82f6;
+  background: var(--color-primary);
   color: white;
 }
 
 .editBtn:hover {
-  background: #2563eb;
+  background: var(--color-primary);
 }
 
 .deleteBtn {
-  background: #ef4444;
+  background: var(--color-danger);
   color: white;
 }
 
 .deleteBtn:hover {
-  background: #dc2626;
+  background: var(--color-danger);
 }
 
 .actionBtn {
-  background: #10b981;
+  background: var(--color-success);
   color: white;
 }
 
 .actionBtn:hover {
-  background: #059669;
+  background: var(--color-success);
 }
 
 @media (max-width: 768px) {

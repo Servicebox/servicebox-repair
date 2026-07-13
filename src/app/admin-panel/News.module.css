@@ -43,7 +43,7 @@
 }
 
 .createButton:hover {
-  background: #2563eb;
+  background: var(--color-primary);
   transform: translateY(-1px);
   box-shadow: var(--shadow);
 }
@@ -59,14 +59,14 @@
 }
 
 .alert.success {
-  background: #f0fdf4;
-  color: #166534;
+  background: var(--color-success-bg);
+  color: var(--color-success);
   border-color: #bbf7d0;
 }
 
 .alert.error {
-  background: #fef2f2;
-  color: #dc2626;
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
   border-color: #fecaca;
 }
 
@@ -114,8 +114,8 @@
 }
 
 .status.published {
-  background: #f0fdf4;
-  color: #166534;
+  background: var(--color-success-bg);
+  color: var(--color-success);
   border: 1px solid #bbf7d0;
 }
 
@@ -126,7 +126,7 @@
 }
 
 .status.expired {
-  background: #fef2f2;
+  background: var(--color-danger-bg);
   color: #991b1b;
   border: 1px solid #fecaca;
 }

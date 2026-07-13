@@ -41,7 +41,7 @@
   padding: 20px;
   background: #f3f4f6;
   border-radius: 8px;
-  border-left: 4px solid #3b82f6;
+  border-left: 4px solid var(--color-primary);
 }
 
 .label {
@@ -77,18 +77,18 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px;
-  background: #f9fafb;
+  background: var(--color-bg-elevated);
   border-radius: 4px;
   border-left: 3px solid #e5e7eb;
 }
 
 .item:hover {
   background: #f3f4f6;
-  border-left-color: #3b82f6;
+  border-left-color: var(--color-primary);
 }
 
 .pageUrl {
-  color: #3b82f6;
+  color: var(--color-primary);
   word-break: break-all;
   flex: 1;
 }
@@ -108,7 +108,7 @@
 }
 
 .error {
-  color: #ef4444;
+  color: var(--color-danger);
 }
 
 @media (max-width: 768px) {

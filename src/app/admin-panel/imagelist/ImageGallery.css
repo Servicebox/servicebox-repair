@@ -38,7 +38,7 @@
 }
 
 .upload-section button {
-  background-color: #0070f3;
+  background-color: var(--color-primary);
   color: white;
   cursor: pointer;
   align-self: start;
@@ -50,7 +50,7 @@
 
 .upload-status {
   margin-top: 10px;
-  color: #0070f3;
+  color: var(--color-primary);
 }
 
 .manage-header {
@@ -82,7 +82,7 @@
 }
 
 .admin-gallery-item {
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border);
   border-radius: 8px;
   overflow: hidden;
   background-color: white;
@@ -90,7 +90,7 @@
 }
 
 .admin-gallery-item.selected {
-  border-color: #0070f3;
+  border-color: var(--color-primary);
 }
 
 .admin-image-wrapper {
@@ -142,7 +142,7 @@
 }
 
 .admin-image-info button:first-of-type {
-  background-color: #28a745;
+  background-color: var(--color-success);
   color: white;
 }
 
