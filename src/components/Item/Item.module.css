@@ -51,7 +51,7 @@
   position: absolute;
   top: 0.75rem;
   left: 0.75rem;
-  background: linear-gradient(135deg, #C21E56, #f97316);
+  background: linear-gradient(135deg, var(--color-danger), var(--color-accent));
   color: var(--color-text-inverse);
   font-size: 0.75rem;
   font-weight: 700;
@@ -90,7 +90,7 @@
 .shopitemPrices {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #C21E56;
+  color: var(--color-danger);
   margin: 0;
 }
 
@@ -114,7 +114,7 @@
 .itemPriceCol {
   margin-left: 0;
   color: var(--color-success);
-  background: #f0fdf4;
+  background: var(--color-success-bg);
   border-radius: 8px;
   padding: 0.25rem 0.75rem;
   font-size: 0.85rem;

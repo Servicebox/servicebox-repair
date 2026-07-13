@@ -212,8 +212,8 @@
   height: 40px;
   border: none;
   border-radius: 10px;
-  background: #fef2f2;
-  color: #C21E56;
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -222,7 +222,7 @@
 }
 
 .removeBtn:hover {
-  background: #C21E56;
+  background: var(--color-danger);
   color: var(--color-text-inverse);
   transform: scale(1.05);
 }
@@ -264,7 +264,7 @@
 }
 
 .discount {
-  color: #C21E56;
+  color: var(--color-danger);
   font-weight: 600;
 }
 
@@ -456,7 +456,7 @@
 .cashPaymentButton {
   width: 100%;
   padding: 12px;
-  background: #4CAF50;
+  background: var(--color-success);
   color: var(--color-text-inverse);
   border: none;
   border-radius: 6px;
@@ -466,7 +466,7 @@
 }
 
 .cashPaymentButton:hover {
-  background: #45a049;
+  background: var(--color-success);
 }
 
 .checkoutLinks {
@@ -480,14 +480,14 @@
 .paymentSuccess {
   text-align: center;
   padding: 40px 20px;
-  background: #f8fff8;
-  border: 1px solid #4CAF50;
+  background: var(--color-success-bg);
+  border: 1px solid var(--color-success);
   border-radius: 8px;
   margin: 20px 0;
 }
 
 .paymentSuccess h2 {
-  color: #4CAF50;
+  color: var(--color-success);
   margin-bottom: 15px;
 }
 
@@ -495,14 +495,14 @@
   display: inline-block;
   margin-top: 15px;
   padding: 10px 20px;
-  background: #2196F3;
+  background: var(--color-primary);
   color: var(--color-text-inverse);
   text-decoration: none;
   border-radius: 6px;
 }
 
 .profileLink:hover {
-  background: #0b7dda;
+  background: var(--color-primary);
 }
 
 @media (max-width: 768px) {

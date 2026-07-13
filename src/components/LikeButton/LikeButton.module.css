@@ -16,13 +16,13 @@
 .likeButton:hover:not(:disabled) {
   border-color: var(--color-danger);
   color: var(--color-danger);
-  background: #fef2f2;
+  background: var(--color-danger-bg);
 }
 
 .likeButton.liked {
   border-color: var(--color-danger);
   color: var(--color-danger);
-  background: #fee2e2;
+  background: var(--color-danger-bg);
 }
 
 .likeButton.liked:hover:not(:disabled) {

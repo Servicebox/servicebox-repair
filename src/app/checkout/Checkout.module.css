@@ -20,10 +20,10 @@
 
 /* Order Summary */
 .orderSummary {
-  background: #f8f9fa;
+  background: var(--color-bg-elevated);
   padding: 1.5rem;
   border-radius: 10px;
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--color-border);
   height: fit-content;
   position: sticky;
   top: 20px;
@@ -32,7 +32,7 @@
 .orderSummary h2 {
   margin-top: 0;
   color: #333;
-  border-bottom: 2px solid #007bff;
+  border-bottom: 2px solid var(--color-primary);
   padding-bottom: 0.5rem;
   margin-bottom: 1.5rem;
 }
@@ -41,7 +41,7 @@
   display: flex;
   justify-content: space-between;
   padding: 1rem 0;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid var(--color-border);
   gap: 1rem;
 }
 
@@ -62,7 +62,7 @@
 
 .productName small {
   font-size: 0.8rem;
-  color: #6c757d;
+  color: var(--color-text-muted);
 }
 
 .productPrice {
@@ -76,14 +76,14 @@
 
 .itemTotal {
   font-weight: 600;
-  color: #28a745;
+  color: var(--color-success);
   font-size: 1.1rem;
 }
 
 .priceBreakdown {
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  border-top: 2px solid #dee2e6;
+  border-top: 2px solid var(--color-border);
 }
 
 .priceRow {
@@ -96,7 +96,7 @@
 .totalRow {
   font-size: 1.3rem;
   padding-top: 0.75rem;
-  border-top: 1px dashed #dee2e6;
+  border-top: 1px dashed var(--color-border);
   margin-top: 0.75rem;
 }
 
@@ -105,14 +105,14 @@
   background: white;
   padding: 1.5rem;
   border-radius: 10px;
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--color-border);
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .orderForm h2 {
   margin-top: 0;
   color: #333;
-  border-bottom: 2px solid #28a745;
+  border-bottom: 2px solid var(--color-success);
   padding-bottom: 0.5rem;
   margin-bottom: 1.5rem;
 }
@@ -120,13 +120,13 @@
 .formSection {
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .formSection h3 {
   font-size: 1.1rem;
   margin-bottom: 1rem;
-  color: #495057;
+  color: var(--color-text-muted);
 }
 
 .formGroup {
@@ -137,7 +137,7 @@
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: #495057;
+  color: var(--color-text-muted);
 }
 
 .formGroup input,
@@ -153,7 +153,7 @@
 .formGroup input:focus,
 .formGroup textarea:focus {
   outline: none;
-  border-color: #007bff;
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.15);
 }
 
@@ -169,15 +169,15 @@
   align-items: flex-start;
   gap: 0.75rem;
   padding: 1rem;
-  border: 2px solid #e9ecef;
+  border: 2px solid var(--color-border);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .radioLabel:hover {
-  border-color: #007bff;
-  background: #f8f9fa;
+  border-color: var(--color-primary);
+  background: var(--color-bg-elevated);
 }
 
 .radioLabel input[type="radio"] {
@@ -199,18 +199,18 @@
 
 .radioText small {
   font-size: 0.85rem;
-  color: #6c757d;
+  color: var(--color-text-muted);
 }
 
 .radioLabel input[type="radio"]:checked + .radioText {
-  color: #28a745;
+  color: var(--color-success);
 }
 
 /* Submit Button */
 .submitButton {
   width: 100%;
   padding: 1rem;
-  background: #28a745;
+  background: var(--color-success);
   color: white;
   border: none;
   border-radius: 8px;
@@ -229,7 +229,7 @@
 }
 
 .submitButton:disabled {
-  background: #6c757d;
+  background: var(--color-text-muted);
   cursor: not-allowed;
 }
 
@@ -249,10 +249,10 @@
 .securityNote {
   margin-top: 1rem;
   text-align: center;
-  color: #6c757d;
+  color: var(--color-text-muted);
   font-size: 0.85rem;
   padding-top: 1rem;
-  border-top: 1px solid #e9ecef;
+  border-top: 1px solid var(--color-border);
 }
 
 /* Empty Cart */
@@ -262,18 +262,18 @@
 }
 
 .emptyCart h1 {
-  color: #dc3545;
+  color: var(--color-danger);
   margin-bottom: 1rem;
 }
 
 .emptyCart p {
-  color: #6c757d;
+  color: var(--color-text-muted);
   margin-bottom: 2rem;
 }
 
 .emptyCart button {
   padding: 0.75rem 2rem;
-  background: #007bff;
+  background: var(--color-primary);
   color: white;
   border: none;
   border-radius: 6px;

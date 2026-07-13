@@ -30,7 +30,7 @@
 }
 
 .clearCartButton {
-  background: #ffebee;
+  background: var(--color-danger-bg);
   color: #c62828;
   border: 1px solid #ffcdd2;
   padding: 8px 16px;
@@ -55,7 +55,7 @@
   display: flex;
   gap: 15px;
   padding: 15px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   margin-bottom: 15px;
   background: var(--color-bg-dark);
@@ -78,7 +78,7 @@
   height: 100%;
   object-fit: cover;
   border-radius: 6px;
-  border: 1px solid #eee;
+  border: 1px solid var(--color-border);
 }
 
 .productInfo {
@@ -114,7 +114,7 @@
 
 .stockWarning {
   display: inline-block;
-  background: #fff3cd;
+  background: var(--color-warning-bg);
   color: #856404;
   padding: 4px 8px;
   border-radius: 4px;
@@ -141,7 +141,7 @@
 .quantityButton {
   width: 28px;
   height: 28px;
-  border: 1px solid #ced4da;
+  border: 1px solid var(--color-border);
   background: var(--color-bg-dark);
   border-radius: 4px;
   font-size: 16px;
@@ -263,7 +263,7 @@
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border);
 }
 
 .formSection {
@@ -271,7 +271,7 @@
   padding: 20px;
   background: #f9f9f9;
   border-radius: 8px;
-  border: 1px solid #eee;
+  border: 1px solid var(--color-border);
 }
 
 .radioGroup {
@@ -285,7 +285,7 @@
   display: flex;
   align-items: flex-start;
   padding: 15px;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s;
@@ -426,9 +426,9 @@
 .cartSummary {
   margin-top: 15px;
   padding: 12px;
-  background: #e3f2fd;
+  background: var(--color-primary-bg);
   border-radius: 6px;
-  border-left: 4px solid #2196f3;
+  border-left: 4px solid var(--color-primary);
 }
 
 .cartSummary p {
@@ -469,13 +469,13 @@
 }
 
 .inputInvalid {
-  border-color: #dc2626 !important;
+  border-color: var(--color-danger) !important;
   box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1) !important;
 }
 
 .fieldError {
   display: block;
-  color: #dc2626;
+  color: var(--color-danger);
   font-size: 0.78rem;
   margin-top: 4px;
 }

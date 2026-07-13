@@ -287,7 +287,7 @@
 }
 
 .status.outOfStock {
-  background: #ffebee;
+  background: var(--color-danger-bg);
   color: #c62828;
 }
 

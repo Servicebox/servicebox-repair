@@ -2,7 +2,7 @@
   max-width: 500px;
   margin: 20px 0;
   padding: 20px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   background: #f9f9f9;
 }
@@ -35,7 +35,7 @@
 
 .form-control__description {
   background-color: var(--color-bg);
-  color: #6c757d;
+  color: var(--color-text-muted);
   cursor: not-allowed;
 }
 
@@ -61,7 +61,7 @@
 }
 
 .btn-primary:disabled {
-  background-color: #6c757d;
+  background-color: var(--color-text-muted);
   cursor: not-allowed;
 }
 
