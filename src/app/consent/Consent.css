@@ -20,7 +20,7 @@
   background: white;
   padding: 15px 0;
   margin-bottom: 20px;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid var(--color-border);
   z-index: 100;
   display: flex;
   justify-content: flex-end;
@@ -89,7 +89,7 @@
   display: none;
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 1px solid #eaeaea;
+  border-top: 1px solid var(--color-border);
   justify-content: center;
   gap: 15px;
 }
@@ -131,7 +131,7 @@
 .contactInfo {
   margin-top: 20px;
   padding-top: 15px;
-  border-top: 1px solid #dee2e6;
+  border-top: 1px solid var(--color-border);
 }
 
 .contactInfo h3 {
@@ -146,14 +146,14 @@
   color: var(--color-text-muted);
   margin-bottom: 30px;
   padding: 15px;
-  background: #e8f4fc;
+  background: var(--color-primary-bg);
   border-radius: 4px;
 }
 
 .section {
   margin-bottom: 30px;
   padding-bottom: 20px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .section h2 {
@@ -161,7 +161,7 @@
   font-size: 20px;
   margin-bottom: 15px;
   padding-bottom: 8px;
-  border-bottom: 2px solid #f0f0f0;
+  border-bottom: 2px solid var(--color-bg-elevated);
 }
 
 .section p {
@@ -186,7 +186,7 @@
   padding: 30px;
   border-radius: 8px;
   margin: 40px 0;
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--color-border);
 }
 
 .signatureField {
@@ -204,7 +204,7 @@
 
 .signatureLine {
   padding: 12px 0;
-  border-bottom: 2px solid #333;
+  border-bottom: 2px solid var(--color-text);
   min-width: 300px;
   font-size: 18px;
   letter-spacing: 3px;
@@ -221,7 +221,7 @@
 .revisionInfo {
   margin-top: 30px;
   padding-top: 15px;
-  border-top: 1px solid #dee2e6;
+  border-top: 1px solid var(--color-border);
   color: var(--color-text-muted);
   font-size: 14px;
   text-align: center;
@@ -260,7 +260,7 @@
   
   .signatureBlock {
     background: white;
-    border: 2px solid #333;
+    border: 2px solid var(--color-text);
     margin-top: 100px;
     page-break-inside: avoid;
   }

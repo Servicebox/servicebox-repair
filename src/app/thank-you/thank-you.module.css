@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   padding: 2rem 1rem;
-  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  background: linear-gradient(135deg, var(--color-bg-elevated) 0%, var(--color-bg-elevated) 100%);
 }
 
 .successCard {
@@ -64,13 +64,13 @@
 }
 
 .orderInfo p strong {
-  color: #343a40;
+  color: var(--color-text);
   font-weight: 600;
   min-width: 140px;
 }
 
 .orderInfo p span {
-  color: #495057;
+  color: var(--color-text-muted);
   text-align: right;
   flex: 1;
 }
@@ -97,7 +97,7 @@
 
 .nextSteps li {
   margin: 0.8rem 0;
-  color: #495057;
+  color: var(--color-text-muted);
   line-height: 1.5;
   font-size: 1rem;
 }
@@ -135,7 +135,7 @@
 
 .continueButton {
   background: white;
-  color: #495057;
+  color: var(--color-text-muted);
   padding: 1rem 2rem;
   border-radius: 8px;
   text-decoration: none;
@@ -311,7 +311,7 @@
 .decoration.triangle {
   width: 150px;
   height: 150px;
-  border-bottom: 150px solid #0d6efd;
+  border-bottom: 150px solid var(--color-primary);
   border-left: 75px solid transparent;
   border-right: 75px solid transparent;
   bottom: -75px;
@@ -334,7 +334,7 @@
 }
 
 .printButton:hover {
-  background: #64748b;
+  background: var(--color-text-muted);
 }
 
 /* QR код для отслеживания */
@@ -360,27 +360,27 @@
   }
   
   .successCard {
-    background: #1a1a1a;
-    color: #e9ecef;
+    background: var(--color-primary-dark);
+    color: var(--color-bg-elevated);
   }
-  
+
   .orderInfo {
-    background: #2d3748;
-    border-left-color: #38a169;
+    background: var(--color-text);
+    border-left-color: var(--color-success);
   }
-  
+
   .nextSteps {
-    background: #2d3748;
+    background: var(--color-text);
   }
-  
+
   .continueButton {
-    background: #2d3748;
-    color: #e9ecef;
-    border-color: #4a5568;
+    background: var(--color-text);
+    color: var(--color-bg-elevated);
+    border-color: var(--color-text-muted);
   }
-  
+
   .continueButton:hover {
-    border-color: #38a169;
+    border-color: var(--color-success);
     color: #68d391;
   }
   

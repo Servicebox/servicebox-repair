@@ -9,7 +9,7 @@
 
 .gallery {
     position: relative;
-    background: #f0f2f5;
+    background: var(--color-bg-elevated);
     display: flex;
     justify-content: center;
     align-items: center;

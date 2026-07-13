@@ -23,12 +23,12 @@
 .title {
   font-size: 2rem;
   font-weight: 700;
-  color: #111827;
+  color: var(--color-text);
   margin-bottom: 1rem;
 }
 
 .meta {
-  color: #6b7280;
+  color: var(--color-text-muted);
   font-size: 0.875rem;
 }
 
@@ -39,14 +39,14 @@
 .section h2 {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--color-text-muted);
   margin-bottom: 1rem;
   border-left: 4px solid var(--color-primary);
   padding-left: 1rem;
 }
 
 .section p {
-  color: #6b7280;
+  color: var(--color-text-muted);
   margin-bottom: 1rem;
 }
 
@@ -59,7 +59,7 @@
 }
 
 .companyInfo h3 {
-  color: #374151;
+  color: var(--color-text-muted);
   margin-bottom: 1rem;
   font-size: 1.125rem;
 }
@@ -73,7 +73,7 @@
 .detailsList li {
   padding: 0.5rem 0;
   border-bottom: 1px solid var(--color-border);
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 .detailsList li:last-child {
@@ -81,7 +81,7 @@
 }
 
 .detailsList strong {
-  color: #374151;
+  color: var(--color-text-muted);
   min-width: 150px;
   display: inline-block;
 }
@@ -89,7 +89,7 @@
 .list {
   list-style-type: disc;
   margin-left: 1.5rem;
-  color: #6b7280;
+  color: var(--color-text-muted);
   margin-bottom: 1rem;
 }
 
@@ -102,12 +102,12 @@
   background: var(--color-primary-bg);
   padding: 1.5rem;
   border-radius: 8px;
-  border-left: 4px solid #0ea5e9;
+  border-left: 4px solid var(--color-primary);
 }
 
 .contactInfo p {
   margin: 0.5rem 0;
-  color: #374151;
+  color: var(--color-text-muted);
 }
 
 .footer {

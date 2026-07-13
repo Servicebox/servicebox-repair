@@ -143,7 +143,7 @@
 
 /* ==== ЦИТАТА / ОБРАТНАЯ СВЯЗЬ ==== */
 .quoteBlock {
-  background: #eff6ff;
+  background: var(--color-primary-bg);
   border-left: 4px solid var(--primary);
   padding: 1.25rem 1.5rem;
   border-radius: 0 var(--radius) var(--radius) 0;
@@ -152,7 +152,7 @@
 
 .quote {
   margin: 0;
-  color: #1e3a8a;
+  color: var(--color-primary-dark);
 }
 
 .quoteLink {
@@ -202,7 +202,7 @@
 
 .backLink:hover {
   background: var(--color-bg-elevated);
-  border-color: #cbd5e1;
+  border-color: var(--color-border);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
