@@ -113,7 +113,7 @@
 }
 
 .coverItem {
-  background: linear-gradient(135deg, var(--color-bg-dark) 0%, #f0f9ff 100%);
+  background: linear-gradient(135deg, var(--color-bg-dark) 0%, var(--color-primary-bg) 100%);
   text-align: center;
 }
 

@@ -18,7 +18,7 @@
   height: 24px;
   padding: 0 7px;
   border-radius: 999px;
-  background: #dbeafe;
+  background: var(--color-primary-bg);
   color: var(--color-primary-dark);
   font-size: 0.72rem;
   font-weight: 700;
@@ -92,7 +92,7 @@
   padding: 12px 16px;
   background: var(--color-bg-elevated);
   border-radius: 10px;
-  border: 1px dashed #cbd5e1;
+  border: 1px dashed var(--color-border);
 }
 .authLink {
   color: var(--color-primary-dark);
@@ -140,7 +140,7 @@
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 .item:hover {
-  border-color: #bfdbfe;
+  border-color: var(--color-primary-bg);
   box-shadow: 0 2px 10px rgba(37,99,235,.06);
 }
 
@@ -164,7 +164,7 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+  background: linear-gradient(135deg, var(--color-primary-bg), var(--color-primary-bg));
   color: var(--color-primary-dark);
   display: flex;
   align-items: center;
@@ -172,7 +172,7 @@
   font-size: 0.8rem;
   font-weight: 700;
   flex-shrink: 0;
-  border: 1.5px solid #bfdbfe;
+  border: 1.5px solid var(--color-primary-bg);
 }
 
 .username {
@@ -217,7 +217,7 @@
 }
 .pageBtn:hover:not(:disabled) {
   background: var(--color-bg-elevated);
-  border-color: #93c5fd;
+  border-color: var(--color-primary-bg);
   color: var(--color-primary-dark);
 }
 .pageBtn:disabled { opacity: 0.4; cursor: default; }

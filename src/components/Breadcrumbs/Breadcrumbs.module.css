@@ -23,7 +23,7 @@
 }
 
 .separator {
-  color: #9ca3af;
+  color: var(--color-text-muted);
   margin: 0 8px;
   font-size: 12px;
 }

@@ -11,7 +11,7 @@
 }
 
 .breadcrumLink {
-    color: #292929;
+    color: var(--color-text);
     text-decoration: none;
     transition: color 0.2s ease;
     font-size: 0.9rem;
@@ -29,7 +29,7 @@
 }
 
 .currentPage {
-    color: #666;
+    color: var(--color-text-muted);
     font-size: 0.9rem;
     font-weight: 500;
 }

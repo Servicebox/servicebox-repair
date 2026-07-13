@@ -80,14 +80,14 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(135deg, #48bb78, #68d391);
+  background: linear-gradient(135deg, var(--color-success), #68d391);
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
 
 .reviewCard:hover {
   transform: translateY(-8px);
-  border-color: #48bb78;
+  border-color: var(--color-success);
   box-shadow: 0 15px 40px rgba(72, 187, 120, 0.15);
 }
 
