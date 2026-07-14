@@ -43,8 +43,8 @@ const geoKeywords = ['Вологда'];
 
 // Основные цвета
 const PRIMARY_COLOR = 'var(--color-primary-dark)'; // Темно-синий для кнопок
-const TEXT_COLOR = 'text-gray-800'; // Темно-серый для текста
-const BORDER_COLOR = 'border-gray-200'; // Светло-серый для границ
+const TEXT_COLOR = 'text-muted'; // Темно-серый для текста
+const BORDER_COLOR = 'border-border'; // Светло-серый для границ
 
 export default function ServiceDetailPage() {
   const params = useParams();
@@ -177,8 +177,8 @@ export default function ServiceDetailPage() {
       <div className="min-h-screen py-12">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center py-12">
-            <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-blue-600 border-t-transparent mb-6"></div>
-            <h2 className="text-xl font-semibold text-gray-800">Загружаем услугу...</h2>
+            <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-primary border-t-transparent mb-6"></div>
+            <h2 className="text-xl font-semibold text-muted">Загружаем услугу...</h2>
           </div>
         </div>
       </div>
@@ -189,8 +189,8 @@ export default function ServiceDetailPage() {
     return (
       <div className="min-h-screen py-12">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">Услуга не найдена</h1>
-          <Link href="/services" className="text-gray-800 hover:text-blue-600 font-medium">
+          <h1 className="text-3xl font-bold text-muted mb-4">Услуга не найдена</h1>
+          <Link href="/services" className="text-muted hover:text-primary font-medium">
             ← Вернуться к услугам
           </Link>
         </div>
@@ -209,15 +209,15 @@ export default function ServiceDetailPage() {
           <div className="max-w-7xl mx-auto px-4 py-12">
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
               <div className="flex-1">
-                <div className="inline-flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 mb-6">
-                  <svg className="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                <div className="inline-flex items-center gap-2 bg-surface rounded-full px-4 py-2 mb-6">
+                  <svg className="w-4 h-4 text-muted" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-sm font-medium text-gray-700">Обслуживаем: {geoKeywords.join(', ')}</span>
+                  <span className="text-sm font-medium text-muted">Обслуживаем: {geoKeywords.join(', ')}</span>
                 </div>
 
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center border border-gray-300">
+                  <div className="w-16 h-16 bg-surface rounded-xl flex items-center justify-center border border-border">
                     <Image
                       src={icon}
                       alt={service.name}
@@ -231,7 +231,7 @@ export default function ServiceDetailPage() {
                     <h1 className="text-3xl lg:text-4xl font-bold mb-2 text-gray-900">
                       {service.h1 || service.name}
                     </h1>
-                    <p className="text-gray-600 text-lg">
+                    <p className="text-muted text-lg">
                       в {geoKeywords[0]}
                     </p>
                   </div>
@@ -243,29 +243,29 @@ export default function ServiceDetailPage() {
 
                 <div className="flex flex-wrap gap-6 mb-8">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-300">
-                      <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="w-10 h-10 bg-surface rounded-lg flex items-center justify-center border border-border">
+                      <svg className="w-5 h-5 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
-                    <span className="text-gray-700">Гарантия до 12 месяцев</span>
+                    <span className="text-muted">Гарантия до 12 месяцев</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-300">
-                      <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="w-10 h-10 bg-surface rounded-lg flex items-center justify-center border border-border">
+                      <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
-                    <span className="text-gray-700">Ремонт от 1 дня</span>
+                    <span className="text-muted">Ремонт от 1 дня</span>
                   </div>
                 </div>
               </div>
 
               <div className="w-full lg:w-auto">
-                <div className="bg-gray-50 rounded-2xl p-8 border border-gray-300">
+                <div className="bg-surface rounded-2xl p-8 border border-border">
                   <div className="text-center mb-6">
                     <div className="text-4xl font-bold mb-2 text-gray-900">{formatPrice(service.price)}</div>
-                    <p className="text-gray-600">Стоимость услуги</p>
+                    <p className="text-muted">Стоимость услуги</p>
                   </div>
 
                   <button
@@ -277,11 +277,11 @@ export default function ServiceDetailPage() {
                   </button>
 
                   <div className="mt-6 text-center">
-                    <p className="text-gray-600 text-sm">или позвоните</p>
-                    <a href="tel:+79115018828" className="text-2xl font-bold text-gray-900 hover:text-blue-900 transition-colors block">
+                    <p className="text-muted text-sm">или позвоните</p>
+                    <a href="tel:+79115018828" className="text-2xl font-bold text-gray-900 hover:text-primaryDark transition-colors block">
                       +7 (911) 501-88-28
                     </a>
-                    <a href="tel:+79115010696" className="text-2xl font-bold text-gray-900 hover:text-blue-800 transition-colors block mt-2">
+                    <a href="tel:+79115010696" className="text-2xl font-bold text-gray-900 hover:text-primaryDark transition-colors block mt-2">
                       +7 (911) 501-06-96
                     </a>
                   </div>
@@ -310,39 +310,39 @@ export default function ServiceDetailPage() {
         </div>
 
         {/* SEO блок */}
-        <div className="py-12 border-t border-gray-300">
+        <div className="py-12 border-t border-border">
           <div className="max-w-7xl mx-auto px-4">
             <h2 className="text-2xl font-bold mb-6 text-gray-900">
               Профессиональный ремонт техники в {geoKeywords.join(', ')}
             </h2>
-            <p className="text-gray-700 mb-4">
+            <p className="text-muted mb-4">
               Сервисный центр Сервис Бокс специализируется на профессиональном ремонте цифровой техники.
               Наши мастера имеют многолетний опыт работы с устройствами различных производителей.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-8 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-300">
-                  <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-8 bg-surface rounded-lg flex items-center justify-center border border-border">
+                  <svg className="w-4 h-4 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span className="text-gray-700">Оригинальные запчасти</span>
+                <span className="text-muted">Оригинальные запчасти</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-12 h-8 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-300">
-                  <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-8 bg-surface rounded-lg flex items-center justify-center border border-border">
+                  <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <span className="text-gray-700">Бесплатная диагностика</span>
+                <span className="text-muted">Бесплатная диагностика</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-12 h-8 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-300">
+                <div className="w-12 h-8 bg-surface rounded-lg flex items-center justify-center border border-border">
                   <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
                 </div>
-                <span className="text-gray-700">Опытные мастера</span>
+                <span className="text-muted">Опытные мастера</span>
               </div>
             </div>
           </div>
@@ -369,14 +369,14 @@ function CategoryPage({ service, formatPrice }) {
   return (
     <div className="space-y-8">
       {/* Заголовок категории */}
-      <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-300">
+      <div className="bg-bg rounded-2xl shadow-sm p-8 border border-border">
         <h1 className="text-3xl font-bold text-gray-900 mb-4">{service.h1 || service.name}</h1>
-        <p className="text-gray-700 text-lg">{service.description}</p>
+        <p className="text-muted text-lg">{service.description}</p>
       </div>
 
       {/* Подкатегории/услуги */}
       {service.children && service.children.length > 0 && (
-        <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-300">
+        <div className="bg-bg rounded-2xl shadow-sm p-8 border border-border">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">
             {service.children[0]?.isCategory ? 'Подкатегории' : 'Услуги'}
           </h2>
@@ -385,20 +385,20 @@ function CategoryPage({ service, formatPrice }) {
               <Link
                 key={child._id}
                 href={`/services/${encodeURIComponent(child.slug)}`}
-                className="block bg-gray-50 hover:bg-gray-100 rounded-xl p-6 border border-gray-300 hover:border-blue-500 transition-all"
+                className="block bg-surface hover:bg-surface rounded-xl p-6 border border-border hover:border-primary transition-all"
               >
                 <div className="flex items-start justify-between mb-4">
                   <h3 className="font-semibold text-gray-900">{child.name}</h3>
                   {!child.isCategory && child.price && (
-                    <span className="text-blue-600 font-bold">{formatPrice(child.price)}</span>
+                    <span className="text-primary font-bold">{formatPrice(child.price)}</span>
                   )}
                 </div>
-                <p className="text-gray-700 text-sm mb-4">{child.description}</p>
+                <p className="text-muted text-sm mb-4">{child.description}</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-blue-600 font-medium">
+                  <span className="text-primary font-medium">
                     {child.isCategory ? 'Смотреть все' : 'Подробнее'}
                   </span>
-                  <span className="text-gray-400">→</span>
+                  <span className="text-muted">→</span>
                 </div>
               </Link>
             ))}
@@ -408,7 +408,7 @@ function CategoryPage({ service, formatPrice }) {
 
       {/* SEO контент */}
       {service.content && (
-        <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-300">
+        <div className="bg-bg rounded-2xl shadow-sm p-8 border border-border">
           <div
             className="prose prose-lg max-w-none"
             style={{ color: '#374151' }}
@@ -429,15 +429,15 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
       {/* Основной контент */}
       <div className="lg:col-span-2 space-y-8">
         {/* Навигация по вкладкам */}
-        <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-300">
-          <div className="border-b border-gray-300">
+        <div className="bg-bg rounded-2xl shadow-sm overflow-hidden border border-border">
+          <div className="border-b border-border">
             <nav className="flex -mb-px">
               {['description', 'process', 'features', 'faq'].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
                   className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${activeTab === tab
-                    ? `border-blue-600 text-white-600`
+                    ? `border-primary text-white-600`
                     : 'border-transparent text-white-600 hover:text-white-900'
                     }`}
                 >
@@ -454,17 +454,17 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
 
         {/* Особенности */}
         {service.features && service.features.length > 0 && (
-          <div className="bg-gray-50 rounded-2xl p-8 border border-gray-300">
+          <div className="bg-surface rounded-2xl p-8 border border-border">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Что входит в услугу</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {service.features.map((feature, index) => (
                 <div key={index} className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0 border border-blue-200">
-                    <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-6 h-6 bg-primaryBg rounded-full flex items-center justify-center mt-1 flex-shrink-0 border border-primary">
+                    <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <span className="text-gray-800">{feature}</span>
+                  <span className="text-muted">{feature}</span>
                 </div>
               ))}
             </div>
@@ -473,7 +473,7 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
 
         {/* SEO контент */}
         {service.content && (
-          <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-300">
+          <div className="bg-bg rounded-2xl shadow-sm p-8 border border-border">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Подробное описание</h2>
             <div
               className="prose prose-lg max-w-none"
@@ -487,10 +487,10 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
       {/* Сайдбар */}
       <div className="space-y-8">
         {/* Цена и запись */}
-        <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-300">
+        <div className="bg-bg rounded-2xl shadow-sm p-6 border border-border">
           <div className="text-center mb-6">
             <div className="text-3xl font-bold text-gray-900 mb-2">{formatPrice(service.price)}</div>
-            <p className="text-gray-600">Стоимость услуги</p>
+            <p className="text-muted">Стоимость услуги</p>
           </div>
 
           <button
@@ -512,20 +512,20 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
           )}
 
           <div className="text-center">
-            <p className="text-gray-600 text-sm mb-2">или позвоните</p>
-            <a href="tel:+79115018828" className="text-lg font-bold text-gray-900 hover:text-blue-600 transition-colors block">
+            <p className="text-muted text-sm mb-2">или позвоните</p>
+            <a href="tel:+79115018828" className="text-lg font-bold text-gray-900 hover:text-primary transition-colors block">
               +7 (911) 501-88-28
             </a>
-            <a href="tel:+79115010696" className="text-lg font-bold text-gray-900 hover:text-blue-600 transition-colors block mt-1">
+            <a href="tel:+79115010696" className="text-lg font-bold text-gray-900 hover:text-primary transition-colors block mt-1">
               +7 (911) 501-06-96
             </a>
           </div>
         </div>
 
         {/* Города */}
-        <div className="bg-gray-50 rounded-2xl p-6 border border-gray-300">
+        <div className="bg-surface rounded-2xl p-6 border border-border">
           <h3 className="text-lg font-bold mb-4 text-gray-900 flex items-center gap-2">
-            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
@@ -534,23 +534,23 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
           <ul className="space-y-2">
             {geoKeywords.map((city, index) => (
               <li key={index} className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                <span className="text-gray-700">{city}</span>
+                <div className="w-2 h-2 bg-primary rounded-full"></div>
+                <span className="text-muted">{city}</span>
               </li>
             ))}
           </ul>
         </div>
 
         {/* Время работы */}
-        <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-300">
+        <div className="bg-bg rounded-2xl shadow-sm p-6 border border-border">
           <h3 className="text-lg font-bold text-gray-900 mb-4">Время работы</h3>
           <div className="space-y-2">
             <div className="flex justify-between">
-              <span className="text-gray-600">Пн-Пт:</span>
+              <span className="text-muted">Пн-Пт:</span>
               <span className="font-semibold text-gray-900">10:00-19:00</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-600">Сб-Вс:</span>
+              <span className="text-muted">Сб-Вс:</span>
               <span className="font-semibold text-gray-900">Выходные</span>
             </div>
           </div>
@@ -588,7 +588,7 @@ function renderTabContent(service, tab) {
     case 'description':
       return (
         <div>
-          <p className="text-gray-700 mb-4">{service.description}</p>
+          <p className="text-muted mb-4">{service.description}</p>
           {service.content && (
             <div
               className="mt-4 prose prose-lg"
@@ -609,12 +609,12 @@ function renderTabContent(service, tab) {
               { step: 3, title: 'Ремонт', desc: 'Профессиональный ремонт мастерами' },
               { step: 4, title: 'Тестирование', desc: 'Проверка всех функций после ремонта' }
             ].map((item) => (
-              <div key={item.step} className="bg-gray-50 rounded-xl p-6 border border-gray-300">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 border border-blue-200">
-                  <span className="text-blue-600 font-bold">{item.step}</span>
+              <div key={item.step} className="bg-surface rounded-xl p-6 border border-border">
+                <div className="w-12 h-12 bg-primaryBg rounded-lg flex items-center justify-center mb-4 border border-primary">
+                  <span className="text-primary font-bold">{item.step}</span>
                 </div>
                 <h4 className="text-lg font-semibold mb-2 text-gray-900">{item.title}</h4>
-                <p className="text-gray-700">{item.desc}</p>
+                <p className="text-muted">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -626,15 +626,15 @@ function renderTabContent(service, tab) {
         <ul className="space-y-3">
           {service.features.map((feature, index) => (
             <li key={index} className="flex items-start gap-3">
-              <svg className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-success mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
-              <span className="text-gray-800">{feature}</span>
+              <span className="text-muted">{feature}</span>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="text-gray-600">Особенности не указаны</p>
+        <p className="text-muted">Особенности не указаны</p>
       );
 
     case 'faq':
@@ -645,9 +645,9 @@ function renderTabContent(service, tab) {
             { q: 'Какая гарантия?', a: 'До 12 месяцев на работу и запчасти' },
             { q: 'Сколько времени занимает ремонт?', a: 'Обычно 1-3 дня, зависит от сложности и наличия запчастей' }
           ].map((item, index) => (
-            <div key={index} className="border border-gray-300 rounded-lg p-4">
+            <div key={index} className="border border-border rounded-lg p-4">
               <h4 className="font-semibold text-gray-900 mb-2">{item.q}</h4>
-              <p className="text-gray-700">{item.a}</p>
+              <p className="text-muted">{item.a}</p>
             </div>
           ))}
         </div>
