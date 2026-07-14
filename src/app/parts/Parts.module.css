@@ -78,7 +78,7 @@
 
 .resetButton {
   background: var(--color-primary-dark);
-  color: white;
+  color: var(--color-text-inverse);
   border: 1px solid var(--color-primary-dark);
   border-radius: 8px;
   padding: 8px 16px;
@@ -121,7 +121,7 @@
 
 .closeButton:hover {
   background: var(--color-primary-dark);
-  color: white;
+  color: var(--color-text-inverse);
 }
 
 /* Дерево категорий */
@@ -285,14 +285,14 @@
 
 .subcategoryButton.active {
   background: var(--color-primary-dark);
-  color: white;
+  color: var(--color-text-inverse);
   border-color: var(--color-primary-dark);
 }
 
 .subcategoryButton.active::before {
   content: '✓';
   opacity: 1;
-  color: white;
+  color: var(--color-text-inverse);
 }
 
 /* Основная область контента */
@@ -336,7 +336,7 @@
 
 .filterChip.active {
   background: var(--color-primary-dark);
-  color: white;
+  color: var(--color-text-inverse);
   border-color: var(--color-primary-dark);
 }
 
@@ -348,7 +348,7 @@
 .filterToggle {
   display: none;
   background: var(--color-primary-dark);
-  color: white;
+  color: var(--color-text-inverse);
   border: 1px solid var(--color-primary-dark);
 }
 
@@ -477,7 +477,7 @@
 .emptyStateButton {
   padding: 12px 24px;
   background: var(--color-primary-dark);
-  color: white;
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 8px;
   font-size: 1rem;
@@ -536,7 +536,7 @@
 .retryButton {
   padding: 12px 32px;
   background: var(--color-primary-dark);
-  color: white;
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 8px;
   font-size: 1rem;
@@ -1104,7 +1104,7 @@
   width: 56px;
   height: 56px;
   background: var(--color-primary-dark);
-  color: white;
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 50%;
   font-size: 1.3rem;

@@ -22,19 +22,19 @@
   border-radius: 24px;
   padding: 80px 60px;
   border: 2px solid var(--color-warning);
-  background: rgba(255, 255, 255, 0.95);
+  background: color-mix(in srgb, var(--color-bg) 95%, transparent);
   backdrop-filter: blur(10px);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 
+  box-shadow:
     0 10px 40px rgba(37, 99, 235, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.8);
+    0 0 0 1px color-mix(in srgb, var(--color-bg) 80%, transparent);
 }
 
 .quoteContainer:hover {
   transform: translateY(-8px) scale(1.01);
   box-shadow:
     0 20px 60px rgba(37, 99, 235, 0.15),
-    0 0 0 1px rgba(255, 255, 255, 0.9);
+    0 0 0 1px color-mix(in srgb, var(--color-bg) 90%, transparent);
   border-color: var(--color-primary);
 }
 
@@ -282,7 +282,7 @@
     margin-bottom: 32px;
     border-radius: 16px;
     backdrop-filter: none;
-    background: rgba(255, 255, 255, 0.98);
+    background: color-mix(in srgb, var(--color-bg) 98%, transparent);
   }
   
   .aboutMeTitle {

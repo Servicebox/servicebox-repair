@@ -73,7 +73,7 @@
 .heroTitle {
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 800;
-  color: white;
+  color: var(--color-text-inverse);
   margin-bottom: 20px;
   line-height: 1.2;
 }
@@ -87,7 +87,7 @@
 
 .heroSubtitle {
   font-size: clamp(1rem, 2vw, 1.25rem);
-  color: rgba(255, 255, 255, 0.9);
+  color: color-mix(in srgb, var(--color-text-inverse) 90%, transparent);
   margin-bottom: 40px;
   line-height: 1.6;
   max-width: 700px;
@@ -129,15 +129,15 @@
 }
 
 .ctaSecondary {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: color-mix(in srgb, var(--color-text-inverse) 10%, transparent);
+  color: var(--color-text-inverse);
+  border: 2px solid color-mix(in srgb, var(--color-text-inverse) 20%, transparent);
   backdrop-filter: blur(10px);
 }
 
 .ctaSecondary:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: color-mix(in srgb, var(--color-text-inverse) 15%, transparent);
+  border-color: color-mix(in srgb, var(--color-text-inverse) 30%, transparent);
   transform: translateY(-2px);
 }
 
@@ -182,8 +182,8 @@
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.9);
+  background: color-mix(in srgb, var(--color-text-inverse) 10%, transparent);
+  color: color-mix(in srgb, var(--color-text-inverse) 90%, transparent);
   border-radius: 20px;
   font-size: 0.95rem;
   backdrop-filter: blur(10px);
@@ -552,14 +552,14 @@
 .ctaBlockTitle {
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 800;
-  color: white;
+  color: var(--color-text-inverse);
   margin-bottom: 16px;
   line-height: 1.2;
 }
 
 .ctaBlockText {
   font-size: 1.125rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: color-mix(in srgb, var(--color-text-inverse) 90%, transparent);
   margin-bottom: 32px;
   line-height: 1.6;
 }
@@ -596,20 +596,20 @@
   align-items: center;
   gap: 10px;
   padding: 16px 32px;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+  background: color-mix(in srgb, var(--color-text-inverse) 10%, transparent);
+  color: var(--color-text-inverse);
   text-decoration: none;
   border-radius: 12px;
   font-weight: 700;
   font-size: 1.0625rem;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid color-mix(in srgb, var(--color-text-inverse) 20%, transparent);
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
 }
 
 .ctaBlockSecondary:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: color-mix(in srgb, var(--color-text-inverse) 15%, transparent);
+  border-color: color-mix(in srgb, var(--color-text-inverse) 30%, transparent);
   transform: translateY(-2px);
 }
 
