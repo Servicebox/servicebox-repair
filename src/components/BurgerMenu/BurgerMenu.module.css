@@ -88,7 +88,8 @@
 .menuContent {
   position: fixed;
   top: 0;
-  right: -100%;
+  right: 0;
+  transform: translateX(100%);
   width: 85%;
   max-width: 380px;
   height: 100vh;
@@ -96,7 +97,7 @@
   box-shadow: -8px 0 40px rgba(0, 33, 71, 0.25), -2px 0 10px rgba(0, 0, 0, 0.1);
   border-left: 4px solid transparent;
   border-image: var(--cube-gradient) 1;
-  transition: right 0.4s var(--ease-out-expo);
+  transition: transform 0.4s var(--ease-out-expo);
   padding: 0 20px 25px;
   overflow-y: auto;
   display: flex;
@@ -105,7 +106,7 @@
 }
 
 .burgerMenu.open .menuContent {
-  right: 0;
+  transform: translateX(0);
 }
 
 /* Заголовок — фирменный тёмно-синий, "выступает" над светлой панелью */
@@ -331,6 +332,10 @@
 .telegram:hover { color: #0088cc; background: rgba(0, 136, 204, 0.12); border-color: rgba(0, 136, 204, 0.3); }
 
 @media (prefers-reduced-motion: reduce) {
+  .menuContent {
+    transition: none;
+  }
+
   .menuItem {
     animation: none;
     opacity: 1;
