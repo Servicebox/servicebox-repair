@@ -7,7 +7,6 @@ import headerLogo from "../../../public/favicon.webp";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
 import LoginSignup from "../LoginSignup/LoginSignup";
 import GlobalSearch from '../GlobalSearch/GlobalSearch';
-import HeaderTracking from "../HeaderTracking/HeaderTracking";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBasketShopping,
@@ -159,8 +158,6 @@ function Header() {
 
           {/* Действия справа */}
           <div className={styles.headerActions}>
-            <HeaderTracking />
-
             {user ? (
               <div className={styles.navUserGroup} ref={userMenuRef}>
                 <button
