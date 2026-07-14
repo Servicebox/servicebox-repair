@@ -17,9 +17,9 @@
   --color-text-muted: #475569;
   --color-text-inverse: #ffffff;
 
-  /* Brand */
+  /* Brand — matches the logo cube's dark blue facets */
   --color-primary: #2563eb;
-  --color-primary-dark: #1e3a8a;
+  --color-primary-dark: #002147;
   --color-accent: #f97316;
 
   /* Semantic */
