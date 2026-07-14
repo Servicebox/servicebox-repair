@@ -4,6 +4,7 @@ import dbConnect from '@/lib/db';
 import Booking from '@/models/Booking';
 import Service from '@/models/Service';
 import { verifyToken } from '@/lib/auth-helpers';
+import { fetchCrm } from '@/lib/crmClient';
 
 export async function POST(request) {
   await dbConnect();
@@ -73,6 +74,31 @@ export async function POST(request) {
       } catch (telegramError) {
         console.error('❌ Ошибка отправки в Telegram:', telegramError);
       }
+    }
+
+    // Дублируем заявку в CRM как заказ — best-effort, не блокирует ответ клиенту
+    // и не должно ронять бронирование, если CRM недоступна. Локальная запись
+    // (Booking, trackingCode, /admin-panel/bookings, история в профиле
+    // пользователя) остаётся источником правды для сайта — это лишь копия
+    // для CRM, чтобы сотрудники видели заявку рядом со своими заказами.
+    try {
+      const crmRes = await fetchCrm('/api/v1/orders', {
+        method: 'POST',
+        body: JSON.stringify({
+          clientName: userName,
+          clientPhone: userPhone,
+          clientEmail: userEmail || undefined,
+          deviceType: 'Не указано (запись через сайт)',
+          deviceModel: deviceModel || undefined,
+          defectDescription: `Услуга: ${finalServiceName}${notes ? `\n${notes}` : ''}`,
+          source: 'сайт (запись)',
+        }),
+      });
+      if (crmRes && !crmRes.ok) {
+        console.error('[bookings] CRM ответил ошибкой:', crmRes.status, await crmRes.text().catch(() => ''));
+      }
+    } catch (crmError) {
+      console.error('❌ Ошибка отправки заявки в CRM:', crmError);
     }
 
     return NextResponse.json(booking, { status: 201 });
