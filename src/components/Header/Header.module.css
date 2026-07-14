@@ -64,7 +64,11 @@
 
 .headerWorkHours {
   font-size: 0.9rem;
-  color: var(--color-text-muted);
+  /* This bar's background is always --color-primary-dark (a dark blue),
+     regardless of theme — --color-text-muted is tuned for light surfaces
+     and was nearly invisible here. Match the phone links next to it. */
+  color: var(--color-text-inverse);
+  opacity: 0.75;
 }
 
 .headerSocials {
