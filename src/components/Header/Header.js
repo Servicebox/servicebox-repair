@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useAuth } from '@/components/contexts/AuthContext';
 import headerLogo from "../../../public/favicon.webp";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
-import PhosphorCube from "../PhosphorCube/PhosphorCube";
 import LoginSignup from "../LoginSignup/LoginSignup";
 import GlobalSearch from '../GlobalSearch/GlobalSearch';
 import HeaderTracking from "../HeaderTracking/HeaderTracking";
@@ -16,7 +15,6 @@ import {
   faUser,
   faChevronDown,
   faSun,
-  faMoon,
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import { faVk } from "@fortawesome/free-brands-svg-icons";
@@ -117,7 +115,6 @@ function Header() {
           {/* Логотип */}
           <Link href="/" className={styles.headerLogoLink} aria-label="На главную страницу ServiceBox">
             <img src={headerLogo.src} alt="Логотип ServiceBox" className={styles.headerLogo} width="65" height="45" />
-            <PhosphorCube size="sm" />
             <span className={styles.headerLogoText}>
               <span className={styles.headerLogoMain}>Сервис Бокс</span>
               <span className={styles.headerLogoSub}>Вологда</span>
@@ -153,11 +150,7 @@ function Header() {
                   <li><Link href="/promotions-page" className={styles.dropdownItem}>Акции</Link></li>
                   <li><Link href="/price" className={styles.dropdownItem}>Прайс-лист</Link></li>
                   <li><Link href="/depository-public" className={styles.dropdownItem}>Схемы/Bios</Link></li>
-                  <li>
-                    <a href="https://pm-31768.promaster.app/index_cl" target="_blank" rel="noopener noreferrer" className={styles.dropdownItem}>
-                      Статус ремонта
-                    </a>
-                  </li>
+                  <li><Link href="/tracking" className={styles.dropdownItem}>Статус ремонта</Link></li>
                 </ul>
               </li>
             </ul>
@@ -208,15 +201,18 @@ function Header() {
               aria-label="Настройки отображения"
               className={styles.a11yControls}
             >
-              <button
-                type="button"
-                className={styles.themeToggle}
-                onClick={toggleTheme}
-                aria-label={theme === 'dark' ? 'Включить светлую тему' : 'Включить тёмную тему'}
-                aria-pressed={theme === 'dark'}
-              >
-                <FontAwesomeIcon icon={theme === 'dark' ? faSun : faMoon} />
-              </button>
+              {/* Кнопка переключения темы временно скрыта в светлой теме — показываем только "вернуться в светлую" из тёмной */}
+              {theme === 'dark' && (
+                <button
+                  type="button"
+                  className={styles.themeToggle}
+                  onClick={toggleTheme}
+                  aria-label="Включить светлую тему"
+                  aria-pressed={theme === 'dark'}
+                >
+                  <FontAwesomeIcon icon={faSun} />
+                </button>
+              )}
 
               <button
                 type="button"
