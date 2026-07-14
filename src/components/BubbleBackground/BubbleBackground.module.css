@@ -9,72 +9,68 @@
   overflow: hidden;
 }
 
-.bubble {
+/* Пузыри, "наплодившиеся" по клику/тапу — тот же визуал, что у основного
+   пузыря, но всплывают от точки касания и растворяются (только transform +
+   opacity — дёшево для компоновщика, лагов не даёт даже при максимуме). */
+.spawnedBubble {
+  position: absolute;
+  margin-left: -3rem;
+  margin-top: -3rem;
+  border-radius: 45% 50% 55% 45%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -99;
+  box-shadow: 2rem 2rem 1rem 1rem rgba(37, 99, 235, 0.3);
+  animation: bubbleFloatAway 4s ease-out forwards;
+}
+
+@keyframes bubbleFloatAway {
+  0% {
+    transform: translateY(0) scale(0.5);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateY(-14rem) scale(1.1);
+    opacity: 0;
+  }
+}
+
+.bubbleWrap {
   position: fixed;
   top: 0;
   left: 0;
   width: 20rem;
   height: 20rem;
-  transform: translate(calc(var(--left, 50vw) - 50vw), calc(var(--top, 50vh) - 50vh));
   transition: transform 3s ease-out;
-  animation: bubbleWaving 5s ease-in-out infinite;
-  opacity: 0.95;
-  box-shadow: 2rem 2rem 1rem 1rem rgba(37, 99, 235, 0.3);
-  overflow: hidden;
   pointer-events: none;
   z-index: -99;
 }
 
-@keyframes bubbleWaving {
-  0%, 100% {
-    border-radius: 45% 50% 55% 45%;
-  }
-  20% {
-    border-radius: 50% 50% 55% 50%;
-  }
-  40% {
-    border-radius: 50% 55% 45% 55%;
-  }
-  60% {
-    border-radius: 55% 50% 50% 55%;
-  }
-  80% {
-    border-radius: 45% 55% 50% 50%;
-  }
-}
-
-.bubble::before {
-  content: "";
+/* Покачивание формы — только transform (scale/rotate), не border-radius.
+   Раньше border-radius менялся покадрово keyframe-анимацией на большом
+   (320px) элементе, который висит на КАЖДОЙ странице сайта ВЕЧНО —
+   border-radius не композитное свойство, это постоянная перерисовка,
+   бесконечно, даже если ни один пузырь не заспавнен. Сама форма теперь
+   статична, "живость" даёт лёгкое сжатие/поворот — дёшево для GPU. */
+.bubbleShape {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-position: center;
-  background-size: 100vw auto;
-  background-position: calc(10rem - var(--left)) calc(10rem - var(--top));
-  opacity: 0.8;
-  transition: background-position 2s ease-in-out;
-  filter: blur(5px);
-  animation: mirror 5s ease-in-out infinite;
+  inset: 0;
+  border-radius: 45% 55% 50% 50%;
+  opacity: 0.95;
+  box-shadow: 2rem 2rem 1rem 1rem rgba(37, 99, 235, 0.3);
+  overflow: hidden;
+  animation: bubbleWaving 5s ease-in-out infinite;
 }
 
-@keyframes mirror {
-  0%, 100% {
-    transform: scale(-1, -1.2);
-  }
-  20% {
-    transform: scale(-1.2, -1);
-  }
-  40% {
-    transform: scale(-1, -1.2);
-  }
-  60% {
-    transform: scale(-1, -1);
-  }
-  80% {
-    transform: scale(-1.2, -1.2);
-  }
+@keyframes bubbleWaving {
+  0%, 100% { transform: scale(1, 1) rotate(0deg); }
+  20% { transform: scale(1.03, 0.97) rotate(2deg); }
+  40% { transform: scale(0.97, 1.03) rotate(-1deg); }
+  60% { transform: scale(1.02, 0.98) rotate(1deg); }
+  80% { transform: scale(0.98, 1.02) rotate(-2deg); }
 }
 
 .bubbleRainbow {
@@ -92,13 +88,19 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 20% 20%, transparent, rgba(255, 255, 255, 0.95));
+  background: radial-gradient(circle at 20% 20%, transparent, #fff);
 }
 
 .bubbleBrightCircle {
+  /* Раньше здесь была своя анимация bubbleWaving (border-radius) на КАЖДОМ
+     из двух слоёв в КАЖДОМ пузыре — border-radius не композитное свойство,
+     браузер перерисовывает его каждый кадр. Пока пузырь был один, это было
+     незаметно; когда пузыри стали "плодиться" (до 10 одновременно), это
+     давало до 20 параллельных перерисовок в кадр и заметный лаг. Форма
+     теперь статична — сам пузырь и так покачивается (bubbleWaving на
+     .bubble/.spawnedBubble), этого достаточно для живости. */
   position: absolute;
-  border-radius: 50%;
-  animation: bubbleWaving 3s ease-in-out infinite;
+  border-radius: 50% 55% 45% 55%;
 }
 
 .bubbleBrightCircleFirst {
@@ -106,7 +108,7 @@
   left: 5%;
   width: 100%;
   height: 90%;
-  background: linear-gradient(45deg, rgba(255, 255, 255, 0.95) -50%, transparent, rgba(255, 255, 255, 0.95) 150%);
+  background: linear-gradient(45deg, #fff -50%, transparent, #fff 150%);
 }
 
 .bubbleBrightCircleSecond {
@@ -114,14 +116,14 @@
   left: 10%;
   width: 80%;
   height: 80%;
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.95) -50%, transparent, rgba(255, 255, 255, 0.95) 150%);
+  background: linear-gradient(120deg, #fff -50%, transparent, #fff 150%);
   animation-delay: -1s;
 }
 
 .bubbleBrightness {
   position: absolute;
   border-radius: 50%;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.95), transparent);
+  background: linear-gradient(0deg, #fff, transparent);
   transform-origin: center;
 }
 
@@ -142,21 +144,8 @@
 }
 
 /* Responsive styles */
-@media screen and (min-width: 499px) and (max-width: 769px) {
-  .bubble {
-    width: 20rem;
-    height: 20rem;
-    z-index: -99;
-  }
-
-  .bubble::before {
-    width: 80%;
-    height: 80%;
-  }
-}
-
 @media screen and (min-width: 320px) and (max-width: 498px) {
-  .bubble {
+  .bubbleWrap {
     width: 10rem;
     height: 10rem;
   }
