@@ -275,7 +275,7 @@
 
 /* Первый шаг - особый акцент (призыв к действию) */
 .workStepCard:first-child {
-  background: linear-gradient(135deg, var(--color-warning-bg) 0%, #ffffff 100%);
+  background: linear-gradient(135deg, var(--color-warning-bg) 0%, var(--color-bg) 100%);
   border-color: var(--color-warning);
 }
 
@@ -500,7 +500,7 @@
 }
 
 .faqQuestion.active {
-  background: linear-gradient(135deg, var(--color-primary-bg) 0%, #ffffff 100%);
+  background: linear-gradient(135deg, var(--color-primary-bg) 0%, var(--color-bg) 100%);
   color: var(--color-warning);
 }
 
