@@ -1,104 +1,83 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
+import { fetchCrm } from '@/lib/crmClient';
 
 // Используем бота для уведомлений в группу
 const BOT_TOKEN = process.env.NOTIFY_BOT_TOKEN;
 const CHAT_ID = process.env.NOTIFY_CHAT_ID;
 
 export async function POST(request) {
-  try {
-    console.log('Environment check:', {
-      hasToken: !!BOT_TOKEN,
-      hasChatId: !!CHAT_ID,
-      tokenLength: BOT_TOKEN?.length,
-      chatId: CHAT_ID
-    });
+  const { name, phone, description, promotion } = await request.json();
 
-    if (!BOT_TOKEN || !CHAT_ID) {
-      console.error('Missing environment variables:', {
-        BOT_TOKEN: BOT_TOKEN ? 'SET' : 'MISSING',
-        CHAT_ID: CHAT_ID ? 'SET' : 'MISSING'
-      });
-      return NextResponse.json(
-        { error: 'Bot token or chat ID not configured' }, 
-        { status: 500 }
-      );
-    }
-
-    // Получаем данные из формы
-    const { name, phone, description, promotion } = await request.json();
-    
-    console.log('Received form data:', { name, phone, description, promotion });
-    
-    // Валидация обязательных полей
-    if (!name || !phone) {
-      return NextResponse.json(
-        { 
-          error: 'Missing required fields',
-          required: ['name', 'phone'],
-          received: { name, phone, description, promotion }
-        },
-        { status: 400 }
-      );
-    }
-
-    // Форматируем сообщение для Telegram
-    const message = `📝 *Новая заявка с сайта*\n\n` +
-                   `👤 *Имя:* ${name}\n` +
-                   `📞 *Телефон:* ${phone}\n` +
-                   (description ? `📋 *Описание:* ${description}\n` : '') +
-                   (promotion ? `🎁 *Акция:* ${promotion}\n` : '') +
-                   `\n⏰ *Время:* ${new Date().toLocaleString('ru-RU')}`;
-
-    // Отправляем сообщение в Telegram
-    const telegramResponse = await axios.post(
-      `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
-      {
-        chat_id: CHAT_ID,
-        text: message,
-        parse_mode: 'Markdown'
-      },
-      {
-        timeout: 10000,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    );
-
-    console.log('Telegram API response:', telegramResponse.data);
-
-    return NextResponse.json({ 
-      success: true, 
-      message: 'Заявка успешно отправлена',
-      messageId: telegramResponse.data.result?.message_id
-    });
-
-  } catch (error) {
-    console.error('Telegram send error details:', {
-      message: error.message,
-      response: error.response?.data,
-      status: error.response?.status
-    });
-
-    let errorMessage = 'Failed to send message to Telegram';
-    let statusCode = 500;
-
-    if (error.response) {
-      errorMessage = `Telegram API error: ${error.response.data.description || 'Unknown error'}`;
-      statusCode = error.response.status;
-    } else if (error.request) {
-      errorMessage = 'No response received from Telegram API';
-    }
-
+  if (!name || !phone) {
     return NextResponse.json(
-      { 
+      {
         success: false,
-        error: errorMessage
+        error: 'Заполните имя и телефон',
       },
-      { status: statusCode }
+      { status: 400 }
     );
   }
+
+  // Основной канал: заявка становится заказом в CRM — надёжная запись,
+  // которую видят сотрудники, и она не теряется, если Telegram недоступен
+  // (обычная история для api.telegram.org — та же нестабильность сети, что
+  // уже чинили для чата/бронирований через src/lib/crmClient.js).
+  let crmOk = false;
+  try {
+    const defect = [description, promotion ? `Акция: ${promotion}` : null]
+      .filter(Boolean)
+      .join('\n') || 'Без описания';
+
+    const crmRes = await fetchCrm('/api/v1/orders', {
+      method: 'POST',
+      body: JSON.stringify({
+        clientName: name,
+        clientPhone: phone,
+        deviceType: 'Не указано (заявка с сайта)',
+        defectDescription: defect,
+        source: 'сайт (форма)',
+      }),
+    });
+    crmOk = !!crmRes && crmRes.ok;
+    if (crmRes && !crmRes.ok) {
+      console.error('[telegram-form] CRM ответил ошибкой:', crmRes.status, await crmRes.text().catch(() => ''));
+    }
+  } catch (crmError) {
+    console.error('[telegram-form] Ошибка отправки заявки в CRM:', crmError);
+  }
+
+  // Вторичный канал: Telegram-уведомление — best-effort, его сбой больше не
+  // должен блокировать заявку клиенту, если она уже дошла до CRM.
+  let telegramOk = false;
+  if (BOT_TOKEN && CHAT_ID) {
+    try {
+      const message = `📝 *Новая заявка с сайта*\n\n` +
+        `👤 *Имя:* ${name}\n` +
+        `📞 *Телефон:* ${phone}\n` +
+        (description ? `📋 *Описание:* ${description}\n` : '') +
+        (promotion ? `🎁 *Акция:* ${promotion}\n` : '') +
+        `\n⏰ *Время:* ${new Date().toLocaleString('ru-RU')}`;
+
+      await axios.post(
+        `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
+        { chat_id: CHAT_ID, text: message, parse_mode: 'Markdown' },
+        { timeout: 10000, headers: { 'Content-Type': 'application/json' } }
+      );
+      telegramOk = true;
+    } catch (error) {
+      console.error('[telegram-form] Telegram send error:', error.message, error.response?.data);
+    }
+  }
+
+  if (!crmOk && !telegramOk) {
+    return NextResponse.json(
+      { success: false, error: 'Не удалось отправить заявку, попробуйте позже' },
+      { status: 503 }
+    );
+  }
+
+  return NextResponse.json({ success: true, message: 'Заявка успешно отправлена' });
 }
 
 // Обработчик для GET запросов (тот самый который возвращает "Hello telegram!")
