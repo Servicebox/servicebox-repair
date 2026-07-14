@@ -117,7 +117,7 @@ const structuredData = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ru" suppressHydrationWarning className={`${interTight.variable} ${inter.variable}`}>
+    <html lang="ru" suppressHydrationWarning data-scroll-behavior="smooth" className={`${interTight.variable} ${inter.variable}`}>
       <head>
         {/* Anti-flash: apply theme before hydration to prevent flicker */}
         <script dangerouslySetInnerHTML={{ __html: `(function(){
