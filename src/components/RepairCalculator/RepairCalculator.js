@@ -163,10 +163,10 @@ export default function RepairCalculator({ initialDeviceType = null, initialServ
                     <h2 className="text-3xl md:text-4xl font-bold mb-3" itemProp="name" style={{ color: 'var(--color-primary-dark)' }}>
                         🧮 Калькулятор стоимости ремонта
                     </h2>
-                    <p className="text-gray-600 text-lg" itemProp="description">
+                    <p className="text-lg" itemProp="description" style={{ color: 'var(--color-text-muted)' }}>
                         Бесплатный онлайн-калькулятор. Точный расчёт с учётом вашей модели за 30 секунд
                     </p>
-                    <p className="text-sm text-orange-600 font-semibold mt-2">
+                    <p className="text-sm font-semibold mt-2" style={{ color: 'var(--color-warning)' }}>
                         ⚡ Точная цена после диагностики
                     </p>
                 </header>
@@ -196,10 +196,10 @@ export default function RepairCalculator({ initialDeviceType = null, initialServ
                         </div>
                     </div>
                     {deviceType && loading && (
-                        <div className="text-center text-gray-500 py-4">Загрузка цен...</div>
+                        <div className="text-center py-4" style={{ color: 'var(--color-text-muted)' }}>Загрузка цен...</div>
                     )}
                     {deviceType && !loading && matrixData && !matrixData.category && (
-                        <div className="text-center text-orange-600 py-4">
+                        <div className="text-center py-4" style={{ color: 'var(--color-warning)' }}>
                             Для этой категории пока не настроены цены в новой системе — загляните позже.
                         </div>
                     )}
@@ -259,7 +259,7 @@ export default function RepairCalculator({ initialDeviceType = null, initialServ
                                 <h3 className="text-xl font-bold" style={{ color: 'var(--color-primary-dark)' }}>Какие работы нужны?</h3>
                             </div>
                             {applicableServices.length === 0 && (
-                                <p className="text-gray-500">Для этой модели пока нет настроенных цен — уточните стоимость по телефону.</p>
+                                <p style={{ color: 'var(--color-text-muted)' }}>Для этой модели пока нет настроенных цен — уточните стоимость по телефону.</p>
                             )}
                             <div className="space-y-3" role="group" aria-label="Список услуг">
                                 {applicableServices.map(({ service, resolved }) => {
@@ -281,12 +281,12 @@ export default function RepairCalculator({ initialDeviceType = null, initialServ
                                                         <h4 className="font-bold text-lg" style={{ color: 'var(--color-primary-dark)' }}>{service.name}</h4>
                                                     </div>
                                                     {(service.minTime || service.maxTime) && (
-                                                        <div className="text-xs text-gray-500">⏱️ {service.minTime} — {service.maxTime}</div>
+                                                        <div className="text-xs" style={{ color: 'var(--color-text-muted)' }}>⏱️ {service.minTime} — {service.maxTime}</div>
                                                     )}
                                                 </div>
                                                 <div className="text-right flex-shrink-0">
                                                     <div className="font-bold text-lg" style={{ color: '#ff8c00' }}>~{resolved.price?.toLocaleString('ru-RU')}₽</div>
-                                                    <div className="text-xs text-gray-500">работа</div>
+                                                    <div className="text-xs" style={{ color: 'var(--color-text-muted)' }}>работа</div>
                                                 </div>
                                             </div>
                                         </button>

@@ -13,7 +13,7 @@ export default function CommonProblems() {
                     <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--color-primary-dark)' }}>
                         🔍 Частые проблемы с техникой
                     </h2>
-                    <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+                    <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--color-text-muted)' }}>
                         Разбираем типичные поломки, их причины и стоимость ремонта
                     </p>
                 </div>
@@ -25,7 +25,7 @@ export default function CommonProblems() {
                             <Link
                                 key={slug}
                                 href={`/problems/${slug}`}
-                                className="group block rounded-2xl p-6 bg-white border-2 border-gray-200 hover:border-blue-400 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                                className="group block rounded-2xl p-6 bg-bg border-2 border-border hover:border-primary transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
                             >
                                 <div className="flex items-start gap-4">
                                     <div className="text-4xl flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
@@ -41,7 +41,7 @@ export default function CommonProblems() {
                                         <h3 className="font-bold text-base mb-1.5 leading-snug" style={{ color: 'var(--color-primary-dark)' }}>
                                             {problem.title}
                                         </h3>
-                                        <p className="text-sm text-gray-600 line-clamp-2">
+                                        <p className="text-sm line-clamp-2" style={{ color: 'var(--color-text-muted)' }}>
                                             {problem.shortAnswer}
                                         </p>
                                     </div>
