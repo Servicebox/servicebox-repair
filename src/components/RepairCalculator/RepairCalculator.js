@@ -187,7 +187,7 @@ export default function RepairCalculator({ initialDeviceType = null, initialServ
                                     role="radio"
                                     aria-checked={deviceType === key}
                                     aria-label={`Категория: ${label}`}
-                                    style={{ background: deviceType === key ? 'linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%)' : 'white', borderColor: deviceType === key ? 'var(--color-primary-dark)' : '#e2e8f0', color: deviceType === key ? 'white' : 'var(--color-primary-dark)' }}
+                                    style={{ background: deviceType === key ? 'linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%)' : 'var(--color-bg)', borderColor: deviceType === key ? 'var(--color-primary-dark)' : 'var(--color-border)', color: deviceType === key ? 'var(--color-text-inverse)' : 'var(--color-primary-dark)' }}
                                 >
                                     <div className="text-4xl mb-2" aria-hidden="true">{icon}</div>
                                     <div className="font-bold text-sm">{label}</div>
@@ -218,7 +218,7 @@ export default function RepairCalculator({ initialDeviceType = null, initialServ
                                         role="radio"
                                         aria-checked={brandId === b._id}
                                         aria-label={`Бренд: ${b.name}`}
-                                        style={{ background: brandId === b._id ? 'linear-gradient(135deg, #ff8c00 0%, #ff6b00 100%)' : 'white', borderColor: brandId === b._id ? '#ff8c00' : '#e2e8f0', color: brandId === b._id ? 'white' : 'var(--color-primary-dark)' }}
+                                        style={{ background: brandId === b._id ? 'linear-gradient(135deg, #ff8c00 0%, #ff6b00 100%)' : 'var(--color-bg)', borderColor: brandId === b._id ? '#ff8c00' : 'var(--color-border)', color: brandId === b._id ? 'var(--color-text-inverse)' : 'var(--color-primary-dark)' }}
                                     >
                                         <div className="font-bold text-sm mb-1">{b.name}</div>
                                         <div className="text-xs opacity-80">{b.models.length} {b.models.length === 1 ? 'модель' : b.models.length < 5 ? 'модели' : 'моделей'}</div>
@@ -243,7 +243,7 @@ export default function RepairCalculator({ initialDeviceType = null, initialServ
                                             role="radio"
                                             aria-checked={modelId === m._id}
                                             aria-label={`Модель: ${m.name}`}
-                                            style={{ background: modelId === m._id ? 'linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%)' : 'white', borderColor: modelId === m._id ? 'var(--color-primary-dark)' : '#e2e8f0', color: modelId === m._id ? 'white' : 'var(--color-primary-dark)' }}
+                                            style={{ background: modelId === m._id ? 'linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%)' : 'var(--color-bg)', borderColor: modelId === m._id ? 'var(--color-primary-dark)' : 'var(--color-border)', color: modelId === m._id ? 'var(--color-text-inverse)' : 'var(--color-primary-dark)' }}
                                         >
                                             <div className="font-semibold">{m.name}</div>
                                         </button>
@@ -272,7 +272,7 @@ export default function RepairCalculator({ initialDeviceType = null, initialServ
                                             role="checkbox"
                                             aria-checked={isSelected}
                                             aria-label={`${service.name}, цена ~${resolved.price?.toLocaleString('ru-RU')} рублей`}
-                                            style={{ background: isSelected ? 'linear-gradient(135deg, #fff4e6 0%, #ffe8cc 10%)' : 'white', borderColor: isSelected ? '#ff8c00' : '#e2e8f0' }}
+                                            style={{ background: isSelected ? 'var(--color-warning-bg)' : 'var(--color-bg)', borderColor: isSelected ? '#ff8c00' : 'var(--color-border)' }}
                                         >
                                             <div className="flex items-start justify-between gap-4">
                                                 <div className="flex-1">
@@ -300,7 +300,7 @@ export default function RepairCalculator({ initialDeviceType = null, initialServ
                             <meta itemProp="priceCurrency" content="RUB" />
                             <meta itemProp="lowPrice" content={calculatePrice.minTotal} />
                             <meta itemProp="highPrice" content={calculatePrice.maxTotal} />
-                            <div className="rounded-3xl p-6 md:p-8 text-white shadow-2xl" style={{ background: 'linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%)' }}>
+                            <div className="rounded-3xl p-6 md:p-8 shadow-2xl" style={{ background: 'linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%)', color: 'var(--color-text-inverse)' }}>
                                 <div className="text-center mb-6">
                                     <div className="text-sm opacity-80 mb-2">Для {calculatePrice.modelName}</div>
                                     <h3 className="text-2xl font-bold mb-2">💰 Стоимость работ</h3>
@@ -308,7 +308,7 @@ export default function RepairCalculator({ initialDeviceType = null, initialServ
                                         {calculatePrice.minTotal.toLocaleString('ru-RU')} – {calculatePrice.maxTotal.toLocaleString('ru-RU')} ₽
                                     </div>
                                 </div>
-                                <div className="bg-white/10 rounded-2xl p-4 mb-6 space-y-2">
+                                <div className="rounded-2xl p-4 mb-6 space-y-2" style={{ background: 'color-mix(in srgb, var(--color-text-inverse) 10%, transparent)' }}>
                                     {calculatePrice.details.map((d, i) => (
                                         <div key={i} className="flex justify-between text-sm">
                                             <span className="opacity-90">{d.name}</span>
@@ -316,18 +316,18 @@ export default function RepairCalculator({ initialDeviceType = null, initialServ
                                         </div>
                                     ))}
                                 </div>
-                                <div className="bg-white/10 rounded-xl p-3 mb-6 text-center text-sm opacity-90">
+                                <div className="rounded-xl p-3 mb-6 text-center text-sm opacity-90" style={{ background: 'color-mix(in srgb, var(--color-text-inverse) 10%, transparent)' }}>
                                     ⚡ *Цена указана только за работу мастера<br />Стоимость запчастей рассчитывается отдельно
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
-                                    <a href={`tel:${BUSINESS.phones.primary.replace(/-/g, '')}`} className="flex items-center justify-center py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform" style={{ background: '#28a745', color: 'white' }}>
+                                    <a href={`tel:${BUSINESS.phones.primary.replace(/-/g, '')}`} className="flex items-center justify-center py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform" style={{ background: 'var(--color-success)', color: 'var(--color-text-inverse)' }}>
                                         📞 {BUSINESS.phonesFormatted.primary}
                                     </a>
-                                    <Link href="/contacts" className="flex items-center justify-center py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform" style={{ background: 'white', color: 'var(--color-primary-dark)' }}>
+                                    <Link href="/contacts" className="flex items-center justify-center py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform" style={{ background: 'var(--color-bg-dark)', color: 'var(--color-primary-dark)' }}>
                                         📍 Приехать
                                     </Link>
                                 </div>
-                                <button onClick={reset} className="w-full py-3 rounded-xl font-semibold hover:scale-105 transition-transform" style={{ background: 'rgba(255,255,255,0.1)', color: 'white', border: '2px solid rgba(255,255,255,0.3)' }}>
+                                <button onClick={reset} className="w-full py-3 rounded-xl font-semibold hover:scale-105 transition-transform" style={{ background: 'color-mix(in srgb, var(--color-text-inverse) 10%, transparent)', color: 'var(--color-text-inverse)', border: '2px solid color-mix(in srgb, var(--color-text-inverse) 30%, transparent)' }}>
                                     🔄 Рассчитать заново
                                 </button>
                             </div>

@@ -223,7 +223,7 @@
   align-items: center;
   gap: 20px;
   padding: 24px;
-  background: white;
+  background: var(--color-bg);
   border-radius: 20px;
   border: 2px solid transparent;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
@@ -345,7 +345,7 @@
   align-items: center;
   gap: 10px;
   padding: 14px 18px;
-  background: white;
+  background: var(--color-bg);
   border-radius: 12px;
   text-decoration: none;
   color: var(--color-primary-dark);
@@ -370,7 +370,7 @@
    КАРТА И АДРЕС
    ============================================================ */
 .locationCard {
-  background: white;
+  background: var(--color-bg);
   border-radius: 24px;
   padding: 32px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
@@ -617,7 +617,7 @@
    SEO СЕКЦИЯ
    ============================================================ */
 .seoSection {
-  background: white;
+  background: var(--color-bg);
   border-radius: 24px;
   padding: 48px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
@@ -713,7 +713,7 @@
   align-items: center;
   gap: 10px;
   padding: 14px 28px;
-  background: white;
+  background: var(--color-bg);
   color: var(--color-primary-dark);
   text-decoration: none;
   border-radius: 12px;
