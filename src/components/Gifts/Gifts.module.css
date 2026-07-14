@@ -2,7 +2,6 @@
 .gifts {
     padding: 60px 20px;
     text-align: center;
-    color: var(--color-text-inverse);
     border-radius: var(--border-radius);
     margin: 60px auto;
     max-width: 1200px;
@@ -16,10 +15,6 @@
     margin-bottom: 60px;
     line-height: 1.2;
     position: relative;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
 /* Improved styles for the deepshadow effect */

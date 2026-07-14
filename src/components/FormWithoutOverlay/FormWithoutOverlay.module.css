@@ -17,7 +17,7 @@
 
 .formTitle {
   font-size: 1.8rem;
-  color: var(--color-text-muted);
+  color: var(--color-primary-dark);
   margin-bottom: 10px;
 }
 
@@ -54,6 +54,7 @@
   font-size: 16px;
   transition: all 0.3s ease;
   background-color: transparent;
+  color: var(--color-text);
 }
 
 .formInput:focus, .formTextarea:focus {
