@@ -61,7 +61,7 @@
   display: inline-block;
   padding: 8px 20px;
   background: rgba(255, 140, 0, 0.15);
-  color: var(--color-warning);
+  color: var(--color-text-inverse);
   border: 1px solid rgba(255, 140, 0, 0.3);
   border-radius: 20px;
   font-size: 0.875rem;
@@ -79,10 +79,11 @@
 }
 
 .heroAccent {
-  background: linear-gradient(135deg, var(--color-warning) 0%, #fbbf24 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--color-text-inverse);
+  text-decoration: underline;
+  text-decoration-color: #fbbf24;
+  text-decoration-thickness: 4px;
+  text-underline-offset: 6px;
 }
 
 .heroSubtitle {

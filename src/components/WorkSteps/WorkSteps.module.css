@@ -46,8 +46,8 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
-  color: var(--color-text-inverse);
+  background: linear-gradient(135deg, #002147 0%, #001633 100%);
+  color: #ffffff;
   padding: 30px 40px;
   border-radius: 20px;
   box-shadow: 0 20px 60px rgba(26, 26, 46, 0.3);
@@ -88,7 +88,7 @@
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 8px;
-  color: var(--color-text-inverse);
+  color: #ffffff;
 }
 
 .locationDetails p {

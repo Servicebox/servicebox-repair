@@ -228,7 +228,7 @@ export default function ServiceDetailPage() {
                     />
                   </div>
                   <div>
-                    <h1 className="text-3xl lg:text-4xl font-bold mb-2 text-gray-900">
+                    <h1 className="text-3xl lg:text-4xl font-bold mb-2 text-text">
                       {service.h1 || service.name}
                     </h1>
                     <p className="text-muted text-lg">
@@ -264,7 +264,7 @@ export default function ServiceDetailPage() {
               <div className="w-full lg:w-auto">
                 <div className="bg-surface rounded-2xl p-8 border border-border">
                   <div className="text-center mb-6">
-                    <div className="text-4xl font-bold mb-2 text-gray-900">{formatPrice(service.price)}</div>
+                    <div className="text-4xl font-bold mb-2 text-text">{formatPrice(service.price)}</div>
                     <p className="text-muted">Стоимость услуги</p>
                   </div>
 
@@ -278,10 +278,10 @@ export default function ServiceDetailPage() {
 
                   <div className="mt-6 text-center">
                     <p className="text-muted text-sm">или позвоните</p>
-                    <a href="tel:+79115018828" className="text-2xl font-bold text-gray-900 hover:text-primaryDark transition-colors block">
+                    <a href="tel:+79115018828" className="text-2xl font-bold text-text hover:text-primaryDark transition-colors block">
                       +7 (911) 501-88-28
                     </a>
-                    <a href="tel:+79115010696" className="text-2xl font-bold text-gray-900 hover:text-primaryDark transition-colors block mt-2">
+                    <a href="tel:+79115010696" className="text-2xl font-bold text-text hover:text-primaryDark transition-colors block mt-2">
                       +7 (911) 501-06-96
                     </a>
                   </div>
@@ -312,7 +312,7 @@ export default function ServiceDetailPage() {
         {/* SEO блок */}
         <div className="py-12 border-t border-border">
           <div className="max-w-7xl mx-auto px-4">
-            <h2 className="text-2xl font-bold mb-6 text-gray-900">
+            <h2 className="text-2xl font-bold mb-6 text-text">
               Профессиональный ремонт техники в {geoKeywords.join(', ')}
             </h2>
             <p className="text-muted mb-4">
@@ -370,14 +370,14 @@ function CategoryPage({ service, formatPrice }) {
     <div className="space-y-8">
       {/* Заголовок категории */}
       <div className="bg-bg rounded-2xl shadow-sm p-8 border border-border">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">{service.h1 || service.name}</h1>
+        <h1 className="text-3xl font-bold text-text mb-4">{service.h1 || service.name}</h1>
         <p className="text-muted text-lg">{service.description}</p>
       </div>
 
       {/* Подкатегории/услуги */}
       {service.children && service.children.length > 0 && (
         <div className="bg-bg rounded-2xl shadow-sm p-8 border border-border">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+          <h2 className="text-2xl font-bold text-text mb-6">
             {service.children[0]?.isCategory ? 'Подкатегории' : 'Услуги'}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -388,7 +388,7 @@ function CategoryPage({ service, formatPrice }) {
                 className="block bg-surface hover:bg-surface rounded-xl p-6 border border-border hover:border-primary transition-all"
               >
                 <div className="flex items-start justify-between mb-4">
-                  <h3 className="font-semibold text-gray-900">{child.name}</h3>
+                  <h3 className="font-semibold text-text">{child.name}</h3>
                   {!child.isCategory && child.price && (
                     <span className="text-primary font-bold">{formatPrice(child.price)}</span>
                   )}
@@ -455,7 +455,7 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
         {/* Особенности */}
         {service.features && service.features.length > 0 && (
           <div className="bg-surface rounded-2xl p-8 border border-border">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Что входит в услугу</h2>
+            <h2 className="text-2xl font-bold text-text mb-6">Что входит в услугу</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {service.features.map((feature, index) => (
                 <div key={index} className="flex items-start gap-3">
@@ -474,7 +474,7 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
         {/* SEO контент */}
         {service.content && (
           <div className="bg-bg rounded-2xl shadow-sm p-8 border border-border">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Подробное описание</h2>
+            <h2 className="text-2xl font-bold text-text mb-6">Подробное описание</h2>
             <div
               className="prose prose-lg max-w-none"
               style={{ color: '#374151' }}
@@ -489,7 +489,7 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
         {/* Цена и запись */}
         <div className="bg-bg rounded-2xl shadow-sm p-6 border border-border">
           <div className="text-center mb-6">
-            <div className="text-3xl font-bold text-gray-900 mb-2">{formatPrice(service.price)}</div>
+            <div className="text-3xl font-bold text-text mb-2">{formatPrice(service.price)}</div>
             <p className="text-muted">Стоимость услуги</p>
           </div>
 
@@ -513,10 +513,10 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
 
           <div className="text-center">
             <p className="text-muted text-sm mb-2">или позвоните</p>
-            <a href="tel:+79115018828" className="text-lg font-bold text-gray-900 hover:text-primary transition-colors block">
+            <a href="tel:+79115018828" className="text-lg font-bold text-text hover:text-primary transition-colors block">
               +7 (911) 501-88-28
             </a>
-            <a href="tel:+79115010696" className="text-lg font-bold text-gray-900 hover:text-primary transition-colors block mt-1">
+            <a href="tel:+79115010696" className="text-lg font-bold text-text hover:text-primary transition-colors block mt-1">
               +7 (911) 501-06-96
             </a>
           </div>
@@ -524,7 +524,7 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
 
         {/* Города */}
         <div className="bg-surface rounded-2xl p-6 border border-border">
-          <h3 className="text-lg font-bold mb-4 text-gray-900 flex items-center gap-2">
+          <h3 className="text-lg font-bold mb-4 text-text flex items-center gap-2">
             <svg className="w-5 h-5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -543,15 +543,15 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
 
         {/* Время работы */}
         <div className="bg-bg rounded-2xl shadow-sm p-6 border border-border">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">Время работы</h3>
+          <h3 className="text-lg font-bold text-text mb-4">Время работы</h3>
           <div className="space-y-2">
             <div className="flex justify-between">
               <span className="text-muted">Пн-Пт:</span>
-              <span className="font-semibold text-gray-900">10:00-19:00</span>
+              <span className="font-semibold text-text">10:00-19:00</span>
             </div>
             <div className="flex justify-between">
               <span className="text-muted">Сб-Вс:</span>
-              <span className="font-semibold text-gray-900">Выходные</span>
+              <span className="font-semibold text-text">Выходные</span>
             </div>
           </div>
           <button
@@ -613,7 +613,7 @@ function renderTabContent(service, tab) {
                 <div className="w-12 h-12 bg-primaryBg rounded-lg flex items-center justify-center mb-4 border border-primary">
                   <span className="text-primary font-bold">{item.step}</span>
                 </div>
-                <h4 className="text-lg font-semibold mb-2 text-gray-900">{item.title}</h4>
+                <h4 className="text-lg font-semibold mb-2 text-text">{item.title}</h4>
                 <p className="text-muted">{item.desc}</p>
               </div>
             ))}
@@ -646,7 +646,7 @@ function renderTabContent(service, tab) {
             { q: 'Сколько времени занимает ремонт?', a: 'Обычно 1-3 дня, зависит от сложности и наличия запчастей' }
           ].map((item, index) => (
             <div key={index} className="border border-border rounded-lg p-4">
-              <h4 className="font-semibold text-gray-900 mb-2">{item.q}</h4>
+              <h4 className="font-semibold text-text mb-2">{item.q}</h4>
               <p className="text-muted">{item.a}</p>
             </div>
           ))}

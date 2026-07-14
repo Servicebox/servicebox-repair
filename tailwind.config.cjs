@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       colors: {
         bg: 'var(--color-bg)',
+        text: 'var(--color-text)',
         surface: 'var(--color-bg-elevated)',
         primary: 'var(--color-primary)',
         primaryDark: 'var(--color-primary-dark)',

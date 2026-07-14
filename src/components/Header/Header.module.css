@@ -103,8 +103,6 @@
 /* Main Header */
 .header {
   background: var(--color-header-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border);
   box-shadow: 0 2px 10px var(--color-shadow);
   position: sticky;
@@ -219,7 +217,8 @@
   position: absolute;
   top: 100%;
   left: 0;
-  background: var(--color-warning);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
   min-width: 180px;
   box-shadow: 0 4px 15px var(--color-shadow);
   border-radius: 8px;
@@ -305,7 +304,8 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background: var(--color-warning);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
   min-width: 160px;
   box-shadow: 0 4px 15px var(--color-shadow);
   border-radius: 8px;

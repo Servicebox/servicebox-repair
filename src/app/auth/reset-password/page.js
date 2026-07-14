@@ -71,7 +71,7 @@ function ResetPasswordContent() {
       <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900">Недействительная ссылка</h2>
+            <h2 className="text-3xl font-bold text-text">Недействительная ссылка</h2>
             <p className="mt-2 text-gray-600">
               Ссылка для сброса пароля недействительна или просрочена.
             </p>
@@ -88,7 +88,7 @@ function ResetPasswordContent() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-text">
             Установка нового пароля
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
@@ -107,7 +107,7 @@ function ResetPasswordContent() {
                 name="password"
                 type="password"
                 required
-                className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Введите новый пароль"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -124,7 +124,7 @@ function ResetPasswordContent() {
                 name="confirmPassword"
                 type="password"
                 required
-                className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-text focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Повторите новый пароль"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}

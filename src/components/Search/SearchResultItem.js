@@ -9,7 +9,7 @@ export default function SearchResultItem({ item }) {
     console.warn('SearchResultItem received invalid item:', item);
     return (
       <div className="p-4 bg-gray-100 rounded-lg border border-gray-700">
-        <div className="text-gray-900 text-sm">Некорректный результат</div>
+        <div className="text-text text-sm">Некорректный результат</div>
       </div>
     );
   }
@@ -20,6 +20,8 @@ export default function SearchResultItem({ item }) {
       case 'service': return '⚙️';
       case 'news': return '📰';
       case 'file': return '📁';
+      case 'promotion': return '🎁';
+      case 'article': return '🔍';
       default: return '📄';
     }
   };
@@ -30,6 +32,8 @@ export default function SearchResultItem({ item }) {
       case 'service': return 'Услуга';
       case 'news': return 'Новость';
       case 'file': return 'Файл';
+      case 'promotion': return 'Акция';
+      case 'article': return 'Статья';
       default: return 'Страница';
     }
   };
@@ -53,10 +57,10 @@ export default function SearchResultItem({ item }) {
 
         <div className="flex-1">
           <div className="flex justify-between items-start mb-1">
-            <h3 className="font-semibold text-lg text-gray-900 hover:text-blue-600 line-clamp-2">
+            <h3 className="font-semibold text-lg text-text hover:text-blue-600 line-clamp-2">
               {item.title || 'Без названия'}
             </h3>
-            <span className="text-xs px-2 py-1 bg-gray-100 text-gray-900 rounded whitespace-nowrap">
+            <span className="text-xs px-2 py-1 bg-surface text-text rounded whitespace-nowrap">
               {getTypeLabel(item.type)}
             </span>
           </div>

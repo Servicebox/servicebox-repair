@@ -17,12 +17,12 @@ export default function SearchHeader({ query = '', totalResults = 0 }) {
 
   return (
     <div className="mb-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-2">
+      <h1 className="text-3xl font-bold text-text mb-2">
         {query ? `Результаты поиска` : 'Поиск по сайту'}
       </h1>
 
       {query && (
-        <p className="text-gray-900 mb-6">
+        <p className="text-text mb-6">
           По запросу <span className="font-semibold text-blue-600">"{query}"</span> найдено {totalResults} результатов
         </p>
       )}

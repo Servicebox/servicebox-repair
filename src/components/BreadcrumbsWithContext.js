@@ -31,7 +31,7 @@ export default function BreadcrumbsWithContext() {
                     
                     {isLast ? (
                       <span 
-                        className="text-gray-900 font-medium truncate max-w-[200px]"
+                        className="text-text font-medium truncate max-w-[200px]"
                         aria-current="page"
                       >
                         {crumb.name}
@@ -153,7 +153,7 @@ export default function BreadcrumbsWithContext() {
                   
                   {isLast || crumb.url === '#' ? (
                     <span 
-                      className="text-gray-900 font-medium truncate max-w-[200px]"
+                      className="text-text font-medium truncate max-w-[200px]"
                       aria-current="page"
                     >
                       {crumb.name}

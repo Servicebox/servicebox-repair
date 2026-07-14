@@ -145,7 +145,7 @@ function ContactBlock({ icon, title, value, sub, href, note }) {
         <Content href={href} className={`flex items-start gap-4 p-4 rounded-xl transition-colors ${href ? 'hover:bg-gray-50 cursor-pointer' : ''}`}>
             <span className="text-2xl">{icon}</span>
             <div>
-                <div className="font-bold text-gray-900">{title}</div>
+                <div className="font-bold text-text">{title}</div>
                 <div className="text-lg font-medium text-[var(--color-primary-dark)]">{value}</div>
                 {sub && <div className="text-sm text-gray-500">{sub}</div>}
                 {note && <div className="text-xs text-gray-500 mt-1">{note}</div>}

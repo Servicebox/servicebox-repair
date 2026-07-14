@@ -59,7 +59,7 @@ export default function ServicesClient({ initialCategories }) {
             {filteredCategories.length === 0 ? (
                 <div className="text-center py-12 bg-bg rounded-2xl shadow-sm">
                     <div className="text-6xl mb-4">🔍</div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">Категории не найдены</h3>
+                    <h3 className="text-2xl font-bold text-text mb-2">Категории не найдены</h3>
                     <p className="text-muted mb-6">Попробуйте изменить поисковый запрос</p>
                 </div>
             ) : (
@@ -81,7 +81,7 @@ export default function ServicesClient({ initialCategories }) {
                                     />
                                 </div>
 
-                                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
+                                <h3 className="text-xl font-bold text-text mb-3 group-hover:text-primary transition-colors">
                                     {category.name}
                                 </h3>
 

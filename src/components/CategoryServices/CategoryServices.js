@@ -89,7 +89,7 @@ export default function CategoryServices({ categoryId, categoryName }) {
 
         {/* Заголовок и поиск */}
         <div className="bg-bg rounded-lg shadow p-6 mb-6">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">{categoryName}</h1>
+          <h1 className="text-2xl font-bold text-text mb-2">{categoryName}</h1>
 
           <div className="relative">
             <input
@@ -115,7 +115,7 @@ export default function CategoryServices({ categoryId, categoryName }) {
           {filteredServices.length === 0 ? (
             <div className="text-center py-12">
               <div className="text-4xl mb-4">🔍</div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
+              <h3 className="text-lg font-medium text-text mb-2">
                 {searchTerm ? 'Ничего не найдено' : 'В этой категории пока нет услуг'}
               </h3>
               <p className="text-muted mb-4">
@@ -139,7 +139,7 @@ export default function CategoryServices({ categoryId, categoryName }) {
                 <div key={service._id} className="p-6 hover:bg-surface transition-colors">
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      <h3 className="text-lg font-semibold text-text mb-2">
                         {service.name}
                       </h3>
                       <p className="text-muted mb-3">
@@ -162,7 +162,7 @@ export default function CategoryServices({ categoryId, categoryName }) {
 
                     <div className="text-right ml-4">
                       {service.price && (
-                        <div className="text-xl font-bold text-gray-900 mb-2">
+                        <div className="text-xl font-bold text-text mb-2">
                           {parseInt(service.price).toLocaleString('ru-RU')} ₽
                         </div>
                       )}

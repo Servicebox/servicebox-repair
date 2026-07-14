@@ -162,7 +162,7 @@ const AllServicesPage = () => {
                 {/* Заголовок */}
                 <div className="text-center mb-12">
                     <motion.h1
-                        className="text-4xl font-bold text-gray-900 mb-4"
+                        className="text-4xl font-bold text-text mb-4"
                         initial={{ y: -20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.1 }}
@@ -263,7 +263,7 @@ const AllServicesPage = () => {
                         animate={{ scale: 1, opacity: 1 }}
                     >
                         <div className="text-6xl mb-4">🔍</div>
-                        <h3 className="text-2xl font-bold text-gray-900 mb-2">Услуги не найдены</h3>
+                        <h3 className="text-2xl font-bold text-text mb-2">Услуги не найдены</h3>
                         <p className="text-muted mb-6">Попробуйте изменить критерии поиска или выбрать другую категорию</p>
                         <button
                             onClick={() => {
@@ -305,7 +305,7 @@ const AllServicesPage = () => {
                                                 ) : (
                                                     <span className="text-2xl mr-3">📋</span>
                                                 )}
-                                                <h2 className="text-xl font-bold text-gray-900">
+                                                <h2 className="text-xl font-bold text-text">
                                                     {displayData.name || category}
                                                     <span className="text-sm text-muted ml-2">
                                                         ({categoryServices.length})
@@ -328,7 +328,7 @@ const AllServicesPage = () => {
                                                 onClick={() => setActiveService(activeService === service._id ? null : service._id)}
                                             >
                                                 <div className="flex justify-between items-start mb-4">
-                                                    <h3 className="font-semibold text-lg text-gray-900 pr-4">{service.serviceName}</h3>
+                                                    <h3 className="font-semibold text-lg text-text pr-4">{service.serviceName}</h3>
                                                     <span className="bg-primaryBg text-primaryDark px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap">
                                                         {formatPrice(service.price)}
                                                     </span>
