@@ -2,16 +2,22 @@ import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
 
 // koznova.site's DNS zone currently has two A records — one valid, one a stray
-// 0.0.0.0 — so roughly half of connection attempts by hostname fail outright.
-// Retrying once re-resolves DNS and usually lands on the working address.
-// Remove this retry once the bad DNS record is cleaned up at the registrar.
-async function fetchCrmWithRetry(url, options, attempts = 2) {
+// 0.0.0.0 — so roughly half of connection attempts by hostname fail outright,
+// in a random order per lookup (confirmed via repeated `resolvectl query` from
+// this server — not a one-time cache fluke). The bad record has already been
+// removed at the registrar but hasn't fully propagated yet. 4 attempts brings
+// the odds of an all-bad-IP retry sequence down to 1-in-16 in the meantime.
+// Remove this retry once the DNS fix has fully propagated (check with
+// `resolvectl query koznova.site` a few times in a row — only one IP should
+// ever come back).
+async function fetchCrmWithRetry(url, options, attempts = 4) {
   let lastErr;
   for (let i = 0; i < attempts; i++) {
     try {
       return await fetch(url, options);
     } catch (err) {
       lastErr = err;
+      if (i < attempts - 1) await new Promise((r) => setTimeout(r, 150));
     }
   }
   throw lastErr;
