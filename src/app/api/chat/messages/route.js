@@ -1,6 +1,22 @@
 import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
 
+// koznova.site's DNS zone currently has two A records — one valid, one a stray
+// 0.0.0.0 — so roughly half of connection attempts by hostname fail outright.
+// Retrying once re-resolves DNS and usually lands on the working address.
+// Remove this retry once the bad DNS record is cleaned up at the registrar.
+async function fetchCrmWithRetry(url, options, attempts = 2) {
+  let lastErr;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return await fetch(url, options);
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  throw lastErr;
+}
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const sessionId = searchParams.get('sessionId');
@@ -16,7 +32,7 @@ export async function GET(request) {
 
   let crmRes;
   try {
-    crmRes = await fetch(`${crmApiUrl}/api/v1/chat/messages?sessionId=${encodeURIComponent(sessionId)}`, {
+    crmRes = await fetchCrmWithRetry(`${crmApiUrl}/api/v1/chat/messages?sessionId=${encodeURIComponent(sessionId)}`, {
       headers: { Authorization: `Bearer ${crmApiKey}` },
       cache: 'no-store',
     });
@@ -57,7 +73,7 @@ export async function POST(request) {
 
   let crmRes;
   try {
-    crmRes = await fetch(`${crmApiUrl}/api/v1/chat/messages`, {
+    crmRes = await fetchCrmWithRetry(`${crmApiUrl}/api/v1/chat/messages`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
