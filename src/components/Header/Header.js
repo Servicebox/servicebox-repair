@@ -127,14 +127,13 @@ function Header() {
           {/* Навигация */}
           <nav className={styles.headerNav} aria-label="Основная навигация">
             <ul className={styles.headerNavList}>
+              <li className={`${styles.headerNavItem} ${menu === "services" ? styles.active : ''}`}>
+                <Link href="/services" className={styles.headerNavLink}>Услуги и цены</Link>
+              </li>
+
               <li className={`${styles.headerNavItem} ${menu === "about" ? styles.active : ''}`}>
                 <Link href="/about" className={styles.headerNavLink}>О нас</Link>
               </li>
-
-              {/* ✅ ВЫНЕСЕНО В ГЛАВНОЕ МЕНЮ: Услуги и цены теперь всегда на виду */}
-              {/* <li className={`${styles.headerNavItem} ${menu === "services" ? styles.active : ''}`}>
-                <Link href="/services" className={styles.headerNavLink}>Услуги и цены</Link>
-              </li>*/}
 
               <li className={`${styles.headerNavItem} ${menu === "parts" ? styles.active : ''}`}>
                 <Link href="/parts" className={styles.headerNavLink}>Каталог</Link>

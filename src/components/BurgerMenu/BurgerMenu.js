@@ -70,6 +70,9 @@ function BurgerMenu() {
 
         <ul className={styles.menuList}>
           <li className={styles.menuItem}>
+            <Link href="/services" className={styles.menuLink} onClick={toggleMenu}>Услуги и цены</Link>
+          </li>
+          <li className={styles.menuItem}>
             <Link href="/about" className={styles.menuLink} onClick={toggleMenu}>О нас</Link>
           </li>
           <li className={styles.menuItem}>
