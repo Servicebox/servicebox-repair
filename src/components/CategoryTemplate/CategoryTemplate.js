@@ -209,7 +209,7 @@ export default function CategoryTemplate({ categorySlug }) {
         return (
             <div className="min-h-screen py-12 text-center">
                 <h1 className="text-3xl font-bold">Категория не найдена</h1>
-                <Link href="/services" className="text-blue-800 mt-4 inline-block">
+                <Link href="/services" className="text-primaryDark mt-4 inline-block">
                     ← Вернуться к услугам
                 </Link>
             </div>
@@ -217,7 +217,7 @@ export default function CategoryTemplate({ categorySlug }) {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-surface">
             <section
                 className="relative py-20 overflow-hidden"
                 style={{ background: BRAND_GRADIENT }}
@@ -282,7 +282,7 @@ export default function CategoryTemplate({ categorySlug }) {
             </section>
 
             {/* Преимущества */}
-            <section className="py-16 bg-white">
+            <section className="py-16 bg-bg">
                 <div className="max-w-7xl mx-auto px-4">
                     <h2 className="text-3xl md:text-4xl font-bold text-center mb-12" style={{ color: 'var(--color-primary-dark)' }}>
                         Почему выбирают нас
@@ -291,13 +291,13 @@ export default function CategoryTemplate({ categorySlug }) {
                         {data.advantages.map((adv, i) => (
                             <div
                                 key={i}
-                                className="bg-gray-50 rounded-2xl p-6 border-2 border-gray-100 hover:border-blue-300 transition-all hover:-translate-y-1 hover:shadow-lg"
+                                className="bg-surface rounded-2xl p-6 border-2 border-border hover:border-primary transition-all hover:-translate-y-1 hover:shadow-lg"
                             >
                                 <div className="text-5xl mb-4">{adv.icon}</div>
                                 <h3 className="font-bold text-lg mb-2" style={{ color: 'var(--color-primary-dark)' }}>
                                     {adv.title}
                                 </h3>
-                                <p className="text-gray-600 text-sm">{adv.desc}</p>
+                                <p className="text-muted text-sm">{adv.desc}</p>
                             </div>
                         ))}
                     </div>
@@ -305,19 +305,19 @@ export default function CategoryTemplate({ categorySlug }) {
             </section>
 
             {/* Популярные услуги */}
-            <section className="py-16 bg-gray-50">
+            <section className="py-16 bg-surface">
                 <div className="max-w-7xl mx-auto px-4">
                     <h2 className="text-3xl md:text-4xl font-bold text-center mb-4" style={{ color: 'var(--color-primary-dark)' }}>
                         Популярные услуги
                     </h2>
-                    <p className="text-center text-gray-600 mb-12">
+                    <p className="text-center text-muted mb-12">
                         Цены указаны <strong>только за работу</strong> мастера (без учёта запчастей)
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {data.popularServices.map((svc, i) => (
                             <div
                                 key={i}
-                                className="bg-white rounded-2xl p-6 border-2 border-gray-200 hover:border-orange-400 transition-all hover:-translate-y-1 hover:shadow-lg"
+                                className="bg-bg rounded-2xl p-6 border-2 border-border hover:border-orange-400 transition-all hover:-translate-y-1 hover:shadow-lg"
                             >
                                 <div className="flex items-start justify-between mb-3">
                                     <h3 className="font-bold text-lg flex-1" style={{ color: 'var(--color-primary-dark)' }}>
@@ -325,7 +325,7 @@ export default function CategoryTemplate({ categorySlug }) {
                                     </h3>
                                 </div>
                                 <div className="flex items-center justify-between mt-4">
-                                    <span className="text-sm text-gray-500">⏱️ {svc.time}</span>
+                                    <span className="text-sm text-muted">⏱️ {svc.time}</span>
                                     <span className="font-bold text-xl" style={{ color: '#ff8c00' }}>
                                         {svc.price}
                                     </span>
@@ -337,14 +337,14 @@ export default function CategoryTemplate({ categorySlug }) {
             </section>
 
             {/* Калькулятор (предзагруженный на категорию) */}
-            <section id="repair-calculator" className="py-16 bg-white">
+            <section id="repair-calculator" className="py-16 bg-bg">
                 <div className="max-w-7xl mx-auto px-4">
                     <RepairCalculator initialDeviceType={CALCULATOR_KEY_MAP[categorySlug]} />
                 </div>
             </section>
 
             {/* FAQ */}
-            <section className="py-16 bg-gray-50">
+            <section className="py-16 bg-surface">
                 <div className="max-w-4xl mx-auto px-4">
                     <h2 className="text-3xl md:text-4xl font-bold text-center mb-12" style={{ color: 'var(--color-primary-dark)' }}>
                         ❓ Часто задаваемые вопросы
@@ -353,12 +353,12 @@ export default function CategoryTemplate({ categorySlug }) {
                         {data.faq.map((item, i) => (
                             <details
                                 key={i}
-                                className="group bg-white rounded-2xl p-6 border-2 border-gray-200 hover:border-blue-300 transition-all"
+                                className="group bg-bg rounded-2xl p-6 border-2 border-border hover:border-primary transition-all"
                             >
                                 <summary className="flex items-center justify-between cursor-pointer font-bold text-lg" style={{ color: 'var(--color-primary-dark)' }}>
                                     <span>{item.q}</span>
                                     <svg
-                                        className="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform flex-shrink-0 ml-4"
+                                        className="w-5 h-5 text-muted group-open:rotate-180 transition-transform flex-shrink-0 ml-4"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -366,7 +366,7 @@ export default function CategoryTemplate({ categorySlug }) {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                     </svg>
                                 </summary>
-                                <p className="mt-4 text-gray-700 leading-relaxed">{item.a}</p>
+                                <p className="mt-4 text-muted leading-relaxed">{item.a}</p>
                             </details>
                         ))}
                     </div>
@@ -375,9 +375,9 @@ export default function CategoryTemplate({ categorySlug }) {
 
             {/* Гео-якоря: быстрый доступ к популярным запросам */}
             {GEO_ANCHORS[categorySlug] && (
-                <section className="py-8 bg-white border-t border-gray-100">
+                <section className="py-8 bg-bg border-t border-border">
                     <div className="max-w-4xl mx-auto px-4">
-                        <p className="text-sm text-gray-500 mb-3 font-medium uppercase tracking-wide">
+                        <p className="text-sm text-muted mb-3 font-medium uppercase tracking-wide">
                             Популярные запросы в Вологде:
                         </p>
                         <div className="flex flex-wrap gap-2">
@@ -385,7 +385,7 @@ export default function CategoryTemplate({ categorySlug }) {
                                 <Link
                                     key={i}
                                     href={item.href}
-                                    className="text-sm px-4 py-2 rounded-full border border-blue-200 text-blue-800 hover:bg-blue-50 hover:border-blue-400 transition-colors"
+                                    className="text-sm px-4 py-2 rounded-full border border-primary text-primaryDark hover:bg-primaryBg hover:border-primary transition-colors"
                                 >
                                     {item.label}
                                 </Link>
@@ -397,7 +397,7 @@ export default function CategoryTemplate({ categorySlug }) {
 
             {/* Смотрите также */}
             {RELATED_CATEGORIES[categorySlug] && (
-                <section className="py-16 bg-gray-50">
+                <section className="py-16 bg-surface">
                     <div className="max-w-7xl mx-auto px-4">
                         <h2 className="text-2xl md:text-3xl font-bold text-center mb-10" style={{ color: 'var(--color-primary-dark)' }}>
                             Смотрите также
@@ -410,16 +410,16 @@ export default function CategoryTemplate({ categorySlug }) {
                                     <Link
                                         key={slug}
                                         href={`/services/${slug}`}
-                                        className="flex items-center gap-4 bg-white rounded-2xl p-5 border-2 border-gray-100 hover:border-blue-300 hover:-translate-y-1 hover:shadow-lg transition-all"
+                                        className="flex items-center gap-4 bg-bg rounded-2xl p-5 border-2 border-border hover:border-primary hover:-translate-y-1 hover:shadow-lg transition-all"
                                     >
                                         <span className="text-4xl flex-shrink-0">{related.icon}</span>
                                         <div>
                                             <p className="font-bold text-base" style={{ color: 'var(--color-primary-dark)' }}>
                                                 {related.title}
                                             </p>
-                                            <p className="text-sm text-gray-500 mt-0.5">{related.subtitle}</p>
+                                            <p className="text-sm text-muted mt-0.5">{related.subtitle}</p>
                                         </div>
-                                        <span className="ml-auto text-gray-400 text-xl flex-shrink-0">→</span>
+                                        <span className="ml-auto text-muted text-xl flex-shrink-0">→</span>
                                     </Link>
                                 );
                             })}
@@ -446,7 +446,7 @@ export default function CategoryTemplate({ categorySlug }) {
                         </a>
                         <Link
                             href="/contacts"
-                            className="px-8 py-4 bg-white text-blue-900 rounded-xl font-bold text-lg hover:scale-105 transition-all"
+                            className="px-8 py-4 bg-bg text-primaryDark rounded-xl font-bold text-lg hover:scale-105 transition-all"
                         >
                             📍 Приехать в сервис
                         </Link>

@@ -16,7 +16,7 @@ export default function BreadcrumbsWithContext() {
   // Если есть кастомные хлебные крошки из контекста
   if (breadcrumbs.length > 0) {
     return (
-      <nav className="bg-gray-50 border-b border-gray-200" aria-label="Хлебные крошки товара">
+      <nav className="bg-surface border-b border-border" aria-label="Хлебные крошки товара">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="py-3">
             <ol className="flex items-center space-x-2 overflow-x-auto">
@@ -26,7 +26,7 @@ export default function BreadcrumbsWithContext() {
                 return (
                   <li key={index} className="flex items-center">
                     {index > 0 && (
-                      <span className="mx-2 text-gray-400">/</span>
+                      <span className="mx-2 text-muted">/</span>
                     )}
                     
                     {isLast ? (
@@ -39,7 +39,7 @@ export default function BreadcrumbsWithContext() {
                     ) : (
                       <Link 
                         href={crumb.url} 
-                        className="text-gray-600 hover:text-blue-600 transition-colors truncate max-w-[150px]"
+                        className="text-muted hover:text-primary transition-colors truncate max-w-[150px]"
                       >
                         {crumb.name}
                       </Link>
@@ -138,7 +138,7 @@ export default function BreadcrumbsWithContext() {
   if (autoBreadcrumbs.length <= 1) return null;
 
   return (
-    <nav className="bg-gray-50 border-b border-gray-200" aria-label="Хлебные крошки тов">
+    <nav className="bg-surface border-b border-border" aria-label="Хлебные крошки тов">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="py-3">
           <ol className="flex items-center space-x-2 overflow-x-auto">
@@ -148,7 +148,7 @@ export default function BreadcrumbsWithContext() {
               return (
                 <li key={index} className="flex items-center">
                   {index > 0 && (
-                    <span className="mx-2 text-gray-400">/</span>
+                    <span className="mx-2 text-muted">/</span>
                   )}
                   
                   {isLast || crumb.url === '#' ? (
@@ -161,7 +161,7 @@ export default function BreadcrumbsWithContext() {
                   ) : (
                     <Link 
                       href={crumb.url} 
-                      className="text-gray-600 hover:text-blue-600 transition-colors truncate max-w-[150px]"
+                      className="text-muted hover:text-primary transition-colors truncate max-w-[150px]"
                     >
                       {crumb.name}
                     </Link>
