@@ -55,14 +55,14 @@ const services = [
 
 export default function PopularServices() {
     return (
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-surface">
             <div className="max-w-7xl mx-auto px-4">
                 {/* Заголовок */}
                 <div className="text-center mb-12">
                     <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--color-primary-dark)' }}>
                         🔥 Популярные услуги
                     </h2>
-                    <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+                    <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--color-text-muted)' }}>
                         Самые востребованные ремонты с фиксированными ценами
                     </p>
                 </div>
@@ -72,7 +72,7 @@ export default function PopularServices() {
                     {services.map((svc, i) => (
                         <div
                             key={i}
-                            className="group bg-white rounded-2xl p-6 border-2 border-gray-200 hover:border-orange-400 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                            className="group bg-bg rounded-2xl p-6 border-2 border-border hover:border-[var(--color-warning)] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
                         >
                             {/* Бейдж */}
                             <div className="inline-block px-3 py-1 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-bold rounded-full mb-4">
@@ -83,7 +83,7 @@ export default function PopularServices() {
                             <div className="flex items-start justify-between mb-4">
                                 <div className="text-5xl">{svc.icon}</div>
                                 <div className="text-right">
-                                    <div className="text-xs text-gray-500 mb-1">⏱️ {svc.time}</div>
+                                    <div className="text-xs mb-1" style={{ color: 'var(--color-text-muted)' }}>⏱️ {svc.time}</div>
                                     <div className="font-bold text-xl" style={{ color: '#ff8c00' }}>
                                         {svc.price}
                                     </div>
@@ -94,14 +94,15 @@ export default function PopularServices() {
                             <h3 className="font-bold text-lg mb-2" style={{ color: 'var(--color-primary-dark)' }}>
                                 {svc.name}
                             </h3>
-                            <p className="text-gray-600 text-sm mb-4">
+                            <p className="text-sm mb-4" style={{ color: 'var(--color-text-muted)' }}>
                                 {svc.desc}
                             </p>
 
                             {/* Кнопка */}
                             <Link
                                 href="/services"
-                                className="inline-flex items-center gap-2 text-blue-600 font-semibold group-hover:gap-3 transition-all"
+                                className="inline-flex items-center gap-2 font-semibold group-hover:gap-3 transition-all"
+                                style={{ color: 'var(--color-primary)' }}
                             >
                                 Подробнее
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -114,8 +115,8 @@ export default function PopularServices() {
 
                 {/* CTA-блок */}
                 <div className="mt-12 text-center">
-                    <div className="inline-block bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-200">
-                        <p className="text-gray-700 mb-4">
+                    <div className="inline-block rounded-2xl p-6 border" style={{ background: 'var(--color-primary-bg)', borderColor: 'var(--color-primary-bg)' }}>
+                        <p className="mb-4" style={{ color: 'var(--color-text)' }}>
                             Не нашли нужную услугу? <strong>Рассчитайте стоимость</strong> для вашего устройства
                         </p>
                         <button
