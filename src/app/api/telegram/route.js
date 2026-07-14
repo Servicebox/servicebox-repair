@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
+import { randomUUID } from 'crypto';
 import { fetchCrm } from '@/lib/crmClient';
+export const runtime = 'nodejs';
 
 // Используем бота для уведомлений в группу
 const BOT_TOKEN = process.env.NOTIFY_BOT_TOKEN;
@@ -19,24 +21,25 @@ export async function POST(request) {
     );
   }
 
-  // Основной канал: заявка становится заказом в CRM — надёжная запись,
-  // которую видят сотрудники, и она не теряется, если Telegram недоступен
-  // (обычная история для api.telegram.org — та же нестабильность сети, что
-  // уже чинили для чата/бронирований через src/lib/crmClient.js).
+  // Основной канал: заявка уходит в Инбокс CRM как диалог — надёжная запись,
+  // которую видят сотрудники, и она не теряется, если Telegram недоступен.
+  // Не заказ: у этой формы нет данных об устройстве/услуге (только имя,
+  // телефон, короткий комментарий) — заказом это выглядело бы пустым, кроме
+  // телефона; как сообщение в Инбоксе весь текст виден сразу, а сотрудник
+  // сам создаёт заказ после звонка, если он нужен (кнопка "Создать заказ").
   let crmOk = false;
   try {
-    const defect = [description, promotion ? `Акция: ${promotion}` : null]
+    const text = [`Телефон: ${phone}`, description, promotion ? `Акция: ${promotion}` : null]
       .filter(Boolean)
-      .join('\n') || 'Без описания';
+      .join('\n');
 
-    const crmRes = await fetchCrm('/api/v1/orders', {
+    const crmRes = await fetchCrm('/api/v1/chat/messages', {
       method: 'POST',
       body: JSON.stringify({
-        clientName: name,
-        clientPhone: phone,
-        deviceType: 'Не указано (заявка с сайта)',
-        defectDescription: defect,
-        source: 'сайт (форма)',
+        sessionId: `form-${randomUUID()}`,
+        visitorName: name,
+        visitorPhone: phone,
+        text,
       }),
     });
     crmOk = !!crmRes && crmRes.ok;
