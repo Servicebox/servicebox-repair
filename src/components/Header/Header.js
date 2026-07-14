@@ -15,6 +15,7 @@ import {
   faUser,
   faChevronDown,
   faSun,
+  faMoon,
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import { faVk } from "@fortawesome/free-brands-svg-icons";
@@ -201,18 +202,15 @@ function Header() {
               aria-label="Настройки отображения"
               className={styles.a11yControls}
             >
-              {/* Кнопка переключения темы временно скрыта в светлой теме — показываем только "вернуться в светлую" из тёмной */}
-              {theme === 'dark' && (
-                <button
-                  type="button"
-                  className={styles.themeToggle}
-                  onClick={toggleTheme}
-                  aria-label="Включить светлую тему"
-                  aria-pressed={theme === 'dark'}
-                >
-                  <FontAwesomeIcon icon={faSun} />
-                </button>
-              )}
+              <button
+                type="button"
+                className={styles.themeToggle}
+                onClick={toggleTheme}
+                aria-label={theme === 'dark' ? 'Включить светлую тему' : 'Включить тёмную тему'}
+                aria-pressed={theme === 'dark'}
+              >
+                <FontAwesomeIcon icon={theme === 'dark' ? faSun : faMoon} />
+              </button>
 
               <button
                 type="button"
