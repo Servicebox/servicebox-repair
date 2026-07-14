@@ -59,3 +59,6 @@
 - [Ноутбук не включается — что делать?](/ai-answers/laptop-not-turning-on)
 - [Сколько стоит диагностика?](/ai-answers/price-diagnostics)
 - [Срочный ремонт в Вологде](/ai-answers/urgent-repair-vologda)
+- [Сколько стоит ремонт телевизора?](/ai-answers/tv-repair-vologda)
+- [Сколько стоит ремонт PS5 и Xbox?](/ai-answers/game-console-repair-vologda)
+- [Сколько стоит ремонт планшета?](/ai-answers/tablet-repair-vologda)
