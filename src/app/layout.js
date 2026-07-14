@@ -2,6 +2,7 @@ import './globals.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { Inter, Inter_Tight } from 'next/font/google';
+import Chat from '@/components/Chat/Chat';
 
 const interTight = Inter_Tight({
   subsets: ['latin', 'cyrillic'],
@@ -182,6 +183,7 @@ export default function RootLayout({ children }) {
         </AuthProvider>
 
         <Analytics />
+        <Chat />
       </body>
     </html>
   );
