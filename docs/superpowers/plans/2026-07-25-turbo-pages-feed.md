@@ -11,7 +11,8 @@
 ## Global Constraints
 
 - No new npm dependencies.
-- No automated test framework exists in this repo (confirmed: no `jest`/`vitest` in `package.json`, no `*.test.js` files anywhere). Testing here means: pure-function verification via ad-hoc `node -e` snippets (no `@/` import aliases involved, so plain Node can load the file directly), plus `curl` + XML-parse checks against the running dev server for the full route. This matches the established convention in this repo (see `docs/superpowers/plans/2026-07-24-public-offer.md` Task 5).
+- This repo's `package.json` has `"type": "module"` — every `.js` file is an ES module. Use `export const`/`export function`; CommonJS `module.exports`/`require()` do not work and fail silently/confusingly (verified: `require()` on such a file returns an object missing the expected properties, not a clean error).
+- No automated test framework exists in this repo (confirmed: no `jest`/`vitest` in `package.json`, no `*.test.js` files anywhere). Testing here means: pure-function verification via ad-hoc `node --input-type=module -e` snippets using `import` (no `@/` import aliases involved, so plain Node can load the file directly), plus `curl` + XML-parse checks against the running dev server for the full route. This matches the established convention in this repo (see `docs/superpowers/plans/2026-07-24-public-offer.md` Task 5).
 - Turbo callback form widget is **self-closing with zero child fields** — `<form data-type="callback" data-send-to="EMAIL"></form>`. Do not add `<input>` children; Turbo's renderer generates the full UI itself. (Verified against real source of `sokolnikov911/yandex-turbo-pages`, a maintained open-source Turbo RSS generator.)
 - Callback form email destination: `s89062960353@yandex.ru` (confirmed by Tom 2026-07-25).
 - RSS namespaces required on the root `<rss>` tag: `xmlns:yandex="http://news.yandex.ru" xmlns:media="http://search.yahoo.com/mrss/" xmlns:turbo="http://turbo.yandex.ru" version="2.0"` (verified against real fixture output from `LightAir/turbo-rss`'s test suite).
@@ -39,7 +40,7 @@ This task writes ONLY plain functions with zero imports (no `@/lib/...`), so the
 // Форма-заявка (data-type="callback") доставляет письма на email,
 // а не через вебхук — см. docs/superpowers/specs/2026-07-25-turbo-pages-feed-design.md
 
-const escapeXml = (text) => {
+export const escapeXml = (text) => {
   if (text === null || text === undefined || text === '') return '';
   return String(text)
     .replace(/&/g, '&amp;')
@@ -52,7 +53,7 @@ const escapeXml = (text) => {
     .trim();
 };
 
-const escapeHtml = (text) => {
+export const escapeHtml = (text) => {
   if (text === null || text === undefined) return '';
   return String(text)
     .replace(/&/g, '&amp;')
@@ -60,11 +61,11 @@ const escapeHtml = (text) => {
     .replace(/>/g, '&gt;');
 };
 
-const encodeUrlForXml = (url) => encodeURI(url).replace(/&/g, '&amp;');
+export const encodeUrlForXml = (url) => encodeURI(url).replace(/&/g, '&amp;');
 
-const wrapCdata = (html) => `<![CDATA[${html.replace(/]]>/g, ']]&gt;')}]]>`;
+export const wrapCdata = (html) => `<![CDATA[${html.replace(/]]>/g, ']]&gt;')}]]>`;
 
-const buildServiceItem = (service, baseUrl, formEmail) => {
+export const buildServiceItem = (service, baseUrl, formEmail) => {
   const title = escapeXml(service.metaTitle || `${service.name} в Вологде`);
   const link = `${baseUrl}/services/${service.slug}`;
   const name = escapeHtml(service.name);
@@ -91,17 +92,16 @@ const buildServiceItem = (service, baseUrl, formEmail) => {
   );
 };
 
-module.exports = { escapeXml, escapeHtml, encodeUrlForXml, wrapCdata, buildServiceItem };
 ```
 
-Note: the `module.exports` line at the bottom is temporary, only for this task's manual verification step — Task 3 removes it and replaces the whole file's export shape with the real `GET` handler (this file becomes an ES module with `export async function GET`, not CommonJS).
+Note: this repo's `package.json` has `"type": "module"`, so every `.js` file is an ES module — use `export const`, never CommonJS `module.exports`/`require`. Task 3 later adds `export async function GET` to this same file alongside these exports.
 
 - [ ] **Step 2: Verify manually with a throwaway Node script**
 
-Run:
+Run (note `--input-type=module` and `import`, not `require` — required because of `"type": "module"`):
 ```bash
-node -e "
-const { buildServiceItem, escapeHtml, wrapCdata } = require('./src/app/api/turbo-feed/route.js');
+node --input-type=module -e "
+import { buildServiceItem } from './src/app/api/turbo-feed/route.js';
 const item = buildServiceItem(
   { name: 'Замена стекла <тест>', slug: 'test-slug', description: 'Описание & проверка \"кавычек\"', price: '4500', updatedAt: new Date('2026-01-01') },
   'https://servicebox35.ru',
@@ -137,10 +137,10 @@ git commit -m "feat: add Turbo feed escaping helpers and service item builder"
 
 - [ ] **Step 1: Add the content-block mapper and news item builder**
 
-Add these functions to `src/app/api/turbo-feed/route.js`, above the `module.exports` line:
+Add these functions to `src/app/api/turbo-feed/route.js`, after `buildServiceItem`:
 
 ```javascript
-const buildContentBlocksHtml = (blocks) => {
+export const buildContentBlocksHtml = (blocks) => {
   if (!Array.isArray(blocks) || blocks.length === 0) return '';
   return blocks
     .slice()
@@ -178,7 +178,7 @@ const buildContentBlocksHtml = (blocks) => {
     .join('');
 };
 
-const buildNewsItem = (news, baseUrl) => {
+export const buildNewsItem = (news, baseUrl) => {
   const title = escapeXml(news.metaTitle || news.title);
   const link = `${baseUrl}/news/${news.slug}`;
   const bodyHtml =
@@ -202,18 +202,12 @@ const buildNewsItem = (news, baseUrl) => {
 };
 ```
 
-Update the `module.exports` line to also include the two new functions:
-
-```javascript
-module.exports = { escapeXml, escapeHtml, encodeUrlForXml, wrapCdata, buildServiceItem, buildContentBlocksHtml, buildNewsItem };
-```
-
 - [ ] **Step 2: Verify manually**
 
-Run:
+Run (ESM, matching this repo's `"type": "module"` — see Task 1):
 ```bash
-node -e "
-const { buildNewsItem, buildContentBlocksHtml } = require('./src/app/api/turbo-feed/route.js');
+node --input-type=module -e "
+import { buildNewsItem, buildContentBlocksHtml } from './src/app/api/turbo-feed/route.js';
 
 const blocksHtml = buildContentBlocksHtml([
   { type: 'heading', content: 'Заголовок', position: 0 },
@@ -254,11 +248,11 @@ git commit -m "feat: add Turbo feed news content-block mapper and item builder"
 - Consumes: `buildServiceItem`, `buildNewsItem` from Tasks 1-2 (same file). `dbConnect` (default export) from `@/lib/db`. `Service` (default export) from `@/models/Service`. `News` (default export) from `@/models/News`. `BASE_URL`, `BUSINESS`, `SEO_DEFAULTS` (named exports) from `@/lib/constants`.
 - Produces: `GET(request)` — the Route Handler Next.js calls for `/api/turbo-feed`.
 
-This step replaces the temporary `module.exports` CommonJS line with real ES module imports/exports, converting the file into a proper Next.js Route Handler.
+This step adds real imports at the top of the file and the `GET` handler at the bottom, turning the file into a proper Next.js Route Handler (the existing `export const` helpers from Tasks 1-2 stay as-is in the middle).
 
-- [ ] **Step 1: Replace the top of the file with real imports, and replace `module.exports` with the `GET` handler**
+- [ ] **Step 1: Add imports at the top of the file, and the `GET` handler at the bottom**
 
-Remove the `module.exports = { ... };` line at the bottom of the file, and add these imports at the very top (before the `escapeXml` function):
+Add these imports at the very top of `src/app/api/turbo-feed/route.js` (above the existing comment/`escapeXml` export):
 
 ```javascript
 // app/api/turbo-feed/route.js
@@ -274,7 +268,7 @@ const FORM_EMAIL = 's89062960353@yandex.ru';
 let cache = { data: null, timestamp: 0, ttl: 5 * 60 * 1000 };
 ```
 
-At the very end of the file (where `module.exports` was), add:
+At the very end of the file, add:
 
 ```javascript
 const emptyFeedXml = (baseUrl) =>
