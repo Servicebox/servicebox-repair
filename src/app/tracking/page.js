@@ -1,126 +1,242 @@
-// src/app/tracking/page.js
 'use client';
 import { useState } from 'react';
+import styles from './Tracking.module.css';
+
+const STATUS_LABELS = {
+  new: 'Принят',
+  diagnostics: 'Диагностика',
+  waiting_approval: 'Ожидает согласования',
+  waiting_parts: 'Ожидает запчасти',
+  in_repair: 'В ремонте',
+  quality_check: 'Проверка качества',
+  ready: 'Готов к выдаче',
+  issued: 'Выдан',
+  cancelled: 'Отменён',
+  client_declined: 'Клиент отказался',
+};
+
+const STATUS_CLASS = {
+  new: 'statusPending',
+  diagnostics: 'statusProgress',
+  waiting_approval: 'statusPending',
+  waiting_parts: 'statusPending',
+  in_repair: 'statusProgress',
+  quality_check: 'statusProgress',
+  ready: 'statusDone',
+  issued: 'statusDone',
+  cancelled: 'statusCancelled',
+  client_declined: 'statusCancelled',
+};
+
+function StatusBadge({ status }) {
+  return (
+    <span className={`${styles.badge} ${styles[STATUS_CLASS[status] ?? 'statusPending']}`}>
+      {STATUS_LABELS[status] ?? status}
+    </span>
+  );
+}
+
+function formatDate(value) {
+  if (!value) return null;
+  return new Date(value).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function OrderCard({ order, expanded, onToggle }) {
+  const device = [order.deviceBrand, order.deviceModel].filter(Boolean).join(' ') || order.deviceType;
+
+  return (
+    <li className={styles.card}>
+      <div
+        className={styles.cardHeader}
+        onClick={onToggle}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => e.key === 'Enter' && onToggle()}
+      >
+        <div className={styles.cardMeta}>
+          <h3 className={styles.deviceName}>{device || 'Устройство не указано'}</h3>
+          <span className={styles.orderNumber}>
+            Заказ <strong>{order.number}</strong>
+          </span>
+        </div>
+        <div className={styles.cardRight}>
+          <StatusBadge status={order.status} />
+          <span className={styles.expandIcon}>{expanded ? '▲' : '▼'}</span>
+        </div>
+      </div>
+
+      {expanded && (
+        <div className={styles.cardBody}>
+          <dl className={styles.details}>
+            <div className={styles.detailRow}>
+              <dt>Клиент</dt>
+              <dd>{order.clientName}</dd>
+            </div>
+            <div className={styles.detailRow}>
+              <dt>Телефон</dt>
+              <dd>{order.clientPhone}</dd>
+            </div>
+            <div className={styles.detailRow}>
+              <dt>Принят</dt>
+              <dd>{formatDate(order.createdAt)}</dd>
+            </div>
+            {order.dueDate && (
+              <div className={styles.detailRow}>
+                <dt>Срок готовности</dt>
+                <dd>{formatDate(order.dueDate)}</dd>
+              </div>
+            )}
+            {order.issuedAt && (
+              <div className={styles.detailRow}>
+                <dt>Выдан</dt>
+                <dd>{formatDate(order.issuedAt)}</dd>
+              </div>
+            )}
+            {order.defectDescription && (
+              <div className={styles.detailRow}>
+                <dt>Неисправность</dt>
+                <dd>{order.defectDescription}</dd>
+              </div>
+            )}
+            {order.masterComment && (
+              <div className={styles.detailRow}>
+                <dt>Комментарий мастера</dt>
+                <dd>{order.masterComment}</dd>
+              </div>
+            )}
+            {typeof order.finalCost === 'number' && order.finalCost > 0 && (
+              <div className={styles.detailRow}>
+                <dt>Стоимость</dt>
+                <dd>{order.finalCost.toLocaleString('ru-RU')} ₽</dd>
+              </div>
+            )}
+            {order.warrantyExpires && (
+              <div className={styles.detailRow}>
+                <dt>Гарантия до</dt>
+                <dd>{formatDate(order.warrantyExpires)}</dd>
+              </div>
+            )}
+          </dl>
+
+          {order.history?.length > 0 && (
+            <div className={styles.timeline}>
+              <p className={styles.timelineTitle}>История статусов</p>
+              <ul className={styles.timelineList}>
+                {order.history.map((entry, i) => (
+                  <li key={i} className={styles.timelineItem}>
+                    <span className={`${styles.timelineDot} ${styles[STATUS_CLASS[entry.status] ?? 'statusPending']}`} />
+                    <div className={styles.timelineBody}>
+                      <span className={styles.timelineStatus}>{entry.statusLabel}</span>
+                      {entry.comment && <span className={styles.timelineNote}>{entry.comment}</span>}
+                      <time className={styles.timelineDate}>
+                        {new Date(entry.date).toLocaleString('ru-RU', {
+                          day: 'numeric', month: 'short', year: 'numeric',
+                          hour: '2-digit', minute: '2-digit',
+                        })}
+                      </time>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {!order.defectDescription && (
+            <p className={styles.hint}>
+              Укажите телефон при поиске, чтобы увидеть полную информацию по заказу.
+            </p>
+          )}
+        </div>
+      )}
+    </li>
+  );
+}
 
 export default function PublicTrackingPage() {
-  const [trackingCode, setTrackingCode] = useState('');
-  const [booking, setBooking] = useState(null);
+  const [phone, setPhone] = useState('');
+  const [name, setName] = useState('');
+  const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [expandedNumber, setExpandedNumber] = useState(null);
 
-  const handleTrack = async (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
-    if (!trackingCode.trim()) return;
+    if (!phone.trim() && name.trim().length < 2) {
+      setError('Введите номер телефона или фамилию (минимум 2 символа)');
+      return;
+    }
 
     setLoading(true);
     setError('');
-    setBooking(null);
+    setResults(null);
+    setExpandedNumber(null);
 
     try {
-      const response = await fetch(`/api/bookings/track/${trackingCode.trim()}`);
+      const response = await fetch('/api/tracking/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: phone.trim(), name: name.trim() }),
+      });
       const data = await response.json();
 
       if (response.ok && data.success) {
-        setBooking(data.booking);
+        setResults(data.results);
       } else {
-        setError(data.error || 'Запись не найдена');
+        setError(data.error || 'Заказы не найдены');
       }
-    } catch (err) {
-      setError('Ошибка при поиске записи');
-      console.error('Tracking error:', err);
+    } catch {
+      setError('Ошибка при поиске заказа. Попробуйте ещё раз.');
     } finally {
       setLoading(false);
     }
   };
 
-  const getStatusText = (status) => {
-    const statusMap = {
-      'pending': '🟡 Ожидает подтверждения',
-      'confirmed': '🔵 Подтверждена', 
-      'in_progress': '🟠 В работе',
-      'completed': '🟢 Завершена',
-      'canceled': '🔴 Отменена'
-    };
-    return statusMap[status] || status;
-  };
-
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">
-            Отслеживание записи на услугу
-          </h1>
-          <p className="text-gray-600">
-            Введите код отслеживания чтобы узнать статус вашей записи
+    <div className={styles.page}>
+      <div className={styles.container}>
+        <div className={styles.intro}>
+          <h1 className={styles.title}>Отследить статус ремонта</h1>
+          <p className={styles.subtitle}>
+            Введите номер телефона или фамилию, указанные при оформлении заказа
           </p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <form onSubmit={handleTrack} className="flex flex-col sm:flex-row gap-4">
+        <form onSubmit={handleSearch} className={styles.form}>
+          <div className={styles.formRow}>
+            <input
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="Телефон, например +7 900 000-00-00"
+              className={styles.input}
+            />
             <input
               type="text"
-              value={trackingCode}
-              onChange={(e) => setTrackingCode(e.target.value.toUpperCase())}
-              placeholder="Введите код отслеживания"
-              className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Фамилия"
+              className={styles.input}
             />
-            <button
-              type="submit"
-              disabled={loading}
-              className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 font-medium"
-            >
-              {loading ? 'Поиск...' : 'Найти'}
-            </button>
-          </form>
-        </div>
-
-        {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-            <p className="text-red-800">{error}</p>
           </div>
-        )}
+          <button type="submit" disabled={loading} className={styles.submitBtn}>
+            {loading ? 'Поиск…' : 'Найти заказ'}
+          </button>
+        </form>
 
-        {booking && (
-          <div className="bg-white rounded-lg shadow-md overflow-hidden">
-            <div className="bg-blue-600 p-6 text-white">
-              <h2 className="text-2xl font-bold mb-2">Информация о записи</h2>
-              <p>Код: {booking.trackingCode}</p>
-            </div>
-            
-            <div className="p-6 grid md:grid-cols-2 gap-6">
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-4">Детали услуги</h3>
-                <div className="space-y-2">
-                  <p><span className="text-gray-600">Услуга:</span> {booking.serviceName}</p>
-                  <p><span className="text-gray-600">Устройство:</span> {booking.deviceModel || 'Не указано'}</p>
-                  <p><span className="text-gray-600">Дата:</span> {new Date(booking.createdAt).toLocaleDateString('ru-RU')}</p>
-                </div>
-              </div>
+        {error && <p className={styles.error}>{error}</p>}
 
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-4">Клиент</h3>
-                <div className="space-y-2">
-                  <p><span className="text-gray-600">Имя:</span> {booking.userName}</p>
-                  <p><span className="text-gray-600">Телефон:</span> {booking.userPhone}</p>
-                  <p><span className="text-gray-600">Email:</span> {booking.userEmail || 'Не указан'}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="border-t border-gray-200 p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="font-semibold text-gray-900">Статус</h3>
-                  <p className="text-gray-600">Текущее состояние записи</p>
-                </div>
-                <span className="text-lg font-semibold">
-                  {getStatusText(booking.status)}
-                </span>
-              </div>
-            </div>
-          </div>
+        {results && (
+          <ul className={styles.list}>
+            {results.map((order) => (
+              <OrderCard
+                key={order.number}
+                order={order}
+                expanded={expandedNumber === order.number}
+                onToggle={() => setExpandedNumber((prev) => (prev === order.number ? null : order.number))}
+              />
+            ))}
+          </ul>
         )}
       </div>
     </div>
