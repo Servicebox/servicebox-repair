@@ -13,7 +13,7 @@
 - `export const dynamic = 'force-dynamic';`
 - In-memory кэш с TTL 5 минут — тот же паттерн, что уже используется в `src/app/api/services-yml/route.js` (модуль-level переменная `cache = { data, timestamp, ttl }`, без внешнего кэш-слоя).
 - `GET` подключается через `dbConnect()`, параллельно тянет:
-  - `Service.find({ isCategory: false }).lean()` — все 123 услуги (не категории).
+  - `Service.find({}).lean()` — все 123 услуги, включая категории (например, «Ремонт видеокарт», «Ремонт ноутбуков») — именно эти страницы категорий показывали низкие позиции по коммерческим запросам в диагностике, поэтому их нельзя исключать из фида.
   - `News.find({ isPublished: true }).lean()` — все опубликованные новости (сейчас 4).
 - Собирает RSS 2.0 XML-строку вручную (как и `services-yml`/`yml` роуты уже делают — без внешней XML-библиотеки, конкатенация строк с экранированием).
 - Возвращает `Content-Type: application/xml; charset=utf-8`, `Cache-Control: public, max-age=300`.
