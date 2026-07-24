@@ -33,7 +33,7 @@
 
 .empty h3 {
   margin-bottom: 10px;
-  color: var(--color-text);
+  color: var(--color-text-muted);
 }
 
 .ordersList {
@@ -46,7 +46,7 @@
   border: 1px solid var(--color-border);
   border-radius: 8px;
   overflow: hidden;
-  background: white;
+  background: var(--color-bg-dark);
 }
 
 .orderHeader {
@@ -54,13 +54,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
-  background: var(--color-bg-elevated);
+  background: var(--color-bg);
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .orderHeader:hover {
-  background: var(--color-border);
+  background: var(--color-bg-elevated);
 }
 
 .orderInfo {
@@ -72,7 +72,7 @@
 
 .orderNumber {
   font-weight: bold;
-  color: var(--color-text);
+  color: var(--color-text-muted);
   min-width: 120px;
 }
 
@@ -127,7 +127,7 @@
 .orderTotal {
   font-weight: bold;
   font-size: 18px;
-  color: var(--color-text);
+  color: var(--color-text-muted);
   margin-right: 10px;
 }
 
@@ -147,7 +147,7 @@
 
 .section h4 {
   margin-bottom: 12px;
-  color: var(--color-text);
+  color: var(--color-text-muted);
   font-size: 16px;
 }
 
@@ -172,7 +172,7 @@
   align-items: center;
   gap: 12px;
   padding: 12px;
-  background: var(--color-bg-elevated);
+  background: var(--color-bg);
   border-radius: 6px;
 }
 
@@ -218,7 +218,7 @@
   border-top: 1px solid var(--color-border);
   font-weight: bold;
   font-size: 18px;
-  color: var(--color-text);
+  color: var(--color-text-muted);
   margin-top: 8px;
   padding-top: 12px;
 }

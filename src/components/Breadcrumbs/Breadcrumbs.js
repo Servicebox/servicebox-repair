@@ -67,7 +67,6 @@ export default function Breadcrumbs() {
     'cart': 'Корзина',
     'checkout': 'Оформление заказа',
     'image-gallery-api': 'Галерея',
-    'chat-with-gpt': 'Чат с AI'
   };
 
   let currentPath = '';

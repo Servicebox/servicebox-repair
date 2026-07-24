@@ -5,7 +5,7 @@
 }
 
 .section {
-  background: white;
+  background: var(--color-bg-dark);
   border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 1.5rem;
@@ -65,20 +65,20 @@
   padding: 0.45rem 1rem;
   border: 1px solid var(--color-border);
   border-radius: 6px;
-  background: white;
+  background: var(--color-bg-dark);
   cursor: pointer;
   font-size: 0.875rem;
   font-weight: 500;
   transition: background 0.15s;
 }
-.chooseBtn:hover { background: var(--color-bg-elevated); }
+.chooseBtn:hover { background: var(--color-bg); }
 
 .uploadBtn {
   padding: 0.45rem 1rem;
   border: none;
   border-radius: 6px;
   background: var(--color-primary);
-  color: white;
+  color: var(--color-text-inverse);
   cursor: pointer;
   font-size: 0.875rem;
   font-weight: 600;
@@ -101,7 +101,7 @@
   gap: 0.3rem;
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--color-text);
+  color: var(--color-text-muted);
 }
 
 .input {
@@ -118,7 +118,7 @@
   align-self: flex-start;
   padding: 0.5rem 1.25rem;
   background: var(--color-primary);
-  color: white;
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 6px;
   font-size: 0.875rem;
@@ -149,15 +149,15 @@
   padding: 0.5rem 1rem;
   border: 1px solid var(--color-border);
   border-radius: 6px;
-  background: white;
-  color: var(--color-text);
+  background: var(--color-bg-dark);
+  color: var(--color-text-muted);
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 500;
   transition: background 0.15s;
   margin-right: 0.75rem;
 }
-.favLink:hover { background: var(--color-bg-elevated); }
+.favLink:hover { background: var(--color-bg); }
 
 .logoutBtn {
   display: inline-flex;
@@ -166,7 +166,7 @@
   padding: 0.5rem 1rem;
   border: 1px solid var(--color-danger-bg);
   border-radius: 6px;
-  background: white;
+  background: var(--color-bg-dark);
   color: var(--color-danger);
   font-size: 0.875rem;
   font-weight: 500;

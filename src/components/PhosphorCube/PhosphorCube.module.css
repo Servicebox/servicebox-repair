@@ -4,6 +4,9 @@
   position: relative;
   perspective: 800px;
   flex-shrink: 0;
+  overflow: visible;
+  /* Небольшой сдвиг вниз — верх куба обрезался шапкой */
+  margin-top: 4px;
 }
 
 .sizeSm { width: 48px; height: 48px; }
@@ -12,9 +15,13 @@
 
 .halo {
   position: absolute;
-  inset: -40%;
+  inset: -20%;
   background: var(--cube-halo);
-  filter: blur(24px);
+  /* blur(24px) реально разбрасывает свечение на 2-3 радиуса за пределы
+     блока НЕЗАВИСИМО от inset — именно блюр, а не inset, был причиной
+     вылета за шапку на маленьких экранах. 12px даёт мягкое свечение
+     заметно дешевле для GPU. */
+  filter: blur(12px);
   z-index: 0;
   pointer-events: none;
   opacity: 0.8;
@@ -43,40 +50,14 @@
   to { transform: rotateX(360deg) rotateY(360deg); }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .cube {
-    animation: none;
-  }
-}
-
 .face {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: var(--cube-gradient);
-  color: var(--color-primary-dark);
-  font-family: var(--font-display);
-  font-weight: 700;
   border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
-.sizeSm .face { font-size: 0.9rem; }
-.sizeMd .face { font-size: 1.1rem; }
-.sizeLg .face { font-size: 1.6rem; }
-
-.right, .left {
-  font-size: 0.6em;
-  letter-spacing: 0.05em;
-}
-
-.sizeMd .right, .sizeMd .left,
-.sizeLg .right, .sizeLg .left {
-  writing-mode: vertical-rl;
-}
-
-/* Face placement — half of the scene's own width/height, using currentColor-independent transforms */
+/* Face placement — half of the scene's own width/height */
 .sizeSm .front  { transform: translateZ(24px); }
 .sizeSm .back   { transform: rotateY(180deg) translateZ(24px); }
 .sizeSm .right  { transform: rotateY(90deg) translateZ(24px); }
@@ -97,3 +78,70 @@
 .sizeLg .left   { transform: rotateY(-90deg) translateZ(100px); }
 .sizeLg .top    { transform: rotateX(90deg) translateZ(100px); }
 .sizeLg .bottom { transform: rotateX(-90deg) translateZ(100px); }
+
+/* "СЕРВИС БОКС" — не на гранях (нечитаемо при вращении), а плавающими словами
+   рядом с кубом, каждое покачивается независимо и в своём ритме */
+.dangleWord {
+  position: absolute;
+  z-index: 2;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  white-space: nowrap;
+  pointer-events: none;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+.sizeSm .dangleWord { font-size: 0.5rem; letter-spacing: 0.01em; }
+.sizeMd .dangleWord { font-size: 0.7rem; letter-spacing: 0.02em; }
+.sizeLg .dangleWord { font-size: 1.1rem; letter-spacing: 0.03em; }
+
+.dangleServis {
+  top: -0.4em;
+  left: -15%;
+  transform-origin: center;
+  animation: dangleA 3.2s ease-in-out infinite;
+}
+
+.dangleBoks {
+  bottom: -0.4em;
+  right: -10%;
+  transform-origin: center;
+  animation: dangleB 2.6s ease-in-out infinite;
+  animation-delay: -1.1s;
+}
+
+@keyframes dangleA {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-4px) rotate(2deg); }
+}
+
+@keyframes dangleB {
+  0%, 100% { transform: translateY(0) rotate(3deg); }
+  50% { transform: translateY(4px) rotate(-2deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cube {
+    animation: none;
+  }
+  .dangleServis,
+  .dangleBoks {
+    animation: none;
+  }
+}
+
+/* На мобильных верхний бар шапки скрыт (.headerTopBar{display:none} в
+   Header.module.css), поэтому куб оказывается у самого верха страницы —
+   любой вылет гало/текста за пределы 48px-бокса срезается краем вьюпорта.
+   Гало — чисто декоративное свечение, на мобильных проще убрать целиком,
+   чем подбирать inset/blur под каждый экран; куб сам по себе (48px)
+   вписывается в шапку любого размера без всяких поправок. */
+@media (max-width: 768px) {
+  .sizeSm .halo {
+    display: none;
+  }
+  .sizeSm .dangleWord {
+    display: none;
+  }
+}

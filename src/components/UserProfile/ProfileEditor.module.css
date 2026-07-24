@@ -2,7 +2,7 @@
   max-width: 600px;
   margin: 20px auto;
   padding: 20px;
-  background: white;
+  background: var(--color-bg-dark);
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -10,7 +10,7 @@
 .container h2 {
   margin-bottom: 30px;
   font-size: 24px;
-  color: #333;
+  color: var(--color-text-muted);
 }
 
 .form {
@@ -46,7 +46,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #999;
+  color: var(--color-text-muted);
   font-size: 12px;
 }
 
@@ -58,7 +58,7 @@
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text-muted);
 }
 
 .avatarUpload input[type="file"] {
@@ -66,7 +66,7 @@
   margin-bottom: 8px;
   width: 100%;
   padding: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   cursor: pointer;
 }
@@ -78,7 +78,7 @@
 
 .avatarUpload small {
   display: block;
-  color: #999;
+  color: var(--color-text-muted);
   font-size: 12px;
 }
 
@@ -96,14 +96,14 @@
 .formGroup label {
   margin-bottom: 8px;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text-muted);
   font-size: 14px;
 }
 
 .formGroup input,
 .formGroup textarea {
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   font-size: 14px;
   font-family: inherit;
@@ -112,7 +112,7 @@
 .formGroup input:focus,
 .formGroup textarea:focus {
   outline: none;
-  border-color: var(--color-primary);
+  border-color: var(--color-accent);
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
@@ -123,7 +123,7 @@
 
 .formGroup small {
   margin-top: 4px;
-  color: #999;
+  color: var(--color-text-muted);
   font-size: 12px;
 }
 
@@ -147,8 +147,8 @@
 
 .submitButton {
   padding: 12px 24px;
-  background: var(--color-primary);
-  color: white;
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 4px;
   font-size: 16px;

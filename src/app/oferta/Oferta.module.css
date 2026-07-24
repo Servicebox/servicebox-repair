@@ -1,0 +1,147 @@
+/* app/oferta/Oferta.module.css */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  line-height: 1.6;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+}
+
+.meta {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--color-primary);
+  padding-left: 1rem;
+}
+
+.section p {
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+}
+
+.companyInfo {
+  background: var(--color-bg-elevated);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  border-left: 4px solid var(--color-primary);
+}
+
+.companyInfo h3 {
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+  font-size: 1.125rem;
+}
+
+.detailsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.detailsList li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+}
+
+.detailsList li:last-child {
+  border-bottom: none;
+}
+
+.detailsList strong {
+  color: var(--color-text-muted);
+  min-width: 150px;
+  display: inline-block;
+}
+
+.list {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+}
+
+.list li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.contactInfo {
+  background: var(--color-primary-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--color-primary);
+}
+
+.contactInfo p {
+  margin: 0.5rem 0;
+  color: var(--color-text-muted);
+}
+
+.footer {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.footer p {
+  margin: 0.5rem 0;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .content {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .detailsList li {
+    padding: 0.75rem 0;
+  }
+
+  .detailsList strong {
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+}

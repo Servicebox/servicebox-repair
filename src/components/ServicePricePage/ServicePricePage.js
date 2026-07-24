@@ -79,6 +79,13 @@ export default function ServicePricePage() {
         return findCategoryItems(currentCategory._id, services);
     }, [currentCategory, categories, services]);
 
+    // Калькулятор доступен как дополнительная опция (не вместо услуг) для веток
+    // с маппингом — телефоны/ноутбуки/ТВ/видеокарты, на любом уровне вложенности
+    const rootCalculatorType = useMemo(() => {
+        const root = categoryPath[0];
+        return root ? CATEGORY_MAP[root.name]?.type ?? null : null;
+    }, [categoryPath]);
+
     // Фильтрация
     const filteredItems = useMemo(() => {
         if (!searchQuery) return currentItems;
@@ -116,16 +123,14 @@ export default function ServicePricePage() {
         setActiveCalculatorDevice(null); // Сброс калькулятора
     }, []);
 
-    // Обработчик клика по карточке категории (открывает калькулятор, если есть маппинг)
+    // Клик по карточке категории всегда открывает её услуги (как и должно быть) —
+    // раньше для категорий с маппингом калькулятора (телефоны/ноутбуки/ТВ/видеокарты)
+    // клик СРАЗУ открывал калькулятор МИНУЯ список услуг, из-за чего все вручную
+    // добавленные услуги в этих категориях были недостижимы через навигацию сайта.
+    // Калькулятор для таких категорий доступен отдельной кнопкой внутри списка.
     const handleCardClick = useCallback((category) => {
-        const mapData = CATEGORY_MAP[category.name];
-        // Если для категории есть тип калькулятора И мы на верхнем уровне (нет текущей категории), открываем калькулятор
-        if (mapData && mapData.type && !currentCategory) {
-            setActiveCalculatorDevice(mapData.type);
-        } else {
-            handleCategoryClick(category);
-        }
-    }, [currentCategory, handleCategoryClick]);
+        handleCategoryClick(category);
+    }, [handleCategoryClick]);
 
     const handleBookingClick = useCallback((service, e) => {
         if (e) e.stopPropagation();
@@ -223,12 +228,20 @@ export default function ServicePricePage() {
                             </motion.nav>
                         </div>
 
-                        {/* Кнопка назад */}
+                        {/* Кнопка назад + калькулятор (доп. опция, не вместо услуг) */}
                         {currentCategory && (
                             <motion.div className={styles.backButtonContainer} initial={{ x: -15, opacity: 0 }} animate={{ x: 0, opacity: 1 }}>
                                 <button className={styles.backButton} onClick={handleBackClick}>
                                     <span className={styles.backArrow}>←</span> Назад
                                 </button>
+                                {rootCalculatorType && (
+                                    <button
+                                        className={styles.backButton}
+                                        onClick={() => setActiveCalculatorDevice(rootCalculatorType)}
+                                    >
+                                        🧮 Рассчитать стоимость онлайн
+                                    </button>
+                                )}
                             </motion.div>
                         )}
 

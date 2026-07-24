@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import Service from '@/models/Service';
 import dbConnect from '@/lib/db';
+import { generateSlug } from '@/lib/slugify';
 
 // ✅ 1. Добавь эту функцию в начало файла (после импортов)
 const isValidObjectId = (id) => {
@@ -48,7 +49,10 @@ export async function POST(request) {
 
     console.log('📝 POST запрос для создания услуги:', body);
 
-    // 1. Проверяем уникальность slug
+    // 1. Транслитерируем slug на латиницу (кириллица в URL ломает YML-фиды и ведёт к 404 у ботов)
+    body.slug = generateSlug(body.slug || body.name);
+
+    // 2. Проверяем уникальность slug
     if (body.slug) {
       const existingService = await Service.findOne({ slug: body.slug });
       if (existingService) {

@@ -48,3 +48,5 @@ Thumbs.db
 # Database
 *.db
 *.sqlite
+.superpowers/sdd/
+.worktrees/

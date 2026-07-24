@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Service from '@/models/Service';
+import { generateSlug } from '@/lib/slugify';
 
 // Вспомогательная функция для проверки валидности ObjectId
 const isValidObjectId = (id) => /^[0-9a-fA-F]{24}$/.test(id);
@@ -113,6 +114,11 @@ export async function PUT(request, { params }) {
         { success: false, error: 'Услуга не найдена' },
         { status: 404 }
       );
+    }
+
+    // Транслитерируем slug на латиницу (кириллица в URL ломает YML-фиды и ведёт к 404 у ботов)
+    if (body.slug) {
+      body.slug = generateSlug(body.slug);
     }
 
     // Проверяем уникальность slug если он меняется

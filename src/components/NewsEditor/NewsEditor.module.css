@@ -1,6 +1,6 @@
 .editor {
   max-width: 100%;
-  background: white;
+  background: var(--color-bg-dark);
   border-radius: 12px;
   padding: 2rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -56,8 +56,8 @@
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  background: var(--color-danger);
-  color: white;
+  background: #ef4444;
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 50%;
   width: 2rem;
@@ -90,8 +90,8 @@
 
 .addButton {
   padding: 0.5rem 1rem;
-  background: var(--color-primary);
-  color: white;
+  background: #3b82f6;
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -99,8 +99,8 @@
 }
 
 .block {
-  background: white;
-  border: 1px solid var(--color-border);
+  background: var(--color-bg-dark);
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -128,8 +128,8 @@
 .moveButton,
 .removeButton {
   padding: 0.25rem 0.5rem;
-  border: 1px solid var(--color-border);
-  background: white;
+  border: 1px solid #d1d5db;
+  background: var(--color-bg-dark);
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.75rem;
@@ -232,8 +232,8 @@
 
 .saveButton {
   padding: 0.75rem 2rem;
-  background: var(--color-success);
-  color: white;
+  background: #10b981;
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 8px;
   font-size: 1rem;
@@ -395,7 +395,7 @@
   top: 5px;
   right: 5px;
   background-color: rgba(220, 53, 69, 0.8);
-  color: white;
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 50%;
   width: 24px;
@@ -430,8 +430,8 @@
 }
 
 .addButton {
-  background-color: var(--color-text-muted);
-  color: white;
+  background-color: #6c757d;
+  color: var(--color-text-inverse);
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
@@ -455,7 +455,7 @@
   border: 1px solid var(--color-border);
   border-radius: 4px;
   margin-bottom: 15px;
-  background-color: white;
+  background-color: var(--color-text-inverse);
 }
 
 .blockHeader {
@@ -496,8 +496,8 @@
 }
 
 .removeButton:hover {
-  background-color: var(--color-danger);
-  color: white;
+  background-color: #dc3545;
+  color: var(--color-text-inverse);
 }
 
 .moveButton:disabled, .removeButton:disabled {
@@ -613,8 +613,8 @@
 }
 
 .saveButton {
-  background-color: var(--color-primary);
-  color: white;
+  background-color: #0070f3;
+  color: var(--color-text-inverse);
   border: none;
   padding: 12px 30px;
   border-radius: 4px;
@@ -706,8 +706,8 @@
   position: absolute;
   top: -8px;
   right: -8px;
-  background: var(--color-danger);
-  color: white;
+  background: #ff4444;
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 50%;
   width: 24px;
@@ -737,8 +737,8 @@
 
 .addButton {
   padding: 8px 16px;
-  background: var(--color-success);
-  color: white;
+  background: #28a745;
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -775,8 +775,8 @@
 
 .youtubeAddButton {
   padding: 8px 16px;
-  background: var(--color-danger);
-  color: white;
+  background: #ff0000;
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -819,8 +819,8 @@
 
 .moveButton, .removeButton {
   padding: 4px 8px;
-  border: 1px solid var(--color-border);
-  background: white;
+  border: 1px solid #ddd;
+  background: var(--color-bg-dark);
   border-radius: 3px;
   cursor: pointer;
 }
@@ -835,8 +835,8 @@
 }
 
 .removeButton:hover {
-  background: var(--color-danger);
-  color: white;
+  background: #ff4444;
+  color: var(--color-text-inverse);
 }
 
 .textArea {
@@ -948,8 +948,8 @@
 
 .saveButton {
   padding: 12px 30px;
-  background: var(--color-primary);
-  color: white;
+  background: #007bff;
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 6px;
   font-size: 16px;

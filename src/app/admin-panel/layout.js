@@ -107,6 +107,7 @@ export default function AdminLayout({ children }) {
             { href: '/admin-panel/reviews',  label: 'Отзывы',     icon: '⭐' },
             { href: '/admin-panel/bonuses',  label: 'Бонусы',     icon: '🎁' },
             { href: '/admin-panel/payments', label: 'Оплата',     icon: '💳' },
+            { href: '/admin-panel/analytics', label: 'Аналитика',  icon: '📈' },
           ].map((item) => (
             <Link
               key={item.href}
