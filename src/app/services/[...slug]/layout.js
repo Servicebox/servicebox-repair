@@ -27,7 +27,15 @@ export async function generateMetadata({ params }) {
     const service = data.data;
     const pageUrl = `${BASE_URL}/services/${slug}`;
     const title = service.metaTitle || `${service.name} в Вологде | ServiceBox`;
-    const description = service.metaDescription || service.description;
+    // service.description часто переиспользуется дословно между похожими услугами
+    // (например, один и тот же текст про сроки ремонта — у 20+ моделей iPhone
+    // подряд), поэтому нельзя отдавать его как есть: на выходе получались
+    // десятки страниц с побайтово одинаковым description. Название услуги
+    // всегда уникально в рамках этого фолбэка, поэтому подставляем его первым.
+    const description = service.metaDescription ||
+      (service.description
+        ? `${service.name}. ${service.description}`.slice(0, 160)
+        : `${service.name} в Вологде — ServiceBox. Качественный ремонт, гарантия, выезд мастера.`);
 
     return {
       title,

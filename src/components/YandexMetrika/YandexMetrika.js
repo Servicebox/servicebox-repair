@@ -2,16 +2,24 @@
 
 import Script from 'next/script';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 const METRIKA_ID = process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID;
 
-// Отправляет hit при навигации между страницами (SPA-переходы)
+// Отправляет hit при навигации между страницами (SPA-переходы).
+// Хит за самую первую загрузку страницы уже отправляет initScript (onload
+// ниже) — пропускаем первый прогон эффекта, иначе первый визит на сайт
+// считается дважды и портит статистику по просмотрам/отказам в Метрике.
 function MetrikaPageTracker() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const isFirstRun = useRef(true);
 
   useEffect(() => {
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
     if (typeof window === 'undefined' || !window.ym || !METRIKA_ID) return;
     const url = pathname + (searchParams.toString() ? `?${searchParams.toString()}` : '');
     window.ym(Number(METRIKA_ID), 'hit', url);
