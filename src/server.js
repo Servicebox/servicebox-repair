@@ -86,25 +86,36 @@ app.prepare().then(async () => {
   const expressApp = express();
 
   // === СЖАТИЕ (compression) - важно для продакшена ===
+  const helmetOptions = {
+    contentSecurityPolicy: false,
+    crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  };
+  const compressionOptions = {
+    level: 6,
+    threshold: 1024,
+    filter: (req, res) => {
+      if (req.headers['x-no-compression']) return false;
+      return compression.filter(req, res);
+    },
+  };
+
   if (!dev) {
-    // Helmet - безопасность
-    expressApp.use(helmet({
-      contentSecurityPolicy: false,
-      crossOriginEmbedderPolicy: false,
-      crossOriginResourcePolicy: { policy: "cross-origin" },
-    }));
-
-    // Compression - сжатие ответов
-    expressApp.use(compression({
-      level: 6,
-      threshold: 1024,
-      filter: (req, res) => {
-        if (req.headers['x-no-compression']) return false;
-        return compression.filter(req, res);
-      },
-    }));
-
+    expressApp.use(helmet(helmetOptions));
+    expressApp.use(compression(compressionOptions));
     console.log(' Compression enabled (gzip/deflate)');
+  }
+
+  // /api/* маршруты обрабатываются Next.js напрямую (см. createServer ниже),
+  // в обход expressApp — иначе express.json()/urlencoded() читают тело
+  // запроса раньше Route Handler'ов и POST-запросы в API ломаются. Но это
+  // заодно пропускало и compression — ответы вроде /api/calculator-config
+  // (90+ КБ) уходили несжатыми. Отдельный лёгкий пайплайн — только
+  // helmet+compression, без парсинга тела — чинит это, не трогая API.
+  const apiMiddleware = express();
+  if (!dev) {
+    apiMiddleware.use(helmet(helmetOptions));
+    apiMiddleware.use(compression(compressionOptions));
   }
 
   expressApp.use(cookieParser());
@@ -160,7 +171,7 @@ app.prepare().then(async () => {
 
     if (req.url.startsWith('/api')) {
       const parsedUrl = parse(req.url, true);
-      handle(req, res, parsedUrl);
+      apiMiddleware(req, res, () => handle(req, res, parsedUrl));
       return;
     }
 
