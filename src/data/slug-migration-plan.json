@@ -1,0 +1,828 @@
+[
+  {
+    "id": "69373ce19b6f9dd2c1a36a4a",
+    "name": "Восстановление BIOS ноутбука",
+    "isCategory": false,
+    "oldSlug": "восстановление-bios-ноутбука",
+    "newSlug": "vosstanovlenie-bios-noutbuka"
+  },
+  {
+    "id": "699c65cf8e14a537a3b24f72",
+    "name": "Восстановление ПО Sony PlayStation 3",
+    "isCategory": false,
+    "oldSlug": "восстановление-по-sony-playstation-3",
+    "newSlug": "vosstanovlenie-po-sony-playstation-3"
+  },
+  {
+    "id": "699c666e8e14a537a3b24fa1",
+    "name": "Восстановление ПО Sony PlayStation 4",
+    "isCategory": false,
+    "oldSlug": "восстановление-по-sony-playstation-4",
+    "newSlug": "vosstanovlenie-po-sony-playstation-4"
+  },
+  {
+    "id": "699c67908e14a537a3b24fd1",
+    "name": "Восстановление ПО Sony PlayStation 4 Pro",
+    "isCategory": false,
+    "oldSlug": "восстановление-по-sony-playstation-4-pro",
+    "newSlug": "vosstanovlenie-po-sony-playstation-4-pro"
+  },
+  {
+    "id": "69d8f1cee8715c95af5a42ac",
+    "name": "Восстановление ПО X-BOX One",
+    "isCategory": false,
+    "oldSlug": "восстановление-по-x-box-one",
+    "newSlug": "vosstanovlenie-po-x-box-one"
+  },
+  {
+    "id": "69d8f209e8715c95af5a42c9",
+    "name": "Восстановление ПО X-BOX One X/S",
+    "isCategory": false,
+    "oldSlug": "восстановление-по-x-box-one-xs",
+    "newSlug": "vosstanovlenie-po-x-box-one-xs"
+  },
+  {
+    "id": "69d8f247e8715c95af5a42e6",
+    "name": "Восстановление ПО X-BOX Series",
+    "isCategory": false,
+    "oldSlug": "восстановление-по-x-box-series",
+    "newSlug": "vosstanovlenie-po-x-box-series"
+  },
+  {
+    "id": "69d8e2dae8715c95af5a408c",
+    "name": "Восстановление ПО X-Box 360",
+    "isCategory": false,
+    "oldSlug": "восстановление-по-x-box-360",
+    "newSlug": "vosstanovlenie-po-x-box-360"
+  },
+  {
+    "id": "69373aa79b6f9dd2c1a36a00",
+    "name": "Восстановление после влаги",
+    "isCategory": false,
+    "oldSlug": "восстановление-после-влаги",
+    "newSlug": "vosstanovlenie-posle-vlagi"
+  },
+  {
+    "id": "693739139b6f9dd2c1a369a8",
+    "name": "Диагностика",
+    "isCategory": false,
+    "oldSlug": "диагностика",
+    "newSlug": "diagnostika"
+  },
+  {
+    "id": "69d8ec02e8715c95af5a416b",
+    "name": "Диагностика (без ремонта) X-BOX 360",
+    "isCategory": false,
+    "oldSlug": "диагностика-без-ремонта-x-box-360",
+    "newSlug": "diagnostika-bez-remonta-x-box-360"
+  },
+  {
+    "id": "69d90617e8715c95af5a453e",
+    "name": "Диагностика (без ремонта) X-BOX One X/S.",
+    "isCategory": false,
+    "oldSlug": "диагностика-без-ремонта-x-box-one-xs",
+    "newSlug": "diagnostika-bez-remonta-x-box-one-xs"
+  },
+  {
+    "id": "69d9066ee8715c95af5a456b",
+    "name": "Диагностика (без ремонта) X-BOX One.",
+    "isCategory": false,
+    "oldSlug": "диагностика-без-ремонта-x-box-one",
+    "newSlug": "diagnostika-bez-remonta-x-box-one"
+  },
+  {
+    "id": "69d905a0e8715c95af5a4507",
+    "name": "Диагностика (без ремонта) X-BOX Series.",
+    "isCategory": false,
+    "oldSlug": "диагностика-без-ремонта-bga-x-box-series",
+    "newSlug": "diagnostika-bez-remonta-x-box-series"
+  },
+  {
+    "id": "693aa46bbb0889dde8d5282c",
+    "name": "Диагностика любого телефона",
+    "isCategory": false,
+    "oldSlug": "диагностика-любого-телефона",
+    "newSlug": "diagnostika-lyubogo-telefona"
+  },
+  {
+    "id": "697fb134e91bba14f1d7262c",
+    "name": "Диагностика неисправности видеокарты",
+    "isCategory": false,
+    "oldSlug": "диагностика-неисправности-видеокарты",
+    "newSlug": "diagnostika-neispravnosti-videokarty"
+  },
+  {
+    "id": "693c5131bab3cd87b7f46efb",
+    "name": "Замена HDMI разъема на Sony PlayStation 5",
+    "isCategory": false,
+    "oldSlug": "замена-hdmi-разъема-на-sony-playstation-5",
+    "newSlug": "zamena-hdmi-razema-na-sony-playstation-5"
+  },
+  {
+    "id": "693739e99b6f9dd2c1a369d3",
+    "name": "Замена аккумулятора",
+    "isCategory": false,
+    "oldSlug": "замена-аккумулятора",
+    "newSlug": "zamena-akkumulyatora"
+  },
+  {
+    "id": "693a9af8bb0889dde8d52673",
+    "name": "Замена аккумулятора на Apple iPhone 11",
+    "isCategory": false,
+    "oldSlug": "замена-аккумулятора-на-apple-iphone-11",
+    "newSlug": "zamena-akkumulyatora-na-apple-iphone-11"
+  },
+  {
+    "id": "693a9b88bb0889dde8d52686",
+    "name": "Замена аккумулятора на Apple iPhone 11 Pro",
+    "isCategory": false,
+    "oldSlug": "замена-аккумулятора-на-apple-iphone-11-pro",
+    "newSlug": "zamena-akkumulyatora-na-apple-iphone-11-pro"
+  },
+  {
+    "id": "693a9c5abb0889dde8d526a5",
+    "name": "Замена аккумулятора на Apple iPhone 12",
+    "isCategory": false,
+    "oldSlug": "замена-аккумулятора-на-apple-iphone-12",
+    "newSlug": "zamena-akkumulyatora-na-apple-iphone-12"
+  },
+  {
+    "id": "693a9bffbb0889dde8d52699",
+    "name": "Замена аккумулятора на Apple iPhone 12 Mini",
+    "isCategory": false,
+    "oldSlug": "замена-аккумулятора-на-apple-iphone-12-mini",
+    "newSlug": "zamena-akkumulyatora-na-apple-iphone-12-mini"
+  },
+  {
+    "id": "693a9cc6bb0889dde8d526b8",
+    "name": "Замена аккумулятора на Apple iPhone 12 Pro",
+    "isCategory": false,
+    "oldSlug": "замена-аккумулятора-на-apple-iphone-12-pro",
+    "newSlug": "zamena-akkumulyatora-na-apple-iphone-12-pro"
+  },
+  {
+    "id": "693a9913bb0889dde8d52604",
+    "name": "Замена аккумулятора на Apple iPhone Xr/Xs",
+    "isCategory": false,
+    "oldSlug": "замена-аккумулятора-на-apple-iphone-xrxs",
+    "newSlug": "zamena-akkumulyatora-na-apple-iphone-xrxs"
+  },
+  {
+    "id": "693a9a76bb0889dde8d52660",
+    "name": "Замена аккумулятора на Apple iPhone Xs Max",
+    "isCategory": false,
+    "oldSlug": "замена-аккумулятора-на-apple-iphone-xs-max",
+    "newSlug": "zamena-akkumulyatora-na-apple-iphone-xs-max"
+  },
+  {
+    "id": "697fb09fe91bba14f1d72602",
+    "name": "Замена дисплейного модуля (oled)",
+    "isCategory": false,
+    "oldSlug": "замена-дисплейного-модуля",
+    "newSlug": "zamena-displeynogo-modulya-oled"
+  },
+  {
+    "id": "69d8f171e8715c95af5a428f",
+    "name": "Замена ж/диска, SSD (без з/ч) X-BOX One",
+    "isCategory": false,
+    "oldSlug": "замена-ждиска-ssd-без-зч-x-box-one",
+    "newSlug": "zamena-zhdiska-ssd-bez-zch-x-box-one"
+  },
+  {
+    "id": "69d8f04fe8715c95af5a41e0",
+    "name": "Замена ж/диска, SSD (без з/ч) X-BOX One Series",
+    "isCategory": false,
+    "oldSlug": "замена-ждиска-ssd-без-зч-x-box-one-series",
+    "newSlug": "zamena-zhdiska-ssd-bez-zch-x-box-one-series"
+  },
+  {
+    "id": "69d8f10ce8715c95af5a4260",
+    "name": "Замена ж/диска, SSD (без з/ч) X-BOX One X/S",
+    "isCategory": false,
+    "oldSlug": "замена-ждиска-ssd-без-зч-x-box-one-xs",
+    "newSlug": "zamena-zhdiska-ssd-bez-zch-x-box-one-xs"
+  },
+  {
+    "id": "69373c019b6f9dd2c1a36a2b",
+    "name": "Замена клавиатуры ноутбука без пайки",
+    "isCategory": false,
+    "oldSlug": "замена-клавиатуры-ноутбука-без-пайки",
+    "newSlug": "zamena-klaviatury-noutbuka-bez-payki"
+  },
+  {
+    "id": "69d9ff0f38dafe0124d56c93",
+    "name": "Замена кнопки/триггера PS 3/4",
+    "isCategory": false,
+    "oldSlug": "замена-кнопкитриггера-ps-34",
+    "newSlug": "zamena-knopkitriggera-ps-34"
+  },
+  {
+    "id": "692e1f59660d4f52721018f5",
+    "name": "Замена подсветки на телевизоре 37-49 дюймов",
+    "isCategory": false,
+    "oldSlug": "замена-подсветки-на-телевизоре-37-49-дюймов",
+    "newSlug": "zamena-podsvetki-na-televizore-37-49-dyuymov"
+  },
+  {
+    "id": "692e1f79660d4f52721018fe",
+    "name": "Замена подсветки на телевизоре 50-59 дюймов",
+    "isCategory": false,
+    "oldSlug": "замена-подсветки-на-телевизоре-50-59-дюймов",
+    "newSlug": "zamena-podsvetki-na-televizore-50-59-dyuymov"
+  },
+  {
+    "id": "692e1f9a660d4f5272101907",
+    "name": "Замена подсветки на телевизоре 60-74 дюймовЗамена подсветки на телевизоре 50-59 дюймов",
+    "isCategory": false,
+    "oldSlug": "замена-подсветки-на-телевизоре-60-74-дюймовзамена-подсветки-на-телевизоре-50-59-дюймов",
+    "newSlug": "zamena-podsvetki-na-televizore-60-74-dyuymovzamena-podsvetki-na-televizore-50-59-dyuymov"
+  },
+  {
+    "id": "692e1f17660d4f52721018e3",
+    "name": "Замена подсветки на телевизоре до 31 дюйма",
+    "isCategory": false,
+    "oldSlug": "замена-подсветки-на-телевизоре-до-31-дюйма",
+    "newSlug": "zamena-podsvetki-na-televizore-do-31-dyuyma"
+  },
+  {
+    "id": "692e1f40660d4f52721018ec",
+    "name": "Замена подсветки на телевизоре от 32 до 36 дюймов",
+    "isCategory": false,
+    "oldSlug": "замена-подсветки-на-телевизоре-от-32-до-36-дюймов",
+    "newSlug": "zamena-podsvetki-na-televizore-ot-32-do-36-dyuymov"
+  },
+  {
+    "id": "693aa19dbb0889dde8d52744",
+    "name": "Замена разъема зарядки Micro-USB",
+    "isCategory": false,
+    "oldSlug": "замена-разъема-зарядки-micro-usb",
+    "newSlug": "zamena-razema-zaryadki-micro-usb"
+  },
+  {
+    "id": "69d9fd6538dafe0124d56bea",
+    "name": "Замена разъемов PS 3/4",
+    "isCategory": false,
+    "oldSlug": "замена-разъемов-джойстик-ps-34",
+    "newSlug": "zamena-razemov-ps-34"
+  },
+  {
+    "id": "69d90921e8715c95af5a4634",
+    "name": "Замена разъемов X-BOX 360",
+    "isCategory": false,
+    "oldSlug": "замена-разъемов-x-box-360",
+    "newSlug": "zamena-razemov-x-box-360"
+  },
+  {
+    "id": "693aa266bb0889dde8d52787",
+    "name": "Замена разъёма питания Type-C",
+    "isCategory": false,
+    "oldSlug": "замена-разъёма-питания-type-c",
+    "newSlug": "zamena-razyoma-pitaniya-type-c"
+  },
+  {
+    "id": "692cf0091eac6cbfc1b9b57d",
+    "name": "Замена стекла дисплея Iphone 11",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-11",
+    "newSlug": "zamena-stekla-displeya-iphone-11"
+  },
+  {
+    "id": "692cf0331eac6cbfc1b9b586",
+    "name": "Замена стекла дисплея Iphone 11 Pro",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-11-pro",
+    "newSlug": "zamena-stekla-displeya-iphone-11-pro"
+  },
+  {
+    "id": "692cf0521eac6cbfc1b9b58f",
+    "name": "Замена стекла дисплея Iphone 11 Pro Max",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-11-pro-max",
+    "newSlug": "zamena-stekla-displeya-iphone-11-pro-max"
+  },
+  {
+    "id": "692cf0721eac6cbfc1b9b598",
+    "name": "Замена стекла дисплея Iphone 12 Mini",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-12-mini",
+    "newSlug": "zamena-stekla-displeya-iphone-12-mini"
+  },
+  {
+    "id": "692cf0bb1eac6cbfc1b9b5aa",
+    "name": "Замена стекла дисплея Iphone 12 Pro Max",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-12-pro-max",
+    "newSlug": "zamena-stekla-displeya-iphone-12-pro-max"
+  },
+  {
+    "id": "692cf09c1eac6cbfc1b9b5a1",
+    "name": "Замена стекла дисплея Iphone 12/ 12 Pro",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-12-12-pro",
+    "newSlug": "zamena-stekla-displeya-iphone-12-12-pro"
+  },
+  {
+    "id": "692cf0f61eac6cbfc1b9b5bc",
+    "name": "Замена стекла дисплея Iphone 13",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-13",
+    "newSlug": "zamena-stekla-displeya-iphone-13"
+  },
+  {
+    "id": "692cf0d51eac6cbfc1b9b5b3",
+    "name": "Замена стекла дисплея Iphone 13 Mini",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-13-mini",
+    "newSlug": "zamena-stekla-displeya-iphone-13-mini"
+  },
+  {
+    "id": "692cf10d1eac6cbfc1b9b5c5",
+    "name": "Замена стекла дисплея Iphone 13 Pro",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-13-pro",
+    "newSlug": "zamena-stekla-displeya-iphone-13-pro"
+  },
+  {
+    "id": "692cf1321eac6cbfc1b9b5ce",
+    "name": "Замена стекла дисплея Iphone 13 Pro Max",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-13-pro-max",
+    "newSlug": "zamena-stekla-displeya-iphone-13-pro-max"
+  },
+  {
+    "id": "692cf1581eac6cbfc1b9b5d7",
+    "name": "Замена стекла дисплея Iphone 14",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-14",
+    "newSlug": "zamena-stekla-displeya-iphone-14"
+  },
+  {
+    "id": "692cf16e1eac6cbfc1b9b5e0",
+    "name": "Замена стекла дисплея Iphone 14 Plus",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-14-plus",
+    "newSlug": "zamena-stekla-displeya-iphone-14-plus"
+  },
+  {
+    "id": "692cf1bc1eac6cbfc1b9b5f3",
+    "name": "Замена стекла дисплея Iphone 14 Pro",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-14-pro",
+    "newSlug": "zamena-stekla-displeya-iphone-14-pro"
+  },
+  {
+    "id": "692cf1d51eac6cbfc1b9b5fc",
+    "name": "Замена стекла дисплея Iphone 14 Pro Max",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-14-pro-max",
+    "newSlug": "zamena-stekla-displeya-iphone-14-pro-max"
+  },
+  {
+    "id": "692cf1f71eac6cbfc1b9b605",
+    "name": "Замена стекла дисплея Iphone 15",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-15",
+    "newSlug": "zamena-stekla-displeya-iphone-15"
+  },
+  {
+    "id": "692cef751eac6cbfc1b9b559",
+    "name": "Замена стекла дисплея Iphone 7 plus/ 8 plus",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-7-plus-8-plus",
+    "newSlug": "zamena-stekla-displeya-iphone-7-plus-8-plus"
+  },
+  {
+    "id": "692cee661eac6cbfc1b9b537",
+    "name": "Замена стекла дисплея Iphone 7/8",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-78",
+    "newSlug": "zamena-stekla-displeya-iphone-78"
+  },
+  {
+    "id": "692cef901eac6cbfc1b9b562",
+    "name": "Замена стекла дисплея Iphone X/ XS",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-x-xs",
+    "newSlug": "zamena-stekla-displeya-iphone-x-xs"
+  },
+  {
+    "id": "692cefb21eac6cbfc1b9b56b",
+    "name": "Замена стекла дисплея Iphone Xr",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-xr",
+    "newSlug": "zamena-stekla-displeya-iphone-xr"
+  },
+  {
+    "id": "692cefe51eac6cbfc1b9b574",
+    "name": "Замена стекла дисплея Iphone Xs Max",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-iphone-xs-max",
+    "newSlug": "zamena-stekla-displeya-iphone-xs-max"
+  },
+  {
+    "id": "692cf2121eac6cbfc1b9b60e",
+    "name": "Замена стекла дисплея на Iphone 15 Pro",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-на-iphone-15-pro",
+    "newSlug": "zamena-stekla-displeya-na-iphone-15-pro"
+  },
+  {
+    "id": "692cf22b1eac6cbfc1b9b617",
+    "name": "Замена стекла дисплея на Iphone 15 Pro Max",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-на-iphone-15-pro-max",
+    "newSlug": "zamena-stekla-displeya-na-iphone-15-pro-max"
+  },
+  {
+    "id": "699c6d368e14a537a3b25142",
+    "name": "Замена стекла дисплея на Iphone 16",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-на-iphone-16",
+    "newSlug": "zamena-stekla-displeya-na-iphone-16"
+  },
+  {
+    "id": "699c6d858e14a537a3b25182",
+    "name": "Замена стекла дисплея на Iphone 16 Pro",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-на-iphone-16-pro",
+    "newSlug": "zamena-stekla-displeya-na-iphone-16-pro"
+  },
+  {
+    "id": "699c6db58e14a537a3b2519f",
+    "name": "Замена стекла дисплея на Iphone 16 Pro Max",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-на-iphone-16-pro-max",
+    "newSlug": "zamena-stekla-displeya-na-iphone-16-pro-max"
+  },
+  {
+    "id": "699c6de48e14a537a3b251be",
+    "name": "Замена стекла дисплея на Iphone 17",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-на-iphone-17",
+    "newSlug": "zamena-stekla-displeya-na-iphone-17"
+  },
+  {
+    "id": "699c6e3e8e14a537a3b251f8",
+    "name": "Замена стекла дисплея на Iphone 17 Pro",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-на-iphone-17-pro",
+    "newSlug": "zamena-stekla-displeya-na-iphone-17-pro"
+  },
+  {
+    "id": "699c6e638e14a537a3b25215",
+    "name": "Замена стекла дисплея на Iphone 17 Pro Max",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-на-iphone-17-pro-max",
+    "newSlug": "zamena-stekla-displeya-na-iphone-17-pro-max"
+  },
+  {
+    "id": "699c6e8c8e14a537a3b25232",
+    "name": "Замена стекла дисплея на Iphone Air",
+    "isCategory": false,
+    "oldSlug": "замена-стекла-дисплея-на-iphone-air",
+    "newSlug": "zamena-stekla-displeya-na-iphone-air"
+  },
+  {
+    "id": "69d9fff038dafe0124d56cd1",
+    "name": "Замена стика/аналога One PS5",
+    "isCategory": false,
+    "oldSlug": "замена-стикааналога-one-ps5",
+    "newSlug": "zamena-stikaanaloga-one-ps5"
+  },
+  {
+    "id": "69d9ff6d38dafe0124d56cb2",
+    "name": "Замена стика/аналога PS 3/4",
+    "isCategory": false,
+    "oldSlug": "замена-стикааналога-ps-34",
+    "newSlug": "zamena-stikaanaloga-ps-34"
+  },
+  {
+    "id": "69d9076be8715c95af5a45a6",
+    "name": "Замена стика/аналога X-BOX 360",
+    "isCategory": false,
+    "oldSlug": "замена-стикааналога-x-box-360",
+    "newSlug": "zamena-stikaanaloga-x-box-360"
+  },
+  {
+    "id": "693c4f07bab3cd87b7f46e60",
+    "name": "Игровые консоли",
+    "isCategory": true,
+    "oldSlug": "игровые-консоли",
+    "newSlug": "igrovye-konsoli"
+  },
+  {
+    "id": "69d9fdfa38dafe0124d56c36",
+    "name": "Корпусной ремонт PS 3/4",
+    "isCategory": false,
+    "oldSlug": "корпусной-ремонт-ps-34",
+    "newSlug": "korpusnoy-remont-ps-34"
+  },
+  {
+    "id": "69d908bde8715c95af5a4615",
+    "name": "Корпусной ремонт X-BOX 360",
+    "isCategory": false,
+    "oldSlug": "корпусной-ремонт-x-box-360",
+    "newSlug": "korpusnoy-remont-x-box-360"
+  },
+  {
+    "id": "692cf3151eac6cbfc1b9b63c",
+    "name": "Обслуживание GTX1660/S/TI; RX 6400/500/XT",
+    "isCategory": false,
+    "oldSlug": "обслуживание-gtx1660sti-rx-6400500xt",
+    "newSlug": "obsluzhivanie-gtx1660sti-rx-6400500xt"
+  },
+  {
+    "id": "692cf3371eac6cbfc1b9b645",
+    "name": "Обслуживание RTX2060/70/S, 3050/60; RXT6600/XT",
+    "isCategory": false,
+    "oldSlug": "обслуживание-rtx206070s-305060-rxt6600xt",
+    "newSlug": "obsluzhivanie-rtx206070s-305060-rxt6600xt"
+  },
+  {
+    "id": "692cf3611eac6cbfc1b9b654",
+    "name": "Обслуживание RTX2080/S, 3060TI/3070; RX6700/XT, 7600/XT; Intel ARC",
+    "isCategory": false,
+    "oldSlug": "обслуживание-rtx2080s-3060ti3070-rx6700xt-7600xt-intel-arc",
+    "newSlug": "obsluzhivanie-rtx2080s-3060ti3070-rx6700xt-7600xt-intel-arc"
+  },
+  {
+    "id": "692cf3851eac6cbfc1b9b65d",
+    "name": "Обслуживание RTX2080TI, 3070TI, RX6800/XT, 7700/XT",
+    "isCategory": false,
+    "oldSlug": "обслуживание-rtx2080ti-3070ti-rx6800xt-7700xt",
+    "newSlug": "obsluzhivanie-rtx2080ti-3070ti-rx6800xt-7700xt"
+  },
+  {
+    "id": "693b1788bb0889dde8d52942",
+    "name": "Ремонт блока питания телевизора",
+    "isCategory": false,
+    "oldSlug": "ремонт-блока-питания-телевизора",
+    "newSlug": "remont-bloka-pitaniya-televizora"
+  },
+  {
+    "id": "692cf2a81eac6cbfc1b9b620",
+    "name": "Ремонт видеокарт",
+    "isCategory": true,
+    "oldSlug": "ремонт-видеокарт",
+    "newSlug": "remont-videokart"
+  },
+  {
+    "id": "69d906e7e8715c95af5a4588",
+    "name": "Ремонт джойстиков",
+    "isCategory": true,
+    "oldSlug": "ремонт-джойстиков",
+    "newSlug": "remont-dzhoystikov"
+  },
+  {
+    "id": "69da004638dafe0124d56cf0",
+    "name": "Ремонт кнопки/триггера One PS5",
+    "isCategory": false,
+    "oldSlug": "ремонт-кнопкитриггера-one-ps5",
+    "newSlug": "remont-knopkitriggera-one-ps5"
+  },
+  {
+    "id": "69d9081be8715c95af5a45c6",
+    "name": "Ремонт кнопок/триггера X-BOX 360",
+    "isCategory": false,
+    "oldSlug": "ремонт-кнопоктриггера-x-box-360",
+    "newSlug": "remont-knopoktriggera-x-box-360"
+  },
+  {
+    "id": "69f7a08b7c64cb94df15da77",
+    "name": "Ремонт ноутбуков Acer",
+    "isCategory": true,
+    "oldSlug": "ремонт-ноутбуков-acer",
+    "newSlug": "remont-noutbukov-acer"
+  },
+  {
+    "id": "69d8e8efe8715c95af5a412e",
+    "name": "Ремонт привода DVD/BluRay X-BOX 360",
+    "isCategory": false,
+    "oldSlug": "ремонт-привода-dvdbluray-x-box-360",
+    "newSlug": "remont-privoda-dvdbluray-x-box-360"
+  },
+  {
+    "id": "69d8f731e8715c95af5a4414",
+    "name": "Ремонт привода DVD/BluRay X-BOX One Series",
+    "isCategory": false,
+    "oldSlug": "ремонт-привода-dvdbluray-x-box-one-series",
+    "newSlug": "remont-privoda-dvdbluray-x-box-one-series"
+  },
+  {
+    "id": "69d8f77ce8715c95af5a4432",
+    "name": "Ремонт привода DVD/BluRay X-BOX One X/S. Напиши seo описание",
+    "isCategory": false,
+    "oldSlug": "ремонт-привода-dvdbluray-x-box-one-xs-напиши-seo-описание",
+    "newSlug": "remont-privoda-dvdbluray-x-box-one-xs-napishi-seo-opisanie"
+  },
+  {
+    "id": "69d8f7c7e8715c95af5a444f",
+    "name": "Ремонт привода DVD/BluRay X-BOX One.",
+    "isCategory": false,
+    "oldSlug": "ремонт-привода-dvdbluray-x-box-one",
+    "newSlug": "remont-privoda-dvdbluray-x-box-one"
+  },
+  {
+    "id": "69d8f38ce8715c95af5a4384",
+    "name": "Ремонт разъемов (HDMI и др) X-BOX One",
+    "isCategory": false,
+    "oldSlug": "ремонт-разъемов-hdmi-и-др-x-box-one",
+    "newSlug": "remont-razemov-hdmi-i-dr-x-box-one"
+  },
+  {
+    "id": "69d8f345e8715c95af5a4367",
+    "name": "Ремонт разъемов (HDMI и др) X-BOX One X/S",
+    "isCategory": false,
+    "oldSlug": "ремонт-разъемов-hdmi-и-др-x-box-one-xs",
+    "newSlug": "remont-razemov-hdmi-i-dr-x-box-one-xs"
+  },
+  {
+    "id": "69d8f2d1e8715c95af5a432e",
+    "name": "Ремонт разъемов (HDMI и др) X-BOX Series",
+    "isCategory": false,
+    "oldSlug": "ремонт-разъемов-hdmi-и-др-x-box-series",
+    "newSlug": "remont-razemov-hdmi-i-dr-x-box-series"
+  },
+  {
+    "id": "69d8e4d5e8715c95af5a40e3",
+    "name": "Ремонт разъемов (HDMI и др.) X-BOX 360",
+    "isCategory": false,
+    "oldSlug": "ремонт-разъемов-hdmi-и-др-x-box-360",
+    "newSlug": "remont-razemov-hdmi-i-dr-x-box-360"
+  },
+  {
+    "id": "69369054cc08accfe94aef4a",
+    "name": "Ремонт телефонов",
+    "isCategory": true,
+    "oldSlug": "ремонт-телефонов",
+    "newSlug": "remont-telefonov"
+  },
+  {
+    "id": "699c69468e14a537a3b25011",
+    "name": "Ремонт цепей питания Sony PlayStation 3",
+    "isCategory": false,
+    "oldSlug": "ремонт-цепей-питания-sony-playstation-3",
+    "newSlug": "remont-cepey-pitaniya-sony-playstation-3"
+  },
+  {
+    "id": "699c6a528e14a537a3b25037",
+    "name": "Ремонт цепей питания Sony PlayStation 4 Pro",
+    "isCategory": false,
+    "oldSlug": "ремонт-цепей-питания-sony-playstation-4-pro",
+    "newSlug": "remont-cepey-pitaniya-sony-playstation-4-pro"
+  },
+  {
+    "id": "69d8e745e8715c95af5a410c",
+    "name": "Ремонт цепей питания X-BOX 360",
+    "isCategory": false,
+    "oldSlug": "ремонт-цепей-питания",
+    "newSlug": "remont-cepey-pitaniya-x-box-360"
+  },
+  {
+    "id": "69d8f49fe8715c95af5a43f7",
+    "name": "Ремонт цепей питания X-BOX One Series.",
+    "isCategory": false,
+    "oldSlug": "ремонт-цепей-питания-x-box-one-series",
+    "newSlug": "remont-cepey-pitaniya-x-box-one-series"
+  },
+  {
+    "id": "69d8f42ae8715c95af5a43ce",
+    "name": "Ремонт цепей питания X-BOX One X/S.",
+    "isCategory": false,
+    "oldSlug": "ремонт-цепей-питания-x-box-one-xs",
+    "newSlug": "remont-cepey-pitaniya-x-box-one-xs"
+  },
+  {
+    "id": "69d8f3e2e8715c95af5a43a1",
+    "name": "Ремонт цепей питания X-BOX One.",
+    "isCategory": false,
+    "oldSlug": "ремонт-цепей-питания-x-box-one",
+    "newSlug": "remont-cepey-pitaniya-x-box-one"
+  },
+  {
+    "id": "69d9feb738dafe0124d56c74",
+    "name": "Ремонт цепи питания PS 3/4",
+    "isCategory": false,
+    "oldSlug": "ремонт-цепи-питания-ps-34",
+    "newSlug": "remont-cepi-pitaniya-ps-34"
+  },
+  {
+    "id": "69d90884e8715c95af5a45e5",
+    "name": "Ремонт цепи питания X-BOX 360",
+    "isCategory": false,
+    "oldSlug": "ремонт-цепи-питания-x-box-360",
+    "newSlug": "remont-cepi-pitaniya-x-box-360"
+  },
+  {
+    "id": "69f7a3887c64cb94df15db9d",
+    "name": "Сервиcная чистка и замена жидкого металла Acer",
+    "isCategory": false,
+    "oldSlug": "сервиcная-чистка-и-замена-жидкого-металла-acer",
+    "newSlug": "servicnaya-chistka-i-zamena-zhidkogo-metalla-acer"
+  },
+  {
+    "id": "69f7a2ff7c64cb94df15db6c",
+    "name": "Сервисная чистка и замена термопасты Acer",
+    "isCategory": false,
+    "oldSlug": "сервисная-чистка-и-замена-термопасты-acer",
+    "newSlug": "servisnaya-chistka-i-zamena-termopasty-acer"
+  },
+  {
+    "id": "69d8eba3e8715c95af5a414e",
+    "name": "Сложный ремонт, пайка BGA X-BOX 360",
+    "isCategory": false,
+    "oldSlug": "сложный-ремонт-пайка-bga-x-box-360",
+    "newSlug": "slozhnyy-remont-payka-bga-x-box-360"
+  },
+  {
+    "id": "69d8f87fe8715c95af5a4489",
+    "name": "Сложный ремонт, пайка BGA X-BOX One X/S.",
+    "isCategory": false,
+    "oldSlug": "сложный-ремонт-пайка-bga-x-box-one-xs",
+    "newSlug": "slozhnyy-remont-payka-bga-x-box-one-xs"
+  },
+  {
+    "id": "69d8f832e8715c95af5a446c",
+    "name": "Сложный ремонт, пайка BGA X-BOX One.",
+    "isCategory": false,
+    "oldSlug": "сложный-ремонт-пайка-bga-x-box-one",
+    "newSlug": "slozhnyy-remont-payka-bga-x-box-one"
+  },
+  {
+    "id": "69d8f8d0e8715c95af5a44a6",
+    "name": "Сложный ремонт, пайка BGA X-BOX Series.",
+    "isCategory": false,
+    "oldSlug": "сложный-ремонт-пайка-bga-x-box-series",
+    "newSlug": "slozhnyy-remont-payka-bga-x-box-series"
+  },
+  {
+    "id": "699c64438e14a537a3b24f3b",
+    "name": "Чистка и замена термопасты PlayStation 4 PRO",
+    "isCategory": false,
+    "oldSlug": "чистка-и-замена-термопасты-playstation-4-pro",
+    "newSlug": "chistka-i-zamena-termopasty-playstation-4-pro"
+  },
+  {
+    "id": "69d8e174e8715c95af5a4028",
+    "name": "Чистка и замена термопасты X-Box 360",
+    "isCategory": false,
+    "oldSlug": "чистка-и-замена-термопасты-x-box-360",
+    "newSlug": "chistka-i-zamena-termopasty-x-box-360"
+  },
+  {
+    "id": "69d8efafe8715c95af5a41c3",
+    "name": "Чистка консоли, замена т/пасты X-BOX One Series",
+    "isCategory": false,
+    "oldSlug": "чистка-консоли-замена-тпасты-x-box-one-series",
+    "newSlug": "chistka-konsoli-zamena-tpasty-x-box-one-series"
+  },
+  {
+    "id": "69d8ef40e8715c95af5a41a6",
+    "name": "Чистка консоли, замена т/пасты X-BOX One X/S",
+    "isCategory": false,
+    "oldSlug": "чистка-консоли-замена-тпасты-x-box-one-xs",
+    "newSlug": "chistka-konsoli-zamena-tpasty-x-box-one-xs"
+  },
+  {
+    "id": "69d8eef9e8715c95af5a4189",
+    "name": "Чистка консоли, замена т/пасты X-BOX One.",
+    "isCategory": false,
+    "oldSlug": "чистка-консоли-замена-тпасты-x-box-one",
+    "newSlug": "chistka-konsoli-zamena-tpasty-x-box-one"
+  },
+  {
+    "id": "69d9fe5c38dafe0124d56c55",
+    "name": "замена аккумулятора PS 3/4",
+    "isCategory": false,
+    "oldSlug": "замена-аккумулятора-ps-34",
+    "newSlug": "zamena-akkumulyatora-ps-34"
+  },
+  {
+    "id": "693a9731bb0889dde8d525f8",
+    "name": "Замена аккумулятора на Apple iPhone",
+    "isCategory": true,
+    "oldSlug": "замена-аккумулятора-на-apple-iphone",
+    "newSlug": "zamena-akkumulyatora-na-apple-iphone"
+  },
+  {
+    "id": "693aa0edbb0889dde8d52710",
+    "name": "Замена разъемов зарядки",
+    "isCategory": true,
+    "oldSlug": "замена-разъемов-зарядки",
+    "newSlug": "zamena-razemov-zaryadki"
+  },
+  {
+    "id": "692cee241eac6cbfc1b9b52f",
+    "name": "Замена стекла дисплея Apple iPhone",
+    "isCategory": true,
+    "oldSlug": "замена-стекла-дисплея-apple-iphone",
+    "newSlug": "zamena-stekla-displeya-apple-iphone"
+  },
+  {
+    "id": "69f7a10e7c64cb94df15daa3",
+    "name": "Диагностика",
+    "isCategory": false,
+    "oldSlug": "услуга-стоимость-время-заказать-диагностика",
+    "newSlug": "diagnostika-1"
+  }
+]

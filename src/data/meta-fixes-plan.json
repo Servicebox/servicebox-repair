@@ -1,0 +1,14 @@
+[
+  { "id": "693739139b6f9dd2c1a369a8", "name": "Диагностика (Ремонт ноутбуков)", "action": "set", "metaTitle": "Диагностика ноутбука в Вологде | ServiceBox35" },
+  { "id": "69f7a10e7c64cb94df15daa3", "name": "Диагностика (Ремонт ноутбуков Acer)", "action": "set", "metaTitle": "Диагностика ноутбука Acer в Вологде | ServiceBox35" },
+  { "id": "693a9af8bb0889dde8d52673", "name": "Замена аккумулятора на Apple iPhone 11", "action": "clear", "clearMetaTitle": true, "clearMetaDescription": false },
+  { "id": "693a9b88bb0889dde8d52686", "name": "Замена аккумулятора на Apple iPhone 11 Pro", "action": "clear", "clearMetaTitle": true, "clearMetaDescription": true },
+  { "id": "693a9c5abb0889dde8d526a5", "name": "Замена аккумулятора на Apple iPhone 12", "action": "clear", "clearMetaTitle": true, "clearMetaDescription": true },
+  { "id": "693a9bffbb0889dde8d52699", "name": "Замена аккумулятора на Apple iPhone 12 Mini", "action": "clear", "clearMetaTitle": true, "clearMetaDescription": true },
+  { "id": "693a9cc6bb0889dde8d526b8", "name": "Замена аккумулятора на Apple iPhone 12 Pro", "action": "clear", "clearMetaTitle": true, "clearMetaDescription": true },
+  { "id": "693a9913bb0889dde8d52604", "name": "Замена аккумулятора на Apple iPhone Xr/Xs", "action": "clear", "clearMetaTitle": true, "clearMetaDescription": true },
+  { "id": "693a9a76bb0889dde8d52660", "name": "Замена аккумулятора на Apple iPhone Xs Max", "action": "clear", "clearMetaTitle": true, "clearMetaDescription": false },
+  { "id": "693aa19dbb0889dde8d52744", "name": "Замена разъема зарядки Micro-USB", "action": "clear", "clearMetaTitle": true, "clearMetaDescription": false },
+  { "id": "693aa266bb0889dde8d52787", "name": "Замена разъёма питания Type-C", "action": "clear", "clearMetaTitle": true, "clearMetaDescription": false },
+  { "id": "693b1788bb0889dde8d52942", "name": "Ремонт блока питания телевизора", "action": "clear", "clearMetaTitle": true, "clearMetaDescription": false }
+]

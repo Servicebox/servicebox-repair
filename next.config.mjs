@@ -1,4 +1,5 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
+import slugMigrationPlan from './src/data/slug-migration-plan.json' with { type: 'json' };
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -54,6 +55,40 @@ const nextConfig = {
   // Улучшенное кэширование
   httpAgentOptions: {
     keepAlive: true,
+  },
+
+  // Редиректы для мёртвых/переименованных URL, попавших в индексацию Яндекса и Google
+  async redirects() {
+    return [
+      {
+        // /prices/page.js опустел после отката, реальная страница цен — /price
+        source: '/prices',
+        destination: '/price',
+        permanent: true,
+      },
+      {
+        // /worksteps никогда не было отдельной страницей — это секция на главной (Main.js)
+        source: '/worksteps',
+        destination: '/',
+        permanent: true,
+      },
+      // Редиректы со старых кириллических slug'ов услуг на новые латинские
+      // (миграция см. src/data/slug-migration-plan.json и scripts/migrate-service-slugs.mjs)
+      // Next.js матчит source по RAW (percent-encoded) пути запроса, поэтому кодируем явно;
+      // дублируем и «сырой» кириллический вариант на случай иного поведения у прокси/версии Next.
+      ...slugMigrationPlan.flatMap(({ oldSlug, newSlug }) => ([
+        {
+          source: `/services/${encodeURIComponent(oldSlug)}`,
+          destination: `/services/${newSlug}`,
+          permanent: true,
+        },
+        {
+          source: `/services/${oldSlug}`,
+          destination: `/services/${newSlug}`,
+          permanent: true,
+        },
+      ])),
+    ];
   },
 
   // CSP-заголовки для Yandex Pay WebSDK, Yandex Metrika (+ Вебвизор), GTM.
