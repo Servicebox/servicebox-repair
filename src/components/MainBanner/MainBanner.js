@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import styles from './MainBanner.module.css';
 import Form from '../Form/Form';
+import { BUSINESS } from '@/lib/constants';
 
 const trustPills = [
   'Гарантия 24 мес',
@@ -63,8 +64,16 @@ export default function MainBanner() {
     >
       <meta itemProp="name" content="ServiceBox — ремонт техники в Вологде" />
       <meta itemProp="description" content="Профессиональный ремонт iPhone, MacBook, ноутбуков и другой техники в Вологде. Бесплатная диагностика, гарантия до 24 месяцев." />
+      <meta itemProp="telephone" content={BUSINESS.phones.primary} />
       <div itemProp="areaServed" itemScope itemType="https://schema.org/City">
         <meta itemProp="name" content="Вологда" />
+      </div>
+      <div itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
+        <meta itemProp="streetAddress" content={BUSINESS.mainAddress.street} />
+        <meta itemProp="addressLocality" content={BUSINESS.mainAddress.city} />
+        <meta itemProp="addressRegion" content={BUSINESS.mainAddress.region} />
+        <meta itemProp="postalCode" content={BUSINESS.mainAddress.postalCode} />
+        <meta itemProp="addressCountry" content={BUSINESS.mainAddress.country} />
       </div>
 
       {isFormOpen && <Form onClose={closeForm} onSent={closeForm} />}
