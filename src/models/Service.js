@@ -141,7 +141,7 @@ serviceSchema.pre('save', async function(next) {
     this.metaTitle = this.generateMetaTitle();
   }
   
-  if (!this.metaDescription && this.description) {
+  if (!this.metaDescription && this.name) {
     this.metaDescription = this.generateMetaDescription();
   }
   
@@ -193,7 +193,12 @@ serviceSchema.methods.generateMetaDescription = function() {
   if (this.isCategory) {
     return `Профессиональный ${this.name.toLowerCase()} ${geo}. Качественный ремонт, доступные цены, гарантия. Запишитесь онлайн или по телефону.`;
   }
-  return `${this.description}. ${this.price ? `Стоимость  ${this.price}.` : ''} Качественный ремонт ${geo}. Гарантия, выезд мастера.`;
+  // this.description часто дословно совпадает у похожих услуг (одна и та же
+  // формулировка про сроки ремонта у десятков моделей телефонов/ноутбуков),
+  // поэтому name всегда идёт первым — это единственное гарантированно
+  // уникальное поле в рамках шаблона.
+  const base = this.description ? `${this.name}: ${this.description}` : `${this.name} ${geo}`;
+  return `${base}.${this.price ? ` Стоимость ${this.price}.` : ''} Качественный ремонт ${geo}. Гарантия, выезд мастера.`;
 };
 serviceSchema.index({ name: 'text', description: 'text', content: 'text' });
 serviceSchema.index({ slug: 1, isPublished: 1 });
