@@ -117,6 +117,9 @@ function Footer() {
           <Link href="/privacy-policy" className={`${styles.footerLink} ${styles.privacyLink}`}>
             Политика конфиденциальности
           </Link>
+          <Link href="/oferta" className={`${styles.footerLink} ${styles.privacyLink}`}>
+            Публичная оферта
+          </Link>
 
           <h3 className={`${styles.navTitle} ${styles.paymentTitle}`}>Способы оплаты</h3>
           <div className={styles.paymentMethods}>
