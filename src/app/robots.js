@@ -13,7 +13,7 @@ export default function robots() {
           '/brands/', '/problems/'
         ],
         disallow: [
-          '/admin/', '/private/', '/cart/checkout', '/dashboard/',
+          '/admin-panel/', '/private/', '/checkout', '/cart',
           '/api/admin/', '/api/auth/', '/api/internal/', '/_next/', '/api/trpc/'
         ],
       },
@@ -28,7 +28,7 @@ export default function robots() {
           '/services/', '/prices', '/contacts', '/about', '/brands/', '/problems/',
           '/gallery/', '/images/', '/photos/', '/og-image.jpg', '/favicon.webp'
         ],
-        disallow: ['/admin/', '/api/admin/', '/private/', '/dashboard/', '/_next/'],
+        disallow: ['/admin-panel/', '/api/admin/', '/private/', '/checkout', '/cart', '/_next/'],
       },
     ],
     sitemap: `${BASE_URL}/sitemap.xml`,
