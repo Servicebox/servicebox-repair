@@ -53,3 +53,64 @@ export const buildServiceItem = (service, baseUrl, formEmail) => {
     `</item>`
   );
 };
+
+export const buildContentBlocksHtml = (blocks) => {
+  if (!Array.isArray(blocks) || blocks.length === 0) return '';
+  return blocks
+    .slice()
+    .sort((a, b) => (a.position || 0) - (b.position || 0))
+    .map((block) => {
+      try {
+        switch (block.type) {
+          case 'heading':
+            return `<h2>${escapeHtml(block.content)}</h2>`;
+          case 'text':
+            return `<p>${escapeHtml(block.content)}</p>`;
+          case 'list': {
+            const items = (block.content || '')
+              .split('\n')
+              .map((line) => line.trim())
+              .filter(Boolean)
+              .map((line) => `<li>${escapeHtml(line)}</li>`)
+              .join('');
+            return items ? `<ul>${items}</ul>` : '';
+          }
+          case 'image':
+            return block.media
+              ? `<figure><img src="${encodeUrlForXml(block.media)}" alt="${escapeHtml(block.alt || '')}" /></figure>`
+              : '';
+          default:
+            // 'video' / 'youtube' — не конвертируются на Этапе 1
+            return '';
+        }
+      } catch (err) {
+        console.error(`Ошибка обработки блока новости (type=${block.type}):`, err);
+        return '';
+      }
+    })
+    .filter(Boolean)
+    .join('');
+};
+
+export const buildNewsItem = (news, baseUrl) => {
+  const title = escapeXml(news.metaTitle || news.title);
+  const link = `${baseUrl}/news/${news.slug}`;
+  const bodyHtml =
+    buildContentBlocksHtml(news.contentBlocks) || `<p>${escapeHtml(news.excerpt || '')}</p>`;
+  const coverHtml = news.featuredImage
+    ? `<figure><img src="${encodeUrlForXml(news.featuredImage)}" /></figure>`
+    : '';
+  const contentHtml = `<header>${coverHtml}<h1>${escapeHtml(news.title)}</h1></header>${bodyHtml}`;
+  const pubDate = new Date(news.publishedAt || news.createdAt || Date.now()).toUTCString();
+  const encodedLink = encodeUrlForXml(link);
+
+  return (
+    `<item turbo="true">` +
+    `<title>${title}</title>` +
+    `<link>${encodedLink}</link>` +
+    `<pubDate>${pubDate}</pubDate>` +
+    `<guid>${encodedLink}</guid>` +
+    `<turbo:content>${wrapCdata(contentHtml)}</turbo:content>` +
+    `</item>`
+  );
+};
