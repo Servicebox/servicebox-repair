@@ -1,6 +1,7 @@
 // contexts/ShopContext.js
 'use client';
 import React, { createContext, useState, useEffect, useCallback } from "react";
+import { trackAddToCart, trackRemoveFromCart } from '@/lib/metrika';
 
 export const ShopContext = createContext(null);
 
@@ -138,11 +139,14 @@ export const ShopContextProvider = (props) => {
   // Добавление в корзину
   const addToCart = async (itemSlug) => {
     const previousQuantity = cartItems[itemSlug] || 0;
-    
+
     setCartItems(prev => ({
       ...prev,
       [itemSlug]: previousQuantity + 1
     }));
+
+    const product = all_product.find(p => p.slug === itemSlug);
+    if (product) trackAddToCart(product);
 
     try {
       await fetchWithAuth('/api/cart/add', {
@@ -163,11 +167,14 @@ export const ShopContextProvider = (props) => {
   const removeFromCart = async (itemSlug) => {
     const previousQuantity = cartItems[itemSlug] || 0;
     const newQuantity = Math.max(previousQuantity - 1, 0);
-    
+
     setCartItems(prev => ({
       ...prev,
       [itemSlug]: newQuantity
     }));
+
+    const product = all_product.find(p => p.slug === itemSlug);
+    if (product) trackRemoveFromCart(product);
 
     try {
       await fetchWithAuth('/api/cart/remove', {

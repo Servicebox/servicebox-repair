@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { trackProductClick } from '@/lib/metrika';
 import styles from './Item.module.css';
 
 const PLACEHOLDER = "data:image/svg+xml;utf8,<svg width='400' height='400' viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'><rect fill='%23F1F1F1' width='400' height='400'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='32' fill='%23b3b3b3'>Нет фото</text></svg>";
@@ -54,7 +55,11 @@ const Item = ({ slug, name, images, new_price, old_price, description, quantity,
     <div className={styles.item}>
       <div className={styles.itemImgBox}>
         {hasDiscount && <span className={styles.itemBadge}>-{discount}%</span>}
-        <Link href={`/product/${slug}`} className={styles.itemImage}>
+        <Link
+          href={`/product/${slug}`}
+          className={styles.itemImage}
+          onClick={() => trackProductClick({ slug, name, new_price })}
+        >
           <div className={styles.imageContainer}>
             {imageLoading && (
               <div className={styles.imagePlaceholder}>Загрузка...</div>

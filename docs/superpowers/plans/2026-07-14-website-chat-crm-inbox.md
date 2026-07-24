@@ -3,7 +3,7 @@
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Replace the live Chatwoot widget on servicebox35.ru with a chat that lands in Tom's own
-CRM (`crm-repair`, koznova.site), so website conversations show up next to orders instead of in a
+CRM (`crm-repair`, service-box-35.ru), so website conversations show up next to orders instead of in a
 disconnected third-party tool.
 
 **Architecture:** Site widget → servicebox-repair's own `/api/chat/messages` (existing route,
@@ -866,7 +866,7 @@ curl -s -X POST http://localhost:3000/api/chat/messages \
 ```
 
 Expected: `{"message":"Отправлено","data":{...}}`, and the conversation shows up under
-`GET https://koznova.site/api/inbox/conversations` (via the CRM's own logged-in session, not this
+`GET https://service-box-35.ru/api/inbox/conversations` (via the CRM's own logged-in session, not this
 curl — API-key auth only covers the `v1` route).
 
 - [ ] **Step 3: Commit**
@@ -973,7 +973,7 @@ git commit -m "chore: remove Chatwoot widget and unfinished bespoke chat (supers
 
 - [ ] **Step 1:** Open `https://servicebox35.ru/` in a browser, open the chat widget, enter a
   name, send a message.
-- [ ] **Step 2:** Log into `https://koznova.site` as the ServiceBox company owner, open «Инбокс»,
+- [ ] **Step 2:** Log into `https://service-box-35.ru` as the ServiceBox company owner, open «Инбокс»,
   confirm the conversation and message appear.
 - [ ] **Step 3:** Reply from the CRM. Confirm the reply appears on the site widget within ~3.5s
   (its existing poll interval).

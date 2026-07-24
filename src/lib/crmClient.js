@@ -1,6 +1,6 @@
 // lib/crmClient.js
-// Thin fetch wrapper for calling koznova.site's external v1 API from server
-// code (chat proxy, booking forwarding). Retries a few times — koznova.site's
+// Thin fetch wrapper for calling service-box-35.ru's external v1 API from server
+// code (chat proxy, booking forwarding). Retries a few times — service-box-35.ru's
 // DNS zone has had an intermittent stray bad A record causing occasional
 // connection failures; retrying re-resolves DNS and usually lands on the
 // working address. Returns null if CRM env vars aren't configured (caller

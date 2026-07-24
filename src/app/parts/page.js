@@ -3,6 +3,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import Item from '@/components/Item/Item';
+import { trackProductListView } from '@/lib/metrika';
 import styles from './Parts.module.css';
 
 export default function PartsPage() {
@@ -177,6 +178,7 @@ export default function PartsPage() {
     }
     
     setFilteredProducts(filtered);
+    trackProductListView(filtered, 'Каталог запчастей');
   }, [allProducts, selectedCategory, selectedSubcategory, sortBy]);
 
   // Обработчики для дерева категорий

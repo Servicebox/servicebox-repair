@@ -7,6 +7,7 @@ import { BreadcrumbContext } from '@/components/contexts/BreadcrumbContext';
 import styles from './ProductDisplay.module.css';
 import LikeButton from '@/components/LikeButton/LikeButton';
 import FavoriteButton from '@/components/FavoriteButton/FavoriteButton';
+import { trackProductView, trackAddToCart } from '@/lib/metrika';
 
 // Контекст корзины без авторизации
 const useCart = () => {
@@ -93,6 +94,10 @@ export default function ProductDisplay({ product }) {
     setMounted(true);
   }, []);
 
+  useEffect(() => {
+    if (product) trackProductView(product);
+  }, [product]);
+
   if (!product || !mounted) {
     return (
       <div className={styles.loading}>
@@ -121,12 +126,14 @@ export default function ProductDisplay({ product }) {
   const handleAddToCart = () => {
     if (canAddMore) {
       addToCart(product.slug, quantity);
+      trackAddToCart(product, quantity);
     }
   };
 
   const handleBuyNow = () => {
     if (canAddMore) {
       addToCart(product.slug, quantity);
+      trackAddToCart(product, quantity);
       window.location.href = '/cart';
     }
   };

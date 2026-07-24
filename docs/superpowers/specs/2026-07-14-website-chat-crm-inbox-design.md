@@ -2,7 +2,7 @@
 
 **Goal:** Replace the currently-live Chatwoot widget (perceived as unreliable, and its inbox isn't
 actually monitored) with a purpose-built chat that lands directly in Tom's own CRM
-(`https://koznova.site`, a self-hosted multi-tenant SaaS he owns and operates — repo `crm-repair`
+(`https://service-box-35.ru`, a self-hosted multi-tenant SaaS he owns and operates — repo `crm-repair`
 on a separate server), so client messages show up next to orders/leads instead of in a
 disconnected third-party tool.
 
@@ -21,7 +21,7 @@ Two independent, partially-built chat systems already exist and neither is the a
   and never committed. It also has sync-conflict duplicate files (`page 2.js`, `route 3.js`, etc.)
   that need cleanup regardless of what happens with the chat feature itself.
 
-Separately, `crm-repair` (koznova.site) is a real multi-tenant SaaS CRM for repair service
+Separately, `crm-repair` (service-box-35.ru) is a real multi-tenant SaaS CRM for repair service
 centers — subscriptions, multi-branch, YooKassa fiscal payments, warehouse, Telegram/MAX staff
 bots, etc. — with its own `CLAUDE.md` documenting conventions. That document explicitly states:
 
@@ -40,7 +40,7 @@ optimistic about the Funnel. "Создать лид" is dropped from this spec's
 Out of Scope.
 
 The site already talks to this CRM for order tracking (`src/app/api/tracking/search/route.js`),
-via `CRM_API_URL`/`CRM_API_KEY` env vars, hitting `https://koznova.site/api/v1/orders` with a
+via `CRM_API_URL`/`CRM_API_KEY` env vars, hitting `https://service-box-35.ru/api/v1/orders` with a
 `Bearer` token. The CRM resolves that API key to a `Company` and its own isolated tenant MongoDB
 database (`getTenantConnection(company.dbName)`, not just a shared DB with a `companyId` filter).
 The new chat feature follows this exact same, already-proven pattern.
@@ -52,9 +52,9 @@ Site visitor (widget: anonymous or name-captured)
         │  POST/GET /api/chat/messages   (servicebox-repair — existing route, re-pointed)
         ▼
 servicebox-repair backend
-        │  Authorization: Bearer CRM_API_KEY → https://koznova.site/api/v1/chat/...
+        │  Authorization: Bearer CRM_API_KEY → https://service-box-35.ru/api/v1/chat/...
         ▼
-CRM koznova.site (Servicebox's own isolated tenant DB)
+CRM service-box-35.ru (Servicebox's own isolated tenant DB)
         │  stores conversation/messages, sends push notification to the owner
         ▼
 "Инбокс" section in the CRM (list → thread → reply → "Создать заказ")
