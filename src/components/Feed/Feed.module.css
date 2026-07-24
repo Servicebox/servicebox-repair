@@ -12,7 +12,7 @@
 }
 
 .feedTitle {
-    color: #13171D;
+    color: var(--color-text);
     text-align: center;
 }
 

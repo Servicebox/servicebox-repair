@@ -3,7 +3,7 @@
   padding-top: 70px;
   position: relative;
   z-index: 1;
-  background-color: #002147;
+  background-color: var(--color-primary-dark);
   clip-path: polygon(0% -4%, 29% 5%, 58% 2%, 100% 12%, 101% 78%, 100% 100%, 12% 98%, 0% 100%);
 }
 
@@ -22,7 +22,7 @@
 }
 
 .navTitle {
-  color: #ffffff;
+  color: var(--color-bg-dark);
   font-size: 1rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -42,7 +42,7 @@
 }
 
 .footerLink {
-  color: rgba(255, 255, 255, 0.8);
+  color: color-mix(in srgb, var(--color-bg-dark) 80%, transparent);
   text-decoration: none;
   font-size: 0.875rem;
   transition: color 0.2s ease;
@@ -51,7 +51,7 @@
 }
 
 .footerLink:hover {
-  color: #ff8c00;
+  color: var(--color-warning);
 }
 
 /* Contacts */
@@ -66,7 +66,7 @@
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: color-mix(in srgb, var(--color-bg-dark) 80%, transparent);
   font-size: 0.875rem;
   margin: 0;
   line-height: 1.4;
@@ -86,24 +86,24 @@
 }
 
 .socialLink {
-  color: rgba(255, 255, 255, 0.7);
+  color: color-mix(in srgb, var(--color-bg-dark) 70%, transparent);
   text-decoration: none;
   font-size: 0.8rem;
   padding: 0.25rem 0.625rem;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid color-mix(in srgb, var(--color-bg-dark) 25%, transparent);
   border-radius: 4px;
   transition: all 0.2s ease;
 }
 
 .socialLink:hover {
-  color: #ffffff;
-  border-color: #ff8c00;
+  color: var(--color-bg-dark);
+  border-color: var(--color-warning);
   background: rgba(255, 140, 0, 0.1);
 }
 
 /* Company info text */
 .footerText {
-  color: rgba(255, 255, 255, 0.7);
+  color: color-mix(in srgb, var(--color-bg-dark) 70%, transparent);
   font-size: 0.8rem;
   line-height: 1.7;
   margin: 0;
@@ -112,11 +112,11 @@
 .privacyLink {
   font-size: 0.8rem;
   margin-top: 0.25rem;
-  color: rgba(255, 255, 255, 0.5) !important;
+  color: color-mix(in srgb, var(--color-bg-dark) 50%, transparent);
 }
 
 .privacyLink:hover {
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: color-mix(in srgb, var(--color-bg-dark) 80%, transparent);
 }
 
 /* Payment */
@@ -149,7 +149,7 @@
 
 /* Bottom bar */
 .footerBottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: 1px solid color-mix(in srgb, var(--color-bg-dark) 15%, transparent);
   padding-top: 1rem;
   display: flex;
   flex-wrap: wrap;
@@ -159,13 +159,13 @@
 }
 
 .footerAuthor {
-  color: rgba(255, 255, 255, 0.6);
+  color: color-mix(in srgb, var(--color-bg-dark) 60%, transparent);
   font-size: 0.8rem;
   margin: 0;
 }
 
 .footerSeo {
-  color: rgba(255, 255, 255, 0.5);
+  color: color-mix(in srgb, var(--color-bg-dark) 50%, transparent);
   font-size: 0.78rem;
   margin: 0;
 }

@@ -107,7 +107,7 @@ export default function ServicesYmlPage() {
         <div className="bg-white rounded-xl shadow p-6 lg:p-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <div className="space-y-3">
-              <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">
+              <h1 className="text-2xl lg:text-3xl font-bold text-text">
                 YML-фид для Яндекс Услуг
               </h1>
               <p className="text-gray-600 max-w-2xl">
@@ -189,7 +189,7 @@ export default function ServicesYmlPage() {
                 </svg>
               </div>
             </div>
-            <p className="text-3xl font-bold text-gray-900">{state.stats.totalServices}</p>
+            <p className="text-3xl font-bold text-text">{state.stats.totalServices}</p>
             <p className="text-sm text-gray-700 mt-2">активных предложений</p>
           </div>
 
@@ -202,7 +202,7 @@ export default function ServicesYmlPage() {
                 </svg>
               </div>
             </div>
-            <p className="text-xl font-bold text-gray-900">{state.stats.lastUpdated}</p>
+            <p className="text-xl font-bold text-text">{state.stats.lastUpdated}</p>
             <p className="text-sm text-gray-700 mt-2">последняя генерация</p>
           </div>
         </div>
@@ -229,7 +229,7 @@ export default function ServicesYmlPage() {
               </div>
             ) : (
               <div className="p-12 text-center">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Фид пустой</h3>
+                <h3 className="text-xl font-bold text-text mb-2">Фид пустой</h3>
                 <p className="text-gray-600 mb-6">Не удалось загрузить фид</p>
                 <button
                   onClick={() => fetchYmlData(true)}
@@ -244,7 +244,7 @@ export default function ServicesYmlPage() {
 
         {/* Инструкция */}
         <div className="bg-blue-50 border border-blue-200 rounded-xl p-8">
-          <h3 className="text-2xl font-bold text-gray-900 mb-6">Инструкция по загрузке в Яндекс</h3>
+          <h3 className="text-2xl font-bold text-text mb-6">Инструкция по загрузке в Яндекс</h3>
 
           <div className="space-y-6">
             <div className="bg-white rounded-lg p-5 border border-blue-100">
@@ -252,7 +252,7 @@ export default function ServicesYmlPage() {
                 <div className="w-12 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
                   <span className="text-blue-600 font-bold">1</span>
                 </div>
-                <h4 className="font-bold text-gray-900">Перейдите в Яндекс.Вебмастер</h4>
+                <h4 className="font-bold text-text">Перейдите в Яндекс.Вебмастер</h4>
               </div>
               <ul className="space-y-2 text-gray-700">
                 <li>Добавьте сайт servicebox35.ru в Яндекс.Вебмастер</li>
@@ -265,7 +265,7 @@ export default function ServicesYmlPage() {
                 <div className="w-12 h-8 bg-green-100 rounded-lg flex items-center justify-center">
                   <span className="text-green-600 font-bold">2</span>
                 </div>
-                <h4 className="font-bold text-gray-900">Добавьте фид</h4>
+                <h4 className="font-bold text-text">Добавьте фид</h4>
               </div>
               <ul className="space-y-2 text-gray-700">
                 <li>Нажмите "Добавить фид"</li>
@@ -279,7 +279,7 @@ export default function ServicesYmlPage() {
                 <div className="w-12 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
                   <span className="text-purple-600 font-bold">3</span>
                 </div>
-                <h4 className="font-bold text-gray-900">Проверка и публикация</h4>
+                <h4 className="font-bold text-text">Проверка и публикация</h4>
               </div>
               <ul className="space-y-2 text-gray-700">
                 <li>Яндекс проверит фид на валидность</li>

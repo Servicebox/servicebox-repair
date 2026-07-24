@@ -7,20 +7,29 @@ import headerLogo from "../../../public/favicon.webp";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
 import LoginSignup from "../LoginSignup/LoginSignup";
 import GlobalSearch from '../GlobalSearch/GlobalSearch';
-import HeaderTracking from "../HeaderTracking/HeaderTracking";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBasketShopping,
   faMobilePhone,
   faUser,
   faChevronDown,
+  faSun,
+  faMoon,
+  faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import { faVk } from "@fortawesome/free-brands-svg-icons";
 import styles from "./Header.module.css";
+import { useTheme } from '@/hooks/useTheme';
+import { useFontSize } from '@/hooks/useFontSize';
+import { useHighContrast } from '@/hooks/useHighContrast';
 
 function Header() {
   const pathname = usePathname();
   const { user, logout } = useAuth();
+
+  const { theme, toggleTheme } = useTheme();
+  const { fontSize, cycleFontSize } = useFontSize();
+  const { isHighContrast, toggleHighContrast } = useHighContrast();
 
   const [menu, setMenu] = useState("home");
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -115,14 +124,13 @@ function Header() {
           {/* Навигация */}
           <nav className={styles.headerNav} aria-label="Основная навигация">
             <ul className={styles.headerNavList}>
+              <li className={`${styles.headerNavItem} ${menu === "services" ? styles.active : ''}`}>
+                <Link href="/services" className={styles.headerNavLink}>Услуги и цены</Link>
+              </li>
+
               <li className={`${styles.headerNavItem} ${menu === "about" ? styles.active : ''}`}>
                 <Link href="/about" className={styles.headerNavLink}>О нас</Link>
               </li>
-
-              {/* ✅ ВЫНЕСЕНО В ГЛАВНОЕ МЕНЮ: Услуги и цены теперь всегда на виду */}
-              {/* <li className={`${styles.headerNavItem} ${menu === "services" ? styles.active : ''}`}>
-                <Link href="/services" className={styles.headerNavLink}>Услуги и цены</Link>
-              </li>*/}
 
               <li className={`${styles.headerNavItem} ${menu === "parts" ? styles.active : ''}`}>
                 <Link href="/parts" className={styles.headerNavLink}>Каталог</Link>
@@ -142,11 +150,7 @@ function Header() {
                   <li><Link href="/promotions-page" className={styles.dropdownItem}>Акции</Link></li>
                   <li><Link href="/price" className={styles.dropdownItem}>Прайс-лист</Link></li>
                   <li><Link href="/depository-public" className={styles.dropdownItem}>Схемы/Bios</Link></li>
-                  <li>
-                    <a href="https://pm-31768.promaster.app/index_cl" target="_blank" rel="noopener noreferrer" className={styles.dropdownItem}>
-                      Статус ремонта
-                    </a>
-                  </li>
+                  <li><Link href="/tracking" className={styles.dropdownItem}>Статус ремонта</Link></li>
                 </ul>
               </li>
             </ul>
@@ -154,8 +158,6 @@ function Header() {
 
           {/* Действия справа */}
           <div className={styles.headerActions}>
-            <HeaderTracking />
-
             {user ? (
               <div className={styles.navUserGroup} ref={userMenuRef}>
                 <button
@@ -191,6 +193,41 @@ function Header() {
               <FontAwesomeIcon icon={faBasketShopping} />
               {/* Счётчик корзины можно добавить позже, когда подключишь реальную логику */}
             </Link>
+
+            <div
+              role="group"
+              aria-label="Настройки отображения"
+              className={styles.a11yControls}
+            >
+              <button
+                type="button"
+                className={styles.themeToggle}
+                onClick={toggleTheme}
+                aria-label={theme === 'dark' ? 'Включить светлую тему' : 'Включить тёмную тему'}
+                aria-pressed={theme === 'dark'}
+              >
+                <FontAwesomeIcon icon={theme === 'dark' ? faSun : faMoon} />
+              </button>
+
+              <button
+                type="button"
+                className={styles.fontSizeBtn}
+                onClick={cycleFontSize}
+                aria-label={`Размер текста: ${fontSize === 'normal' ? 'нормальный' : fontSize === 'lg' ? 'большой' : 'очень большой'}`}
+              >
+                {fontSize === 'normal' ? 'A' : fontSize === 'lg' ? 'A+' : 'A++'}
+              </button>
+
+              <button
+                type="button"
+                className={styles.contrastToggle}
+                onClick={toggleHighContrast}
+                aria-label="Высокий контраст"
+                aria-pressed={isHighContrast}
+              >
+                <FontAwesomeIcon icon={faEye} />
+              </button>
+            </div>
 
             <BurgerMenu />
           </div>

@@ -13,7 +13,7 @@
   border: none;
   font-size: 1.8rem;
   cursor: pointer;
-  color: #7f8c8d;
+  color: var(--color-text-muted);
   line-height: 1;
   padding: 5px;
   opacity: 0.7;
@@ -45,7 +45,7 @@
 }
 
 .pulseDot {
-  color: #242424;
+  color: var(--color-text);
   font-size: 1.5rem;
   font-weight: bold;
   position: absolute;
@@ -126,7 +126,7 @@
 }
 
 .nameModal p {
-  color: #7f8c8d;
+  color: var(--color-text-muted);
   margin-bottom: 20px;
   font-size: 0.95rem;
 }
@@ -134,21 +134,29 @@
 .nameInput {
   width: 100%;
   padding: 12px 15px;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border);
   border-radius: 12px;
   font-size: 1rem;
   transition: border-color 0.3s;
   margin-bottom: 15px;
 }
 
+.editNameInput {
+  flex-grow: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
 .nameInput:focus {
-  border-color: #3498db;
+  border-color: var(--color-accent);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
 }
 
 .nameSaveBtn {
-  background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary-dark) 100%);
   color: white;
   border: none;
   border-radius: 12px;
@@ -161,7 +169,7 @@
 }
 
 .nameSaveBtn:disabled {
-  background: #bdc3c7;
+  background: var(--color-border);
   cursor: not-allowed;
 }
 
@@ -171,7 +179,7 @@
 }
 
 .chatHeader {
-  background: linear-gradient(135deg, #2c3e50 0%, #1a2530 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, #1a2530 100%);
   color: white;
   padding: 15px 20px;
   display: flex;
@@ -198,7 +206,7 @@
   right: 0;
   width: 12px;
   height: 12px;
-  background-color: #2ecc71;
+  background-color: var(--color-success);
   border: 2px solid white;
   border-radius: 50%;
 }
@@ -236,16 +244,16 @@
 }
 
 .userNameBadge {
-  background: #f8f9fa;
+  background: var(--color-bg-elevated);
   padding: 10px 15px;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   font-size: 0.9rem;
 }
 
 .userNameBadge span {
-  color: #6c757d;
+  color: var(--color-text-muted);
   margin-right: 5px;
 }
 
@@ -257,7 +265,7 @@
 .editNameBtn {
   background: none;
   border: none;
-  color: #3498db;
+  color: var(--color-accent);
   font-size: 0.8rem;
   margin-left: auto;
   cursor: pointer;
@@ -267,24 +275,17 @@
 }
 
 .editNameBtn:hover {
-  background: #e3f2fd;
+  background: var(--color-primary-bg);
 }
 
 .editNameContainer {
   display: flex;
   padding: 10px 15px;
-  background: #f8f9fa;
-  border-bottom: 1px solid #e9ecef;
+  background: var(--color-bg-elevated);
+  border-bottom: 1px solid var(--color-border);
   gap: 8px;
 }
 
-.editNameInput {
-  flex-grow: 1;
-  padding: 8px 12px;
-  border: 1px solid #ced4da;
-  border-radius: 8px;
-  font-size: 0.9rem;
-}
 
 .saveNameBtn, .cancelNameBtn {
   padding: 8px 12px;
@@ -296,34 +297,34 @@
 }
 
 .saveNameBtn {
-  background: #28a745;
+  background: var(--color-success);
   color: white;
 }
 
 .saveNameBtn:disabled {
-  background: #94d3a2;
+  background: var(--color-success);
   cursor: not-allowed;
 }
 
 .saveNameBtn:not(:disabled):hover {
-  background: #218838;
+  background: var(--color-success);
 }
 
 .cancelNameBtn {
-  background: #f8f9fa;
-  color: #6c757d;
-  border: 1px solid #dee2e6;
+  background: var(--color-bg-elevated);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
 }
 
 .cancelNameBtn:hover {
-  background: #e9ecef;
+  background: var(--color-border);
 }
 
 .chatMessages {
   flex-grow: 1;
   overflow-y: auto;
   padding: 15px;
-  background: #f5f8fa;
+  background: var(--color-bg-elevated);
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -362,7 +363,7 @@
 
 .welcomeBubble p {
   margin: 0;
-  color: #7f8c8d;
+  color: var(--color-text-muted);
   font-size: 0.95rem;
   line-height: 1.4;
 }
@@ -397,7 +398,7 @@
 }
 
 .userMsg .chatBubble {
-  background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary-dark) 100%);
   color: white;
   border-bottom-right-radius: 5px;
 }
@@ -415,7 +416,7 @@
   width: 0;
   height: 0;
   border: 10px solid transparent;
-  border-top-color: #3498db;
+  border-top-color: var(--color-accent);
   border-bottom: 0;
   border-right: 0;
   margin-bottom: -10px;
@@ -438,7 +439,7 @@
 .messageUserName {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #3498db;
+  color: var(--color-accent);
   margin-bottom: 4px;
 }
 
@@ -477,11 +478,11 @@
 }
 
 .msgStatus.sent {
-  color: #95a5a6;
+  color: var(--color-text-muted);
 }
 
 .msgStatus.delivered {
-  color: #2ecc71;
+  color: var(--color-success);
 }
 
 .chatInputForm {
@@ -489,7 +490,7 @@
   flex-direction: row;
   padding: 15px;
   background: white;
-  border-top: 1px solid #e9ecef;
+  border-top: 1px solid var(--color-border);
   position: relative;
   gap: 8px;
   align-items: center;
@@ -547,7 +548,7 @@
 
 .chatInput {
   flex-grow: 1;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border);
   border-radius: 25px;
   padding: 12px 20px;
   font-size: 0.95rem;
@@ -557,17 +558,17 @@
 }
 
 .chatInput:focus {
-  border-color: #3498db;
+  border-color: var(--color-accent);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
 }
 
 .chatInput:disabled {
-  background: #f8f9fa;
+  background: var(--color-bg-elevated);
 }
 
 .chatSendBtn {
-  background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary-dark) 100%);
   border: none;
   border-radius: 50%;
   width: 45px;
@@ -582,7 +583,7 @@
 }
 
 .chatSendBtn:disabled {
-  background: #bdc3c7;
+  background: var(--color-border);
   cursor: not-allowed;
 }
 

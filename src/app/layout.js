@@ -1,7 +1,21 @@
 import './globals.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
-import ChatwootScript from '@/components/ChatwootScript/ChatwootScript';
+import { Inter, Inter_Tight } from 'next/font/google';
+import Chat from '@/components/Chat/Chat';
+
+const interTight = Inter_Tight({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['500', '600', '700'],
+  variable: '--font-inter-tight',
+  display: 'swap',
+});
+const inter = Inter({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '600'],
+  variable: '--font-inter',
+  display: 'swap',
+});
 
 import Header from '../components/Header/Header';
 import BubbleBackground from '../components/BubbleBackground/BubbleBackground';
@@ -103,8 +117,20 @@ const structuredData = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ru" suppressHydrationWarning>
+    <html lang="ru" suppressHydrationWarning data-scroll-behavior="smooth" className={`${interTight.variable} ${inter.variable}`}>
       <head>
+        {/* Anti-flash: apply theme before hydration to prevent flicker */}
+        <script dangerouslySetInnerHTML={{ __html: `(function(){
+    try {
+      var t = localStorage.getItem('theme');
+      var pref = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t || pref);
+      var fs = localStorage.getItem('fontSize');
+      if (fs && fs !== 'normal') document.documentElement.setAttribute('data-font-size', fs);
+      var hc = localStorage.getItem('highContrast');
+      if (hc === 'true') document.documentElement.setAttribute('data-contrast', 'high');
+    } catch(e) {}
+  })();` }} />
         <meta charSet="utf-8" />
         <script
           dangerouslySetInnerHTML={{
@@ -119,14 +145,16 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://mc.yandex.ru" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://yastatic.net" />
         <link rel="dns-prefetch" href="https://api-maps.yandex.ru" />
-        {/* Reserve Chatwoot widget space to prevent CLS */}
-        <style>{`.chatwoot-widget-holder{position:fixed;bottom:0;right:0;z-index:9999;pointer-events:none}`}</style>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
-      <body className="bg-gray-50 text-slate-900">
+      <body>
+        <a href="#main-content" className="skip-to-content">
+          Перейти к основному содержимому
+        </a>
+
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
@@ -145,7 +173,7 @@ export default function RootLayout({ children }) {
                 <BubbleBackground />
                 <div className="page__wrapper flex-grow">
                   <BreadcrumbsWithContext />
-                  <main>{children}</main>
+                  <main id="main-content">{children}</main>
                 </div>
                 <Footer />
                 <CookieConsent />
@@ -155,9 +183,7 @@ export default function RootLayout({ children }) {
         </AuthProvider>
 
         <Analytics />
-
-        {/* CHATWOOT */}
-        <ChatwootScript />
+        <Chat />
       </body>
     </html>
   );

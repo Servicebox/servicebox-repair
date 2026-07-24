@@ -163,7 +163,7 @@ export default function BrandsPage() {
     .brands-stat-value {
       font-size: 1.75rem;
       font-weight: 800;
-      color: #002147;
+      color: var(--color-primary-dark);
     }
 
     .brands-stat-label {
@@ -177,7 +177,7 @@ export default function BrandsPage() {
       margin: 2rem 0 1.5rem 0;
       color: #0a1929;
       padding-bottom: 0.75rem;
-      border-bottom: 3px solid #002147;
+      border-bottom: 3px solid var(--color-primary-dark);
     }
 
     .brands-grid {
@@ -208,7 +208,7 @@ export default function BrandsPage() {
       left: 0;
       right: 0;
       height: 4px;
-      background: linear-gradient(90deg, #002147 0%, #004499 100%);
+      background: linear-gradient(90deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 0.3s ease;
@@ -217,7 +217,7 @@ export default function BrandsPage() {
     .brand-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 12px 24px rgba(0, 102, 204, 0.15);
-      border-color: #002147;
+      border-color: var(--color-primary-dark);
     }
 
     .brand-card:hover::before {
@@ -273,7 +273,7 @@ export default function BrandsPage() {
       position: absolute;
       top: 1.5rem;
       right: 1.5rem;
-      color: #002147;
+      color: var(--color-primary-dark);
       font-size: 1.5rem;
       opacity: 0;
       transform: translateX(-8px);
@@ -287,7 +287,7 @@ export default function BrandsPage() {
 
     .brands-cta {
       padding: 3rem 2rem;
-      background: linear-gradient(135deg, #002147 0%, #004499 100%);
+      background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
       border-radius: 24px;
       color: white;
       text-align: center;
@@ -334,7 +334,7 @@ export default function BrandsPage() {
 
     .brands-cta-button-secondary {
       background: white;
-      color: #002147;
+      color: var(--color-primary-dark);
     }
 
     .brands-advantages {
@@ -396,9 +396,9 @@ export default function BrandsPage() {
 
             {/* Хлебные крошки */}
             <nav style={{ marginBottom: '1.5rem', fontSize: '0.9rem', color: '#64748b' }}>
-                <Link href="/" style={{ color: '#002147', textDecoration: 'none' }}>Главная</Link>
+                <Link href="/" style={{ color: 'var(--color-primary-dark)', textDecoration: 'none' }}>Главная</Link>
                 <span style={{ margin: '0 0.5rem' }}>›</span>
-                <Link href="/services" style={{ color: '#002147', textDecoration: 'none' }}>Услуги</Link>
+                <Link href="/services" style={{ color: 'var(--color-primary-dark)', textDecoration: 'none' }}>Услуги</Link>
                 <span style={{ margin: '0 0.5rem' }}>›</span>
                 <span>Все бренды</span>
             </nav>
@@ -534,7 +534,7 @@ export default function BrandsPage() {
                         borderRadius: '12px',
                         border: '1px solid #e2e8f0',
                     }}>
-                        <h3 style={{ fontSize: '1.1rem', fontWeight: 700, margin: '0 0 0.75rem 0', color: '#002147' }}>
+                        <h3 style={{ fontSize: '1.1rem', fontWeight: 700, margin: '0 0 0.75rem 0', color: 'var(--color-primary-dark)' }}>
                             {faq.q}
                         </h3>
                         <p style={{ margin: 0, color: '#334155' }}>{faq.a}</p>
@@ -567,7 +567,7 @@ export default function BrandsPage() {
             }}>
                 <p>© {new Date().getFullYear()} ServiceBox Вологда · Ремонт цифровой техники с 2016 года</p>
                 <p>
-                    <a href="tel:+7-911-501-88-28" style={{ color: '#002147', textDecoration: 'none' }}>+7 (911) 501-88-28</a>
+                    <a href="tel:+7-911-501-88-28" style={{ color: 'var(--color-primary-dark)', textDecoration: 'none' }}>+7 (911) 501-88-28</a>
                     {' · '}
                     ул. Северная, 7А, ТЦ КИТ · Ежедневно 10:00–20:00
                 </p>

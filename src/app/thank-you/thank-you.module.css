@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   padding: 2rem 1rem;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: linear-gradient(135deg, var(--color-bg-elevated) 0%, var(--color-bg-elevated) 100%);
 }
 
 .successCard {
@@ -29,7 +29,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #28a745, #20c997, #17a2b8);
+  background: linear-gradient(90deg, var(--color-success), #20c997, #17a2b8);
 }
 
 .successIcon {
@@ -39,7 +39,7 @@
 }
 
 .successCard h1 {
-  color: #28a745;
+  color: var(--color-success);
   margin-bottom: 1.5rem;
   font-size: 2.2rem;
   font-weight: 700;
@@ -47,12 +47,12 @@
 }
 
 .orderInfo {
-  background: #f8f9fa;
+  background: var(--color-bg-elevated);
   border-radius: 10px;
   padding: 1.5rem;
   margin: 2rem 0;
   text-align: left;
-  border-left: 4px solid #28a745;
+  border-left: 4px solid var(--color-success);
 }
 
 .orderInfo p {
@@ -64,19 +64,19 @@
 }
 
 .orderInfo p strong {
-  color: #343a40;
+  color: var(--color-text);
   font-weight: 600;
   min-width: 140px;
 }
 
 .orderInfo p span {
-  color: #495057;
+  color: var(--color-text-muted);
   text-align: right;
   flex: 1;
 }
 
 .nextSteps {
-  background: #e8f4fc;
+  background: var(--color-primary-bg);
   border-radius: 10px;
   padding: 1.5rem;
   margin: 2rem 0;
@@ -84,7 +84,7 @@
 }
 
 .nextSteps h3 {
-  color: #0d6efd;
+  color: var(--color-primary);
   margin-bottom: 1rem;
   font-size: 1.3rem;
   font-weight: 600;
@@ -97,7 +97,7 @@
 
 .nextSteps li {
   margin: 0.8rem 0;
-  color: #495057;
+  color: var(--color-text-muted);
   line-height: 1.5;
   font-size: 1rem;
 }
@@ -111,7 +111,7 @@
 }
 
 .profileButton {
-  background: linear-gradient(135deg, #28a745, #20c997);
+  background: linear-gradient(135deg, var(--color-success), #20c997);
   color: white;
   padding: 1rem 2rem;
   border-radius: 8px;
@@ -130,18 +130,18 @@
 .profileButton:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
-  background: linear-gradient(135deg, #218838, #1ca87c);
+  background: linear-gradient(135deg, #15803d, #1ca87c);
 }
 
 .continueButton {
   background: white;
-  color: #495057;
+  color: var(--color-text-muted);
   padding: 1rem 2rem;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 600;
   font-size: 1.1rem;
-  border: 2px solid #dee2e6;
+  border: 2px solid var(--color-border);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -151,16 +151,16 @@
 }
 
 .continueButton:hover {
-  border-color: #28a745;
-  color: #28a745;
+  border-color: var(--color-success);
+  color: var(--color-success);
   transform: translateY(-2px);
 }
 
 .contactInfo {
   margin-top: 2rem;
   padding-top: 2rem;
-  border-top: 1px solid #e9ecef;
-  color: #6c757d;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-muted);
 }
 
 .contactInfo p {
@@ -169,13 +169,13 @@
 }
 
 .contactInfo strong {
-  color: #0d6efd;
+  color: var(--color-primary);
   font-weight: 600;
 }
 
 .loading {
   font-size: 1.5rem;
-  color: #6c757d;
+  color: var(--color-text-muted);
   text-align: center;
   padding: 4rem;
 }
@@ -214,21 +214,21 @@
   position: absolute;
   width: 10px;
   height: 10px;
-  background: #ff4757;
+  background: var(--color-danger);
   top: 0;
   opacity: 0;
 }
 
 .confetti:nth-child(odd) {
-  background: #ff8c00;
+  background: var(--color-warning);
 }
 
 .confetti:nth-child(even) {
-  background: #2ed573;
+  background: var(--color-success);
 }
 
 .confetti:nth-child(3n) {
-  background: #1e90ff;
+  background: var(--color-primary);
 }
 
 /* Адаптивность */
@@ -303,7 +303,7 @@
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  background: #28a745;
+  background: var(--color-success);
   top: -100px;
   right: -100px;
 }
@@ -311,7 +311,7 @@
 .decoration.triangle {
   width: 150px;
   height: 150px;
-  border-bottom: 150px solid #0d6efd;
+  border-bottom: 150px solid var(--color-primary);
   border-left: 75px solid transparent;
   border-right: 75px solid transparent;
   bottom: -75px;
@@ -320,7 +320,7 @@
 
 /* Интерактивные элементы */
 .printButton {
-  background: #6c757d;
+  background: var(--color-text-muted);
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -334,7 +334,7 @@
 }
 
 .printButton:hover {
-  background: #5a6268;
+  background: var(--color-text-muted);
 }
 
 /* QR код для отслеживания */
@@ -343,48 +343,48 @@
   padding: 1rem;
   background: white;
   border-radius: 8px;
-  border: 2px dashed #dee2e6;
+  border: 2px dashed var(--color-border);
   max-width: 200px;
 }
 
 .qrText {
   font-size: 0.8rem;
-  color: #6c757d;
+  color: var(--color-text-muted);
   margin-top: 0.5rem;
 }
 
 /* Для темной темы */
 @media (prefers-color-scheme: dark) {
   .container {
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
   }
   
   .successCard {
-    background: #1a1a1a;
-    color: #e9ecef;
+    background: var(--color-primary-dark);
+    color: var(--color-bg-elevated);
   }
-  
+
   .orderInfo {
-    background: #2d3748;
-    border-left-color: #38a169;
+    background: var(--color-text);
+    border-left-color: var(--color-success);
   }
-  
+
   .nextSteps {
-    background: #2d3748;
+    background: var(--color-text);
   }
-  
+
   .continueButton {
-    background: #2d3748;
-    color: #e9ecef;
-    border-color: #4a5568;
+    background: var(--color-text);
+    color: var(--color-bg-elevated);
+    border-color: var(--color-text-muted);
   }
-  
+
   .continueButton:hover {
-    border-color: #38a169;
+    border-color: var(--color-success);
     color: #68d391;
   }
   
   .contactInfo strong {
-    color: #63b3ed;
+    color: var(--color-primary);
   }
 }

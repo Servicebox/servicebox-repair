@@ -1,110 +1,145 @@
 'use client';
-import { PRICING } from '@/lib/pricing-data';
 import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { BUSINESS } from '@/lib/constants';
+import { resolvePrice } from '@/lib/resolve-price';
 
-// Вспомогательная функция (чистая функция, не хук)
-const getServicePrice = (serviceKey, category, brandData, modelData) => {
-    const service = category.services[serviceKey];
-    if (!service || !modelData || !brandData) return null;
-    let price = modelData.specificPrices?.[serviceKey];
-    if (price === undefined) {
-        const calculated = Math.round(
-            service.basePrice *
-            (modelData.gen || 1.0) *
-            (brandData.multiplier || 1.0)
-        );
-        price = Math.max(calculated, service.basePrice);
+// Статичный список категорий устройств калькулятора — те же 6, что и в
+// src/components/Admin/PricingMatrix/PricingMatrix.js. Живых данных на этот
+// список нет (это не более чем ярлыки), сами цены/бренды/модели — из БД.
+const DEVICE_TYPES = [
+    { key: 'phone', label: 'Смартфон', icon: '📱' },
+    { key: 'laptop', label: 'Ноутбук', icon: '💻' },
+    { key: 'tablet', label: 'Планшет', icon: '📲' },
+    { key: 'tv', label: 'Телевизор', icon: '📺' },
+    { key: 'console', label: 'Игровая приставка', icon: '🎮' },
+    { key: 'videocard', label: 'Видеокарта', icon: '🔥' },
+];
+
+// Бренд считается "Apple" по имени — в унифицированной модели данных нет
+// отдельного стабильного ключа бренда (раньше был литерал 'apple' в pricing-data.js).
+const isAppleBrand = (brand) => /apple/i.test(brand?.name || '');
+
+// Проверяет, применим ли ремонтный пункт (service) к выбранным бренду/модели.
+// Переносит фильтрацию из старой pricing-data.js версии 1:1 на compatFlags.
+const isServiceApplicable = (service, brand, model) => {
+    const flags = service.compatFlags || {};
+    if (flags.appleOnly && !isAppleBrand(brand)) return false;
+    if (flags.portType) {
+        if (!model.portType) return false;
+        if (flags.portType !== model.portType) return false;
     }
-    return price;
+    if (flags.requiresSeparateGlass && !model.hasSeparateGlass) return false;
+    if (flags.requiresThermalPads && !model.hasThermalPads) return false;
+    if (flags.requiresBga && !model.hasBga) return false;
+    // requiresFaceId: в исходных данных ни у одной модели никогда не было
+    // соответствующего флага — сохраняем это (пока не заведено) поведение как есть.
+    if (flags.requiresFaceId && !model.hasFaceId) return false;
+    if (flags.requiresTvType?.length && !flags.requiresTvType.includes(model.tvType)) return false;
+    return true;
 };
 
-export default function RepairCalculator({ initialDeviceType = null }) {
-    // ✅ ХУКИ ВНУТРИ КОМПОНЕНТА
-    const [dbPricing, setDbPricing] = useState(null);
-
-    useEffect(() => {
-        fetch('/api/calculator-config')
-            .then(res => res.json())
-            .then(data => {
-                if (data.success && data.pricingData) setDbPricing(data.pricingData);
-            })
-            .catch(() => { }); // Если API недоступен, останется null
-    }, []);
-
-    // Переменная, которая берет данные из БД, а если их нет - берет локальный PRICING
-    const activePricing = dbPricing || PRICING;
-
+export default function RepairCalculator({ initialDeviceType = null, initialServiceId = null }) {
     const [deviceType, setDeviceType] = useState(initialDeviceType);
-    const [brand, setBrand] = useState(null);
+    const [matrixData, setMatrixData] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    const [brandId, setBrandId] = useState(null);
     const [modelId, setModelId] = useState(null);
     const [selectedServices, setSelectedServices] = useState([]);
+    const [autoSelected, setAutoSelected] = useState(false);
 
-    const toggleService = (key) => {
+    useEffect(() => {
+        if (!deviceType) return;
+        setLoading(true);
+        setMatrixData(null);
+        fetch(`/api/repair-pricing?deviceType=${deviceType}`)
+            .then(res => res.json())
+            .then(data => { if (data.success) setMatrixData(data); })
+            .catch(() => {})
+            .finally(() => setLoading(false));
+    }, [deviceType]);
+
+    const brand = useMemo(
+        () => matrixData?.brands.find(b => b._id === brandId) ?? null,
+        [matrixData, brandId]
+    );
+    const model = useMemo(
+        () => brand?.models.find(m => m._id === modelId) ?? null,
+        [brand, modelId]
+    );
+
+    const toggleService = (id) => {
         setSelectedServices(prev =>
-            prev.includes(key) ? prev.filter(s => s !== key) : [...prev, key]
+            prev.includes(id) ? prev.filter(s => s !== id) : [...prev, id]
         );
     };
 
     const reset = () => {
         setDeviceType(null);
-        setBrand(null);
+        setMatrixData(null);
+        setBrandId(null);
         setModelId(null);
         setSelectedServices([]);
     };
 
+    const selectDeviceType = (key) => {
+        setDeviceType(key);
+        setBrandId(null);
+        setModelId(null);
+        setSelectedServices([]);
+    };
+
+    const selectBrand = (id) => {
+        setBrandId(id);
+        setModelId(null);
+        setSelectedServices([]);
+    };
+
+    const selectModel = (id) => {
+        setModelId(id);
+        setSelectedServices([]);
+    };
+
+    // Услуги, применимые к выбранным бренду/модели и имеющие вычислимую цену
+    // (basePrice или подходящий priceVariant) — то, что ещё не привязано к
+    // Brand/Model через матрицу цен в админке, в калькуляторе не показывается.
+    const applicableServices = useMemo(() => {
+        if (!matrixData || !brand || !model) return [];
+        return matrixData.services
+            .filter(service => isServiceApplicable(service, brand, model))
+            .map(service => ({ service, resolved: resolvePrice(service, brand, model) }))
+            .filter(({ resolved }) => resolved.type !== 'display');
+    }, [matrixData, brand, model]);
+
+    // Пришли со страницы конкретной услуги ("Точный расчёт по вашей модели") — как
+    // только после выбора модели эта услуга появится в применимых, отмечаем её сами,
+    // один раз (чтобы не мешать пользователю потом снять галочку вручную).
+    useEffect(() => {
+        if (autoSelected || !initialServiceId) return;
+        if (applicableServices.some(({ service }) => service._id === initialServiceId)) {
+            setSelectedServices(prev => prev.includes(initialServiceId) ? prev : [...prev, initialServiceId]);
+            setAutoSelected(true);
+        }
+    }, [applicableServices, initialServiceId, autoSelected]);
+
     const calculatePrice = useMemo(() => {
-        if (!deviceType || !brand || !modelId || selectedServices.length === 0) return null;
-
-        // Используем activePricing (который может быть из БД)
-        const category = activePricing[deviceType];
-        if (!category) return null;
-
-        const brandData = category.brands[brand];
-        const modelData = brandData?.models.find(m => m.id === modelId);
-        if (!modelData) return null;
+        if (!model || selectedServices.length === 0) return null;
 
         let minTotal = 0;
         let maxTotal = 0;
-        const details = selectedServices.map(serviceKey => {
-            const price = getServicePrice(serviceKey, category, brandData, modelData);
-            if (price === null) return null;
-            const minPrice = Math.round(price * 0.85);
-            const maxPrice = Math.round(price * 1.15);
+        const details = selectedServices.map(id => {
+            const entry = applicableServices.find(({ service }) => service._id === id);
+            if (!entry) return null;
+            const minPrice = Math.round(entry.resolved.price * 0.85);
+            const maxPrice = Math.round(entry.resolved.price * 1.15);
             minTotal += minPrice;
             maxTotal += maxPrice;
-            return { ...category.services[serviceKey], minPrice, maxPrice };
+            return { name: entry.service.name, minPrice, maxPrice };
         }).filter(Boolean);
-        return { minTotal, maxTotal, details, modelName: modelData.name };
-    }, [deviceType, brand, modelId, selectedServices, activePricing]); // Добавил activePricing в зависимости
 
-    const getFilteredServices = () => {
-        if (!deviceType || !brand || !modelId) return [];
-        const category = activePricing[deviceType];
-        const brandData = category.brands[brand];
-        const modelData = brandData.models.find(m => m.id === modelId);
-        if (!modelData) return Object.entries(category.services);
-        return Object.entries(category.services).filter(([key, svc]) => {
-            if (svc.appleOnly && brand !== 'apple') return false;
-            if (svc.portType) {
-                if (modelData.portType) return svc.portType === modelData.portType;
-                return false;
-            }
-            if (svc.requiresSeparateGlass && !modelData.hasSeparateGlass) return false;
-            if (svc.requiresThermalPads && !modelData.hasThermalPads) return false;
-            if (svc.requiresBga && !modelData.hasBga) return false;
-            if (svc.requiresFaceId && !modelData.requiresFaceId) return false;
-            if (svc.requiresTvType && Array.isArray(svc.requiresTvType)) {
-                if (!modelData.tvType || !svc.requiresTvType.includes(modelData.tvType)) return false;
-            }
-            if (key === 'face_id' && brand !== 'apple') return false;
-            if (key === 'silent_switch' && brand !== 'apple') return false;
-            if (key === 'apple_id_setup' && brand !== 'apple') return false;
-            if (key === 'glass' && brand !== 'apple') return false;
-            return true;
-        });
-    };
+        return { minTotal, maxTotal, details, modelName: model.name };
+    }, [model, selectedServices, applicableServices]);
 
     return (
         <>
@@ -125,57 +160,65 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                 <meta itemProp="operatingSystem" content="All" />
                 <meta itemProp="isAccessibleForFree" content="true" />
                 <header className="text-center mb-8">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-3" itemProp="name" style={{ color: '#002147' }}>
+                    <h2 className="text-3xl md:text-4xl font-bold mb-3" itemProp="name" style={{ color: 'var(--color-primary-dark)' }}>
                         🧮 Калькулятор стоимости ремонта
                     </h2>
-                    <p className="text-gray-600 text-lg" itemProp="description">
+                    <p className="text-lg" itemProp="description" style={{ color: 'var(--color-text-muted)' }}>
                         Бесплатный онлайн-калькулятор. Точный расчёт с учётом вашей модели за 30 секунд
                     </p>
-                    <p className="text-sm text-orange-600 font-semibold mt-2">
+                    <p className="text-sm font-semibold mt-2" style={{ color: 'var(--color-warning)' }}>
                         ⚡ Точная цена после диагностики
                     </p>
                 </header>
                 <div className="rounded-3xl p-6 md:p-8 shadow-2xl border-2" style={{
-                    background: 'transparent', borderColor: '#002147', backdropFilter: 'blur(10px)'
+                    background: 'transparent', borderColor: 'var(--color-primary-dark)', backdropFilter: 'blur(10px)'
                 }}>
                     <div className="mb-8">
                         <div className="flex items-center gap-2 mb-4">
-                            <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: '#002147' }}>1</div>
-                            <h3 className="text-xl font-bold" style={{ color: '#002147' }}>Что ремонтируем?</h3>
+                            <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: 'var(--color-primary-dark)' }}>1</div>
+                            <h3 className="text-xl font-bold" style={{ color: 'var(--color-primary-dark)' }}>Что ремонтируем?</h3>
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3" role="radiogroup" aria-label="Категории техники">
-                            {Object.entries(activePricing).map(([key, cat]) => (
+                            {DEVICE_TYPES.map(({ key, label, icon }) => (
                                 <button
                                     key={key}
-                                    onClick={() => { setDeviceType(key); setBrand(null); setModelId(null); setSelectedServices([]); }}
+                                    onClick={() => selectDeviceType(key)}
                                     className="group relative overflow-hidden rounded-2xl p-4 transition-all duration-300 border-2 hover:scale-105"
                                     role="radio"
                                     aria-checked={deviceType === key}
-                                    aria-label={`Категория: ${cat.label}`}
-                                    style={{ background: deviceType === key ? 'linear-gradient(135deg, #002147 0%, #003d7a 100%)' : 'white', borderColor: deviceType === key ? '#002147' : '#e2e8f0', color: deviceType === key ? 'white' : '#002147' }}
+                                    aria-label={`Категория: ${label}`}
+                                    style={{ background: deviceType === key ? 'linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%)' : 'var(--color-bg)', borderColor: deviceType === key ? 'var(--color-primary-dark)' : 'var(--color-border)', color: deviceType === key ? 'var(--color-text-inverse)' : 'var(--color-primary-dark)' }}
                                 >
-                                    <div className="text-4xl mb-2" aria-hidden="true">{cat.icon}</div>
-                                    <div className="font-bold text-sm">{cat.label}</div>
+                                    <div className="text-4xl mb-2" aria-hidden="true">{icon}</div>
+                                    <div className="font-bold text-sm">{label}</div>
                                 </button>
                             ))}
                         </div>
                     </div>
-                    {deviceType && (
+                    {deviceType && loading && (
+                        <div className="text-center py-4" style={{ color: 'var(--color-text-muted)' }}>Загрузка цен...</div>
+                    )}
+                    {deviceType && !loading && matrixData && !matrixData.category && (
+                        <div className="text-center py-4" style={{ color: 'var(--color-warning)' }}>
+                            Для этой категории пока не настроены цены в новой системе — загляните позже.
+                        </div>
+                    )}
+                    {deviceType && matrixData?.category && (
                         <div className="mb-8 animate-fadeIn">
                             <div className="flex items-center gap-2 mb-4">
-                                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: '#002147' }}>2</div>
-                                <h3 className="text-xl font-bold" style={{ color: '#002147' }}>Выберите бренд / серию</h3>
+                                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: 'var(--color-primary-dark)' }}>2</div>
+                                <h3 className="text-xl font-bold" style={{ color: 'var(--color-primary-dark)' }}>Выберите бренд / серию</h3>
                             </div>
                             <div className="grid grid-cols-2 md:grid-cols-3 gap-3" role="radiogroup" aria-label="Бренды">
-                                {Object.entries(activePricing[deviceType].brands).map(([key, b]) => (
+                                {matrixData.brands.map((b) => (
                                     <button
-                                        key={key}
-                                        onClick={() => { setBrand(key); setModelId(null); setSelectedServices([]); }}
+                                        key={b._id}
+                                        onClick={() => selectBrand(b._id)}
                                         className="rounded-xl p-4 transition-all duration-300 border-2 hover:scale-105 text-left"
                                         role="radio"
-                                        aria-checked={brand === key}
+                                        aria-checked={brandId === b._id}
                                         aria-label={`Бренд: ${b.name}`}
-                                        style={{ background: brand === key ? 'linear-gradient(135deg, #ff8c00 0%, #ff6b00 100%)' : 'white', borderColor: brand === key ? '#ff8c00' : '#e2e8f0', color: brand === key ? 'white' : '#002147' }}
+                                        style={{ background: brandId === b._id ? 'linear-gradient(135deg, #ff8c00 0%, #ff6b00 100%)' : 'var(--color-bg)', borderColor: brandId === b._id ? '#ff8c00' : 'var(--color-border)', color: brandId === b._id ? 'var(--color-text-inverse)' : 'var(--color-primary-dark)' }}
                                     >
                                         <div className="font-bold text-sm mb-1">{b.name}</div>
                                         <div className="text-xs opacity-80">{b.models.length} {b.models.length === 1 ? 'модель' : b.models.length < 5 ? 'модели' : 'моделей'}</div>
@@ -187,20 +230,20 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                     {brand && (
                         <div className="mb-8 animate-fadeIn">
                             <div className="flex items-center gap-2 mb-4">
-                                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: '#002147' }}>3</div>
-                                <h3 className="text-xl font-bold" style={{ color: '#002147' }}>Выберите точную модель</h3>
+                                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: 'var(--color-primary-dark)' }}>3</div>
+                                <h3 className="text-xl font-bold" style={{ color: 'var(--color-primary-dark)' }}>Выберите точную модель</h3>
                             </div>
                             <div className="max-h-64 overflow-y-auto pr-2">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3" role="radiogroup" aria-label="Модели устройств">
-                                    {activePricing[deviceType].brands[brand].models.map((m) => (
+                                    {brand.models.map((m) => (
                                         <button
-                                            key={m.id}
-                                            onClick={() => { setModelId(m.id); setSelectedServices([]); }}
+                                            key={m._id}
+                                            onClick={() => selectModel(m._id)}
                                             className="rounded-xl p-4 transition-all duration-300 border-2 text-left hover:scale-[1.02]"
                                             role="radio"
-                                            aria-checked={modelId === m.id}
+                                            aria-checked={modelId === m._id}
                                             aria-label={`Модель: ${m.name}`}
-                                            style={{ background: modelId === m.id ? 'linear-gradient(135deg, #002147 0%, #003d7a 100%)' : 'white', borderColor: modelId === m.id ? '#002147' : '#e2e8f0', color: modelId === m.id ? 'white' : '#002147' }}
+                                            style={{ background: modelId === m._id ? 'linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%)' : 'var(--color-bg)', borderColor: modelId === m._id ? 'var(--color-primary-dark)' : 'var(--color-border)', color: modelId === m._id ? 'var(--color-text-inverse)' : 'var(--color-primary-dark)' }}
                                         >
                                             <div className="font-semibold">{m.name}</div>
                                         </button>
@@ -209,40 +252,41 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                             </div>
                         </div>
                     )}
-                    {modelId && (
+                    {model && (
                         <div className="mb-8 animate-fadeIn">
                             <div className="flex items-center gap-2 mb-4">
-                                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: '#002147' }}>4</div>
-                                <h3 className="text-xl font-bold" style={{ color: '#002147' }}>Какие работы нужны?</h3>
+                                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: 'var(--color-primary-dark)' }}>4</div>
+                                <h3 className="text-xl font-bold" style={{ color: 'var(--color-primary-dark)' }}>Какие работы нужны?</h3>
                             </div>
+                            {applicableServices.length === 0 && (
+                                <p style={{ color: 'var(--color-text-muted)' }}>Для этой модели пока нет настроенных цен — уточните стоимость по телефону.</p>
+                            )}
                             <div className="space-y-3" role="group" aria-label="Список услуг">
-                                {getFilteredServices().map(([key, svc]) => {
-                                    const modelData = activePricing[deviceType].brands[brand].models.find(m => m.id === modelId);
-                                    const brandData = activePricing[deviceType].brands[brand];
-                                    const price = getServicePrice(key, activePricing[deviceType], brandData, modelData);
-                                    const isSelected = selectedServices.includes(key);
+                                {applicableServices.map(({ service, resolved }) => {
+                                    const isSelected = selectedServices.includes(service._id);
                                     return (
                                         <button
-                                            key={key}
-                                            onClick={() => toggleService(key)}
+                                            key={service._id}
+                                            onClick={() => toggleService(service._id)}
                                             className="w-full rounded-2xl p-5 transition-all duration-300 border-2 hover:scale-[1.02] text-left"
                                             role="checkbox"
                                             aria-checked={isSelected}
-                                            aria-label={`${svc.name}, цена ~${price?.toLocaleString('ru-RU')} рублей`}
-                                            style={{ background: isSelected ? 'linear-gradient(135deg, #fff4e6 0%, #ffe8cc 10%)' : 'white', borderColor: isSelected ? '#ff8c00' : '#e2e8f0' }}
+                                            aria-label={`${service.name}, цена ~${resolved.price?.toLocaleString('ru-RU')} рублей`}
+                                            style={{ background: isSelected ? 'var(--color-warning-bg)' : 'var(--color-bg)', borderColor: isSelected ? '#ff8c00' : 'var(--color-border)' }}
                                         >
                                             <div className="flex items-start justify-between gap-4">
                                                 <div className="flex-1">
                                                     <div className="flex items-center gap-2 mb-1">
                                                         {isSelected && <span style={{ color: '#ff8c00' }} aria-hidden="true">✓</span>}
-                                                        <h4 className="font-bold text-lg" style={{ color: '#002147' }}>{svc.name}</h4>
+                                                        <h4 className="font-bold text-lg" style={{ color: 'var(--color-primary-dark)' }}>{service.name}</h4>
                                                     </div>
-                                                    <p className="text-sm text-gray-600 mb-1">{svc.desc}</p>
-                                                    <div className="text-xs text-gray-500">⏱️ {svc.minTime} — {svc.maxTime}</div>
+                                                    {(service.minTime || service.maxTime) && (
+                                                        <div className="text-xs" style={{ color: 'var(--color-text-muted)' }}>⏱️ {service.minTime} — {service.maxTime}</div>
+                                                    )}
                                                 </div>
                                                 <div className="text-right flex-shrink-0">
-                                                    <div className="font-bold text-lg" style={{ color: '#ff8c00' }}>~{price?.toLocaleString('ru-RU')}₽</div>
-                                                    <div className="text-xs text-gray-500">работа</div>
+                                                    <div className="font-bold text-lg" style={{ color: '#ff8c00' }}>~{resolved.price?.toLocaleString('ru-RU')}₽</div>
+                                                    <div className="text-xs" style={{ color: 'var(--color-text-muted)' }}>работа</div>
                                                 </div>
                                             </div>
                                         </button>
@@ -256,7 +300,7 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                             <meta itemProp="priceCurrency" content="RUB" />
                             <meta itemProp="lowPrice" content={calculatePrice.minTotal} />
                             <meta itemProp="highPrice" content={calculatePrice.maxTotal} />
-                            <div className="rounded-3xl p-6 md:p-8 text-white shadow-2xl" style={{ background: 'linear-gradient(135deg, #002147 0%, #003d7a 100%)' }}>
+                            <div className="rounded-3xl p-6 md:p-8 shadow-2xl" style={{ background: 'linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%)', color: 'var(--color-text-inverse)' }}>
                                 <div className="text-center mb-6">
                                     <div className="text-sm opacity-80 mb-2">Для {calculatePrice.modelName}</div>
                                     <h3 className="text-2xl font-bold mb-2">💰 Стоимость работ</h3>
@@ -264,7 +308,7 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                                         {calculatePrice.minTotal.toLocaleString('ru-RU')} – {calculatePrice.maxTotal.toLocaleString('ru-RU')} ₽
                                     </div>
                                 </div>
-                                <div className="bg-white/10 rounded-2xl p-4 mb-6 space-y-2">
+                                <div className="rounded-2xl p-4 mb-6 space-y-2" style={{ background: 'color-mix(in srgb, var(--color-text-inverse) 10%, transparent)' }}>
                                     {calculatePrice.details.map((d, i) => (
                                         <div key={i} className="flex justify-between text-sm">
                                             <span className="opacity-90">{d.name}</span>
@@ -272,18 +316,18 @@ export default function RepairCalculator({ initialDeviceType = null }) {
                                         </div>
                                     ))}
                                 </div>
-                                <div className="bg-white/10 rounded-xl p-3 mb-6 text-center text-sm opacity-90">
+                                <div className="rounded-xl p-3 mb-6 text-center text-sm opacity-90" style={{ background: 'color-mix(in srgb, var(--color-text-inverse) 10%, transparent)' }}>
                                     ⚡ *Цена указана только за работу мастера<br />Стоимость запчастей рассчитывается отдельно
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
-                                    <a href={`tel:${BUSINESS.phones.primary.replace(/-/g, '')}`} className="flex items-center justify-center py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform" style={{ background: '#28a745', color: 'white' }}>
+                                    <a href={`tel:${BUSINESS.phones.primary.replace(/-/g, '')}`} className="flex items-center justify-center py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform" style={{ background: 'var(--color-success)', color: 'var(--color-text-inverse)' }}>
                                         📞 {BUSINESS.phonesFormatted.primary}
                                     </a>
-                                    <Link href="/contacts" className="flex items-center justify-center py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform" style={{ background: 'white', color: '#002147' }}>
+                                    <Link href="/contacts" className="flex items-center justify-center py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform" style={{ background: 'var(--color-bg-dark)', color: 'var(--color-primary-dark)' }}>
                                         📍 Приехать
                                     </Link>
                                 </div>
-                                <button onClick={reset} className="w-full py-3 rounded-xl font-semibold hover:scale-105 transition-transform" style={{ background: 'rgba(255,255,255,0.1)', color: 'white', border: '2px solid rgba(255,255,255,0.3)' }}>
+                                <button onClick={reset} className="w-full py-3 rounded-xl font-semibold hover:scale-105 transition-transform" style={{ background: 'color-mix(in srgb, var(--color-text-inverse) 10%, transparent)', color: 'var(--color-text-inverse)', border: '2px solid color-mix(in srgb, var(--color-text-inverse) 30%, transparent)' }}>
                                     🔄 Рассчитать заново
                                 </button>
                             </div>

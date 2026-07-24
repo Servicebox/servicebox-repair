@@ -5,7 +5,7 @@
      margin: 0 auto;
      padding: 3rem 1.5rem;
      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-     color: #1f2937;
+     color: var(--color-text);
      background: transparent;
      position: relative;
  }
@@ -28,13 +28,13 @@
      font-size: clamp(1.75rem, 4vw, 2.5rem);
      font-weight: 700;
      margin: 0 0 0.75rem 0;
-     color: #111827;
+     color: var(--color-text);
      line-height: 1.2;
  }
 
  .animatedTitle p {
      font-size: clamp(1rem, 2vw, 1.125rem);
-     color: #6b7280;
+     color: var(--color-text-muted);
      max-width: 650px;
      margin: 0 auto;
      line-height: 1.6;
@@ -61,8 +61,8 @@
 
  .breadcrumbItem {
      background: rgba(243, 244, 246, 0.8);
-     border: 1px solid #e5e7eb;
-     color: #374151;
+     border: 1px solid var(--color-border);
+     color: var(--color-text-muted);
      padding: 0.375rem 0.75rem;
      border-radius: 0.5rem;
      cursor: pointer;
@@ -72,8 +72,8 @@
  }
 
  .breadcrumbItem:hover {
-     background: #e5e7eb;
-     color: #111827;
+     background: var(--color-border);
+     color: var(--color-text);
      transform: translateY(-1px);
  }
 
@@ -85,7 +85,7 @@
      display: flex;
      align-items: center;
      gap: 0.25rem;
-     color: #9ca3af;
+     color: var(--color-text-muted);
  }
 
  .chevron {
@@ -97,7 +97,7 @@
  .breadcrumbHome {
      background: none;
      border: none;
-     color: #3b82f6;
+     color: var(--color-accent);
      padding: 0.375rem 0.5rem;
      cursor: pointer;
      font-weight: 500;
@@ -119,22 +119,22 @@
      display: inline-flex;
      align-items: center;
      gap: 0.5rem;
-     background: white;
-     border: 1px solid #e5e7eb;
+     background: var(--color-bg-dark);
+     border: 1px solid var(--color-border);
      padding: 0.5rem 1rem;
      border-radius: 0.5rem;
      cursor: pointer;
      font-size: 0.95rem;
      font-weight: 500;
-     color: #374151;
+     color: var(--color-text-muted);
      transition: all 0.2s ease;
-     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+     box-shadow: 0 1px 2px var(--color-shadow);
  }
 
  .backButton:hover {
-     background: #f9fafb;
-     border-color: #d1d5db;
-     color: #111827;
+     background: var(--color-bg);
+     border-color: var(--color-border);
+     color: var(--color-text);
      transform: translateX(-2px);
  }
 
@@ -153,14 +153,14 @@
  }
 
  .categoryCard {
-     background: white;
+     background: var(--color-bg-dark);
      border-radius: 1rem;
      padding: 1.5rem;
      text-align: center;
      cursor: pointer;
      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-     border: 1px solid #e5e7eb;
-     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+     border: 1px solid var(--color-border);
+     box-shadow: 0 1px 3px var(--color-shadow);
      display: flex;
      flex-direction: column;
      align-items: center;
@@ -168,7 +168,7 @@
  }
 
  .categoryCard:hover {
-     border-color: #3b82f6;
+     border-color: var(--color-accent);
      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
      transform: translateY(-4px);
  }
@@ -199,19 +199,19 @@
 
  .defaultIcon {
      font-size: 2rem;
-     color: #6b7280;
+     color: var(--color-text-muted);
  }
 
  .categoryName {
      font-size: 1.125rem;
      font-weight: 600;
-     color: #111827;
+     color: var(--color-text);
      margin: 0 0 0.5rem 0;
      line-height: 1.3;
  }
 
  .categoryDescription {
-     color: #6b7280;
+     color: var(--color-text-muted);
      font-size: 0.9rem;
      margin: 0 0 1rem 0;
      line-height: 1.5;
@@ -227,7 +227,7 @@
 
  .categoryBadge {
      background: transparent;
-     color: #030042;
+     color: var(--color-primary-dark);
      padding: 0.375rem 0.875rem;
      border-radius: 9px;
      font-size: 0.8rem;
@@ -244,30 +244,30 @@
  }
 
  .itemCard {
-     background: white;
+     background: var(--color-bg-dark);
      border-radius: 0.875rem;
      padding: 1.25rem;
      cursor: pointer;
      transition: all 0.25s ease;
-     border: 1px solid #e5e7eb;
-     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+     border: 1px solid var(--color-border);
+     box-shadow: 0 1px 2px var(--color-shadow);
      display: flex;
      flex-direction: column;
      min-height: 180px;
  }
 
  .itemCard:hover {
-     border-color: #3b82f6;
+     border-color: var(--color-accent);
      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
      transform: translateY(-2px);
  }
 
  .categoryItem {
-     border-left: 3px solid #6b7280;
+     border-left: 3px solid var(--color-text-muted);
  }
 
  .serviceItem {
-     border-left: 3px solid #3b82f6;
+     border-left: 3px solid var(--color-accent);
  }
 
  .itemHeader {
@@ -281,7 +281,7 @@
  .itemName {
      font-size: 1.05rem;
      font-weight: 600;
-     color: #111827;
+     color: var(--color-text);
      margin: 0;
      line-height: 1.4;
      /* Ограничение: 2 строки */
@@ -295,8 +295,8 @@
  }
 
  .itemType {
-     background: #f3f4f6;
-     color: #4b5563;
+     background: var(--color-bg-elevated);
+     color: var(--color-text-muted);
      padding: 0.25rem 0.625rem;
      border-radius: 0.375rem;
      font-size: 0.75rem;
@@ -307,8 +307,8 @@
  }
 
  .priceTag {
-     background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-     color: white;
+     background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent) 100%);
+     color: var(--color-text-inverse);
      padding: 0.375rem 0.875rem;
      border-radius: 0.5rem;
      font-weight: 700;
@@ -319,7 +319,7 @@
  }
 
  .itemDescription {
-     color: #6b7280;
+     color: var(--color-text-muted);
      font-size: 0.925rem;
      margin: 0 0 1rem 0;
      line-height: 1.5;
@@ -339,23 +339,23 @@
      align-items: center;
      margin-top: auto;
      padding-top: 0.75rem;
-     border-top: 1px solid #f3f4f6;
+     border-top: 1px solid var(--color-bg-elevated);
  }
 
  .itemsCount {
-     color: #6b7280;
+     color: var(--color-text-muted);
      font-size: 0.85rem;
      font-weight: 500;
  }
 
  .serviceTime {
-     color: #9ca3af;
+     color: var(--color-text-muted);
      font-size: 0.85rem;
  }
 
  .arrowIcon {
      font-size: 1.125rem;
-     color: #3b82f6;
+     color: var(--color-accent);
      transition: transform 0.2s ease;
      font-weight: 500;
  }
@@ -365,8 +365,8 @@
  }
 
  .bookButton {
-     background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-     color: white;
+     background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary) 100%);
+     color: var(--color-text-inverse);
      border: none;
      padding: 0.5rem 1.25rem;
      border-radius: 0.5rem;
@@ -378,7 +378,7 @@
  }
 
  .bookButton:hover {
-     background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
      transform: translateY(-1px);
      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
  }
@@ -396,18 +396,18 @@
      justify-content: center;
      padding: 4rem 2rem;
      text-align: center;
-     color: #6b7280;
-     background: white;
+     color: var(--color-text-muted);
+     background: var(--color-bg-dark);
      border-radius: 1rem;
-     border: 1px solid #e5e7eb;
+     border: 1px solid var(--color-border);
      margin: 0 0.5rem;
  }
 
  .loadingSpinner {
      width: 48px;
      height: 48px;
-     border: 3px solid #e5e7eb;
-     border-top-color: #3b82f6;
+     border: 3px solid var(--color-border);
+     border-top-color: var(--color-accent);
      border-radius: 50%;
      animation: spin 1s linear infinite;
      margin-bottom: 1rem;
@@ -422,19 +422,19 @@
  .noResults h3 {
      font-size: 1.25rem;
      font-weight: 600;
-     color: #111827;
+     color: var(--color-text);
      margin: 0 0 0.5rem 0;
  }
 
  .noResults p {
      margin: 0 0 1.5rem 0;
-     color: #6b7280;
+     color: var(--color-text-muted);
  }
 
  .clearSearchButton {
-     background: #f3f4f6;
-     color: #374151;
-     border: 1px solid #d1d5db;
+     background: var(--color-bg-elevated);
+     color: var(--color-text-muted);
+     border: 1px solid var(--color-border);
      padding: 0.5rem 1.25rem;
      border-radius: 0.5rem;
      cursor: pointer;
@@ -444,8 +444,8 @@
  }
 
  .clearSearchButton:hover {
-     background: #e5e7eb;
-     border-color: #9ca3af;
+     background: var(--color-border);
+     border-color: var(--color-text-muted);
  }
 
  /* ===== МОДАЛЬНОЕ ОКНО (BookingForm) — базовые стили ===== */
@@ -466,7 +466,7 @@
  }
 
  .modalContent {
-     background: white;
+     background: var(--color-bg-dark);
      border-radius: 1rem;
      padding: 1.5rem;
      max-width: 500px;
@@ -650,41 +650,41 @@
  }
 
  .modalContent::-webkit-scrollbar-track {
-     background: #f1f1f1;
+     background: var(--color-bg-elevated);
      border-radius: 3px;
  }
 
  .modalContent::-webkit-scrollbar-thumb {
-     background: #c1c1c1;
+     background: var(--color-border);
      border-radius: 3px;
  }
 
  .modalContent::-webkit-scrollbar-thumb:hover {
-     background: #a1a1a1;
+     background: var(--color-text-muted);
  }
  /* В конце файла ServicePricePage.module.css */
 
  .calculatorContainer {
-     background: white;
+     background: var(--color-bg-dark);
      border-radius: 20px;
      padding: 20px;
      min-height: 500px;
  }
 
  .backToServicesBtn {
-     background: #f0f4f8;
+     background: var(--color-bg-elevated);
      border: none;
      padding: 10px 20px;
      border-radius: 8px;
      cursor: pointer;
      font-weight: 600;
-     color: #4a5568;
+     color: var(--color-text-muted);
      margin-bottom: 20px;
      transition: background 0.2s;
  }
 
  .backToServicesBtn:hover {
-     background: #e2e8f0;
+     background: var(--color-border);
  }
 
  .categoryFooter {
@@ -697,8 +697,8 @@
  }
 
  .calcBadge {
-     background: linear-gradient(135deg, #0066cc, #004499);
-     color: white;
+     background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+     color: var(--color-text-inverse);
      padding: 4px 8px;
      border-radius: 12px;
      font-size: 0.7rem;

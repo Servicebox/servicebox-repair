@@ -15,7 +15,7 @@
 }
 
 .modalContent {
-  background: white;
+  background: var(--color-bg-dark);
   border-radius: 16px;
   max-width: 500px;
   width: 100%;
@@ -34,8 +34,8 @@
 }
 
 .header {
-  background: linear-gradient(135deg, #0F52BA, #002147);
-  color: white;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: var(--color-bg-dark);
   padding: 24px;
   border-radius: 16px 16px 0 0;
   text-align: center;
@@ -58,8 +58,8 @@
 }
 
 .trackingCode {
-  background: #f8fafc;
-  border: 2px solid #e2e8f0;
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 20px;
@@ -69,7 +69,7 @@
 .codeLabel {
   display: block;
   font-size: 0.875rem;
-  color: #4a5568;
+  color: var(--color-text-muted);
   margin-bottom: 8px;
 }
 
@@ -77,14 +77,14 @@
   font-family: 'Courier New', monospace;
   font-size: 1.5rem;
   font-weight: 700;
-  color: #002147;
+  color: var(--color-primary-dark);
   letter-spacing: 1px;
   margin: 0 0 16px 0;
 }
 
 .copyButton {
-  background: #0F52BA;
-  color: white;
+  background: var(--color-primary);
+  color: var(--color-bg-dark);
   border: none;
   border-radius: 8px;
   padding: 10px 20px;
@@ -95,11 +95,11 @@
 }
 
 .copyButton:hover {
-  background: #002147;
+  background: var(--color-primary);
 }
 
 .copyButton.copied {
-  background: #10b981;
+  background: var(--color-success);
 }
 
 .details {
@@ -110,7 +110,7 @@
   display: flex;
   justify-content: space-between;
   padding: 8px 0;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .detailRow:last-child {
@@ -118,27 +118,27 @@
 }
 
 .detailLabel {
-  color: #4a5568;
+  color: var(--color-text-muted);
   font-weight: 500;
 }
 
 .detailValue {
-  color: #002147;
+  color: var(--color-primary-dark);
   font-weight: 600;
 }
 
 .footer {
   padding: 20px 24px 24px;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--color-border);
   display: flex;
   gap: 12px;
 }
 
 .secondaryButton {
   flex: 1;
-  background: white;
-  color: #4a5568;
-  border: 2px solid #e2e8f0;
+  background: var(--color-bg-dark);
+  color: var(--color-text-muted);
+  border: 2px solid var(--color-border);
   border-radius: 8px;
   padding: 12px;
   font-weight: 600;
@@ -147,13 +147,13 @@
 }
 
 .secondaryButton:hover {
-  border-color: #4a5568;
+  border-color: var(--color-text-muted);
 }
 
 .primaryButton {
   flex: 1;
-  background: #0F52BA;
-  color: white;
+  background: var(--color-primary);
+  color: var(--color-bg-dark);
   border: none;
   border-radius: 8px;
   padding: 12px;
@@ -163,14 +163,14 @@
 }
 
 .primaryButton:hover {
-  background: #002147;
+  background: var(--color-primary);
 }
 
 @media (max-width: 768px) {
   .successModal {
     padding: 10px;
   }
-  
+
   .footer {
     flex-direction: column;
   }

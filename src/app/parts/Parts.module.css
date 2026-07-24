@@ -22,7 +22,7 @@
 .header h1 {
   font-size: 2.8rem;
   font-weight: 700;
-  color: #333;
+  color: var(--color-primary-dark);
   margin-bottom: 8px;
   position: relative;
   display: inline-block;
@@ -30,7 +30,7 @@
 
 .header p {
   font-size: 1.1rem;
-  color: #1d1d1d;
+  color: var(--color-text);
   max-width: 600px;
   line-height: 1.5;
 }
@@ -40,7 +40,7 @@
   background: transparent;
   border-radius: 12px;
   padding: 20px;
-  border: 1px solid rgba(0, 33, 71, 0.1);
+  border: 1px solid rgba(26, 26, 46, 0.1);
   height: fit-content;
   position: sticky;
   top: 20px;
@@ -53,13 +53,13 @@
   justify-content: space-between;
   margin-bottom: 20px;
   padding-bottom: 15px;
-  border-bottom: 1px solid rgba(0, 33, 71, 0.1);
+  border-bottom: 1px solid rgba(26, 26, 46, 0.1);
 }
 
 .sidebarHeader h2 {
   font-size: 1.3rem;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -77,9 +77,9 @@
 }
 
 .resetButton {
-  background: #002147;
-  color: white;
-  border: 1px solid #002147;
+  background: var(--color-primary-dark);
+  color: var(--color-text-inverse);
+  border: 1px solid var(--color-primary-dark);
   border-radius: 8px;
   padding: 8px 16px;
   font-size: 0.85rem;
@@ -93,8 +93,8 @@
 }
 
 .resetButton:hover {
-  background: #003366;
-  border-color: #003366;
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
   transform: translateY(-1px);
 }
 
@@ -104,8 +104,8 @@
 
 .closeButton {
   background: transparent;
-  color: #002147;
-  border: 1px solid #002147;
+  color: var(--color-primary-dark);
+  border: 1px solid var(--color-primary-dark);
   border-radius: 8px;
   padding: 8px 12px;
   font-size: 1rem;
@@ -120,8 +120,8 @@
 }
 
 .closeButton:hover {
-  background: #002147;
-  color: white;
+  background: var(--color-primary-dark);
+  color: var(--color-text-inverse);
 }
 
 /* Дерево категорий */
@@ -142,12 +142,12 @@
 }
 
 .categoriesTree::-webkit-scrollbar-thumb {
-  background: rgba(0, 33, 71, 0.2);
+  background: rgba(26, 26, 46, 0.2);
   border-radius: 3px;
 }
 
 .categoriesTree::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 33, 71, 0.3);
+  background: rgba(26, 26, 46, 0.3);
 }
 
 .categoryItem {
@@ -161,9 +161,9 @@
   justify-content: space-between;
   padding: 12px 16px;
   background: transparent;
-  border: 1px solid rgba(0, 33, 71, 0.1);
+  border: 1px solid rgba(26, 26, 46, 0.1);
   border-radius: 8px;
-  color: #333;
+  color: var(--color-text);
   font-weight: 500;
   font-size: 0.95rem;
   cursor: pointer;
@@ -173,14 +173,14 @@
 }
 
 .categoryToggle:hover {
-  background: rgba(0, 33, 71, 0.05);
-  border-color: #002147;
+  background: rgba(26, 26, 46, 0.05);
+  border-color: var(--color-primary-dark);
 }
 
 .categoryToggle.active {
-  background: rgba(0, 33, 71, 0.1);
-  color: #002147;
-  border-color: #002147;
+  background: rgba(26, 26, 46, 0.1);
+  color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
   font-weight: 600;
 }
 
@@ -210,7 +210,7 @@
 .categoryCount {
   font-size: 0.8rem;
   font-weight: 400;
-  color: #666;
+  color: var(--color-text-muted);
   margin-left: 8px;
   opacity: 0.7;
 }
@@ -218,7 +218,7 @@
 .categoryArrow {
   font-size: 0.75rem;
   transition: transform 0.2s ease;
-  color: #353535;
+  color: var(--color-text);
   flex-shrink: 0;
   padding: 4px;
   display: flex;
@@ -234,7 +234,7 @@
   margin-left: 20px;
   margin-top: 6px;
   padding-left: 12px;
-  border-left: 1px solid rgba(0, 33, 71, 0.2);
+  border-left: 1px solid rgba(26, 26, 46, 0.2);
   animation: slideDown 0.2s ease-out;
 }
 
@@ -254,9 +254,9 @@
   padding: 10px 16px;
   margin: 4px 0;
   background: transparent;
-  border: 1px solid rgba(0, 33, 71, 0.1);
+  border: 1px solid rgba(26, 26, 46, 0.1);
   border-radius: 6px;
-  color: #323232;
+  color: var(--color-text);
   font-weight: 400;
   font-size: 0.9rem;
   cursor: pointer;
@@ -273,26 +273,26 @@
 .subcategoryButton::before {
   content: '→';
   font-size: 0.85rem;
-  color: #666;
+  color: var(--color-text-muted);
   opacity: 0.5;
   flex-shrink: 0;
 }
 
 .subcategoryButton:hover {
-  background: rgba(0, 33, 71, 0.05);
-  border-color: #002147;
+  background: rgba(26, 26, 46, 0.05);
+  border-color: var(--color-primary-dark);
 }
 
 .subcategoryButton.active {
-  background: #002147;
-  color: white;
-  border-color: #002147;
+  background: var(--color-primary-dark);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary-dark);
 }
 
 .subcategoryButton.active::before {
   content: '✓';
   opacity: 1;
-  color: white;
+  color: var(--color-text-inverse);
 }
 
 /* Основная область контента */
@@ -316,9 +316,9 @@
 .filterChip {
   padding: 8px 16px;
   background: transparent;
-  border: 1px solid rgba(0, 33, 71, 0.2);
+  border: 1px solid rgba(26, 26, 46, 0.2);
   border-radius: 20px;
-  color: #333;
+  color: var(--color-text);
   font-weight: 500;
   font-size: 0.9rem;
   cursor: pointer;
@@ -330,14 +330,14 @@
 }
 
 .filterChip:hover {
-  background: rgba(0, 33, 71, 0.05);
-  border-color: #002147;
+  background: rgba(26, 26, 46, 0.05);
+  border-color: var(--color-primary-dark);
 }
 
 .filterChip.active {
-  background: #002147;
-  color: white;
-  border-color: #002147;
+  background: var(--color-primary-dark);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary-dark);
 }
 
 .filterChip.active::before {
@@ -347,9 +347,9 @@
 
 .filterToggle {
   display: none;
-  background: #002147;
-  color: white;
-  border: 1px solid #002147;
+  background: var(--color-primary-dark);
+  color: var(--color-text-inverse);
+  border: 1px solid var(--color-primary-dark);
 }
 
 /* Информация о товарах */
@@ -361,7 +361,7 @@
   padding: 15px;
   background: transparent;
   border-radius: 8px;
-  border: 1px solid rgba(0, 33, 71, 0.1);
+  border: 1px solid rgba(26, 26, 46, 0.1);
   flex-wrap: wrap;
   gap: 15px;
 }
@@ -369,7 +369,7 @@
 .productCount {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -381,7 +381,7 @@
 }
 
 .productCount span {
-  color: #002147;
+  color: var(--color-primary-dark);
   font-weight: 700;
 }
 
@@ -394,18 +394,18 @@
 
 .sortLabel {
   font-weight: 500;
-  color: #2f2f2f;
+  color: var(--color-text);
   font-size: 0.9rem;
   white-space: nowrap;
 }
 
 .sortSelect {
   padding: 8px 16px;
-  border: 1px solid rgba(0, 33, 71, 0.2);
+  border: 1px solid rgba(26, 26, 46, 0.2);
   border-radius: 8px;
   background: transparent;
   font-size: 0.9rem;
-  color: #797979;
+  color: var(--color-text-muted);
   cursor: pointer;
   transition: all 0.2s ease;
   min-width: 160px;
@@ -418,13 +418,13 @@
 }
 
 .sortSelect:hover {
-  border-color: #002147;
+  border-color: var(--color-primary-dark);
 }
 
 .sortSelect:focus {
   outline: none;
-  border-color: #002147;
-  box-shadow: 0 0 0 2px rgba(0, 33, 71, 0.1);
+  border-color: var(--color-primary-dark);
+  box-shadow: 0 0 0 2px rgba(26, 26, 46, 0.1);
 }
 
 /* Сетка товаров */
@@ -442,25 +442,25 @@
   background: transparent;
   border-radius: 12px;
   margin: 30px 0;
-  border: 2px dashed rgba(0, 33, 71, 0.2);
+  border: 2px dashed rgba(26, 26, 46, 0.2);
 }
 
 .emptyStateIcon {
   font-size: 3rem;
   margin-bottom: 20px;
   opacity: 0.5;
-  color: #002147;
+  color: var(--color-primary-dark);
 }
 
 .emptyState h3 {
   font-size: 1.5rem;
-  color: #333;
+  color: var(--color-text);
   margin-bottom: 15px;
   font-weight: 600;
 }
 
 .emptyState p {
-  color: #666;
+  color: var(--color-text-muted);
   font-size: 1rem;
   max-width: 400px;
   margin: 0 auto 30px;
@@ -476,8 +476,8 @@
 
 .emptyStateButton {
   padding: 12px 24px;
-  background: #002147;
-  color: white;
+  background: var(--color-primary-dark);
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 8px;
   font-size: 1rem;
@@ -490,18 +490,18 @@
 }
 
 .emptyStateButton:hover {
-  background: #003366;
+  background: var(--color-primary-dark);
   transform: translateY(-1px);
 }
 
 .emptyStateButton.secondary {
   background: transparent;
-  border: 1px solid #002147;
-  color: #002147;
+  border: 1px solid var(--color-primary-dark);
+  color: var(--color-primary-dark);
 }
 
 .emptyStateButton.secondary:hover {
-  background: rgba(0, 33, 71, 0.05);
+  background: rgba(26, 26, 46, 0.05);
 }
 
 /* Ошибка */
@@ -518,25 +518,25 @@
 .errorIcon {
   font-size: 4rem;
   margin-bottom: 20px;
-  color: #ff6b6b;
+  color: var(--color-danger);
 }
 
 .errorContainer h2 {
   font-size: 2rem;
-  color: #333;
+  color: var(--color-text);
   margin-bottom: 15px;
 }
 
 .errorContainer p {
-  color: #666;
+  color: var(--color-text-muted);
   margin-bottom: 25px;
   line-height: 1.5;
 }
 
 .retryButton {
   padding: 12px 32px;
-  background: #002147;
-  color: white;
+  background: var(--color-primary-dark);
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 8px;
   font-size: 1rem;
@@ -546,7 +546,7 @@
 }
 
 .retryButton:hover {
-  background: #003366;
+  background: var(--color-primary-dark);
   transform: translateY(-1px);
 }
 
@@ -574,7 +574,7 @@
   height: 100%;
   border: 3px solid transparent;
   border-radius: 50%;
-  border-top-color: #002147;
+  border-top-color: var(--color-primary-dark);
   animation: spin 1.2s linear infinite;
 }
 
@@ -585,7 +585,7 @@
 
 .loadingText {
   font-size: 1.2rem;
-  color: #666;
+  color: var(--color-text-muted);
   font-weight: 500;
   margin-top: 15px;
 }
@@ -663,7 +663,7 @@
     background: white;
     padding: 15px 20px;
     z-index: 1001;
-    border-bottom: 1px solid rgba(0, 33, 71, 0.1);
+    border-bottom: 1px solid rgba(26, 26, 46, 0.1);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
   
@@ -1103,20 +1103,20 @@
   z-index: 999;
   width: 56px;
   height: 56px;
-  background: #002147;
-  color: white;
+  background: var(--color-primary-dark);
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 50%;
   font-size: 1.3rem;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 33, 71, 0.3);
+  box-shadow: 0 4px 12px rgba(26, 26, 46, 0.3);
   transition: all 0.2s ease;
   align-items: center;
   justify-content: center;
 }
 
 .mobileMenuToggle:hover {
-  background: #003366;
+  background: var(--color-primary-dark);
   transform: scale(1.05);
 }
 

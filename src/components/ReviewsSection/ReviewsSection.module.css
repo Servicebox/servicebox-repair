@@ -27,7 +27,7 @@
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 800;
   text-align: center;
-  color: #002147;
+  color: var(--color-primary-dark);
   margin-bottom: 16px;
   line-height: 1.2;
   position: relative;
@@ -41,13 +41,13 @@
   transform: translateX(-50%);
   width: 80px;
   height: 3px;
-  background: linear-gradient(135deg, #0F52BA, #002147);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
   border-radius: 2px;
 }
 
 .reviewsSubtitle {
   text-align: center;
-  color: #4D4D4D;
+  color: var(--color-text-muted);
   margin-bottom: 60px;
   font-size: 1.1rem;
   line-height: 1.6;
@@ -67,7 +67,7 @@
   background: transparent;
   border-radius: 20px;
   padding: 30px;
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--color-border);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -80,14 +80,14 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(135deg, #48bb78, #68d391);
+  background: linear-gradient(135deg, var(--color-success), #68d391);
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
 
 .reviewCard:hover {
   transform: translateY(-8px);
-  border-color: #48bb78;
+  border-color: var(--color-success);
   box-shadow: 0 15px 40px rgba(72, 187, 120, 0.15);
 }
 
@@ -105,25 +105,25 @@
 
 .reviewAuthor {
   font-weight: 700;
-  color: #002147;
+  color: var(--color-primary-dark);
   font-size: 1.1rem;
 }
 
 .reviewDate {
-  color: #4D4D4D;
+  color: var(--color-text-muted);
   font-size: 0.9rem;
   white-space: nowrap;
 }
 
 .reviewRating {
-  color: #ff8c00;
+  color: var(--color-warning);
   font-size: 1.3rem;
   margin-bottom: 20px;
   letter-spacing: 2px;
 }
 
 .reviewText {
-  color: #002147;
+  color: var(--color-primary-dark);
   line-height: 1.7;
   margin: 0;
   font-size: 1rem;
@@ -133,7 +133,7 @@
 .reviewText::before {
   content: '"';
   font-size: 4rem;
-  color: #e2e8f0;
+  color: var(--color-border);
   position: absolute;
   top: -20px;
   left: -10px;
@@ -146,15 +146,15 @@
   text-align: center;
   margin-top: 40px;
   padding-top: 40px;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--color-border);
 }
 
 .reviewsLink {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: linear-gradient(135deg, #0F52BA, #002147);
-  color: white;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: var(--color-text-inverse);
   padding: 16px 32px;
   border-radius: 50px;
   text-decoration: none;
@@ -167,16 +167,16 @@
 .reviewsLink:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(66, 153, 225, 0.4);
-  color: white;
+  color: var(--color-text-inverse);
 }
 
 .reviewsRatingSummary {
-  color: #002147;
+  color: var(--color-primary-dark);
   font-size: 1.1rem;
 }
 
 .reviewsRatingSummary strong {
-  color: #002147;
+  color: var(--color-primary-dark);
   font-weight: 800;
 }
 
@@ -322,7 +322,7 @@
 }
 
 .reviewCard:focus-within {
-  outline: 2px solid #0F52BA;
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 

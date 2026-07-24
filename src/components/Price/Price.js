@@ -77,10 +77,10 @@ export default function PricePage() {
     };
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 py-8">
+            <div className="min-h-screen bg-surface py-8">
                 <div className="max-w-7xl mx-auto px-4 text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                    <p className="text-gray-600">Загрузка прайс-листа...</p>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+                    <p style={{ color: 'var(--color-text-muted)' }}>Загрузка прайс-листа...</p>
                 </div>
             </div>
         );
@@ -88,12 +88,12 @@ export default function PricePage() {
 
     if (error) {
         return (
-            <div className="min-h-screen bg-gray-50 py-8">
+            <div className="min-h-screen bg-surface py-8">
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
-                        <h3 className="text-lg font-bold text-red-800 mb-2">Ошибка загрузки</h3>
-                        <p className="text-red-600 mb-4">{error}</p>
-                        <button onClick={loadPriceData} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    <div className="rounded-lg p-6 text-center border" style={{ background: 'var(--color-danger-bg)', borderColor: 'var(--color-danger)' }}>
+                        <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--color-danger)' }}>Ошибка загрузки</h3>
+                        <p className="mb-4" style={{ color: 'var(--color-danger)' }}>{error}</p>
+                        <button onClick={loadPriceData} className="bg-primary text-white px-4 py-2 rounded hover:opacity-90">
                             Повторить
                         </button>
                     </div>
@@ -103,15 +103,15 @@ export default function PricePage() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8">
+        <div className="min-h-screen bg-surface py-8">
             <div className="max-w-7xl mx-auto px-4">
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">Прайс-лист</h1>
-                    <p className="text-gray-600">Актуально на {new Date().toLocaleDateString('ru-RU')}</p>
+                    <h1 className="text-3xl font-bold mb-2">Прайс-лист</h1>
+                    <p style={{ color: 'var(--color-text-muted)' }}>Актуально на {new Date().toLocaleDateString('ru-RU')}</p>
                 </div>
 
                 {/* Поиск и кнопки */}
-                <div className="bg-white rounded-lg shadow p-4 mb-6">
+                <div className="bg-bg rounded-lg shadow p-4 mb-6">
                     <div className="flex flex-col md:flex-row gap-4">
                         <input
                             type="text"
@@ -121,41 +121,42 @@ export default function PricePage() {
                                 setSearchTerm(e.target.value);
                                 setCurrentPage(1);
                             }}
-                            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                            className="flex-1 px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-primary"
                         />
                         <button
                             onClick={handleDownload}
-                            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                            className="px-6 py-2 bg-primary text-white rounded-lg hover:opacity-90 transition"
                         >
                             Скачать Excel
                         </button>
                     </div>
-                    <p className="mt-2 text-sm text-gray-600">
+                    <p className="mt-2 text-sm" style={{ color: 'var(--color-text-muted)' }}>
                         Найдено: {filteredData.length} позиций
                     </p>
                 </div>
                 {/* Таблица */}
                 {paginatedData.length > 0 ? (
-                    <div className="bg-white rounded-lg shadow overflow-hidden">
+                    <div className="bg-bg rounded-lg shadow overflow-hidden">
                         <div className="overflow-x-auto">
-                            <table className="min-w-full divide-y divide-gray-200">
-                                <thead className="bg-gray-50">
+                            <table className="min-w-full divide-y divide-border">
+                                <thead className="bg-surface">
                                     <tr>
                                         {headers.map((header) => (
                                             <th
                                                 key={header}
-                                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                                className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                                                style={{ color: 'var(--color-text-muted)' }}
                                             >
                                                 {header}
                                             </th>
                                         ))}
                                     </tr>
                                 </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
+                                <tbody className="bg-bg divide-y divide-border">
                                     {paginatedData.map((row, idx) => (
-                                        <tr key={idx} className="hover:bg-gray-50">
+                                        <tr key={idx} className="hover:bg-surface">
                                             {headers.map((header) => (
-                                                <td key={header} className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                <td key={header} className="px-6 py-4 whitespace-nowrap text-sm">
                                                     {formatValue(row[header], header)}
                                                 </td>
                                             ))}
@@ -166,21 +167,21 @@ export default function PricePage() {
                         </div>
                         {/* Пагинация */}
                         {totalPages > 1 && (
-                            <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+                            <div className="px-6 py-4 border-t border-border flex items-center justify-between">
                                 <button
                                     onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                                     disabled={currentPage === 1}
-                                    className="px-4 py-2 border border-gray-300 rounded disabled:opacity-50"
+                                    className="px-4 py-2 border border-border rounded disabled:opacity-50"
                                 >
                                     Назад
                                 </button>
-                                <span className="text-sm text-gray-700">
+                                <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
                                     Страница {currentPage} из {totalPages}
                                 </span>
                                 <button
                                     onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                                     disabled={currentPage === totalPages}
-                                    className="px-4 py-2 border border-gray-300 rounded disabled:opacity-50"
+                                    className="px-4 py-2 border border-border rounded disabled:opacity-50"
                                 >
                                     Вперед
                                 </button>
@@ -188,8 +189,8 @@ export default function PricePage() {
                         )}
                     </div>
                 ) : (
-                    <div className="bg-white rounded-lg shadow p-12 text-center">
-                        <p className="text-gray-600">Прайс-лист пуст или не загружен</p>
+                    <div className="bg-bg rounded-lg shadow p-12 text-center">
+                        <p style={{ color: 'var(--color-text-muted)' }}>Прайс-лист пуст или не загружен</p>
                     </div>
                 )}
             </div>

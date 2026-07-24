@@ -18,10 +18,10 @@
 .workStepsTitle {
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 800;
-  color: #002147;
+  color: var(--color-primary-dark);
   margin-bottom: 16px;
   line-height: 1.2;
-  background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -29,7 +29,7 @@
 
 .workStepsSubtitle {
   font-size: clamp(1rem, 2vw, 1.25rem);
-  color: #64748b;
+  color: var(--color-text-muted);
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
@@ -46,11 +46,11 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
-  color: white;
+  background: linear-gradient(135deg, #002147 0%, #001633 100%);
+  color: #ffffff;
   padding: 30px 40px;
   border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 33, 71, 0.3);
+  box-shadow: 0 20px 60px rgba(26, 26, 46, 0.3);
   position: relative;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -58,7 +58,7 @@
 
 .locationCard:hover {
   transform: translateY(-4px);
-  box-shadow: 0 25px 70px rgba(0, 33, 71, 0.4);
+  box-shadow: 0 25px 70px rgba(26, 26, 46, 0.4);
 }
 
 .locationCard::before {
@@ -75,7 +75,7 @@
 .locationIcon {
   width: 50px;
   height: 50px;
-  color: #ff8c00;
+  color: var(--color-warning);
   flex-shrink: 0;
   filter: drop-shadow(0 4px 8px rgba(255, 140, 0, 0.3));
 }
@@ -88,7 +88,7 @@
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 8px;
-  color: white;
+  color: #ffffff;
 }
 
 .locationDetails p {
@@ -113,7 +113,7 @@
 
 .progressLine {
   height: 4px;
-  background: #e2e8f0;
+  background: var(--color-border);
   border-radius: 2px;
   margin-bottom: 20px;
   position: relative;
@@ -122,7 +122,7 @@
 
 .progressFill {
   height: 100%;
-  background: linear-gradient(90deg, #002147 0%, #ff8c00 100%);
+  background: linear-gradient(90deg, var(--color-primary-dark) 0%, var(--color-warning) 100%);
   border-radius: 2px;
   transition: width 0.5s ease;
   box-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
@@ -138,13 +138,13 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: white;
-  border: 3px solid #e2e8f0;
+  background: var(--color-bg-dark);
+  border: 3px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  color: #94a3b8;
+  color: var(--color-text-muted);
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
@@ -152,16 +152,16 @@
 }
 
 .stepIndicator:hover {
-  border-color: #002147;
-  color: #002147;
+  border-color: var(--color-primary-dark);
+  color: var(--color-primary-dark);
   transform: scale(1.1);
 }
 
 .stepIndicator.active {
-  background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
-  border-color: #002147;
-  color: white;
-  box-shadow: 0 4px 12px rgba(0, 33, 71, 0.3);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
+  border-color: var(--color-primary-dark);
+  color: var(--color-text-inverse);
+  box-shadow: 0 4px 12px rgba(26, 26, 46, 0.3);
   transform: scale(1.15);
 }
 
@@ -180,8 +180,8 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: white;
-  border: 2px solid #e2e8f0;
+  background: var(--color-bg-dark);
+  border: 2px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -192,11 +192,11 @@
 }
 
 .scrollButton:hover {
-  background: #002147;
-  color: white;
-  border-color: #002147;
+  background: var(--color-primary-dark);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary-dark);
   transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 6px 16px rgba(0, 33, 71, 0.3);
+  box-shadow: 0 6px 16px rgba(26, 26, 46, 0.3);
 }
 
 .scrollButton.left {
@@ -229,7 +229,7 @@
 .workStepCard {
   flex: 0 0 calc(33.333% - 16px);
   min-width: 320px;
-  background: white;
+  background: var(--color-bg-dark);
   border-radius: 20px;
   padding: 32px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
@@ -247,7 +247,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #002147 0%, #ff8c00 100%);
+  background: linear-gradient(90deg, var(--color-primary-dark) 0%, var(--color-warning) 100%);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.4s ease;
@@ -255,8 +255,8 @@
 
 .workStepCard:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 40px rgba(0, 33, 71, 0.15);
-  border-color: #002147;
+  box-shadow: 0 12px 40px rgba(26, 26, 46, 0.15);
+  border-color: var(--color-primary-dark);
 }
 
 .workStepCard:hover::before {
@@ -264,35 +264,35 @@
 }
 
 .workStepCard.active {
-  border-color: #ff8c00;
+  border-color: var(--color-warning);
   box-shadow: 0 12px 40px rgba(255, 140, 0, 0.2);
 }
 
 .workStepCard.active::before {
   transform: scaleX(1);
-  background: #ff8c00;
+  background: var(--color-warning);
 }
 
 /* Первый шаг - особый акцент (призыв к действию) */
 .workStepCard:first-child {
-  background: linear-gradient(135deg, #fff4e6 0%, #ffffff 100%);
-  border-color: #ff8c00;
+  background: linear-gradient(135deg, var(--color-warning-bg) 0%, var(--color-bg) 100%);
+  border-color: var(--color-warning);
 }
 
 .workStepCard:first-child .stepIcon {
-  background: linear-gradient(135deg, #ff8c00 0%, #ff6b00 100%);
+  background: linear-gradient(135deg, var(--color-warning) 0%, #ff6b00 100%);
 }
 
 .stepIcon {
   width: 70px;
   height: 70px;
   border-radius: 16px;
-  background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
-  box-shadow: 0 8px 20px rgba(0, 33, 71, 0.2);
+  box-shadow: 0 8px 20px rgba(26, 26, 46, 0.2);
   transition: transform 0.3s ease;
 }
 
@@ -303,7 +303,7 @@
 .stepIconSvg {
   width: 36px;
   height: 36px;
-  color: white;
+  color: var(--color-text-inverse);
 }
 
 .stepContent {
@@ -313,14 +313,14 @@
 .stepTitle {
   font-size: 1.375rem;
   font-weight: 700;
-  color: #002147;
+  color: var(--color-primary-dark);
   margin-bottom: 12px;
   line-height: 1.3;
 }
 
 .stepDescription {
   font-size: 1rem;
-  color: #64748b;
+  color: var(--color-text-muted);
   line-height: 1.6;
   margin-bottom: 16px;
 }
@@ -328,13 +328,13 @@
 .stepDetails {
   display: inline-block;
   padding: 8px 16px;
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-  color: #0369a1;
+  background: linear-gradient(135deg, var(--color-primary-bg) 0%, var(--color-primary-bg) 100%);
+  color: var(--color-primary);
   border-radius: 20px;
   font-size: 0.875rem;
   font-weight: 600;
   margin-bottom: 16px;
-  border: 1px solid #bae6fd;
+  border: 1px solid var(--color-primary-bg);
 }
 
 .stepFullText {
@@ -343,7 +343,7 @@
   opacity: 0;
   transition: all 0.4s ease;
   font-size: 0.95rem;
-  color: #475569;
+  color: var(--color-text-muted);
   line-height: 1.7;
 }
 
@@ -352,7 +352,7 @@
   opacity: 1;
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 2px solid #e2e8f0;
+  border-top: 2px solid var(--color-border);
 }
 
 /* ============================================================
@@ -365,7 +365,7 @@
 .advantagesTitle {
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 800;
-  color: #002147;
+  color: var(--color-primary-dark);
   text-align: center;
   margin-bottom: 50px;
 }
@@ -377,7 +377,7 @@
 }
 
 .advantageItem {
-  background: white;
+  background: var(--color-bg-dark);
   padding: 40px 30px;
   border-radius: 20px;
   text-align: center;
@@ -395,15 +395,15 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #002147 0%, #ff8c00 100%);
+  background: linear-gradient(90deg, var(--color-primary-dark) 0%, var(--color-warning) 100%);
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
 
 .advantageItem:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 40px rgba(0, 33, 71, 0.15);
-  border-color: #002147;
+  box-shadow: 0 12px 40px rgba(26, 26, 46, 0.15);
+  border-color: var(--color-primary-dark);
 }
 
 .advantageItem:hover::before {
@@ -413,7 +413,7 @@
 .advantageIcon {
   width: 60px;
   height: 60px;
-  color: #ff8c00;
+  color: var(--color-warning);
   margin: 0 auto 20px;
   filter: drop-shadow(0 4px 8px rgba(255, 140, 0, 0.3));
 }
@@ -421,13 +421,13 @@
 .advantageItem h4 {
   font-size: 1.375rem;
   font-weight: 700;
-  color: #002147;
+  color: var(--color-primary-dark);
   margin-bottom: 12px;
 }
 
 .advantageItem p {
   font-size: 1rem;
-  color: #64748b;
+  color: var(--color-text-muted);
   line-height: 1.6;
 }
 
@@ -441,14 +441,14 @@
 .faqTitle {
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 800;
-  color: #002147;
+  color: var(--color-primary-dark);
   text-align: center;
   margin-bottom: 16px;
 }
 
 .faqSubtitle {
   font-size: 1.125rem;
-  color: #64748b;
+  color: var(--color-text-muted);
   text-align: center;
   margin-bottom: 50px;
   max-width: 700px;
@@ -465,7 +465,7 @@
 }
 
 .faqItem {
-  background: white;
+  background: var(--color-bg-dark);
   border-radius: 16px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
   overflow: hidden;
@@ -474,8 +474,8 @@
 }
 
 .faqItem:hover {
-  border-color: #002147;
-  box-shadow: 0 6px 20px rgba(0, 33, 71, 0.12);
+  border-color: var(--color-primary-dark);
+  box-shadow: 0 6px 20px rgba(26, 26, 46, 0.12);
 }
 
 .faqQuestion {
@@ -486,7 +486,7 @@
   text-align: left;
   font-size: 1.125rem;
   font-weight: 600;
-  color: #002147;
+  color: var(--color-primary-dark);
   cursor: pointer;
   display: flex;
   justify-content: space-between;
@@ -496,18 +496,18 @@
 }
 
 .faqQuestion:hover {
-  color: #ff8c00;
+  color: var(--color-warning);
 }
 
 .faqQuestion.active {
-  background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
-  color: #ff8c00;
+  background: linear-gradient(135deg, var(--color-primary-bg) 0%, var(--color-bg) 100%);
+  color: var(--color-warning);
 }
 
 .faqToggle {
   font-size: 1.75rem;
   font-weight: 300;
-  color: #ff8c00;
+  color: var(--color-warning);
   flex-shrink: 0;
   transition: transform 0.3s ease;
 }
@@ -529,10 +529,10 @@
 
 .faqAnswer p {
   font-size: 1rem;
-  color: #64748b;
+  color: var(--color-text-muted);
   line-height: 1.7;
   padding-top: 16px;
-  border-top: 2px solid #e2e8f0;
+  border-top: 2px solid var(--color-border);
 }
 
 /* ============================================================

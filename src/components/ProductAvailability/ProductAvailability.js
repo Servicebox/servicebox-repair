@@ -35,7 +35,7 @@ export default function ProductAvailability({ productSlug }) {
         {getAvailabilityText()}
       </div>
       {inCart > 0 && (
-        <div className="text-gray-500">
+        <div className="text-muted">
           В вашей корзине: {inCart} шт.
         </div>
       )}

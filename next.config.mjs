@@ -56,7 +56,16 @@ const nextConfig = {
     keepAlive: true,
   },
 
-  // CSP-заголовки для Yandex Pay WebSDK, Chatwoot, GTM
+  // CSP-заголовки для Yandex Pay WebSDK, Yandex Metrika (+ Вебвизор), GTM.
+  // Единственное место, где задаётся CSP — раньше та же политика ЕЩЁ РАЗ
+  // задавалась в nginx (add_header Content-Security-Policy), и два набора
+  // разъехались: nginx-версия не пускала Yandex Pay и сужала img-src/font-src
+  // (без blob:/data:), версия отсюда не пускала домены Вебвизора
+  // (mc.webvisor.com/org, включён через webvisor:true в YandexMetrika.js) и
+  // *.google-analytics.com. Браузер требует соответствия ОБОИМ заголовкам
+  // сразу (пересечение, не замена), так что реально применялась худшая
+  // комбинация из двух. Убрано из nginx-конфига — эта версия ниже единственная.
+  // service-box-35.ru (Chatwoot) выпилен — сам Chatwoot удалён из проекта.
   async headers() {
     return [
       {
@@ -66,14 +75,13 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              // 'unsafe-inline' нужен для GTM inline-скрипта и JSON-LD в layout.js;
-              // service-box-35.ru — Chatwoot SDK; googletagmanager.com — GTM
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pay.yandex.ru https://service-box-35.ru https://www.googletagmanager.com https://mc.yandex.ru https://yastatic.net",
-              "frame-src https://pay.yandex.ru https://www.googletagmanager.com https://service-box-35.ru https://yandex.ru",
+              // 'unsafe-inline' нужен для GTM inline-скрипта и JSON-LD в layout.js
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pay.yandex.ru https://www.googletagmanager.com https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.com https://mc.webvisor.org https://yastatic.net",
+              "frame-src 'self' https://pay.yandex.ru https://www.googletagmanager.com https://yandex.ru",
               "img-src 'self' data: blob: https:",
-              "connect-src 'self' https://pay.yandex.ru https://sandbox.pay.yandex.ru https://servicebox35.ru https://service-box-35.ru https://www.googletagmanager.com https://mc.yandex.ru https://yastatic.net https://yandex.ru wss://service-box-35.ru",
+              "connect-src 'self' https://pay.yandex.ru https://sandbox.pay.yandex.ru https://servicebox35.ru https://www.googletagmanager.com https://*.googletagmanager.com https://mc.yandex.ru wss://mc.yandex.ru https://yastatic.net https://yandex.ru https://*.google-analytics.com https://*.analytics.google.com",
               "style-src 'self' 'unsafe-inline'",
-              "font-src 'self' data: https://service-box-35.ru",
+              "font-src 'self' data:",
               "media-src 'self'",
               "worker-src blob:",
             ].join('; '),

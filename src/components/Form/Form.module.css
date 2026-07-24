@@ -9,7 +9,7 @@
 }
 
 .formContainer {
-  background: #fafcff;
+  background: var(--color-bg-elevated);
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(50, 50, 90, 0.17);
   max-width: 430px;
@@ -28,7 +28,7 @@
 
 .besplatnaya {
   background: linear-gradient(90deg, #fb2c5c, #f99f0e);
-  color: #ffffff;
+  color: var(--color-bg-dark);
   border-radius: 3px;
   padding: 0 6px;
   font-weight: 600;
@@ -36,7 +36,7 @@
 
 .formTitle {
   margin-bottom: 13px;
-  color: #273046;
+  color: var(--color-text);
   text-align: center;
 }
 
@@ -45,6 +45,9 @@
   flex-direction: column;
   gap: 19px;
   margin-top: 7px;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1rem;
 }
 
 .formLabel {
@@ -54,11 +57,11 @@
 }
 
 .formInput {
-  background: #f2f3f6;
-  border: 1.5px solid #e4e7ee;
+  background: var(--color-bg-elevated);
+  border: 1.5px solid var(--color-border);
   padding: 10px 13px 12px 13px;
   border-radius: 7px;
-  color: #1c2641;
+  color: var(--color-text);
   outline: none;
   transition: border-color 0.18s, background 0.21s;
   width: 100%;
@@ -66,32 +69,32 @@
 }
 
 .formInput:focus {
-  border-color: #0676d9;
-  background: #eef6ff;
+  border-color: var(--color-primary);
+  background: var(--color-primary-bg);
 }
 
 .formError {
-  border-color: #e01026;
-  background: #ffebed;
+  border-color: var(--color-danger);
+  background: var(--color-danger-bg);
 }
 
 .formPlaceholder {
   position: absolute;
   left: 19px;
   top: 10px;
-  color: #bfc9db;
+  color: var(--color-text-muted);
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.18s;
 }
 
 .formInput::placeholder {
-  color: #acb6cb;
+  color: var(--color-text-muted);
   opacity: 1;
 }
 
 .errorMsg {
-  color: #e01026;
+  color: var(--color-danger);
   font-size: 0.92em;
   margin-top: -9px;
   margin-bottom: 2px;
@@ -100,15 +103,15 @@
 }
 
 .successText {
-  color: #28ad32;
+  color: var(--color-success);
   text-align: center;
   margin: 14px 0;
 }
 
 .formOverlayBtn {
   margin-top: 8px;
-  background: #dde4ea;
-  color: #6d7586;
+  background: var(--color-border);
+  color: var(--color-text-muted);
   border-radius: 7px;
   border: none;
   padding: 12px 14px;
@@ -118,20 +121,20 @@
 }
 
 .active {
-  background: linear-gradient(90deg, #2884fa, #09decb);
-  color: #ffffff;
+  background: linear-gradient(90deg, var(--color-primary), #09decb);
+  color: var(--color-bg-dark);
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(19, 189, 199, 0.53);
 }
 
 .formOverlayBtn:disabled {
-  background: #dde4ea;
-  color: #8391a7;
+  background: var(--color-border);
+  color: var(--color-text-muted);
 }
 
 .closeButton {
   position: absolute;
-  background: #f99f0e;
+  background: var(--color-accent);
   top: 13px;
   right: 13px;
   border: none;

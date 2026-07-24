@@ -16,7 +16,31 @@ const serviceSchema = new mongoose.Schema({
     type: String,
     default: 'Уточняйте'
   },
-  
+
+  // Точная цена под конкретную модель (Model._id) — заполняется через bulk-матрицу в админке
+  priceVariants: [{
+    modelId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Model'
+    },
+    price: Number
+  }],
+  // Базовая цена для авто-оценки по мультипликатору бренда, когда нет priceVariants на модель
+  basePrice: Number,
+
+  // Метаданные ремонтной работы для калькулятора (перенесены из pricing-data.js)
+  minTime: String,
+  maxTime: String,
+  compatFlags: {
+    appleOnly: { type: Boolean, default: false },
+    portType: String,
+    requiresSeparateGlass: { type: Boolean, default: false },
+    requiresThermalPads: { type: Boolean, default: false },
+    requiresBga: { type: Boolean, default: false },
+    requiresFaceId: { type: Boolean, default: false },
+    requiresTvType: [String]
+  },
+
   // SEO поля
   slug: { 
     type: String, 

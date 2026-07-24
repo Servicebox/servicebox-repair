@@ -11,14 +11,14 @@
 }
 
 .breadcrumLink {
-    color: #292929;
+    color: var(--color-text);
     text-decoration: none;
     transition: color 0.2s ease;
     font-size: 0.9rem;
 }
 
 .breadcrumLink:hover {
-    color: #0F52BA;
+    color: var(--color-primary-dark);
     text-decoration: underline;
 }
 
@@ -29,7 +29,7 @@
 }
 
 .currentPage {
-    color: #666;
+    color: var(--color-text-muted);
     font-size: 0.9rem;
     font-weight: 500;
 }
@@ -40,7 +40,7 @@
         margin: 0 0 30px 0;
         gap: 6px;
     }
-    
+
     .breadcrumLink,
     .currentPage {
         font-size: 0.8rem;

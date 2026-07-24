@@ -3,6 +3,9 @@ import connectDB from '@/lib/db';
 import Product from '@/models/Product';
 import Service from '@/models/Service';
 import News from '@/models/News';
+import Promotion from '@/models/Promotion';
+import { PROBLEMS } from '@/lib/problems-data';
+import { ANSWERS } from '@/lib/ai-answers-data';
 
 export async function GET(request) {
   try {
@@ -149,6 +152,81 @@ export async function GET(request) {
       console.error('❌ Ошибка поиска новостей:', newsError.message);
     }
 
+    try {
+      // 🔎 Поиск по АКЦИЯМ
+      console.log('🔍 Ищу акции...');
+      const promotions = await Promotion.find({
+        isActive: true,
+        $or: [
+          { title: searchRegex },
+          { description: searchRegex },
+          { shortDescription: searchRegex }
+        ]
+      })
+        .select('title shortDescription description')
+        .limit(10)
+        .lean();
+
+      console.log(`✅ Найдено акций: ${promotions.length}`);
+
+      promotions.forEach(promo => {
+        const score = calculateRelevanceScore(promo.title, promo.shortDescription || promo.description, query);
+        allResults.push({
+          id: promo._id.toString(),
+          title: promo.title,
+          description: promo.shortDescription || 'Акция сервисного центра',
+          url: `/promotions-page`,
+          type: 'promotion',
+          category: 'Акция',
+          score: score + 70
+        });
+      });
+    } catch (promoError) {
+      console.error('❌ Ошибка поиска акций:', promoError.message);
+    }
+
+    try {
+      // 🔎 Поиск по СТАТЬЯМ-ДИАГНОСТИКЕ (/problems/*)
+      Object.entries(PROBLEMS).forEach(([slug, problem]) => {
+        const haystack = `${problem.title} ${problem.shortAnswer}`;
+        if (searchRegex.test(haystack)) {
+          const score = calculateRelevanceScore(problem.title, problem.shortAnswer, query);
+          allResults.push({
+            id: `problem-${slug}`,
+            title: problem.title,
+            description: problem.shortAnswer,
+            url: `/problems/${slug}`,
+            type: 'article',
+            category: problem.category,
+            score: score + 60
+          });
+        }
+      });
+    } catch (problemsError) {
+      console.error('❌ Ошибка поиска статей-диагностики:', problemsError.message);
+    }
+
+    try {
+      // 🔎 Поиск по AI-ОТВЕТАМ (/ai-answers/*)
+      Object.entries(ANSWERS).forEach(([slug, answer]) => {
+        const haystack = `${answer.question} ${answer.shortAnswer}`;
+        if (searchRegex.test(haystack)) {
+          const score = calculateRelevanceScore(answer.question, answer.shortAnswer, query);
+          allResults.push({
+            id: `ai-answer-${slug}`,
+            title: answer.question,
+            description: answer.shortAnswer,
+            url: `/ai-answers/${slug}`,
+            type: 'article',
+            category: answer.category,
+            score: score + 60
+          });
+        }
+      });
+    } catch (answersError) {
+      console.error('❌ Ошибка поиска AI-ответов:', answersError.message);
+    }
+
     // Сортируем по релевантности
     const sortedResults = allResults.sort((a, b) => b.score - a.score).slice(0, 15);
 
@@ -161,7 +239,9 @@ export async function GET(request) {
         total: sortedResults.length,
         services: sortedResults.filter(r => r.type === 'service').length,
         products: sortedResults.filter(r => r.type === 'product').length,
-        news: sortedResults.filter(r => r.type === 'news').length
+        news: sortedResults.filter(r => r.type === 'news').length,
+        promotions: sortedResults.filter(r => r.type === 'promotion').length,
+        articles: sortedResults.filter(r => r.type === 'article').length
       },
       query
     });

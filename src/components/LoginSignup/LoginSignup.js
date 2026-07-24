@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '../contexts/AuthContext';
 import YandexLoginButton from '../YandexLoginButton/YandexLoginButton';
+import PhosphorCube from '../PhosphorCube/PhosphorCube';
 import styles from './LoginSignup.module.css';
 
 // ── Validation helpers ──────────────────────────────────────────────────────
@@ -390,6 +391,7 @@ function LoginSignupContent({ isOpen, onClose, onLoginSuccess }) {
     <div className={styles.modalOverlay} onClick={onClose}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalHeader}>
+          <PhosphorCube size="md" />
           <h2>{modeLabel[mode] || mode}</h2>
           <button className={styles.closeButton} onClick={onClose} type="button" aria-label="Закрыть">
             &times;

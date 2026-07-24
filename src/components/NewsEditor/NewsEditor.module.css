@@ -14,13 +14,13 @@
   display: block;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #374151;
+  color: var(--color-text);
 }
 
 .titleInput {
   width: 100%;
   padding: 0.75rem;
-  border: 2px solid #e5e7eb;
+  border: 2px solid var(--color-border);
   border-radius: 8px;
   font-size: 1.125rem;
   transition: border-color 0.2s;
@@ -28,15 +28,15 @@
 
 .titleInput:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: var(--color-primary);
 }
 
 .fileInput {
   width: 100%;
   padding: 0.5rem;
-  border: 2px dashed #d1d5db;
+  border: 2px dashed var(--color-border);
   border-radius: 8px;
-  background: #f9fafb;
+  background: var(--color-bg-elevated);
 }
 
 .imagePreview {
@@ -49,14 +49,14 @@
   width: 100%;
   height: auto;
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
 }
 
 .removeImageButton {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  background: #ef4444;
+  background: var(--color-danger);
   color: white;
   border: none;
   border-radius: 50%;
@@ -72,7 +72,7 @@
 .blocksSection {
   margin: 2rem 0;
   padding: 1.5rem;
-  background: #f9fafb;
+  background: var(--color-bg-elevated);
   border-radius: 8px;
 }
 
@@ -90,7 +90,7 @@
 
 .addButton {
   padding: 0.5rem 1rem;
-  background: #3b82f6;
+  background: var(--color-primary);
   color: white;
   border: none;
   border-radius: 6px;
@@ -100,7 +100,7 @@
 
 .block {
   background: white;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -112,12 +112,12 @@
   align-items: center;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .blockType {
   font-weight: 600;
-  color: #374151;
+  color: var(--color-text);
 }
 
 .blockActions {
@@ -128,7 +128,7 @@
 .moveButton,
 .removeButton {
   padding: 0.25rem 0.5rem;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--color-border);
   background: white;
   border-radius: 4px;
   cursor: pointer;
@@ -136,15 +136,15 @@
 }
 
 .removeButton {
-  background: #fef2f2;
-  border-color: #fecaca;
-  color: #dc2626;
+  background: var(--color-danger-bg);
+  border-color: var(--color-danger-bg);
+  color: var(--color-danger);
 }
 
 .textArea {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   font-size: 1rem;
   resize: vertical;
@@ -166,19 +166,19 @@
   width: 100%;
   height: auto;
   border-radius: 6px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
 }
 
 .mediaVideo {
   width: 100%;
   max-width: 400px;
   border-radius: 6px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
 }
 
 .captionInput {
   padding: 0.5rem;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   font-size: 0.875rem;
 }
@@ -186,7 +186,7 @@
 .metaSection {
   margin: 2rem 0;
   padding: 1.5rem;
-  background: #f0f9ff;
+  background: var(--color-primary-bg);
   border-radius: 8px;
 }
 
@@ -194,7 +194,7 @@
 .metaTextarea {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   font-size: 1rem;
 }
@@ -227,12 +227,12 @@
   gap: 1rem;
   margin-top: 2rem;
   padding-top: 1.5rem;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid var(--color-border);
 }
 
 .saveButton {
   padding: 0.75rem 2rem;
-  background: #10b981;
+  background: var(--color-success);
   color: white;
   border: none;
   border-radius: 8px;
@@ -243,12 +243,12 @@
 }
 
 .saveButton:disabled {
-  background: #9ca3af;
+  background: var(--color-text-muted);
   cursor: not-allowed;
 }
 
 .saveButton:hover:not(:disabled) {
-  background: #059669;
+  background: var(--color-success);
 }
 
 /* Адаптивность */
@@ -291,7 +291,7 @@
 .progressBar {
   width: 100%;
   height: 20px;
-  background-color: #f0f0f0;
+  background-color: var(--color-bg-elevated);
   border-radius: 10px;
   margin-top: 10px;
   position: relative;
@@ -300,7 +300,7 @@
 
 .progressFill {
   height: 100%;
-  background-color: #0070f3;
+  background-color: var(--color-primary);
   border-radius: 10px;
   transition: width 0.3s ease;
 }
@@ -311,7 +311,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 12px;
-  color: #333;
+  color: var(--color-text);
   font-weight: bold;
 }
 .editor {
@@ -326,13 +326,13 @@
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text);
 }
 
 .titleInput {
   width: 100%;
   padding: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   font-size: 16px;
   transition: border-color 0.2s;
@@ -340,20 +340,20 @@
 
 .titleInput:focus {
   outline: none;
-  border-color: #0070f3;
+  border-color: var(--color-primary);
 }
 
 .fileInput {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
 }
 
 .progressBar {
   width: 100%;
   height: 20px;
-  background-color: #f0f0f0;
+  background-color: var(--color-bg-elevated);
   border-radius: 10px;
   margin-top: 10px;
   position: relative;
@@ -362,7 +362,7 @@
 
 .progressFill {
   height: 100%;
-  background-color: #0070f3;
+  background-color: var(--color-primary);
   border-radius: 10px;
   transition: width 0.3s ease;
 }
@@ -373,7 +373,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 12px;
-  color: #333;
+  color: var(--color-text);
   font-weight: bold;
 }
 
@@ -408,7 +408,7 @@
 }
 
 .removeImageButton:hover {
-  background-color: #dc3545;
+  background-color: var(--color-danger);
 }
 
 .blocksSection {
@@ -421,7 +421,7 @@
   align-items: center;
   margin-bottom: 20px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .blockButtons {
@@ -430,7 +430,7 @@
 }
 
 .addButton {
-  background-color: #6c757d;
+  background-color: var(--color-text-muted);
   color: white;
   border: none;
   padding: 8px 16px;
@@ -440,19 +440,19 @@
 }
 
 .addButton:hover {
-  background-color: #545b62;
+  background-color: var(--color-text-muted);
 }
 
 .emptyBlocks {
   text-align: center;
   padding: 40px 20px;
-  background-color: #f8f9fa;
+  background-color: var(--color-bg-elevated);
   border-radius: 4px;
-  color: #666;
+  color: var(--color-text-muted);
 }
 
 .block {
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   margin-bottom: 15px;
   background-color: white;
@@ -463,13 +463,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 15px;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #e0e0e0;
+  background-color: var(--color-bg-elevated);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .blockType {
   font-weight: 500;
-  color: #333;
+  color: var(--color-text);
 }
 
 .blockActions {
@@ -479,7 +479,7 @@
 
 .moveButton, .removeButton {
   background: none;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   padding: 4px 8px;
   border-radius: 3px;
   cursor: pointer;
@@ -487,16 +487,16 @@
 }
 
 .moveButton:hover {
-  background-color: #e9ecef;
+  background-color: var(--color-bg-elevated);
 }
 
 .removeButton {
-  color: #dc3545;
-  border-color: #dc3545;
+  color: var(--color-danger);
+  border-color: var(--color-danger);
 }
 
 .removeButton:hover {
-  background-color: #dc3545;
+  background-color: var(--color-danger);
   color: white;
 }
 
@@ -512,7 +512,7 @@
 .textArea {
   width: 100%;
   padding: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   font-size: 14px;
   line-height: 1.5;
@@ -522,7 +522,7 @@
 
 .textArea:focus {
   outline: none;
-  border-color: #0070f3;
+  border-color: var(--color-primary);
 }
 
 .mediaBlock {
@@ -552,7 +552,7 @@
 .captionInput {
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   font-size: 14px;
 }
@@ -560,20 +560,20 @@
 .metaSection {
   margin: 30px 0;
   padding: 20px;
-  background-color: #f8f9fa;
+  background-color: var(--color-bg-elevated);
   border-radius: 4px;
 }
 
 .metaSection h3 {
   margin-top: 0;
   margin-bottom: 20px;
-  color: #333;
+  color: var(--color-text);
 }
 
 .metaInput, .metaTextarea {
   width: 100%;
   padding: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   font-size: 14px;
 }
@@ -586,9 +586,9 @@
 .publishSection {
   margin: 25px 0;
   padding: 15px;
-  background-color: #fff3cd;
+  background-color: var(--color-warning-bg);
   border-radius: 4px;
-  border: 1px solid #ffeaa7;
+  border: 1px solid var(--color-warning-bg);
 }
 
 .publishLabel {
@@ -596,7 +596,7 @@
   align-items: center;
   gap: 10px;
   font-weight: 500;
-  color: #856404;
+  color: var(--color-warning);
   cursor: pointer;
 }
 
@@ -609,11 +609,11 @@
   text-align: right;
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--color-border);
 }
 
 .saveButton {
-  background-color: #0070f3;
+  background-color: var(--color-primary);
   color: white;
   border: none;
   padding: 12px 30px;
@@ -625,11 +625,11 @@
 }
 
 .saveButton:hover:not(:disabled) {
-  background-color: #0056b3;
+  background-color: var(--color-primary-dark);
 }
 
 .saveButton:disabled {
-  background-color: #6c757d;
+  background-color: var(--color-text-muted);
   cursor: not-allowed;
 }
 /* src/components/NewsEditor/NewsEditor.module.css */
@@ -647,13 +647,13 @@
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text);
 }
 
 .titleInput {
   width: 100%;
   padding: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   font-size: 16px;
 }
@@ -661,14 +661,14 @@
 .fileInput {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
 }
 
 .progressBar {
   width: 100%;
   height: 20px;
-  background: #f0f0f0;
+  background: var(--color-bg-elevated);
   border-radius: 10px;
   margin-top: 8px;
   overflow: hidden;
@@ -677,7 +677,7 @@
 
 .progressFill {
   height: 100%;
-  background: #007bff;
+  background: var(--color-primary);
   transition: width 0.3s ease;
 }
 
@@ -687,7 +687,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 12px;
-  color: #333;
+  color: var(--color-text);
 }
 
 .imagePreview {
@@ -706,7 +706,7 @@
   position: absolute;
   top: -8px;
   right: -8px;
-  background: #ff4444;
+  background: var(--color-danger);
   color: white;
   border: none;
   border-radius: 50%;
@@ -718,7 +718,7 @@
 
 .blocksSection {
   margin: 30px 0;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 20px;
 }
@@ -737,7 +737,7 @@
 
 .addButton {
   padding: 8px 16px;
-  background: #28a745;
+  background: var(--color-success);
   color: white;
   border: none;
   border-radius: 4px;
@@ -745,18 +745,18 @@
 }
 
 .addButton:hover {
-  background: #218838;
+  background: var(--color-success);
 }
 
 .addButton:disabled {
-  background: #6c757d;
+  background: var(--color-text-muted);
   cursor: not-allowed;
 }
 
 .youtubeSection {
   margin: 20px 0;
   padding: 15px;
-  background: #f8f9fa;
+  background: var(--color-bg-elevated);
   border-radius: 6px;
 }
 
@@ -769,13 +769,13 @@
 .youtubeUrlInput {
   flex: 1;
   padding: 8px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
 }
 
 .youtubeAddButton {
   padding: 8px 16px;
-  background: #ff0000;
+  background: var(--color-danger);
   color: white;
   border: none;
   border-radius: 4px;
@@ -783,16 +783,16 @@
 }
 
 .youtubeAddButton:hover:not(:disabled) {
-  background: #cc0000;
+  background: var(--color-danger);
 }
 
 .youtubeAddButton:disabled {
-  background: #999;
+  background: var(--color-text-muted);
   cursor: not-allowed;
 }
 
 .block {
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   margin-bottom: 15px;
   padding: 15px;
@@ -804,12 +804,12 @@
   align-items: center;
   margin-bottom: 15px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .blockType {
   font-weight: 600;
-  color: #555;
+  color: var(--color-text);
 }
 
 .blockActions {
@@ -819,30 +819,30 @@
 
 .moveButton, .removeButton {
   padding: 4px 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   background: white;
   border-radius: 3px;
   cursor: pointer;
 }
 
 .moveButton:hover {
-  background: #f8f9fa;
+  background: var(--color-bg-elevated);
 }
 
 .removeButton {
-  color: #ff4444;
-  border-color: #ff4444;
+  color: var(--color-danger);
+  border-color: var(--color-danger);
 }
 
 .removeButton:hover {
-  background: #ff4444;
+  background: var(--color-danger);
   color: white;
 }
 
 .textArea {
   width: 100%;
   padding: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   font-family: inherit;
   resize: vertical;
@@ -877,7 +877,7 @@
   gap: 15px;
   margin: 10px 0;
   padding: 10px;
-  background: #f8f9fa;
+  background: var(--color-bg-elevated);
   border-radius: 6px;
 }
 
@@ -900,14 +900,14 @@
 .captionInput {
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   margin-top: 8px;
 }
 
 .metaSection {
   margin: 30px 0;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 20px;
 }
@@ -915,7 +915,7 @@
 .metaInput, .metaTextarea {
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   font-family: inherit;
 }
@@ -948,7 +948,7 @@
 
 .saveButton {
   padding: 12px 30px;
-  background: #007bff;
+  background: var(--color-primary);
   color: white;
   border: none;
   border-radius: 6px;
@@ -957,18 +957,18 @@
 }
 
 .saveButton:hover:not(:disabled) {
-  background: #0056b3;
+  background: var(--color-primary-dark);
 }
 
 .saveButton:disabled {
-  background: #6c757d;
+  background: var(--color-text-muted);
   cursor: not-allowed;
 }
 
 .emptyBlocks {
   text-align: center;
   padding: 40px;
-  color: #666;
-  background: #f8f9fa;
+  color: var(--color-text-muted);
+  background: var(--color-bg-elevated);
   border-radius: 6px;
 }

@@ -3,7 +3,7 @@
 /* Базовые стили страницы */
 .servicesPage {
     min-height: 100vh;
-    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    background: linear-gradient(180deg, var(--color-bg-elevated) 0%, var(--color-bg) 100%);
     padding: 40px 0;
 }
 
@@ -22,13 +22,13 @@
 .animatedTitle h1 {
     font-size: clamp(1.75rem, 4vw, 2.5rem);
     font-weight: 800;
-    color: #002147;
+    color: var(--color-primary-dark);
     margin-bottom: 12px;
 }
 
 .animatedTitle p {
     font-size: 1.125rem;
-    color: #64748b;
+    color: var(--color-text-muted);
 }
 
 /* Поиск */
@@ -44,7 +44,7 @@
 .searchInput {
     width: 100%;
     padding: 14px 20px;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--color-border);
     border-radius: 12px;
     font-size: 1rem;
     transition: all 0.2s ease;
@@ -53,8 +53,8 @@
 
 .searchInput:focus {
     outline: none;
-    border-color: #002147;
-    box-shadow: 0 0 0 3px rgba(0, 33, 71, 0.1);
+    border-color: var(--color-primary-dark);
+    box-shadow: 0 0 0 3px rgba(26, 26, 46, 0.1);
 }
 
 /* Сетка категорий */
@@ -72,7 +72,7 @@
     flex-direction: column;
     padding: 24px;
     background: white;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--color-border);
     border-radius: 16px;
     text-decoration: none;
     color: inherit;
@@ -82,18 +82,18 @@
 
 .categoryCard:hover {
     transform: translateY(-4px);
-    border-color: #002147;
-    box-shadow: 0 12px 24px -8px rgba(0, 33, 71, 0.15);
+    border-color: var(--color-primary-dark);
+    box-shadow: 0 12px 24px -8px rgba(26, 26, 46, 0.15);
 }
 
 /* ✅ Выделение категорий-калькуляторов */
 .calculatorCategory {
-    background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
-    border-color: #0ea5e9;
+    background: linear-gradient(135deg, var(--color-primary-bg) 0%, var(--color-bg) 100%);
+    border-color: var(--color-primary);
 }
 
 .calculatorCategory:hover {
-    border-color: #0284c7;
+    border-color: var(--color-primary);
     box-shadow: 0 12px 24px -8px rgba(14, 165, 233, 0.25);
 }
 
@@ -104,7 +104,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #0ea5e9, #002147);
+    background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));
 }
 
 /* Иконка категории */
@@ -114,13 +114,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f1f5f9;
+    background: var(--color-bg-elevated);
     border-radius: 12px;
     margin-bottom: 16px;
 }
 
 .calculatorCategory .categoryIcon {
-    background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+    background: linear-gradient(135deg, var(--color-primary-bg), var(--color-primary-bg));
 }
 
 .categoryImg {
@@ -133,14 +133,14 @@
 .categoryName {
     font-size: 1.25rem;
     font-weight: 700;
-    color: #002147;
+    color: var(--color-primary-dark);
     margin-bottom: 8px;
 }
 
 /* Описание */
 .categoryDescription {
     font-size: 0.95rem;
-    color: #64748b;
+    color: var(--color-text-muted);
     line-height: 1.5;
     margin-bottom: 16px;
     flex: 1;
@@ -151,8 +151,8 @@
     display: inline-flex;
     align-items: center;
     padding: 6px 12px;
-    background: #f1f5f9;
-    color: #475569;
+    background: var(--color-bg-elevated);
+    color: var(--color-text-muted);
     border-radius: 20px;
     font-size: 0.875rem;
     font-weight: 600;
@@ -161,7 +161,7 @@
 
 /* ✅ Бейдж для категорий-калькуляторов */
 .calculatorBadge {
-    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary));
     color: white;
 }
 
@@ -171,23 +171,23 @@
     padding: 60px 20px;
     background: white;
     border-radius: 16px;
-    border: 2px dashed #e2e8f0;
+    border: 2px dashed var(--color-border);
 }
 
 .noResults h3 {
     font-size: 1.5rem;
-    color: #002147;
+    color: var(--color-primary-dark);
     margin-bottom: 8px;
 }
 
 .noResults p {
-    color: #64748b;
+    color: var(--color-text-muted);
     margin-bottom: 20px;
 }
 
 .clearSearchButton {
     padding: 10px 20px;
-    background: #002147;
+    background: var(--color-primary-dark);
     color: white;
     border: none;
     border-radius: 8px;
@@ -197,7 +197,7 @@
 }
 
 .clearSearchButton:hover {
-    background: #003d7a;
+    background: var(--color-primary-dark);
 }
 
 /* Загрузка */
@@ -208,7 +208,7 @@
 
 /* ✅ Информационный блок внизу */
 .infoBlock {
-    background: linear-gradient(135deg, #002147 0%, #003d7a 100%);
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-dark) 100%);
     color: white;
     padding: 40px;
     border-radius: 20px;
@@ -234,7 +234,7 @@
 .infoButton {
     display: inline-block;
     padding: 14px 32px;
-    background: #10b981;
+    background: var(--color-success);
     color: white;
     border-radius: 12px;
     font-weight: 700;
@@ -244,7 +244,7 @@
 }
 
 .infoButton:hover {
-    background: #059669;
+    background: var(--color-success);
     transform: scale(1.05);
 }
 

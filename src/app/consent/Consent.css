@@ -20,7 +20,7 @@
   background: white;
   padding: 15px 0;
   margin-bottom: 20px;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid var(--color-border);
   z-index: 100;
   display: flex;
   justify-content: flex-end;
@@ -45,26 +45,26 @@
 }
 
 .downloadBtn {
-  background: #3498db;
+  background: var(--color-accent);
   color: white;
 }
 
 .downloadBtn:hover {
-  background: #2980b9;
+  background: var(--color-primary-dark);
 }
 
 .downloadBtn.disabled {
-  background: #95a5a6;
+  background: var(--color-text-muted);
   cursor: not-allowed;
 }
 
 .printBtn {
-  background: #2ecc71;
+  background: var(--color-success);
   color: white;
 }
 
 .printBtn:hover {
-  background: #27ae60;
+  background: var(--color-success);
 }
 
 .icon {
@@ -89,30 +89,30 @@
   display: none;
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 1px solid #eaeaea;
+  border-top: 1px solid var(--color-border);
   justify-content: center;
   gap: 15px;
 }
 
 .title {
-  color: #2c3e50;
+  color: var(--color-primary-dark);
   text-align: center;
   margin-bottom: 30px;
   font-size: 28px;
-  border-bottom: 2px solid #3498db;
+  border-bottom: 2px solid var(--color-accent);
   padding-bottom: 15px;
 }
 
 .companyInfo {
-  background: #f8f9fa;
-  border-left: 4px solid #3498db;
+  background: var(--color-bg-elevated);
+  border-left: 4px solid var(--color-accent);
   padding: 20px;
   margin-bottom: 30px;
   border-radius: 4px;
 }
 
 .companyTitle {
-  color: #2c3e50;
+  color: var(--color-primary-dark);
   margin-top: 0;
   font-size: 22px;
 }
@@ -123,7 +123,7 @@
 }
 
 .companyDetails strong {
-  color: #2c3e50;
+  color: var(--color-primary-dark);
   min-width: 200px;
   display: inline-block;
 }
@@ -131,11 +131,11 @@
 .contactInfo {
   margin-top: 20px;
   padding-top: 15px;
-  border-top: 1px solid #dee2e6;
+  border-top: 1px solid var(--color-border);
 }
 
 .contactInfo h3 {
-  color: #2c3e50;
+  color: var(--color-primary-dark);
   margin-top: 0;
   font-size: 18px;
 }
@@ -143,30 +143,30 @@
 .intro {
   font-size: 16px;
   line-height: 1.6;
-  color: #495057;
+  color: var(--color-text-muted);
   margin-bottom: 30px;
   padding: 15px;
-  background: #e8f4fc;
+  background: var(--color-primary-bg);
   border-radius: 4px;
 }
 
 .section {
   margin-bottom: 30px;
   padding-bottom: 20px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .section h2 {
-  color: #2c3e50;
+  color: var(--color-primary-dark);
   font-size: 20px;
   margin-bottom: 15px;
   padding-bottom: 8px;
-  border-bottom: 2px solid #f0f0f0;
+  border-bottom: 2px solid var(--color-bg-elevated);
 }
 
 .section p {
   line-height: 1.6;
-  color: #495057;
+  color: var(--color-text-muted);
   margin-bottom: 15px;
 }
 
@@ -178,15 +178,15 @@
 .list li {
   margin-bottom: 10px;
   line-height: 1.5;
-  color: #495057;
+  color: var(--color-text-muted);
 }
 
 .signatureBlock {
-  background: #f8f9fa;
+  background: var(--color-bg-elevated);
   padding: 30px;
   border-radius: 8px;
   margin: 40px 0;
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--color-border);
 }
 
 .signatureField {
@@ -204,31 +204,31 @@
 
 .signatureLine {
   padding: 12px 0;
-  border-bottom: 2px solid #333;
+  border-bottom: 2px solid var(--color-text);
   min-width: 300px;
   font-size: 18px;
   letter-spacing: 3px;
 }
 
 .acknowledgment {
-  background: #fff8e1;
+  background: var(--color-warning-bg);
   padding: 20px;
   border-radius: 4px;
   margin: 30px 0;
-  border-left: 4px solid #ff8c00;
+  border-left: 4px solid var(--color-warning);
 }
 
 .revisionInfo {
   margin-top: 30px;
   padding-top: 15px;
-  border-top: 1px solid #dee2e6;
-  color: #6c757d;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-muted);
   font-size: 14px;
   text-align: center;
 }
 
 .revisionInfo strong {
-  color: #495057;
+  color: var(--color-text-muted);
 }
 
 /* Стили для печати */
@@ -260,7 +260,7 @@
   
   .signatureBlock {
     background: white;
-    border: 2px solid #333;
+    border: 2px solid var(--color-text);
     margin-top: 100px;
     page-break-inside: avoid;
   }

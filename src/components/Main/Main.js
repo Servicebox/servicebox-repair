@@ -4,6 +4,7 @@
 import MainBanner from "../MainBanner/MainBanner";
 import RepairCalculator from '@/components/RepairCalculator/RepairCalculator';
 import CategoriesGrid from "../CategoriesGrid/CategoriesGrid";
+import CommonProblems from "../CommonProblems/CommonProblems";
 import ReviewsSection from "../ReviewsSection/ReviewsSection";
 import WorkSteps from "../WorkSteps/WorkSteps";
 import AboutMe from "../AboutMe/AboutMe";
@@ -20,6 +21,7 @@ function Main() {
           <RepairCalculator />
         </div>
         <CategoriesGrid />
+        <CommonProblems />
         <ReviewsSection />
         <WorkSteps />
         <AboutMe />

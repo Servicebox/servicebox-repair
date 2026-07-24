@@ -140,11 +140,11 @@ const AllServicesPage = () => {
 
     if (loading) {
         return (
-            <motion.div className="min-h-screen bg-gray-50 py-8">
+            <motion.div className="min-h-screen bg-surface py-8">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="text-center py-12">
-                        <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mx-auto mb-4"></div>
-                        <p className="text-gray-600">Загружаем услуги...</p>
+                        <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent mx-auto mb-4"></div>
+                        <p className="text-muted">Загружаем услуги...</p>
                     </div>
                 </div>
             </motion.div>
@@ -153,7 +153,7 @@ const AllServicesPage = () => {
 
     return (
         <motion.div
-            className="min-h-screen bg-gray-50 py-8"
+            className="min-h-screen bg-surface py-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -162,7 +162,7 @@ const AllServicesPage = () => {
                 {/* Заголовок */}
                 <div className="text-center mb-12">
                     <motion.h1
-                        className="text-4xl font-bold text-gray-900 mb-4"
+                        className="text-4xl font-bold text-text mb-4"
                         initial={{ y: -20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.1 }}
@@ -170,7 +170,7 @@ const AllServicesPage = () => {
                         Цены на услуги
                     </motion.h1>
                     <motion.p
-                        className="text-xl text-gray-600 max-w-3xl mx-auto"
+                        className="text-xl text-muted max-w-3xl mx-auto"
                         initial={{ y: -20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.2 }}
@@ -193,9 +193,9 @@ const AllServicesPage = () => {
                                 placeholder="🔍 Поиск услуги..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full px-4 py-3 pl-12 border border-border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             />
-                            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted">
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                 </svg>
@@ -217,7 +217,7 @@ const AllServicesPage = () => {
                                     key={category}
                                     className={`px-4 py-2 rounded-lg border-2 font-medium transition-all ${selectedCategory === category
                                         ? 'text-white'
-                                        : 'text-gray-700 hover:bg-gray-50'
+                                        : 'text-muted hover:bg-surface'
                                         }`}
                                     onClick={() => setSelectedCategory(category)}
                                     whileHover={{ scale: 1.05 }}
@@ -263,14 +263,14 @@ const AllServicesPage = () => {
                         animate={{ scale: 1, opacity: 1 }}
                     >
                         <div className="text-6xl mb-4">🔍</div>
-                        <h3 className="text-2xl font-bold text-gray-900 mb-2">Услуги не найдены</h3>
-                        <p className="text-gray-600 mb-6">Попробуйте изменить критерии поиска или выбрать другую категорию</p>
+                        <h3 className="text-2xl font-bold text-text mb-2">Услуги не найдены</h3>
+                        <p className="text-muted mb-6">Попробуйте изменить критерии поиска или выбрать другую категорию</p>
                         <button
                             onClick={() => {
                                 setSearchQuery('');
                                 setSelectedCategory('Все');
                             }}
-                            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                            className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primaryDark transition-colors"
                         >
                             Сбросить фильтры
                         </button>
@@ -284,7 +284,7 @@ const AllServicesPage = () => {
                             return (
                                 <motion.div
                                     key={category}
-                                    className="bg-white rounded-2xl shadow-lg overflow-hidden"
+                                    className="bg-bg rounded-2xl shadow-lg overflow-hidden"
                                     variants={container}
                                     initial="hidden"
                                     animate="show"
@@ -305,9 +305,9 @@ const AllServicesPage = () => {
                                                 ) : (
                                                     <span className="text-2xl mr-3">📋</span>
                                                 )}
-                                                <h2 className="text-xl font-bold text-gray-900">
+                                                <h2 className="text-xl font-bold text-text">
                                                     {displayData.name || category}
-                                                    <span className="text-sm text-gray-600 ml-2">
+                                                    <span className="text-sm text-muted ml-2">
                                                         ({categoryServices.length})
                                                     </span>
                                                 </h2>
@@ -320,21 +320,21 @@ const AllServicesPage = () => {
                                             <motion.div
                                                 key={service._id}
                                                 className={`border-2 rounded-xl p-6 transition-all duration-300 ${activeService === service._id
-                                                    ? 'border-blue-500 shadow-lg'
-                                                    : 'border-gray-200 hover:border-gray-300 hover:shadow-md'
+                                                    ? 'border-primary shadow-lg'
+                                                    : 'border-border hover:border-border hover:shadow-md'
                                                     }`}
                                                 variants={item}
                                                 whileHover={{ y: -5 }}
                                                 onClick={() => setActiveService(activeService === service._id ? null : service._id)}
                                             >
                                                 <div className="flex justify-between items-start mb-4">
-                                                    <h3 className="font-semibold text-lg text-gray-900 pr-4">{service.serviceName}</h3>
-                                                    <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap">
+                                                    <h3 className="font-semibold text-lg text-text pr-4">{service.serviceName}</h3>
+                                                    <span className="bg-primaryBg text-primaryDark px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap">
                                                         {formatPrice(service.price)}
                                                     </span>
                                                 </div>
 
-                                                <p className="text-gray-600 mb-4 line-clamp-3">{service.description}</p>
+                                                <p className="text-muted mb-4 line-clamp-3">{service.description}</p>
 
                                                 {activeService === service._id && (
                                                     <motion.div
@@ -344,7 +344,7 @@ const AllServicesPage = () => {
                                                         transition={{ duration: 0.3 }}
                                                     >
                                                         <div className="flex flex-wrap gap-2 mb-4">
-                                                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-surface text-muted">
                                                                 {displayData.icon ? (
                                                                     <Image
                                                                         src={displayData.icon}
@@ -363,7 +363,7 @@ const AllServicesPage = () => {
                                                         </div>
 
                                                         <button
-                                                            className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center justify-center"
+                                                            className="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-primaryDark transition-colors font-medium flex items-center justify-center"
                                                             onClick={(e) => handleBookingClick(service, e)}
                                                         >
                                                             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

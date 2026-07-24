@@ -11,7 +11,7 @@
   align-items: center;
   margin-bottom: 30px;
   padding-bottom: 20px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .header-actions {
@@ -22,15 +22,15 @@
 
 .view-toggle button {
   padding: 8px 16px;
-  border: 1px solid #ddd;
-  background: white;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-dark);
   cursor: pointer;
 }
 
 .view-toggle button.active {
-  background: #007bff;
-  color: white;
-  border-color: #007bff;
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
+  border-color: var(--color-accent);
 }
 
 /* Дерево услуг */
@@ -47,9 +47,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px;
-  background: #f8f9fa;
+  background: var(--color-bg);
   border-radius: 6px;
-  border: 1px solid #e9ecef;
+  border: 1px solid var(--color-bg-elevated);
 }
 
 .node-main {
@@ -76,18 +76,18 @@
 
 .service-name {
   font-weight: 600;
-  color: #333;
+  color: var(--color-text-muted);
 }
 
 .service-type {
-  color: #666;
+  color: var(--color-text-muted);
   font-size: 0.9em;
 }
 
 .service-slug {
-  color: #888;
+  color: var(--color-text-muted);
   font-size: 0.8em;
-  background: #e9ecef;
+  background: var(--color-bg-elevated);
   padding: 2px 6px;
   border-radius: 4px;
 }
@@ -99,7 +99,7 @@
 
 /* Список услуг */
 .service-list {
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -109,9 +109,9 @@
   grid-template-columns: 2fr 1fr 1fr 1.5fr 1fr;
   gap: 15px;
   padding: 15px;
-  background: #f5f5f5;
+  background: var(--color-bg-elevated);
   font-weight: 600;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .list-item {
@@ -119,12 +119,12 @@
   grid-template-columns: 2fr 1fr 1fr 1.5fr 1fr;
   gap: 15px;
   padding: 15px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--color-bg-elevated);
   align-items: center;
 }
 
 .list-item:hover {
-  background: #f8f9fa;
+  background: var(--color-bg);
 }
 
 .actions {
@@ -147,7 +147,7 @@
 }
 
 .modal-content {
-  background: white;
+  background: var(--color-bg-dark);
   border-radius: 8px;
   width: 90%;
   max-width: 800px;
@@ -160,7 +160,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .close-btn {
@@ -168,7 +168,7 @@
   border: none;
   font-size: 24px;
   cursor: pointer;
-  color: #666;
+  color: var(--color-text-muted);
 }
 
 .service-form {
@@ -197,7 +197,7 @@
 .form-group textarea {
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   font-size: 14px;
 }
@@ -227,7 +227,7 @@
   gap: 10px;
   margin-top: 20px;
   padding-top: 20px;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--color-border);
 }
 
 /* Кнопки */
@@ -240,18 +240,18 @@
 }
 
 .btn-primary {
-  background: #007bff;
-  color: white;
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
 }
 
 .btn-success {
-  background: #28a745;
-  color: white;
+  background: var(--color-success);
+  color: var(--color-text-inverse);
 }
 
 .btn-danger {
-  background: #dc3545;
-  color: white;
+  background: var(--color-danger);
+  color: var(--color-text-inverse);
 }
 
 .btn-sm {

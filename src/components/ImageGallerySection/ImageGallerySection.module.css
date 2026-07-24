@@ -1,7 +1,7 @@
 /* components/ImageGallerySection/ImageGallerySection.css */
 .image-gallery-section {
   padding: 80px 0;
-  background: #f8fafc;
+  background: var(--color-bg);
 }
 
 .image-gallery-section.loading {
@@ -26,13 +26,13 @@
 .section-title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #2d3748;
+  color: var(--color-text);
   margin-bottom: 16px;
 }
 
 .section-subtitle {
   font-size: 1.125rem;
-  color: #718096;
+  color: var(--color-text-muted);
   margin-bottom: 32px;
   max-width: 600px;
   margin-left: auto;
@@ -57,9 +57,9 @@
 
 .view-toggle {
   padding: 10px 20px;
-  border: 2px solid #e2e8f0;
-  background: white;
-  color: #4a5568;
+  border: 2px solid var(--color-border);
+  background: var(--color-bg-dark);
+  color: var(--color-text-muted);
   border-radius: 25px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -67,18 +67,18 @@
 }
 
 .view-toggle:hover {
-  border-color: #667eea;
-  color: #667eea;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .view-toggle.active {
-  background: #667eea;
-  color: white;
-  border-color: #667eea;
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary);
 }
 
 .gallery-stats {
-  color: #718096;
+  color: var(--color-text-muted);
   font-weight: 500;
 }
 
@@ -89,14 +89,14 @@
   align-items: center;
   justify-content: center;
   padding: 60px 20px;
-  color: #718096;
+  color: var(--color-text-muted);
 }
 
 .loading-spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid #e2e8f0;
-  border-top: 4px solid #667eea;
+  border: 4px solid var(--color-border);
+  border-top: 4px solid var(--color-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 16px;
@@ -111,7 +111,7 @@
 .empty-gallery {
   text-align: center;
   padding: 80px 20px;
-  color: #718096;
+  color: var(--color-text-muted);
 }
 
 .empty-icon {
@@ -123,7 +123,7 @@
 .empty-gallery h3 {
   font-size: 1.5rem;
   margin-bottom: 12px;
-  color: #4a5568;
+  color: var(--color-text-muted);
 }
 
 /* Grid Gallery */
@@ -145,7 +145,7 @@
 
 .grid-item,
 .masonry-item {
-  background: white;
+  background: var(--color-bg-dark);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -200,7 +200,7 @@
 }
 
 .overlay-content {
-  color: white;
+  color: var(--color-text-inverse);
   transform: translateY(20px);
   transition: transform 0.3s ease;
 }
@@ -253,7 +253,7 @@
 
 .modal-content {
   position: relative;
-  background: white;
+  background: var(--color-bg-dark);
   border-radius: 16px;
   max-width: 90vw;
   max-height: 90vh;
@@ -282,7 +282,7 @@
   top: 16px;
   right: 16px;
   background: rgba(0, 0, 0, 0.7);
-  color: white;
+  color: var(--color-text-inverse);
   border: none;
   width: 40px;
   height: 40px;
@@ -306,7 +306,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f7fafc;
+  background: var(--color-bg);
   min-height: 60vh;
   max-height: 70vh;
 }
@@ -322,7 +322,7 @@
   top: 50%;
   transform: translateY(-50%);
   background: rgba(0, 0, 0, 0.7);
-  color: white;
+  color: var(--color-text-inverse);
   border: none;
   width: 50px;
   height: 50px;
@@ -349,13 +349,13 @@
 
 .modal-info {
   padding: 24px;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--color-border);
   max-height: 30vh;
   overflow-y: auto;
 }
 
 .modal-description p {
-  color: #4a5568;
+  color: var(--color-text-muted);
   line-height: 1.6;
   margin-bottom: 16px;
   font-size: 1.1rem;
@@ -375,12 +375,12 @@
 
 .meta-label {
   font-size: 0.875rem;
-  color: #718096;
+  color: var(--color-text-muted);
   font-weight: 500;
 }
 
 .meta-value {
-  color: #2d3748;
+  color: var(--color-text);
   font-weight: 500;
 }
 
@@ -391,7 +391,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  color: #718096;
+  color: var(--color-text-muted);
 }
 
 /* Responsive Design */
@@ -511,13 +511,13 @@
 
 /* Focus styles for accessibility */
 button:focus-visible {
-  outline: 2px solid #667eea;
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
 .grid-item:focus-visible,
 .masonry-item:focus-visible {
-  outline: 3px solid #667eea;
+  outline: 3px solid var(--color-primary);
   outline-offset: 3px;
 }
 

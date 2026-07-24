@@ -17,7 +17,7 @@
 }
 
 .modalContent {
-  background: #ffffff;
+  background: var(--color-bg-dark);
   border-radius: 20px;
   width: 100%;
   max-width: 440px;
@@ -30,6 +30,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
   padding: 28px 28px 0;
 }
 
@@ -37,12 +38,12 @@
   margin: 0;
   font-size: 22px;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--color-text);
   letter-spacing: -0.3px;
 }
 
 .closeButton {
-  background: #f1f5f9;
+  background: var(--color-bg-elevated);
   border: none;
   width: 36px;
   height: 36px;
@@ -50,7 +51,7 @@
   font-size: 20px;
   line-height: 1;
   cursor: pointer;
-  color: #64748b;
+  color: var(--color-text-muted);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -59,8 +60,8 @@
 }
 
 .closeButton:hover {
-  background: #e2e8f0;
-  color: #0f172a;
+  background: var(--color-border);
+  color: var(--color-text);
 }
 
 /* ── Form containers ── */
@@ -88,7 +89,7 @@
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  color: #94a3b8;
+  color: var(--color-text-muted);
   pointer-events: none;
   display: flex;
   align-items: center;
@@ -106,35 +107,35 @@
   width: 100%;
   height: 48px;
   padding: 0 44px 0 44px;
-  border: 1.5px solid #e2e8f0;
+  border: 1.5px solid var(--color-border);
   border-radius: 10px;
   font-size: 15px;
-  color: #0f172a;
-  background: #f8fafc;
+  color: var(--color-text);
+  background: var(--color-bg);
   box-sizing: border-box;
   transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
   outline: none;
 }
 
 .input::placeholder {
-  color: #94a3b8;
+  color: var(--color-text-muted);
 }
 
 .input:focus {
-  border-color: #2563eb;
-  background: #ffffff;
+  border-color: var(--color-primary);
+  background: var(--color-bg-dark);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
 .input.inputError {
-  border-color: #dc2626;
-  background: #fff8f8;
+  border-color: var(--color-danger);
+  background: var(--color-danger-bg);
   box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
 }
 
 .input.inputValid {
-  border-color: #16a34a;
-  background: #f0fdf4;
+  border-color: var(--color-success);
+  background: var(--color-success-bg);
 }
 
 /* Input without left icon */
@@ -152,7 +153,7 @@
   border: none;
   padding: 4px;
   cursor: pointer;
-  color: #9ca3af;
+  color: var(--color-text-muted);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -161,7 +162,7 @@
 }
 
 .pwToggle:hover {
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 .fieldWrapper.hasError .pwToggle {
@@ -172,7 +173,7 @@
 /* ── Per-field error text ── */
 .fieldError {
   font-size: 12px;
-  color: #dc2626;
+  color: var(--color-danger);
   margin-top: 4px;
   padding-left: 2px;
   line-height: 1.4;
@@ -190,25 +191,25 @@
   flex: 1;
   height: 4px;
   border-radius: 2px;
-  background: #e2e8f0;
+  background: var(--color-border);
   transition: background 0.25s ease;
 }
 
 .strengthSegment.weak {
-  background: #ef4444;
+  background: var(--color-danger);
 }
 
 .strengthSegment.medium {
-  background: #f59e0b;
+  background: var(--color-warning);
 }
 
 .strengthSegment.strong {
-  background: #16a34a;
+  background: var(--color-success);
 }
 
 .strengthLabel {
   font-size: 11px;
-  color: #6b7280;
+  color: var(--color-text-muted);
   margin-top: 2px;
 }
 
@@ -226,18 +227,18 @@
   margin-top: 2px;
   flex-shrink: 0;
   cursor: pointer;
-  accent-color: #2563eb;
+  accent-color: var(--color-primary);
 }
 
 .consentLabel {
   font-size: 13px;
-  color: #6b7280;
+  color: var(--color-text-muted);
   line-height: 1.5;
   cursor: pointer;
 }
 
 .consentLink {
-  color: #2563eb;
+  color: var(--color-primary-dark);
   text-decoration: none;
   transition: text-decoration 0.18s ease;
 }
@@ -250,8 +251,8 @@
 .submitButton {
   width: 100%;
   height: 48px;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  color: #ffffff;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary));
+  color: var(--color-bg-dark);
   border: none;
   border-radius: 10px;
   font-size: 15px;
@@ -278,23 +279,23 @@
 
 /* ── Messages ── */
 .errorMessage {
-  background: #fef2f2;
-  color: #dc2626;
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
   padding: 10px 16px;
   margin: 16px 28px 0;
   border-radius: 8px;
-  border: 1px solid #fecaca;
+  border: 1px solid var(--color-danger-bg);
   font-size: 14px;
   line-height: 1.5;
 }
 
 .successMessage {
-  background: #f0fdf4;
-  color: #16a34a;
+  background: var(--color-success-bg);
+  color: var(--color-success);
   padding: 10px 16px;
   margin: 16px 28px 0;
   border-radius: 8px;
-  border: 1px solid #bbf7d0;
+  border: 1px solid var(--color-success-bg);
   font-size: 14px;
   line-height: 1.5;
 }
@@ -305,7 +306,7 @@
   align-items: center;
   gap: 12px;
   margin: 4px 28px 0;
-  color: #9ca3af;
+  color: var(--color-text-muted);
   font-size: 13px;
 }
 
@@ -314,7 +315,7 @@
   content: '';
   flex: 1;
   height: 1px;
-  background: #e2e8f0;
+  background: var(--color-border);
 }
 
 .oauthButtons {
@@ -326,13 +327,13 @@
 .forgotPasswordLink {
   padding: 12px 28px 24px;
   text-align: center;
-  color: #6b7280;
+  color: var(--color-text-muted);
   font-size: 14px;
 }
 
 .toggleState span,
 .forgotPasswordLink span {
-  color: #2563eb;
+  color: var(--color-primary-dark);
   cursor: pointer;
   font-weight: 500;
   transition: color 0.18s ease;
@@ -340,7 +341,7 @@
 
 .toggleState span:hover,
 .forgotPasswordLink span:hover {
-  color: #1d4ed8;
+  color: var(--color-primary-dark);
   text-decoration: underline;
 }
 
@@ -359,7 +360,7 @@
 }
 
 .modalContentInner {
-  background: white;
+  background: var(--color-bg-dark);
   padding: 28px;
   border-radius: 16px;
   max-width: 380px;
@@ -370,32 +371,32 @@
 
 .modalContentInner h3 {
   margin: 0 0 12px 0;
-  color: #dc2626;
+  color: var(--color-danger);
   font-size: 18px;
 }
 
 .modalContentInner p {
   margin: 0 0 20px 0;
-  color: #6b7280;
+  color: var(--color-text-muted);
   font-size: 14px;
 }
 
 .recoverLink {
-  color: #2563eb;
+  color: var(--color-primary-dark);
   cursor: pointer;
   font-weight: 500;
   transition: color 0.18s ease;
 }
 
 .recoverLink:hover {
-  color: #1d4ed8;
+  color: var(--color-primary-dark);
   text-decoration: underline;
 }
 
 .closeModalButton {
   padding: 9px 22px;
-  background: #6b7280;
-  color: white;
+  background: var(--color-text-muted);
+  color: var(--color-bg-dark);
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -405,7 +406,7 @@
 }
 
 .closeModalButton:hover {
-  background: #4b5563;
+  background: var(--color-text-muted);
 }
 
 /* ── Mobile ── */

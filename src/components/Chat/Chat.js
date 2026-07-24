@@ -120,28 +120,35 @@ export default function Chat() {
       sndSend.current.play().catch(() => { });
     }
 
+    const messageText = text.trim();
+
     try {
-      const response = await axios.post('/api/telegram/send', {
-        userId: USER_ID,
-        userName,
-        text: text.trim(),
+      // Save to MongoDB
+      await axios.post('/api/chat/messages', {
+        sessionId: USER_ID,
+        text: messageText,
+        senderName: userName,
+        author: 'user',
       });
 
-      if (response.data.success) {
-        const newMsg = {
-          _id: Date.now().toString(),
-          author: 'user',
-          text: text.trim(),
-          userName,
-          createdAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          status: 'sent',
-        };
+      // Also notify via Telegram (fire-and-forget)
+      axios.post('/api/telegram/send', {
+        userId: USER_ID,
+        userName,
+        text: messageText,
+      }).catch(() => {});
 
-        setMessages((prev) => [...prev, newMsg]);
-        setText('');
-      } else {
-        console.error('Failed to send message:', response.data.error);
-      }
+      const newMsg = {
+        _id: Date.now().toString(),
+        author: 'user',
+        text: messageText,
+        senderName: userName,
+        createdAt: new Date().toISOString(),
+        status: 'sent',
+      };
+
+      setMessages((prev) => [...prev, newMsg]);
+      setText('');
     } catch (error) {
       console.error('Send error:', error.response?.data || error.message);
     } finally {
@@ -151,22 +158,29 @@ export default function Chat() {
 
   const loadMessageHistory = async () => {
     try {
-      const response = await axios.get(`/api/telegram/updates?userId=${USER_ID}`);
-      const replies = response.data || [];
+      const response = await axios.get(`/api/chat/messages?sessionId=${USER_ID}&limit=100`);
+      const fetched = response.data?.messages || [];
 
       setMessages((prev) => {
-        const knownIds = new Set(prev.map((m) => m._id));
-        const delivered = prev.map((msg) =>
-          msg.author === 'user' && msg.status !== 'delivered'
-            ? { ...msg, status: 'delivered' }
-            : msg
-        );
-        const newReplies = replies.filter((r) => !knownIds.has(r._id));
-        if (newReplies.length && sndDelivery.current) {
+        const prevCount = prev.length;
+        const merged = fetched.map((m) => ({
+          _id: m._id,
+          author: m.author,
+          text: m.text,
+          senderName: m.senderName,
+          createdAt: m.createdAt,
+          status: 'delivered',
+        }));
+
+        // Play sound if new messages from admin arrived
+        const prevAdminCount = prev.filter((m) => m.author === 'admin').length;
+        const newAdminCount = merged.filter((m) => m.author === 'admin').length;
+        if (newAdminCount > prevAdminCount && sndDelivery.current) {
           sndDelivery.current.currentTime = 0;
-          sndDelivery.current.play().catch(() => { });
+          sndDelivery.current.play().catch(() => {});
         }
-        return [...delivered, ...newReplies];
+
+        return merged;
       });
     } catch (err) {
       console.error('Load history error:', err.response?.data || err.message);
@@ -324,7 +338,7 @@ export default function Chat() {
                   />
                   <div className={styles.chatBubble}>
                     {msg.author === 'user' && (
-                      <div className={styles.messageUserName}>{msg.userName || userName}</div>
+                      <div className={styles.messageUserName}>{msg.senderName || userName}</div>
                     )}
                     <div className={styles.messageText}>
                       {msg.text.split('\n').map((line, i) => (
@@ -332,7 +346,9 @@ export default function Chat() {
                       ))}
                     </div>
                     <div className={styles.chatMeta}>
-                      <span className={styles.chatTime}>{msg.createdAt}</span>
+                      <span className={styles.chatTime}>
+                        {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </span>
                       {msg.author === 'user' && (
                         <span className={`${styles.msgStatus} ${styles[msg.status]}`}>
                           {msg.status === 'delivered' ? '✓✓' : '✓'}

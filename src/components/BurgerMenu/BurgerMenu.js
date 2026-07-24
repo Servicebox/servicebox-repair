@@ -70,6 +70,9 @@ function BurgerMenu() {
 
         <ul className={styles.menuList}>
           <li className={styles.menuItem}>
+            <Link href="/services" className={styles.menuLink} onClick={toggleMenu}>Услуги и цены</Link>
+          </li>
+          <li className={styles.menuItem}>
             <Link href="/about" className={styles.menuLink} onClick={toggleMenu}>О нас</Link>
           </li>
           <li className={styles.menuItem}>
@@ -94,14 +97,9 @@ function BurgerMenu() {
 
         <div className={styles.menuFooter}>
           <div className={styles.statusCheck}>
-            <a
-              className={styles.statusButton}
-              href="https://pm-31768.promaster.app/index_cl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Link className={styles.statusButton} href="/tracking" onClick={toggleMenu}>
               Проверить статус ремонта
-            </a>
+            </Link>
           </div>
 
           <div className={styles.contactInfo}>

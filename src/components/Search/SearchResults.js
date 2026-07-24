@@ -10,7 +10,7 @@ export default function SearchResults({ results, counts = {}, query, error }) {
       <div className="text-center py-12">
         <div className="text-red-500 text-5xl mb-4">⚠️</div>
         <h3 className="text-xl font-semibold mb-2">Ошибка при поиске</h3>
-        <p className="text-gray-900">Попробуйте обновить страницу или повторить поиск позже</p>
+        <p className="text-text">Попробуйте обновить страницу или повторить поиск позже</p>
       </div>
     );
   }
@@ -20,7 +20,7 @@ export default function SearchResults({ results, counts = {}, query, error }) {
       <div className="text-center py-12">
         <div className="text-gray-400 text-5xl mb-4">🔍</div>
         <h3 className="text-xl font-semibold mb-2">Что ищем?</h3>
-        <p className="text-gray-900">Введите запрос в поисковой строке</p>
+        <p className="text-text">Введите запрос в поисковой строке</p>
         <div className="mt-6">
           <h4 className="font-medium mb-3">Популярные запросы:</h4>
           <div className="flex flex-wrap justify-center gap-2">
@@ -63,6 +63,8 @@ export default function SearchResults({ results, counts = {}, query, error }) {
     services: results.filter(r => r.type === 'service'),
     products: results.filter(r => r.type === 'product'),
     news: results.filter(r => r.type === 'news'),
+    promotions: results.filter(r => r.type === 'promotion'),
+    articles: results.filter(r => r.type === 'article'),
     pages: results.filter(r => r.type === 'page'),
     files: results.filter(r => r.type === 'file')
   };
@@ -76,6 +78,8 @@ export default function SearchResults({ results, counts = {}, query, error }) {
           {counts.products > 0 && <span className="text-blue-600">🛒 Товары: {counts.products}</span>}
           {counts.services > 0 && <span className="text-green-600">⚙️ Услуги: {counts.services}</span>}
           {counts.news > 0 && <span className="text-purple-600">📰 Новости: {counts.news}</span>}
+          {counts.promotions > 0 && <span className="text-orange-600">🎁 Акции: {counts.promotions}</span>}
+          {counts.articles > 0 && <span className="text-teal-600">🔍 Статьи: {counts.articles}</span>}
         </div>
       </div>
 
@@ -112,6 +116,30 @@ export default function SearchResults({ results, counts = {}, query, error }) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {groupedResults.news.map((item, index) => (
                 <SearchResultItem key={`news-${index}`} item={item} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Акции */}
+        {groupedResults.promotions.length > 0 && (
+          <section>
+            <h2 className="text-xl font-bold mb-4 pb-2 border-b">🎁 Акции ({groupedResults.promotions.length})</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {groupedResults.promotions.map((item, index) => (
+                <SearchResultItem key={`promotion-${index}`} item={item} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Статьи */}
+        {groupedResults.articles.length > 0 && (
+          <section>
+            <h2 className="text-xl font-bold mb-4 pb-2 border-b">🔍 Статьи ({groupedResults.articles.length})</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {groupedResults.articles.map((item, index) => (
+                <SearchResultItem key={`article-${index}`} item={item} />
               ))}
             </div>
           </section>

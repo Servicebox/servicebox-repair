@@ -4,10 +4,12 @@ import Product from '@/models/Product';
 import News from '@/models/News';
 import Service from '@/models/Service';
 import { BASE_URL } from '@/lib/constants';
+import { PROBLEMS } from '@/lib/problems-data';
+import { ANSWERS } from '@/lib/ai-answers-data';
 
 const BRAND_SLUGS = ['apple', 'samsung', 'xiaomi', 'huawei', 'asus', 'lenovo', 'hp', 'acer', 'msi', 'dell', 'sony', 'lg'];
-const PROBLEM_SLUGS = ['laptop-not-turning-on', 'phone-battery-drains-fast', 'screen-artifacts', 'laptop-overheating', 'phone-charging-issue', 'water-damage'];
-const AI_ANSWER_SLUGS = ['repair-laptop-vologda', 'phone-screen-replacement', 'videocard-repair-cost', 'water-damage-phone', 'apple-repair-warranty', 'laptop-not-turning-on', 'price-diagnostics', 'urgent-repair-vologda'];
+const PROBLEM_SLUGS = Object.keys(PROBLEMS);
+const AI_ANSWER_SLUGS = Object.keys(ANSWERS);
 
 export default async function sitemap() {
 
@@ -22,13 +24,12 @@ export default async function sitemap() {
     ['/', 1.0, 'daily'],
     ['/contacts', 0.9, 'monthly'],
     ['/services', 0.95, 'daily'],
-    ['/prices', 0.9, 'weekly'],
+    ['/price', 0.9, 'weekly'],
     ['/parts', 0.9, 'daily'],
     ['/about', 0.8, 'monthly'],
     ['/news', 0.8, 'weekly'],
     ['/promotions-page', 0.85, 'weekly'],
     ['/gallery', 0.7, 'monthly'],
-    ['/worksteps', 0.85, 'monthly'],
     ['/depository-public', 0.6, 'weekly'],
     ['/tracking', 0.7, 'daily'],
     ['/consent', 0.1, 'yearly'],

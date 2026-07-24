@@ -17,17 +17,17 @@
 
 .formTitle {
   font-size: 1.8rem;
-  color: #333;
+  color: var(--color-primary-dark);
   margin-bottom: 10px;
 }
 
 .highlight {
-  color: #0070f3;
+  color: var(--color-primary);
   font-weight: bold;
 }
 
 .formSubtitle {
-  color: #333;
+  color: var(--color-text-muted);
   font-size: 1rem;
   line-height: 1.4;
 }
@@ -49,17 +49,18 @@
 .formInput, .formTextarea {
   width: 100%;
   padding: 15px;
-  border: 2px solid #022f81;
+  border: 2px solid var(--color-primary-dark);
   border-radius: 8px;
   font-size: 16px;
   transition: all 0.3s ease;
   background-color: transparent;
+  color: var(--color-text);
 }
 
 .formInput:focus, .formTextarea:focus {
   outline: none;
-  border-color: #0070f3;
-  background-color: white;
+  border-color: var(--color-primary);
+  background-color: var(--color-bg-dark);
   box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
 }
 
@@ -72,7 +73,7 @@
   position: absolute;
   top: 15px;
   left: 15px;
-  color: #333;
+  color: var(--color-text-muted);
   font-size: 16px;
   pointer-events: none;
   transition: all 0.3s ease;
@@ -87,17 +88,17 @@
   top: -10px;
   left: 10px;
   font-size: 12px;
-  color: #0070f3;
+  color: var(--color-primary);
   font-weight: 500;
 }
 
 .error .formInput,
 .error .formTextarea {
-  border-color: #dc3545;
+  border-color: var(--color-danger);
 }
 
 .errorMessage {
-  color: #dc3545;
+  color: var(--color-danger);
   font-size: 12px;
   margin-top: 5px;
 }
@@ -105,8 +106,8 @@
 .submitBtn {
   width: 100%;
   padding: 15px;
-  background-color: #6c757d;
-  color: white;
+  background-color: var(--color-text-muted);
+  color: var(--color-bg-dark);
   border: none;
   border-radius: 8px;
   font-size: 16px;
@@ -117,12 +118,12 @@
 }
 
 .submitBtn.active {
-  background: linear-gradient(135deg, #0070f3, #0051a8);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary));
   cursor: pointer;
 }
 
 .submitBtn.active:hover {
-  background: linear-gradient(135deg, #0051a8, #003d7a);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 112, 243, 0.3);
 }
@@ -131,7 +132,7 @@
   width: 20px;
   height: 20px;
   border: 2px solid transparent;
-  border-top: 2px solid white;
+  border-top: 2px solid var(--color-bg-dark);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto;
@@ -145,11 +146,11 @@
 
 .privacyText {
   font-size: 12px;
-  color: #333;
+  color: var(--color-text-muted);
 }
 
 .privacyText a {
-  color: #0070f3;
+  color: var(--color-primary);
   text-decoration: none;
 }
 
@@ -166,8 +167,8 @@
 .successIcon {
   width: 60px;
   height: 60px;
-  background-color: #28a745;
-  color: white;
+  background-color: var(--color-success);
+  color: var(--color-bg-dark);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -180,25 +181,25 @@
 .successCountdown {
   margin-top: 20px;
   height: 4px;
-  background-color: #e9ecef;
+  background-color: var(--color-bg-elevated);
   border-radius: 2px;
   overflow: hidden;
 }
 
 .countdownBar {
   height: 100%;
-  background-color: #28a745;
+  background-color: var(--color-success);
   animation: countdown 1s linear forwards;
 }
 
 .errorModal h3 {
-  color: #dc3545;
+  color: var(--color-danger);
   margin-bottom: 15px;
 }
 
 .modalCloseBtn {
-  background-color: #0070f3;
-  color: white;
+  background-color: var(--color-primary);
+  color: var(--color-bg-dark);
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -221,11 +222,11 @@
   .formContainerGift {
     padding: 15px;
   }
-  
+
   .formTitle {
     font-size: 1.5rem;
   }
-  
+
   .formInput, .formTextarea {
     padding: 12px;
   }
@@ -246,7 +247,7 @@
 
 .modalContent {
   position: relative;
-  background: white;
+  background: var(--color-bg-dark);
   border-radius: 12px;
   max-width: 500px;
   width: 100%;
@@ -269,7 +270,7 @@
   justify-content: center;
   cursor: pointer;
   font-size: 18px;
-  color: #333;
+  color: var(--color-text-muted);
   z-index: 10;
   transition: background-color 0.3s ease;
 }
@@ -306,18 +307,18 @@
 .successMessage {
   text-align: center;
   padding: 2rem;
-  background: #f0f9ff;
+  background: var(--color-primary-bg);
   border-radius: 8px;
-  border: 1px solid #bae6fd;
+  border: 1px solid var(--color-border);
 }
 
 .successIcon {
   font-size: 3rem;
-  color: #059669;
+  color: var(--color-success);
   margin-bottom: 1rem;
 }
 
 .successMessage h4 {
-  color: #059669;
+  color: var(--color-success);
   margin-bottom: 0.5rem;
 }

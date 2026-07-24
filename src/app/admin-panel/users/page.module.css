@@ -16,7 +16,7 @@
 
 .tabs {
   display: flex;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--color-border);
   margin-bottom: 30px;
   gap: 10px;
 }
@@ -34,12 +34,12 @@
 
 .tab:hover {
   color: #333;
-  background-color: #f5f5f5;
+  background-color: var(--color-bg-elevated);
 }
 
 .tab.active {
-  color: #007bff;
-  border-bottom-color: #007bff;
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
   font-weight: 500;
 }
 
@@ -65,7 +65,7 @@
   }
   
   .tab.active {
-    border-bottom: 2px solid #007bff;
-    background-color: #e3f2fd;
+    border-bottom: 2px solid var(--color-primary);
+    background-color: var(--color-primary-bg);
   }
 }

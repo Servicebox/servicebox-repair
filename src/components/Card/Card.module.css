@@ -14,7 +14,7 @@
 .cartSummary {
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 2px solid #eaeaea;
+  border-top: 2px solid var(--color-border);
 }
 
 .total {
@@ -27,7 +27,7 @@
 }
 
 .totalAmount {
-  color: #007bff;
+  color: var(--color-accent);
   font-size: 1.5rem;
 }
 
@@ -38,24 +38,24 @@
 
 .continueShopping {
   flex: 1;
-  background: #f8f9fa;
-  color: #333;
+  background: var(--color-bg);
+  color: var(--color-text-muted);
   text-align: center;
   padding: 12px 24px;
   border-radius: 6px;
   text-decoration: none;
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--color-border);
   transition: all 0.2s;
 }
 
 .continueShopping:hover {
-  background: #e9ecef;
+  background: var(--color-bg-elevated);
 }
 
 .checkoutButton {
   flex: 1;
-  background: #007bff;
-  color: white;
+  background: var(--color-accent);
+  color: var(--color-bg-dark);
   text-align: center;
   padding: 12px 24px;
   border-radius: 6px;
@@ -65,7 +65,7 @@
 }
 
 .checkoutButton:hover {
-  background: #0056b3;
+  background: var(--color-accent);
 }
 
 @media (max-width: 768px) {
@@ -113,12 +113,12 @@
 }
 
 .coverItem {
-  background: linear-gradient(135deg, #fff 0%, #f0f9ff 100%);
+  background: linear-gradient(135deg, var(--color-bg-dark) 0%, var(--color-primary-bg) 100%);
   text-align: center;
 }
 
 .cardBack {
-  background: white;
+  background: var(--color-bg-dark);
   transform: rotateY(180deg);
   text-align: center;
 }
@@ -136,7 +136,7 @@
 }
 
 .cardTitleOne {
-  color: rgb(0, 0, 0);
+  color: var(--color-text);
   margin-bottom: 10px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   font-size: 1.5rem;
@@ -183,10 +183,10 @@
 
 .linkCard:hover,
 .linkCard:focus {
-  background: #ff8c00;
+  background: var(--color-warning);
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(78, 115, 223, 0.4);
-  outline: 2px solid #1ad1ff;
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 

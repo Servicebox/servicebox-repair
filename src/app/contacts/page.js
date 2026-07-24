@@ -64,7 +64,7 @@ export default function ContactsPage() {
             <section className="max-w-5xl mx-auto py-12 px-4">
 
                 <header className="text-center mb-12">
-                    <h1 className="text-3xl md:text-4xl font-bold text-[#002147] mb-4">Контакты сервисного центра ServiceBox</h1>
+                    <h1 className="text-3xl md:text-4xl font-bold text-[var(--color-primary-dark)] mb-4">Контакты сервисного центра ServiceBox</h1>
                     <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                         Приезжайте на бесплатную диагностику или свяжитесь с нами онлайн. Отвечаем в течение 15 минут.
                     </p>
@@ -72,7 +72,7 @@ export default function ContactsPage() {
 
                 <div className="grid lg:grid-cols-2 gap-8 mb-12">
                     <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                        <h2 className="text-2xl font-bold mb-6 text-[#002147]">Как с нами связаться</h2>
+                        <h2 className="text-2xl font-bold mb-6 text-[var(--color-primary-dark)]">Как с нами связаться</h2>
                         <div className="space-y-6">
                             <ContactBlock icon="📞" title="Телефон" value={BUSINESS.phonesFormatted.primary} sub={BUSINESS.phones.secondary} href={`tel:${BUSINESS.phones.primary.replace(/-/g, '')}`} note="Звонки: 10:00 – 20:00" />
                             <ContactBlock icon="✉️" title="Электронная почта" value={BUSINESS.email} href={`mailto:${BUSINESS.email}`} note="Ответим в течение 1 дня" />
@@ -80,7 +80,7 @@ export default function ContactsPage() {
                         </div>
 
                         <div className="mt-8">
-                            <h3 className="font-bold text-lg mb-4 text-[#002147]">Мы в социальных сетях</h3>
+                            <h3 className="font-bold text-lg mb-4 text-[var(--color-primary-dark)]">Мы в социальных сетях</h3>
                             <div className="flex gap-4">
                                 <a href={BUSINESS.socials.vk} target="_blank" rel="noopener noreferrer" className="flex-1 bg-blue-700 text-white py-3 rounded-xl text-center font-medium hover:bg-blue-800 transition">ВКонтакте</a>
                                 <a href={BUSINESS.socials.telegram} target="_blank" rel="noopener noreferrer" className="flex-1 bg-blue-500 text-white py-3 rounded-xl text-center font-medium hover:bg-blue-600 transition">Telegram</a>
@@ -89,7 +89,7 @@ export default function ContactsPage() {
                     </div>
 
                     <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                        <h2 className="text-2xl font-bold mb-6 text-[#002147]">Наш сервисный центр</h2>
+                        <h2 className="text-2xl font-bold mb-6 text-[var(--color-primary-dark)]">Наш сервисный центр</h2>
                         <div className="mb-4 text-gray-700">
                             <p className="font-semibold text-lg">г. Вологда, ул. Северная, 7А</p>
                             <p className="text-sm text-gray-500">ТЦ «КИТ», 1 этаж, напротив эскалатора (ориентир: магазин Бристоль)</p>
@@ -97,7 +97,7 @@ export default function ContactsPage() {
                         <div className="w-full h-[300px] rounded-xl overflow-hidden bg-gray-100 mb-6">
                             <iframe src={yandexMapUrl} width="100%" height="100%" frameBorder="0" loading="lazy" title="Карта проезда ServiceBox" className="w-full h-full" />
                         </div>
-                        <a href={yandexProfileUrl} target="_blank" rel="noopener noreferrer" className="block w-full text-center bg-[#002147] text-white py-3 rounded-xl font-bold hover:bg-[#003d7a] transition">
+                        <a href={yandexProfileUrl} target="_blank" rel="noopener noreferrer" className="block w-full text-center bg-[var(--color-primary-dark)] text-white py-3 rounded-xl font-bold hover:bg-[var(--color-primary-dark)] transition">
                             🗺️ Открыть в Яндекс.Картах
                         </a>
                     </div>
@@ -112,13 +112,13 @@ export default function ContactsPage() {
                     ].map((f, i) => (
                         <div key={i} className="bg-white p-5 rounded-xl shadow-sm border border-gray-100 text-center">
                             <div className="text-2xl mb-2">{f.icon}</div>
-                            <div className="font-bold text-sm text-[#002147]">{f.title}</div>
+                            <div className="font-bold text-sm text-[var(--color-primary-dark)]">{f.title}</div>
                             <div className="text-xs text-gray-500">{f.desc}</div>
                         </div>
                     ))}
                 </div>
 
-                <div className="bg-gradient-to-br from-[#002147] to-[#003d7a] rounded-2xl p-8 text-center text-white mb-12">
+                <div className="bg-gradient-to-br from-[var(--color-primary-dark)] to-[var(--color-primary-dark)] rounded-2xl p-8 text-center text-white mb-12">
                     <h2 className="text-2xl font-bold mb-3">Нужна срочная консультация?</h2>
                     <p className="mb-6 opacity-90">Опишите проблему — назовём точную стоимость и сроки ремонта вашей техники</p>
                     <a href={`tel:${BUSINESS.phones.primary.replace(/-/g, '')}`} className="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-bold text-lg transition-transform hover:scale-105">
@@ -127,7 +127,7 @@ export default function ContactsPage() {
                 </div>
 
                 <div className="bg-blue-50 rounded-2xl p-6 border border-blue-200 text-gray-700">
-                    <h3 className="text-lg font-bold mb-4 text-[#002147] flex items-center gap-2">🚌 Как добраться на общественном транспорте</h3>
+                    <h3 className="text-lg font-bold mb-4 text-[var(--color-primary-dark)] flex items-center gap-2">🚌 Как добраться на общественном транспорте</h3>
                     <ul className="space-y-2 list-disc list-inside">
                         <li><strong>Остановка «Судоремонтная»:</strong> автобусы № 4, 6, 8, 9, 16, 19, 23, 42, 43, 44</li>
                         <li><strong>Из центра города:</strong> любой транспорт до остановки «Судоремонтная», далее 2 минуты пешком в сторону ТЦ «КИТ»</li>
@@ -145,8 +145,8 @@ function ContactBlock({ icon, title, value, sub, href, note }) {
         <Content href={href} className={`flex items-start gap-4 p-4 rounded-xl transition-colors ${href ? 'hover:bg-gray-50 cursor-pointer' : ''}`}>
             <span className="text-2xl">{icon}</span>
             <div>
-                <div className="font-bold text-gray-900">{title}</div>
-                <div className="text-lg font-medium text-[#002147]">{value}</div>
+                <div className="font-bold text-text">{title}</div>
+                <div className="text-lg font-medium text-[var(--color-primary-dark)]">{value}</div>
                 {sub && <div className="text-sm text-gray-500">{sub}</div>}
                 {note && <div className="text-xs text-gray-500 mt-1">{note}</div>}
             </div>
