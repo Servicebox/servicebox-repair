@@ -44,7 +44,7 @@
 .emptyLink {
   display: inline-block;
   background: var(--color-primary);
-  color: #fff;
+  color: var(--color-text-inverse);
   padding: 8px 20px;
   border-radius: 8px;
   font-size: 0.875rem;
@@ -62,7 +62,7 @@
   border: 1.5px solid var(--color-border);
   border-radius: 14px;
   overflow: hidden;
-  background: #fff;
+  background: var(--color-bg-dark);
   transition: box-shadow 0.2s;
 }
 .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.07); }
@@ -74,7 +74,7 @@
   gap: 12px;
   padding: 14px 16px;
   cursor: pointer;
-  background: var(--color-bg-elevated);
+  background: var(--color-bg);
   user-select: none;
 }
 .cardHeader:hover { background: var(--color-bg-elevated); }
@@ -94,7 +94,7 @@
   font-size: 0.78rem;
   color: var(--color-text-muted);
 }
-.tracking strong { font-family: monospace; color: var(--color-text); }
+.tracking strong { font-family: monospace; color: var(--color-text-muted); }
 
 .cardRight { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 

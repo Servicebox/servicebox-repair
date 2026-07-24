@@ -16,7 +16,7 @@
 .logoutButton {
     padding: 10px 20px;
     background-color: var(--color-danger);
-    color: white;
+    color: var(--color-text-inverse);
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -32,11 +32,11 @@
     display: flex;
     gap: 25px;
     align-items: center;
-    background: white;
+    background: var(--color-bg-dark);
     border-radius: 12px;
     padding: 25px;
     margin-bottom: 30px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px var(--color-shadow);
 }
 
 .avatar {
@@ -47,7 +47,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: var(--color-text-inverse);
     font-size: 32px;
     font-weight: bold;
     flex-shrink: 0;
@@ -55,7 +55,7 @@
 
 .info h2 {
     margin: 0 0 10px 0;
-    color: var(--color-text);
+    color: var(--color-text-muted);
     font-size: 24px;
 }
 
@@ -92,10 +92,10 @@
 }
 
 .userOrdersSection {
-    background: white;
+    background: var(--color-bg-dark);
     border-radius: 12px;
     padding: 25px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px var(--color-shadow);
 }
 
 .sectionHeader {
@@ -109,13 +109,13 @@
 
 .sectionHeader h3 {
     margin: 0;
-    color: var(--color-text);
+    color: var(--color-text-muted);
     font-size: 20px;
 }
 
 .refreshButton {
     padding: 8px 16px;
-    background: var(--color-bg-elevated);
+    background: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: 6px;
     color: var(--color-text-muted);
@@ -132,7 +132,7 @@
 .ordersStats {
     display: flex;
     justify-content: space-between;
-    background: var(--color-bg-elevated);
+    background: var(--color-bg);
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 20px;
@@ -141,7 +141,7 @@
 }
 
 .ordersStats strong {
-    color: var(--color-text);
+    color: var(--color-text-muted);
     font-size: 16px;
 }
 
@@ -159,8 +159,8 @@
 }
 
 .orderItem.expanded {
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    border-color: var(--color-primary);
+    box-shadow: 0 4px 15px var(--color-shadow);
+    border-color: var(--color-accent);
 }
 
 .orderHeader {
@@ -168,7 +168,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    background: var(--color-bg-elevated);
+    background: var(--color-bg);
     cursor: pointer;
     transition: background 0.3s;
 }
@@ -192,7 +192,7 @@
 
 .orderId strong {
     font-size: 16px;
-    color: var(--color-text);
+    color: var(--color-text-muted);
 }
 
 .orderDate {
@@ -211,7 +211,7 @@
     border-radius: 20px;
     font-size: 13px;
     font-weight: 500;
-    color: white;
+    color: var(--color-text-inverse);
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -219,7 +219,7 @@
 .orderTotal {
     font-weight: bold;
     font-size: 16px;
-    color: var(--color-text);
+    color: var(--color-text-muted);
 }
 
 .productsCount {
@@ -236,7 +236,7 @@
 
 .orderDetails {
     padding: 20px;
-    background: white;
+    background: var(--color-bg-dark);
     border-top: 1px solid var(--color-border);
 }
 
@@ -249,7 +249,7 @@
 
 .detailSection h4 {
     margin: 0 0 15px 0;
-    color: var(--color-text);
+    color: var(--color-text-muted);
     font-size: 16px;
     padding-bottom: 10px;
     border-bottom: 2px solid var(--color-bg-elevated);
@@ -267,7 +267,7 @@
 
 .productsSection h4 {
     margin: 0 0 15px 0;
-    color: var(--color-text);
+    color: var(--color-text-muted);
     font-size: 16px;
     padding-bottom: 10px;
     border-bottom: 2px solid var(--color-bg-elevated);
@@ -285,7 +285,7 @@
     padding: 15px;
     border: 1px solid var(--color-border);
     border-radius: 8px;
-    background: var(--color-bg-elevated);
+    background: var(--color-bg);
 }
 
 .productImage {
@@ -309,7 +309,7 @@
 .productName {
     font-weight: 600;
     margin-bottom: 8px;
-    color: var(--color-text);
+    color: var(--color-text-muted);
     font-size: 15px;
 }
 
@@ -327,7 +327,7 @@
 }
 
 .pricingSummary {
-    background: var(--color-bg-elevated);
+    background: var(--color-bg);
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 20px;
@@ -347,7 +347,7 @@
     border-top: 2px solid var(--color-border);
     font-weight: bold;
     font-size: 18px;
-    color: var(--color-text);
+    color: var(--color-text-muted);
 }
 
 .notes {
@@ -385,7 +385,7 @@
 }
 
 .empty {
-    background: var(--color-bg-elevated);
+    background: var(--color-bg);
     border-radius: 8px;
 }
 
@@ -397,8 +397,8 @@
 .retryButton {
     margin-top: 15px;
     padding: 10px 20px;
-    background: var(--color-primary);
-    color: white;
+    background: var(--color-accent);
+    color: var(--color-text-inverse);
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -410,7 +410,7 @@
     margin-top: 15px;
     padding: 10px 20px;
     background: var(--color-success);
-    color: white;
+    color: var(--color-text-inverse);
     text-decoration: none;
     border-radius: 6px;
     font-size: 14px;
@@ -420,8 +420,8 @@
     display: inline-block;
     margin-top: 20px;
     padding: 12px 24px;
-    background: var(--color-primary);
-    color: white;
+    background: var(--color-accent);
+    color: var(--color-text-inverse);
     text-decoration: none;
     border-radius: 6px;
     font-size: 16px;
