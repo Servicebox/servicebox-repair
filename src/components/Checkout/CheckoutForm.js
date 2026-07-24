@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/contexts/AuthContext';
 import SplitPayButton from '@/components/SplitPayButton/SplitPayButton';
 import YandexPayButton from '@/components/YandexPayButton/YandexPayButton';
+import { trackCheckoutOpen, trackOrderCreated } from '@/lib/metrika';
 import styles from './CheckoutForm.module.css';
 
 const CheckoutForm = () => {
@@ -165,6 +166,14 @@ const CheckoutForm = () => {
     .filter(p => cart[p.slug] > 0)
     .sort((a, b) => a.name.localeCompare(b.name));
 
+  const checkoutOpenTracked = useRef(false);
+  useEffect(() => {
+    if (checkoutOpenTracked.current || visibleProducts.length === 0) return;
+    checkoutOpenTracked.current = true;
+    trackCheckoutOpen(visibleProducts.map(product => ({ product, quantity: cart[product.slug] })));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visibleProducts.length]);
+
   const calculateTotal = () => {
     return visibleProducts.reduce((sum, product) => {
       return sum + (product.new_price * (cart[product.slug] || 0));
@@ -266,6 +275,13 @@ const CheckoutForm = () => {
 
       if (response.ok && result.success) {
         console.log('✅ Заказ создан успешно:', result);
+
+        trackOrderCreated({
+          orderNumber: result.orderNumber,
+          totalAmount,
+          products: orderData.products,
+          isPrepaid: paymentMethod !== 'cash',
+        });
 
         // Очищаем корзину
         localStorage.removeItem('cart');

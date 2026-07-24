@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import axios from 'axios';
 import styles from './ShopCategory.module.css';
 import Item from '../Item/Item';
+import { trackProductListView } from '@/lib/metrika';
 
 const API_URL = '';
 
@@ -94,6 +95,10 @@ const ShopCategory = () => {
   const paginate = useCallback((pageNumber) => { setCurrentPage(pageNumber); window.scrollTo({ top: 0, behavior: 'smooth' }); }, []);
 
   const newArrivals = useMemo(() => [...allProducts].sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0)).slice(0, 8), [allProducts]);
+
+  useEffect(() => {
+    trackProductListView(currentItems, 'Каталог');
+  }, [currentItems]);
 
   useEffect(() => {
     const handleResize = () => {

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/components/contexts/AuthContext';
 import SuccessBookingModal from '@/components/SuccessBookingModal/SuccessBookingModal';
 import PrivacyCheckbox from '../PrivacyCheckbox/PrivacyCheckbox';
+import { trackBookingSubmitted } from '@/lib/metrika';
 import styles from './BookingForm.module.css';
 
 const extractDeviceModel = (serviceName) => {
@@ -105,6 +106,8 @@ const BookingForm = ({ service, onClose, onBookingSuccess }) => {
       }
 
       console.log('✅ Бронирование создано успешно:', bookingDataResult);
+
+      trackBookingSubmitted(service.name);
 
       // Телеграм уведомление
       try {
