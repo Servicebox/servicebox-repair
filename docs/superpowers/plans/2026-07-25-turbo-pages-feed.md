@@ -11,6 +11,7 @@
 ## Global Constraints
 
 - No new npm dependencies.
+- Next.js App Router `route.js` files only allow specific recognized exports (`GET`, `POST`, `dynamic`, `revalidate`, `runtime`, etc.) — an extra `export const` for a helper function makes the dev server silently fail to register/compile the route (plain 500 "Internal Server Error", no build error, no "Compiled" log line — this cost real debugging time before the cause was found). Tasks 1-2 export the helpers with `export const` ONLY so the ad-hoc `node --input-type=module` verification scripts can `import` them in isolation; Task 3's first step strips every `export` keyword from those helpers (keeping only `GET` and `dynamic` exported), matching the existing convention already used in `services-yml/route.js` (plain unexported `const escapeXml`).
 - This repo's `package.json` has `"type": "module"` — every `.js` file is an ES module. Use `export const`/`export function`; CommonJS `module.exports`/`require()` do not work and fail silently/confusingly (verified: `require()` on such a file returns an object missing the expected properties, not a clean error).
 - No automated test framework exists in this repo (confirmed: no `jest`/`vitest` in `package.json`, no `*.test.js` files anywhere). Testing here means: pure-function verification via ad-hoc `node --input-type=module -e` snippets using `import` (no `@/` import aliases involved, so plain Node can load the file directly), plus `curl` + XML-parse checks against the running dev server for the full route. This matches the established convention in this repo (see `docs/superpowers/plans/2026-07-24-public-offer.md` Task 5).
 - Turbo callback form widget is **self-closing with zero child fields** — `<form data-type="callback" data-send-to="EMAIL"></form>`. Do not add `<input>` children; Turbo's renderer generates the full UI itself. (Verified against real source of `sokolnikov911/yandex-turbo-pages`, a maintained open-source Turbo RSS generator.)
@@ -250,9 +251,11 @@ git commit -m "feat: add Turbo feed news content-block mapper and item builder"
 
 This step adds real imports at the top of the file and the `GET` handler at the bottom, turning the file into a proper Next.js Route Handler (the existing `export const` helpers from Tasks 1-2 stay as-is in the middle).
 
-- [ ] **Step 1: Add imports at the top of the file, and the `GET` handler at the bottom**
+- [ ] **Step 1: Strip `export` from every helper, add imports at the top, and add the `GET` handler at the bottom**
 
-Add these imports at the very top of `src/app/api/turbo-feed/route.js` (above the existing comment/`escapeXml` export):
+First, remove the `export` keyword from every helper defined in Tasks 1-2 (`escapeXml`, `escapeHtml`, `encodeUrlForXml`, `wrapCdata`, `buildServiceItem`, `buildContentBlocksHtml`, `buildNewsItem`) — they become plain `const name = ...`, not `export const name = ...`. This is required (see Global Constraints) — leaving them exported makes the dev server 500 with no useful error message.
+
+Then add these imports at the very top of `src/app/api/turbo-feed/route.js` (above the existing comment/`escapeXml` declaration):
 
 ```javascript
 // app/api/turbo-feed/route.js
@@ -298,6 +301,10 @@ export async function GET(request) {
 
     let itemsXml = '';
     services.forEach((service) => {
+      if (!service.name || !service.slug) {
+        console.warn(`Пропущена услуга без name/slug: ${service._id}`);
+        return;
+      }
       try {
         itemsXml += buildServiceItem(service, baseUrl, FORM_EMAIL);
       } catch (err) {
@@ -305,6 +312,10 @@ export async function GET(request) {
       }
     });
     news.forEach((item) => {
+      if (!item.title || !item.slug) {
+        console.warn(`Пропущена новость без title/slug: ${item._id}`);
+        return;
+      }
       try {
         itemsXml += buildNewsItem(item, baseUrl);
       } catch (err) {
@@ -358,7 +369,9 @@ print('guid count:', len(guids), 'unique:', len(set(guids)))
 "
 ```
 
-Expected: `XML is well-formed` prints with no exception, `item count: 127` (123 services + 4 news — adjust if the actual published counts differ at run time, but guid count must equal item count with no duplicates), `has form widget: True`.
+Expected: `XML is well-formed` prints with no exception, `has form widget: True`, `has undefined link: False`, and guid count equals item count with no duplicates. Note: this repo's local `.env.local`/`.env.production` both point `MONGODB_URI` at `127.0.0.1:27017` — this machine's own local MongoDB, NOT the real production database — so the local item count will NOT be 123+4; whatever real (possibly smaller, possibly containing malformed documents missing `name`/`slug`) data exists locally is fine for this check. The real 123-service, 4-news count is verified against the actual live site in Task 4.
+
+If the dev server returns a plain-text `Internal Server Error` (not this route's own XML fallback) with no matching `console.error`/`console.warn` line in the terminal, and no `✓ Compiled /api/turbo-feed` line ever appears in the dev server log even after waiting — check that no helper function in this file still has an `export` keyword (see Global Constraints); that failure mode is silent and doesn't print a webpack/syntax error.
 
 - [ ] **Step 3: Stop the dev server, commit**
 

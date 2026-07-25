@@ -1,8 +1,18 @@
 // app/api/turbo-feed/route.js
 // Форма-заявка (data-type="callback") доставляет письма на email,
 // а не через вебхук — см. docs/superpowers/specs/2026-07-25-turbo-pages-feed-design.md
+import dbConnect from '@/lib/db';
+import Service from '@/models/Service';
+import News from '@/models/News';
+import { BASE_URL, BUSINESS, SEO_DEFAULTS } from '@/lib/constants';
 
-export const escapeXml = (text) => {
+export const dynamic = 'force-dynamic';
+
+const FORM_EMAIL = 's89062960353@yandex.ru';
+
+let cache = { data: null, timestamp: 0, ttl: 5 * 60 * 1000 };
+
+const escapeXml = (text) => {
   if (text === null || text === undefined || text === '') return '';
   return String(text)
     .replace(/&/g, '&amp;')
@@ -15,7 +25,7 @@ export const escapeXml = (text) => {
     .trim();
 };
 
-export const escapeHtml = (text) => {
+const escapeHtml = (text) => {
   if (text === null || text === undefined) return '';
   return String(text)
     .replace(/&/g, '&amp;')
@@ -23,11 +33,11 @@ export const escapeHtml = (text) => {
     .replace(/>/g, '&gt;');
 };
 
-export const encodeUrlForXml = (url) => encodeURI(url).replace(/&/g, '&amp;');
+const encodeUrlForXml = (url) => encodeURI(url).replace(/&/g, '&amp;');
 
-export const wrapCdata = (html) => `<![CDATA[${html.replace(/]]>/g, ']]&gt;')}]]>`;
+const wrapCdata = (html) => `<![CDATA[${html.replace(/]]>/g, ']]&gt;')}]]>`;
 
-export const buildServiceItem = (service, baseUrl, formEmail) => {
+const buildServiceItem = (service, baseUrl, formEmail) => {
   const title = escapeXml(service.metaTitle || `${service.name} в Вологде`);
   const link = `${baseUrl}/services/${service.slug}`;
   const name = escapeHtml(service.name);
@@ -54,7 +64,7 @@ export const buildServiceItem = (service, baseUrl, formEmail) => {
   );
 };
 
-export const buildContentBlocksHtml = (blocks) => {
+const buildContentBlocksHtml = (blocks) => {
   if (!Array.isArray(blocks) || blocks.length === 0) return '';
   return blocks
     .slice()
@@ -92,7 +102,7 @@ export const buildContentBlocksHtml = (blocks) => {
     .join('');
 };
 
-export const buildNewsItem = (news, baseUrl) => {
+const buildNewsItem = (news, baseUrl) => {
   const title = escapeXml(news.metaTitle || news.title);
   const link = `${baseUrl}/news/${news.slug}`;
   const bodyHtml =
@@ -114,3 +124,78 @@ export const buildNewsItem = (news, baseUrl) => {
     `</item>`
   );
 };
+
+const emptyFeedXml = (baseUrl) =>
+  `<?xml version="1.0" encoding="UTF-8"?>` +
+  `<rss xmlns:yandex="http://news.yandex.ru" xmlns:media="http://search.yahoo.com/mrss/" xmlns:turbo="http://turbo.yandex.ru" version="2.0">` +
+  `<channel><title>${escapeXml(BUSINESS.shortName)}</title><link>${baseUrl}</link><description>${escapeXml(SEO_DEFAULTS.description)}</description><language>ru</language></channel>` +
+  `</rss>`;
+
+export async function GET(request) {
+  const baseUrl = BASE_URL;
+  try {
+    const forceRefresh = request.url.includes('refresh');
+    const now = Date.now();
+
+    if (!forceRefresh && cache.data && now - cache.timestamp < cache.ttl) {
+      return new Response(cache.data, {
+        headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=300' },
+      });
+    }
+
+    await dbConnect();
+
+    const [services, news] = await Promise.all([
+      Service.find({}).lean(),
+      News.find({ isPublished: true }).lean(),
+    ]);
+
+    let itemsXml = '';
+    services.forEach((service) => {
+      if (!service.name || !service.slug) {
+        console.warn(`Пропущена услуга без name/slug: ${service._id}`);
+        return;
+      }
+      try {
+        itemsXml += buildServiceItem(service, baseUrl, FORM_EMAIL);
+      } catch (err) {
+        console.error(`Ошибка обработки услуги ${service.name}:`, err);
+      }
+    });
+    news.forEach((item) => {
+      if (!item.title || !item.slug) {
+        console.warn(`Пропущена новость без title/slug: ${item._id}`);
+        return;
+      }
+      try {
+        itemsXml += buildNewsItem(item, baseUrl);
+      } catch (err) {
+        console.error(`Ошибка обработки новости ${item.title}:`, err);
+      }
+    });
+
+    const xml =
+      `<?xml version="1.0" encoding="UTF-8"?>` +
+      `<rss xmlns:yandex="http://news.yandex.ru" xmlns:media="http://search.yahoo.com/mrss/" xmlns:turbo="http://turbo.yandex.ru" version="2.0">` +
+      `<channel>` +
+      `<title>${escapeXml(BUSINESS.shortName)}</title>` +
+      `<link>${baseUrl}</link>` +
+      `<description>${escapeXml(SEO_DEFAULTS.description)}</description>` +
+      `<language>ru</language>` +
+      itemsXml +
+      `</channel>` +
+      `</rss>`;
+
+    cache = { data: xml, timestamp: now, ttl: cache.ttl };
+
+    return new Response(xml, {
+      headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=300' },
+    });
+  } catch (error) {
+    console.error('❌ Критическая ошибка Turbo-фида:', error);
+    return new Response(emptyFeedXml(baseUrl), {
+      status: 500,
+      headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'no-cache' },
+    });
+  }
+}
