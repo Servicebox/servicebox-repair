@@ -5,6 +5,8 @@ import Link from 'next/link';
 import styles from './MainBanner.module.css';
 import Form from '../Form/Form';
 import { BUSINESS } from '@/lib/constants';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faVk } from '@fortawesome/free-brands-svg-icons';
 
 const trustPills = [
   'Гарантия 24 мес',
@@ -122,6 +124,15 @@ export default function MainBanner() {
             >
               Рассчитать стоимость
             </button>
+            <a
+              href={BUSINESS.socials.vk}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.heroVkBtn}
+              aria-label="Мы ВКонтакте"
+            >
+              <FontAwesomeIcon icon={faVk} />
+            </a>
           </div>
 
           <div className={styles.heroMicro}>
