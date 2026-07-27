@@ -170,6 +170,28 @@
   color: var(--color-text-inverse);
 }
 
+.reviewsLinkSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  color: var(--color-primary-dark);
+  padding: 16px 32px;
+  border: 2px solid var(--color-border);
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+  margin-left: 12px;
+}
+
+.reviewsLinkSecondary:hover {
+  background: var(--color-bg-dark);
+  border-color: var(--color-primary-bg);
+  transform: translateY(-3px);
+}
+
 .reviewsRatingSummary {
   color: var(--color-primary-dark);
   font-size: 1.1rem;
