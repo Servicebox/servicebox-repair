@@ -53,7 +53,7 @@
 
 - `src/components/Footer/Footer.js:97-103` — ссылка-текст «Telegram» в блоке соцсетей футера. Удаляется целиком (остаётся только ссылка ВКонтакте).
 - `src/components/Contacts/Contacts.js:156-163` — карточка контакта с иконкой `faTelegram` и текстом «Telegram» на странице `/contacts`. Удаляется целиком; неиспользуемый после этого импорт `faTelegram` из `@fortawesome/free-brands-svg-icons` тоже убирается (оставить `faVk`).
-- `src/components/AboutRef/AboutRef.js:78,85-92` — упоминание «Онлайн-консультации через сайт и Telegram» в тексте (переформулировать без Telegram) и отдельная кнопка-ссылка «Telegram @Tomkka» с иконкой. Кнопка удаляется целиком; текст переформулируется на «Онлайн-консультации через сайт» (или аналогично, без упоминания конкретного мессенджера); неиспользуемый после этого импорт `faTelegram` убирается.
+- `src/components/AboutRef/AboutRef.js` — проверено: этот компонент нигде не импортируется (`grep -rln "from.*AboutRef'" src` — пусто), т.е. мёртвый код; вдобавок содержит собственный баг — `aboutJsonLd` (строка 50) используется, но нигде не определён и не импортирован (вызвал бы `ReferenceError`, если бы компонент когда-либо реально рендерился). Решение с Томой (27.07.2026): удалить компонент целиком (`AboutRef.js` + `AboutRef.module.css`), а не чинить Telegram-упоминания внутри мёртвого файла.
 - `src/lib/constants.js:52` — `BUSINESS.socials.telegram: 'https://t.me/Tomkka'`. Удаляется как поле объекта.
 - `src/lib/seo-helpers.js:78` — `sameAs: [BUSINESS.socials.vk, BUSINESS.socials.telegram]` (JSON-LD структурированные данные `LocalBusiness`, используется в `layout.js`). Меняется на `sameAs: [BUSINESS.socials.vk]`.
 
