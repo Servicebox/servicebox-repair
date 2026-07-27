@@ -29,7 +29,7 @@ const ReviewsSection = () => {
   ];
 
   return (
-    <section className={styles.reviewsSection} aria-labelledby="reviews-heading">
+    <section id="reviews" className={styles.reviewsSection} aria-labelledby="reviews-heading">
       <div className={styles.container}>
         <h2 id="reviews-heading" className={styles.reviewsTitle}>
           Отзывы клиентов из Вологды

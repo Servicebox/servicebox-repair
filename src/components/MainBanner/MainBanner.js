@@ -85,12 +85,12 @@ export default function MainBanner() {
         {/* LEFT: headline + trust + CTA */}
         <div className={styles.heroLeft}>
 
-          <div className={styles.heroBadge}>
+          <a href="#reviews" className={styles.heroBadge}>
             <div className={styles.badgeStars}>⭐⭐⭐⭐⭐</div>
             <div className={styles.badgeText}>
               <strong>5.0</strong> на Яндекс.Картах · <strong>150+</strong> отзывов
             </div>
-          </div>
+          </a>
 
           <h1 className={styles.heroTitle}>
             Починим вашу технику<br />
