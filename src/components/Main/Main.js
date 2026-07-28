@@ -1,6 +1,7 @@
 // components/Main/Main.js
 'use client';
 
+import { useState } from 'react';
 import MainBanner from "../MainBanner/MainBanner";
 import RepairCalculator from '@/components/RepairCalculator/RepairCalculator';
 import CategoriesGrid from "../CategoriesGrid/CategoriesGrid";
@@ -13,12 +14,14 @@ import Gifts from "../Gifts/Gifts";
 import Contacts from "../Contacts/Contacts";
 
 function Main() {
+  const [heroDeviceType, setHeroDeviceType] = useState(null);
+
   return (
     <div>
       <section className="main">
-        <MainBanner />
+        <MainBanner onSelectDeviceType={setHeroDeviceType} />
         <div id="repair-calculator" className="scroll-mt-24">
-          <RepairCalculator />
+          <RepairCalculator initialDeviceType={heroDeviceType} />
         </div>
         <CategoriesGrid />
         <CommonProblems />
