@@ -35,7 +35,7 @@ export async function generateMetadata({ params }) {
     const description = service.metaDescription ||
       (service.description
         ? `${service.name}. ${service.description}`.slice(0, 160)
-        : `${service.name} в Вологде — ServiceBox. Качественный ремонт, гарантия, выезд мастера.`);
+        : `${service.name} в Вологде — ServiceBox. Качественный ремонт, гарантия на работы.`);
 
     return {
       title,
