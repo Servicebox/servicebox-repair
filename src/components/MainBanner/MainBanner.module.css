@@ -146,6 +146,22 @@
   margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
 }
 
+/* Держит "Рассчитать стоимость" и VK-кнопку в одной строке на узких
+   экранах (<480px), где .heroCTA ещё в колонку — иначе квадратная
+   VK-кнопка повисает одна на отдельной строке под полноширинными
+   кнопками. На ≥480px становится "прозрачной" (display:contents),
+   чтобы её дети влились в общий ряд .heroCTA как раньше. */
+.heroCTASecondaryRow {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.heroCTASecondaryRow .heroBtn {
+  width: auto;
+  flex: 1;
+  min-width: 0;
+}
+
 .heroBtn {
   display: inline-flex;
   align-items: center;
@@ -219,7 +235,7 @@
 
 .deviceQuickPickGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 0.5rem;
 }
 
@@ -469,6 +485,10 @@
     width: auto;
     flex: 1;
     min-width: 0;
+  }
+
+  .heroCTASecondaryRow {
+    display: contents;
   }
 }
 
