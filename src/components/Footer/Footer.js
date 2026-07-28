@@ -93,15 +93,6 @@ function Footer() {
             >
               ВКонтакте
             </a>
-            <a
-              href="https://t.me/Tomkka"
-              className={styles.socialLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Telegram ServiceBox"
-            >
-              Telegram
-            </a>
           </div>
         </div>
 

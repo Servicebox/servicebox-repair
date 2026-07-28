@@ -5,6 +5,8 @@ import Link from 'next/link';
 import styles from './MainBanner.module.css';
 import Form from '../Form/Form';
 import { BUSINESS } from '@/lib/constants';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faVk } from '@fortawesome/free-brands-svg-icons';
 
 const trustPills = [
   'Гарантия 24 мес',
@@ -22,6 +24,15 @@ const services = [
   { icon: '🕹️', name: 'Приставки', href: '/services/consoles' },
 ];
 
+const deviceTypePicks = [
+  { key: 'phone', icon: '📱', label: 'Смартфон' },
+  { key: 'laptop', icon: '💻', label: 'Ноутбук' },
+  { key: 'tablet', icon: '📲', label: 'Планшет' },
+  { key: 'tv', icon: '📺', label: 'Телевизор' },
+  { key: 'console', icon: '🎮', label: 'Приставка' },
+  { key: 'videocard', icon: '🔥', label: 'Видеокарта' },
+];
+
 const stats = [
   { value: '5 000+', label: 'устройств починено' },
   { value: '10 лет', label: 'опыта в Вологде' },
@@ -31,7 +42,7 @@ const stats = [
 const avatarColors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b'];
 const avatarLabels = ['А', 'М', 'Д', '+'];
 
-export default function MainBanner() {
+export default function MainBanner({ onSelectDeviceType }) {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   const openForm = () => {
@@ -53,6 +64,11 @@ export default function MainBanner() {
         document.getElementById('repair-calculator')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 300);
     }
+  };
+
+  const handleDeviceTypePick = (key) => {
+    onSelectDeviceType?.(key);
+    scrollToCalculator();
   };
 
   return (
@@ -83,12 +99,12 @@ export default function MainBanner() {
         {/* LEFT: headline + trust + CTA */}
         <div className={styles.heroLeft}>
 
-          <div className={styles.heroBadge}>
+          <a href="#reviews" className={styles.heroBadge}>
             <div className={styles.badgeStars}>⭐⭐⭐⭐⭐</div>
             <div className={styles.badgeText}>
               <strong>5.0</strong> на Яндекс.Картах · <strong>150+</strong> отзывов
             </div>
-          </div>
+          </a>
 
           <h1 className={styles.heroTitle}>
             Починим вашу технику<br />
@@ -122,6 +138,32 @@ export default function MainBanner() {
             >
               Рассчитать стоимость
             </button>
+            <a
+              href={BUSINESS.socials.vk}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.heroVkBtn}
+              aria-label="Мы ВКонтакте"
+            >
+              <FontAwesomeIcon icon={faVk} />
+            </a>
+          </div>
+
+          <div className={styles.deviceQuickPick} aria-label="Быстрый выбор устройства для расчёта цены">
+            <p className={styles.deviceQuickPickLabel}>Узнать цену за 1 клик:</p>
+            <div className={styles.deviceQuickPickGrid}>
+              {deviceTypePicks.map((d) => (
+                <button
+                  key={d.key}
+                  type="button"
+                  className={styles.deviceQuickPickChip}
+                  onClick={() => handleDeviceTypePick(d.key)}
+                >
+                  <span aria-hidden="true">{d.icon}</span>
+                  <span>{d.label}</span>
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className={styles.heroMicro}>

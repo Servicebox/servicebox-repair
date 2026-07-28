@@ -90,6 +90,15 @@ export default function RepairCalculator({ initialDeviceType = null, initialServ
         setSelectedServices([]);
     };
 
+    // Реагирует на изменение initialDeviceType ПОСЛЕ монтирования — обычный
+    // useState(initialDeviceType) выше видит его только один раз при первом
+    // рендере. Нужно для hero-пикера категории на главной (Main.js), который
+    // передаёт initialDeviceType уже после того, как этот компонент смонтирован.
+    useEffect(() => {
+        if (initialDeviceType) selectDeviceType(initialDeviceType);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initialDeviceType]);
+
     const selectBrand = (id) => {
         setBrandId(id);
         setModelId(null);

@@ -49,7 +49,6 @@ export const BUSINESS = {
 
     socials: {
         vk: 'https://vk.com/servicebox35',
-        telegram: 'https://t.me/Tomkka',
     },
 
     foundingDate: '2016',

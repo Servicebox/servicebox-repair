@@ -83,7 +83,6 @@ export default function ContactsPage() {
                             <h3 className="font-bold text-lg mb-4 text-[var(--color-primary-dark)]">Мы в социальных сетях</h3>
                             <div className="flex gap-4">
                                 <a href={BUSINESS.socials.vk} target="_blank" rel="noopener noreferrer" className="flex-1 bg-blue-700 text-white py-3 rounded-xl text-center font-medium hover:bg-blue-800 transition">ВКонтакте</a>
-                                <a href={BUSINESS.socials.telegram} target="_blank" rel="noopener noreferrer" className="flex-1 bg-blue-500 text-white py-3 rounded-xl text-center font-medium hover:bg-blue-600 transition">Telegram</a>
                             </div>
                         </div>
                     </div>

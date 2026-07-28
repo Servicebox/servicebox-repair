@@ -12,7 +12,7 @@ import {
   faCheckCircle,
   faPhoneVolume
 } from '@fortawesome/free-solid-svg-icons';
-import { faVk, faTelegram } from '@fortawesome/free-brands-svg-icons';
+import { faVk } from '@fortawesome/free-brands-svg-icons';
 
 import styles from "./Contacts.module.css";
 
@@ -151,16 +151,6 @@ const Contacts = forwardRef((props, ref) => {
                 >
                   <FontAwesomeIcon icon={faVk} className={styles.socialIcon} />
                   <span>ВКонтакте</span>
-                </a>
-                <a
-                  href="https://t.me/Tomkka"
-                  className={styles.socialLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Telegram"
-                >
-                  <FontAwesomeIcon icon={faTelegram} className={styles.socialIcon} />
-                  <span>Telegram</span>
                 </a>
               </div>
             </div>

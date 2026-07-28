@@ -1,6 +1,7 @@
 'use client';
 
 import React from "react";
+import Link from "next/link";
 import styles from "./ReviewsSection.module.css";
 
 const ReviewsSection = () => {
@@ -29,7 +30,7 @@ const ReviewsSection = () => {
   ];
 
   return (
-    <section className={styles.reviewsSection} aria-labelledby="reviews-heading">
+    <section id="reviews" className={styles.reviewsSection} aria-labelledby="reviews-heading">
       <div className={styles.container}>
         <h2 id="reviews-heading" className={styles.reviewsTitle}>
           Отзывы клиентов из Вологды
@@ -74,6 +75,9 @@ const ReviewsSection = () => {
           >
             Читать все отзывы на Яндекс.Картах →
           </a>
+          <Link href="/reviews" className={styles.reviewsLinkSecondary}>
+            Оставить свой отзыв
+          </Link>
           <div className={styles.reviewsRatingSummary}>
             <p>
               Рейтинг: <strong>5.0</strong> на основе <strong>150+ отзывов</strong> в Вологде
