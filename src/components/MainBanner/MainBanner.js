@@ -132,21 +132,23 @@ export default function MainBanner({ onSelectDeviceType }) {
             >
               Записаться на ремонт
             </button>
-            <button
-              className={`${styles.heroBtn} ${styles.secondary}`}
-              onClick={scrollToCalculator}
-            >
-              Рассчитать стоимость
-            </button>
-            <a
-              href={BUSINESS.socials.vk}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.heroVkBtn}
-              aria-label="Мы ВКонтакте"
-            >
-              <FontAwesomeIcon icon={faVk} />
-            </a>
+            <div className={styles.heroCTASecondaryRow}>
+              <button
+                className={`${styles.heroBtn} ${styles.secondary}`}
+                onClick={scrollToCalculator}
+              >
+                Рассчитать стоимость
+              </button>
+              <a
+                href={BUSINESS.socials.vk}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.heroVkBtn}
+                aria-label="Мы ВКонтакте"
+              >
+                <FontAwesomeIcon icon={faVk} />
+              </a>
+            </div>
           </div>
 
           <div className={styles.deviceQuickPick} aria-label="Быстрый выбор устройства для расчёта цены">
