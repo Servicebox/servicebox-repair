@@ -75,7 +75,7 @@ export const LOCAL_BUSINESS_SCHEMA = {
     ],
     areaServed: { '@type': 'City', name: BUSINESS.mainAddress.city },
     foundingDate: BUSINESS.foundingDate,
-    sameAs: [BUSINESS.socials.vk, BUSINESS.socials.telegram],
+    sameAs: [BUSINESS.socials.vk],
 };
 
 // ✅ Хлебные крошки

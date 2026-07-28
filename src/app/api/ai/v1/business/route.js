@@ -50,7 +50,6 @@ export async function GET() {
         ],
         sameAs: [
           "https://vk.com/servicebox35",
-          "https://t.me/Tomkka",
           "https://yandex.ru/maps/org/servis_boks/58578899506/"
         ]
       },
