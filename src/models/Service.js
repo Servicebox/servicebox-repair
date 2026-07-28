@@ -198,7 +198,7 @@ serviceSchema.methods.generateMetaDescription = function() {
   // поэтому name всегда идёт первым — это единственное гарантированно
   // уникальное поле в рамках шаблона.
   const base = this.description ? `${this.name}: ${this.description}` : `${this.name} ${geo}`;
-  return `${base}.${this.price ? ` Стоимость ${this.price}.` : ''} Качественный ремонт ${geo}. Гарантия, выезд мастера.`;
+  return `${base}.${this.price ? ` Стоимость ${this.price}.` : ''} Качественный ремонт ${geo}. Гарантия на работы.`;
 };
 serviceSchema.index({ name: 'text', description: 'text', content: 'text' });
 serviceSchema.index({ slug: 1, isPublished: 1 });
