@@ -3,6 +3,7 @@ import dbConnect from '@/lib/db';
 import User from '@/models/User';
 import crypto from 'crypto';
 import { sendVerificationEmail } from '@/lib/email';
+import { phoneMatchRegex } from '@/lib/phone';
 
 export async function POST(request) {
   try {
@@ -35,6 +36,15 @@ export async function POST(request) {
       );
     }
 
+    // Если бонусы уже начислялись по этому телефону через CRM (ремонт в
+    // сервисе до регистрации на сайте) — "забираем" тот тихий аккаунт вместо
+    // создания нового, пустого. Иначе накопленные бонусы остались бы
+    // недоступны клиенту навсегда.
+    const phoneMatcher = phoneMatchRegex(phone);
+    const placeholderUser = phoneMatcher
+      ? await User.findOne({ phone: phoneMatcher, isPhoneOnlyAccount: true })
+      : null;
+
     // СОЗДАЕМ ТОКЕН НАПРЯМУЮ (без метода модели)
     const verificationToken = crypto.randomBytes(32).toString('hex');
     const verificationTokenExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 часа
@@ -42,17 +52,29 @@ export async function POST(request) {
     console.log('🔐 Verification token created:', verificationToken);
     console.log('🔐 Token expires:', verificationTokenExpires);
 
-    // Создаем пользователя с токеном
-    const user = new User({
-      username: username.trim(),
-      email: email.toLowerCase().trim(),
-      password,
-      phone: phone.trim(),
-      verificationToken,
-      verificationTokenExpires,
-    });
+    let user;
+    if (placeholderUser) {
+      console.log('🔗 Claiming existing phone-only account:', placeholderUser._id);
+      placeholderUser.username = username.trim();
+      placeholderUser.email = email.toLowerCase().trim();
+      placeholderUser.password = password;
+      placeholderUser.phone = phone.trim();
+      placeholderUser.isPhoneOnlyAccount = false;
+      placeholderUser.verificationToken = verificationToken;
+      placeholderUser.verificationTokenExpires = verificationTokenExpires;
+      user = placeholderUser;
+    } else {
+      user = new User({
+        username: username.trim(),
+        email: email.toLowerCase().trim(),
+        password,
+        phone: phone.trim(),
+        verificationToken,
+        verificationTokenExpires,
+      });
+    }
 
-    console.log('👤 User instance created:', user._id);
+    console.log('👤 User instance ready:', user._id ?? '(new)');
 
     // Сохраняем пользователя
     console.log('💾 сохранен в базу...');
