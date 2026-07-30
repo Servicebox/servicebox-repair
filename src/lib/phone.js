@@ -1,9 +1,9 @@
 /**
- * Builds a regex that matches a phone number regardless of formatting
- * (spaces, dashes, parentheses, leading +7/8) by comparing only the last
- * 10 digits with any non-digit characters allowed between them. Mirrors
- * crm-repair's buildPhoneMatcher so both sides agree on "same phone number"
- * without requiring any existing User.phone values to be normalized first.
+ * Строит регулярку, которая находит телефон независимо от форматирования
+ * (пробелы, дефисы, скобки, +7/8 в начале) — сравниваются только последние
+ * 10 цифр, между ними допускаются любые нецифровые символы. Логика зеркалит
+ * buildPhoneMatcher из crm-repair, чтобы обе стороны одинаково понимали
+ * "один и тот же номер телефона" без миграции уже сохранённых User.phone.
  */
 export function phoneMatchRegex(rawPhone) {
   const digits = (rawPhone ?? '').replace(/\D/g, '').slice(-10);
@@ -11,7 +11,7 @@ export function phoneMatchRegex(rawPhone) {
   return new RegExp(digits.split('').join('\\D*'));
 }
 
-/** Last-10-digits form, used only when we need to *store* a phone value ourselves. */
+/** Последние 10 цифр — используется только когда сами СОХРАНЯЕМ телефон. */
 export function normalizePhoneDigits(rawPhone) {
   return (rawPhone ?? '').replace(/\D/g, '').slice(-10);
 }

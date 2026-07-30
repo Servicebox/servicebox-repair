@@ -134,19 +134,38 @@ document; if found, it upgrades that existing document in place (sets real `emai
 
 ## Spending: site checkout
 
-- Checkout UI shows available-to-spend = `min(balance, 50% of order total)`.
-- New customer-facing route (e.g. `POST /api/orders/[id]/apply-bonus`), authenticated via the
-  existing `verifyToken` (not admin-only, unlike current `/api/bonuses` POST). Server
-  re-validates the 50% cap against the actual order total — never trusts a client-supplied amount.
-- Balance-sufficiency check uses the same atomic single-query pattern already in
-  `/api/bonuses` POST (`{ _id: userId, bonuses: { $gte: points } }`), not read-then-write.
-- The `BonusTransaction` (`type: 'spend'`) is only created inside the existing Split
-  payment-webhook success handler (after the reduced amount is actually confirmed paid) — not at
-  the moment the customer clicks "apply." If payment never completes, no bonuses are spent.
+**Correction found while reading the actual checkout code:** online cashback today is only ever
+earned through the Yandex Split path — `awardOrderBonuses` is called exclusively from the Split
+payment webhook. The plain "cash/card at pickup" checkout (`POST /api/orders`, used by
+`CheckoutForm.js`'s main submit button) creates an `Order` directly, has no online payment step,
+and never touches bonuses at all today. So bonus *spending* is scoped to the same Split path
+where earning already happens — not a generic "any checkout" feature. This keeps the change
+small and symmetric with existing behavior; the cash/card-at-pickup flow is untouched.
+
+- Checkout UI (near `SplitPayButton`) shows available-to-spend =
+  `min(balance, 50% of cart total)`, with an input/slider for how many points to redeem.
+- `POST /api/payments/split/create` (`src/app/api/payments/split/create/route.js`) gains an
+  optional `bonusPoints` field in its request schema. Server re-validates: re-fetches
+  `User.findById(user.id).select('bonuses')` and re-derives the 50% cap from `totalRub` computed
+  server-side from `items` — never trusts a client-supplied discount amount.
+- The Split payment amount (`splitPayload.amount`/`totalKop`) is reduced by `bonusPoints * 100`
+  (kopecks), so the customer is only charged the discounted amount through Split. The created
+  `Order` document stores the redeemed amount in its existing `discount` field (already present
+  on the schema, currently always `0` from this route — no new field needed) and `totalAmount`
+  is set to the discounted total.
+- The `BonusTransaction` (`type: 'spend'`) and the `$inc` debit against `User.bonuses` happen
+  inside the existing Split webhook success handler (`/api/payments/split/webhook`), guarded by
+  the same atomic `{ _id: userId, bonuses: { $gte: points } }` pattern already used in
+  `/api/bonuses` POST — not at checkout-button-click time. If payment never completes, no bonuses
+  are debited. If the debit fails at webhook time (e.g. balance already spent by a concurrent
+  order) after the discounted Split payment already succeeded, this is accepted as a rare soft
+  failure (logged, not retried) — consistent with this project's other accepted edge cases; it
+  costs the business a small discount rather than breaking anything for the customer.
 - `awardOrderBonuses`'s cashback base changes from "order total" to "amount actually paid in
-  money" (order total minus any bonus discount applied). For the ~100% of orders today that don't
-  use a bonus discount, this is numerically identical to current behavior — zero regression. This
-  prevents bonuses from generating further bonuses in a loop.
+  money" (`order.totalAmount`, which by the point cashback is awarded already reflects any bonus
+  discount). For every order that doesn't use a bonus discount (100% of orders today), this is
+  numerically identical to current behavior — zero regression. This prevents bonuses from
+  generating further bonuses in a loop.
 
 ## Spending: in-person via CRM (generic, opt-in per tenant company)
 

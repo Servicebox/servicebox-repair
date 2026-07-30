@@ -17,7 +17,7 @@ function verifyHmac(rawBody, header) {
 
   if (!header) return false;
 
-  // crm-repair's fireWebhook signs as `sha256=<hex>` (src/lib/outboundWebhook.ts)
+  // crm-repair подписывает как `sha256=<hex>` (см. src/lib/outboundWebhook.ts)
   const expected = `sha256=${createHmac('sha256', secret).update(rawBody).digest('hex')}`;
 
   try {
