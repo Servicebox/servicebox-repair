@@ -42,6 +42,10 @@ const userSchema = new mongoose.Schema({
     default: 0,
     min: [0, 'Баланс бонусов не может быть отрицательным']
   },
+  isPhoneOnlyAccount: {
+    type: Boolean,
+    default: false
+  },
   googleWalletPassId: {
     type: String,
     default: ''
