@@ -7,6 +7,7 @@ import dbConnect from '@/lib/db';
 import { verifyToken } from '@/lib/auth-helpers';
 import Order from '@/models/Order';
 import PaymentConfig from '@/models/PaymentConfig';
+import User from '@/models/User';
 
 const itemSchema = z.object({
   productId: z.string().min(1),
@@ -22,7 +23,55 @@ const createSchema = z.object({
   customerName: z.string().min(1),
   customerEmail: z.string().email(),
   customerPhone: z.string().min(7),
+  bonusPoints: z.number().int().min(0).optional().default(0),
 });
+
+/**
+ * В payload Яндекс Сплит одновременно передаются и общая `amount`, и цена
+ * ЗА ЕДИНИЦУ по каждой позиции (`price` × `count`). Раз цена в позиции —
+ * целое число копеек за штуку, а не за всю строку, произвольную скидку
+ * нельзя всегда разложить без остатка при quantity > 1 (например, скидка
+ * 1899.97 → 1329.98 при 3 шт. в одной строке не делится ровно на 3).
+ * Поэтому здесь СНАЧАЛА считается цена за единицу с округлением по каждой
+ * позиции, а затем из этих же округлённых цен пересобирается фактическая
+ * сумма (`actualTotalKop`) — она и уходит в Яндекс как `amount`, чтобы
+ * позиции и итог гарантированно совпадали. Расхождение с "идеальной"
+ * скидкой — не больше нескольких копеек суммарно и не влияет на баллы,
+ * списываемые с бонусного баланса (те остаются целым числом, как ввёл
+ * клиент) — оно есть только в сумме, которую видит платёжный провайдер.
+ */
+function buildDiscountedSplitItems(items, totalKopBeforeDiscount, totalKopAfterDiscount) {
+  if (totalKopBeforeDiscount === totalKopAfterDiscount) {
+    const splitItems = items.map(i => ({
+      id: i.productId,
+      title: i.name,
+      price: Math.round(i.price * 100),
+      count: i.quantity,
+      type: 'PHYSICAL',
+    }));
+    return { splitItems, actualTotalKop: totalKopAfterDiscount };
+  }
+
+  const ratio = totalKopAfterDiscount / totalKopBeforeDiscount;
+  let actualTotalKop = 0;
+
+  const splitItems = items.map(i => {
+    const lineTotalKopBefore = Math.round(i.price * i.quantity * 100);
+    const lineTotalKopAfter = Math.round(lineTotalKopBefore * ratio);
+    const unitPriceKop = Math.round(lineTotalKopAfter / i.quantity);
+    actualTotalKop += unitPriceKop * i.quantity;
+
+    return {
+      id: i.productId,
+      title: i.name,
+      price: unitPriceKop,
+      count: i.quantity,
+      type: 'PHYSICAL',
+    };
+  });
+
+  return { splitItems, actualTotalKop };
+}
 
 export async function POST(request) {
   await dbConnect();
@@ -51,21 +100,26 @@ export async function POST(request) {
   }
 
   const totalRub = body.items.reduce((sum, i) => sum + i.price * i.quantity, 0);
-  const totalKop = Math.round(totalRub * 100);
+  const totalKopBeforeDiscount = Math.round(totalRub * 100);
+
+  let bonusPoints = 0;
+  if (body.bonusPoints > 0) {
+    const caller = await User.findById(user.id).select('bonuses').lean();
+    const maxRedeemable = Math.min(caller?.bonuses ?? 0, Math.floor(totalRub * 0.5));
+    bonusPoints = Math.min(body.bonusPoints, maxRedeemable);
+  }
+
+  const discountedTotalRub = totalRub - bonusPoints;
+  const nominalTotalKop = Math.round(discountedTotalRub * 100);
+  const { splitItems, actualTotalKop } = buildDiscountedSplitItems(body.items, totalKopBeforeDiscount, nominalTotalKop);
   const merchantOrderId = `SB-${Date.now()}-${randomUUID().slice(0, 8).toUpperCase()}`;
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://servicebox35.ru';
 
   const splitPayload = {
     merchantOrderId,
-    amount: totalKop,
+    amount: actualTotalKop,
     currency: 'RUB',
-    items: body.items.map(i => ({
-      id: i.productId,
-      title: i.name,
-      price: Math.round(i.price * 100),
-      count: i.quantity,
-      type: 'PHYSICAL',
-    })),
+    items: splitItems,
     customer: {
       name: body.customerName,
       email: body.customerEmail,
@@ -125,7 +179,8 @@ export async function POST(request) {
       totalPrice: i.price * i.quantity,
     })),
     subtotal: totalRub,
-    totalAmount: totalRub,
+    discount: bonusPoints,
+    totalAmount: discountedTotalRub,
     paymentMethod: 'yandex_split',
     paymentStatus: 'pending',
     status: 'pending',

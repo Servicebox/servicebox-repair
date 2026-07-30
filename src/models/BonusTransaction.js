@@ -29,6 +29,10 @@ const BonusTransactionSchema = new mongoose.Schema({
     ref: 'Order',
     default: null
   },
+  crmOrderNumber: {
+    type: String,
+    default: null
+  },
   description: {
     type: String,
     required: [true, 'Описание транзакции обязательно'],
