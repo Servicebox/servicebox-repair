@@ -138,7 +138,11 @@ const OrderSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  
+  bonusesSpent: {
+    type: Boolean,
+    default: false
+  },
+
   // Статусы
   status: {
     type: String,
