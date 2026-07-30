@@ -4,9 +4,10 @@ import { useState } from 'react';
 /**
  * items: Array<{ productId, name, price, quantity, image?, slug? }>
  * customer: { name, email, phone }
+ * bonusPoints?: number — сколько бонусов списать как скидку (лимит проверяется на сервере)
  * onError?: (msg: string) => void
  */
-export default function SplitPayButton({ items, customer, className = '', onError }) {
+export default function SplitPayButton({ items, customer, bonusPoints = 0, className = '', onError }) {
   const [loading, setLoading] = useState(false);
 
   if (process.env.NEXT_PUBLIC_SPLIT_ENABLED !== 'true') return null;
@@ -36,6 +37,7 @@ export default function SplitPayButton({ items, customer, className = '', onErro
           customerName:  customer.name,
           customerEmail: customer.email,
           customerPhone: customer.phone,
+          bonusPoints,
         }),
       });
 
@@ -56,7 +58,7 @@ export default function SplitPayButton({ items, customer, className = '', onErro
   };
 
   const plans = process.env.NEXT_PUBLIC_SPLIT_PLANS?.split(',') ?? ['2', '4', '6'];
-  const partAmount = Math.ceil(totalAmount / Number(plans[0]));
+  const partAmount = Math.ceil((totalAmount - bonusPoints) / Number(plans[0]));
 
   return (
     <button

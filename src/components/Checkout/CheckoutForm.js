@@ -26,6 +26,8 @@ const CheckoutForm = () => {
   });
   const [errors, setErrors]   = useState({});
   const [touched, setTouched] = useState({});
+  const [bonusBalance, setBonusBalance] = useState(0);
+  const [bonusToRedeem, setBonusToRedeem] = useState(0);
 
   useEffect(() => {
     loadCartAndProducts();
@@ -51,6 +53,11 @@ const CheckoutForm = () => {
         email: user.email || '',
         phone: user.phone || ''
       }));
+
+      fetch('/api/bonuses', { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => setBonusBalance(data.balance ?? 0))
+        .catch(() => setBonusBalance(0));
     }
 
     fetch('/api/allproducts')
@@ -646,6 +653,25 @@ const CheckoutForm = () => {
               onError={msg => alert(msg)}
             />
 
+            {user && bonusBalance > 0 && (
+              <div className={styles.formGroup}>
+                <label>
+                  Списать бонусы (доступно: {Math.min(bonusBalance, Math.floor(finalTotal * 0.5))} из {bonusBalance})
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  max={Math.min(bonusBalance, Math.floor(finalTotal * 0.5))}
+                  value={bonusToRedeem}
+                  onChange={(e) => {
+                    const cap = Math.min(bonusBalance, Math.floor(finalTotal * 0.5));
+                    const next = Math.max(0, Math.min(cap, Number(e.target.value) || 0));
+                    setBonusToRedeem(next);
+                  }}
+                />
+              </div>
+            )}
+
             <SplitPayButton
               items={visibleProducts.map(p => ({
                 productId: p._id ?? p.slug,
@@ -660,6 +686,7 @@ const CheckoutForm = () => {
                 email: formData.email,
                 phone: formData.phone,
               }}
+              bonusPoints={bonusToRedeem}
               onError={msg => alert(msg)}
             />
 
