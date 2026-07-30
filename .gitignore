@@ -50,3 +50,9 @@ Thumbs.db
 *.sqlite
 .superpowers/sdd/
 .worktrees/
+
+# Google Cloud service account key files (downloaded to project root during
+# manual key rotation — must never be committed; the actual key lives only
+# in GOOGLE_SERVICE_ACCOUNT_KEY in .env.production on the server)
+servicebox35-e242f-*.json
+*-gserviceaccount-*.json

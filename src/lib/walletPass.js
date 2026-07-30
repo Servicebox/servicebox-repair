@@ -20,8 +20,14 @@ function getServiceAccount() {
 export function generateWalletJwt({ userId, username, bonuses }) {
   const sa = getServiceAccount();
 
-  const issuerId    = process.env.GOOGLE_WALLET_ISSUER_ID ?? '9299-5484-6696';
-  const classSuffix = process.env.GOOGLE_WALLET_CLASS_ID ?? 'loyalty_class';
+  // issuerId должен быть чисто числовым (формат ресурса Google Wallet API это
+  // требует) — реальный номер эмитента 3388000000023112880, найден в кабинете
+  // pay.google.com/business/console (URL класса лояльности). "9299-5484-6696"
+  // (с дефисами) — это реальный, но человекочитаемый суффикс класса,
+  // ошибочно использовавшийся как issuerId (issuerId и classSuffix были
+  // перепутаны местами в конфиге ранее).
+  const issuerId    = process.env.GOOGLE_WALLET_ISSUER_ID ?? '3388000000023112880';
+  const classSuffix = process.env.GOOGLE_WALLET_CLASS_ID ?? '9299-5484-6696';
   const classId     = `${issuerId}.${classSuffix}`;
   // Правильный формат: issuerId.suffix — точка только одна (не classId.suffix)
   const objectId    = `${issuerId}.sb_${userId}`;
