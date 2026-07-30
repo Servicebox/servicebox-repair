@@ -113,10 +113,24 @@ what this project adds) keep receiving the existing fields unchanged.
     session/transaction, same pattern as `awardOrderBonuses`. `BonusTransaction` gets a new
     optional `crmOrderNumber` field (traceability back to the CRM order; `orderId` stays reserved
     for the site's own `Order` model).
-  - not found → create a new `User` with only `phone` set (no email, no password hash — existing
-    login code paths require a password, so this account is inert for login purposes until the
-    customer sets one), then credit it the same way. No separate "pending balance" model — the
-    account itself *is* the balance holder from the first repair onward.
+  - not found → create a new `User`, then credit it the same way. No separate "pending balance"
+    model — the account itself *is* the balance holder from the first repair onward.
+
+**Correction found while reading the actual `User` schema (`src/models/User.js`):** `email` is
+`required: true, unique: true` — a phone-only `User` cannot simply omit it. The auto-created
+account gets a deterministic placeholder email (`phone<normalizedDigits>@bonus.crm`, satisfying
+the existing email-format validator) and a new `isPhoneOnlyAccount: true` flag (new schema field,
+default `false`, additive — existing users are unaffected). This account is unusable for login
+(no password hash is set; the existing login route already requires a password match).
+
+**Claiming the account at real registration:** the existing signup route
+(`src/app/api/auth/signup/route.js`) only de-dupes by `email`, not `phone` — if left unchanged, a
+customer who later registers normally would get a *second*, empty-balance `User`, orphaning the
+bonuses earned via CRM on the placeholder account. Signup is changed to also check
+`User.findOne({ phone: normalizedPhone, isPhoneOnlyAccount: true })` before creating a new
+document; if found, it upgrades that existing document in place (sets real `email`/`password`/
+`username`, clears `isPhoneOnlyAccount`) instead of inserting a new one — preserving `_id`,
+`bonuses`, and transaction history.
 
 ## Spending: site checkout
 
