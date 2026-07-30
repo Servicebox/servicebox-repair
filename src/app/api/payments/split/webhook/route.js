@@ -5,6 +5,8 @@ import { createHmac, timingSafeEqual } from 'crypto';
 import mongoose from 'mongoose';
 import dbConnect from '@/lib/db';
 import Order from '@/models/Order';
+import User from '@/models/User';
+import BonusTransaction from '@/models/BonusTransaction';
 import { awardOrderBonuses } from '@/lib/bonuses';
 
 function verifyHmac(rawBody, signature) {
@@ -82,6 +84,36 @@ export async function POST(request) {
         });
 
         await Order.findByIdAndUpdate(order._id, { bonusesAwarded: true }, { session });
+      }
+
+      if (order.userId && order.discount > 0 && !order.bonusesSpent) {
+        const spendResult = await User.findOneAndUpdate(
+          { _id: order.userId, bonuses: { $gte: order.discount } },
+          { $inc: { bonuses: -order.discount } },
+          { new: true, session }
+        );
+
+        if (spendResult) {
+          await BonusTransaction.create(
+            [{
+              userId: order.userId,
+              type: 'spend',
+              points: -order.discount,
+              orderId: order._id,
+              description: `Списание бонусов при оплате заказа ${order.orderNumber}`,
+            }],
+            { session }
+          );
+        } else {
+          // Баланс изменился между оформлением заказа и подтверждением оплаты
+          // (например, бонусы уже потрачены где-то ещё). Принятая мягкая
+          // деградация — клиент уже получил скидку через Split, повторных
+          // попыток не делаем. См. спеку 2026-07-30-crm-bonus-integration-design.md,
+          // раздел "Error handling".
+          console.warn(`Order ${order.orderNumber}: insufficient bonus balance at spend time (${order.discount} needed), not debited`);
+        }
+
+        await Order.findByIdAndUpdate(order._id, { bonusesSpent: true }, { session });
       }
 
       await session.commitTransaction();
