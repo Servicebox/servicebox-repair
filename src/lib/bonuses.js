@@ -40,12 +40,15 @@ export async function awardOrderBonuses({ userId, orderId, totalAmount, session 
  * 2026-07-30-crm-bonus-integration-design.md, раздел "Correction found while
  * reading the actual User schema".
  */
-export async function awardCrmRepairBonus({ phone, finalCost, crmOrderNumber, session }) {
+/**
+ * Находит пользователя по телефону или создаёт "тихий" аккаунт (без пароля,
+ * с плейсхолдер-email) — общая логика для начисления бонусов из CRM и для
+ * выдачи карты лояльности по прямой ссылке (см. /wallet/issue). Возвращает
+ * null, если phone не проходит валидацию как телефон вообще.
+ */
+export async function findOrCreateUserByPhone(phone, { session } = {}) {
   const matcher = phoneMatchRegex(phone);
-  if (!matcher) return { awarded: false, reason: 'invalid_phone' };
-  if (!finalCost || finalCost <= 0) return { awarded: false, reason: 'zero_amount' };
-
-  const points = Math.max(1, Math.floor(finalCost * BONUS_RATE));
+  if (!matcher) return null;
 
   let user = await User.findOne({ phone: matcher }).session(session);
   if (!user) {
@@ -61,6 +64,16 @@ export async function awardCrmRepairBonus({ phone, finalCost, crmOrderNumber, se
       { session }
     );
   }
+  return user;
+}
+
+export async function awardCrmRepairBonus({ phone, finalCost, crmOrderNumber, session }) {
+  if (!finalCost || finalCost <= 0) return { awarded: false, reason: 'zero_amount' };
+
+  const user = await findOrCreateUserByPhone(phone, { session });
+  if (!user) return { awarded: false, reason: 'invalid_phone' };
+
+  const points = Math.max(1, Math.floor(finalCost * BONUS_RATE));
 
   await User.updateOne(
     { _id: user._id },
