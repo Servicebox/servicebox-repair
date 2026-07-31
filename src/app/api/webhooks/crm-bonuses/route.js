@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import dbConnect from '@/lib/db';
 import ProcessedCrmBonusEvent from '@/models/ProcessedCrmBonusEvent';
 import { awardCrmRepairBonus } from '@/lib/bonuses';
+import { syncWalletBalance } from '@/lib/walletPass';
 
 function verifyHmac(rawBody, header) {
   const secret = process.env.CRM_BONUS_WEBHOOK_SECRET;
@@ -64,9 +65,10 @@ export async function POST(request) {
   }
 
   const session = await mongoose.startSession();
+  let result;
   try {
     session.startTransaction();
-    await awardCrmRepairBonus({
+    result = await awardCrmRepairBonus({
       phone: clientPhone,
       finalCost,
       crmOrderNumber: orderNumber,
@@ -79,6 +81,10 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Внутренняя ошибка' }, { status: 500 });
   } finally {
     session.endSession();
+  }
+
+  if (result?.awarded) {
+    await syncWalletBalance({ userId: result.userId, bonuses: result.newBalance });
   }
 
   return NextResponse.json({ ok: true });

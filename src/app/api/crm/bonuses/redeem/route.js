@@ -7,6 +7,7 @@ import dbConnect from '@/lib/db';
 import User from '@/models/User';
 import BonusTransaction from '@/models/BonusTransaction';
 import { phoneMatchRegex } from '@/lib/phone';
+import { syncWalletBalance } from '@/lib/walletPass';
 
 function validateApiKey(request) {
   const envKey = process.env.CRM_BONUS_API_KEY;
@@ -79,6 +80,8 @@ export async function POST(request) {
     points: -body.points,
     description: 'Списание бонусов в сервисном центре (CRM)',
   });
+
+  await syncWalletBalance({ userId: updatedUser._id, bonuses: updatedUser.bonuses });
 
   return NextResponse.json({ ok: true, newBalance: updatedUser.bonuses });
 }

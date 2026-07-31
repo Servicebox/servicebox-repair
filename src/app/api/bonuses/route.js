@@ -6,6 +6,7 @@ import dbConnect from '@/lib/db';
 import { verifyToken } from '@/lib/auth-helpers';
 import User from '@/models/User';
 import BonusTransaction from '@/models/BonusTransaction';
+import { syncWalletBalance } from '@/lib/walletPass';
 
 const adminAdjustSchema = z.object({
   userId:      z.string().min(1),
@@ -92,6 +93,8 @@ export async function POST(request) {
     points:      delta,
     description: body.description,
   });
+
+  await syncWalletBalance({ userId: body.userId, bonuses: updatedUser.bonuses });
 
   return NextResponse.json(
     { balance: updatedUser.bonuses, transaction: tx },
