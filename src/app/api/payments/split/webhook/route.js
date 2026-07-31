@@ -8,6 +8,7 @@ import Order from '@/models/Order';
 import User from '@/models/User';
 import BonusTransaction from '@/models/BonusTransaction';
 import { awardOrderBonuses } from '@/lib/bonuses';
+import { syncWalletBalance } from '@/lib/walletPass';
 
 function verifyHmac(rawBody, signature) {
   const secret = process.env.YANDEX_SPLIT_WEBHOOK_SECRET;
@@ -61,6 +62,7 @@ export async function POST(request) {
 
   if (status === 'success' || status === 'completed' || status === 'captured') {
     const session = await mongoose.startSession();
+    let walletSync = null;
     try {
       session.startTransaction();
 
@@ -76,12 +78,13 @@ export async function POST(request) {
       }
 
       if (order.userId && !order.bonusesAwarded) {
-        await awardOrderBonuses({
+        const awardResult = await awardOrderBonuses({
           userId:      order.userId,
           orderId:     order._id,
           totalAmount: order.totalAmount,
           session,
         });
+        walletSync = { userId: order.userId, bonuses: awardResult.newBalance };
 
         await Order.findByIdAndUpdate(order._id, { bonusesAwarded: true }, { session });
       }
@@ -104,6 +107,7 @@ export async function POST(request) {
             }],
             { session }
           );
+          walletSync = { userId: order.userId, bonuses: spendResult.bonuses };
         } else {
           // Баланс изменился между оформлением заказа и подтверждением оплаты
           // (например, бонусы уже потрачены где-то ещё). Принятая мягкая
@@ -123,6 +127,10 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Внутренняя ошибка' }, { status: 500 });
     } finally {
       session.endSession();
+    }
+
+    if (walletSync) {
+      await syncWalletBalance(walletSync);
     }
   } else if (status === 'failed' || status === 'cancelled' || status === 'voided') {
     await Order.findOneAndUpdate(

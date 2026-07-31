@@ -26,10 +26,10 @@ export async function awardOrderBonuses({ userId, orderId, totalAmount, session 
   const ratePct = await getBonusRatePct();
   const points = Math.max(1, Math.floor(totalAmount * (ratePct / 100)));
 
-  await User.findByIdAndUpdate(
+  const updatedUser = await User.findByIdAndUpdate(
     userId,
     { $inc: { bonuses: points } },
-    { session }
+    { new: true, session }
   );
 
   await BonusTransaction.create(
@@ -43,7 +43,7 @@ export async function awardOrderBonuses({ userId, orderId, totalAmount, session 
     { session }
   );
 
-  return { awarded: true, points };
+  return { awarded: true, points, newBalance: updatedUser.bonuses };
 }
 
 /**
@@ -89,10 +89,10 @@ export async function awardCrmRepairBonus({ phone, finalCost, crmOrderNumber, se
   const ratePct = await getBonusRatePct();
   const points = Math.max(1, Math.floor(finalCost * (ratePct / 100)));
 
-  await User.updateOne(
+  const updatedUser = await User.findOneAndUpdate(
     { _id: user._id },
     { $inc: { bonuses: points } },
-    { session }
+    { new: true, session }
   );
 
   await BonusTransaction.create(
@@ -106,5 +106,5 @@ export async function awardCrmRepairBonus({ phone, finalCost, crmOrderNumber, se
     { session }
   );
 
-  return { awarded: true, points, userId: user._id.toString() };
+  return { awarded: true, points, userId: user._id.toString(), newBalance: updatedUser.bonuses };
 }

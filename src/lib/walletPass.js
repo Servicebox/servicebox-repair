@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 
 const SAVE_URL_BASE = 'https://pay.google.com/gp/v/save';
+const WALLET_OBJECTS_API = 'https://walletobjects.googleapis.com/walletobjects/v1';
+const TOKEN_URL = 'https://oauth2.googleapis.com/token';
 
 function getServiceAccount() {
   const raw = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
@@ -102,4 +104,80 @@ export function generateWalletJwt({ userId, username, bonuses }) {
     saveUrl:  `${SAVE_URL_BASE}/${token}`,
     objectId,
   };
+}
+
+/**
+ * Получает OAuth2 access token сервисного аккаунта для Google Wallet
+ * Objects REST API (JWT bearer grant, RFC 7523) — отдельный от JWT для
+ * "savetowallet" выше, у него другая аудитория (aud) и он реально уходит
+ * в Google, а не просто подписывается для ссылки.
+ */
+async function getWalletAccessToken() {
+  const sa = getServiceAccount();
+  const now = Math.floor(Date.now() / 1000);
+
+  const assertion = jwt.sign(
+    {
+      iss: sa.client_email,
+      scope: 'https://www.googleapis.com/auth/wallet_object.issuer',
+      aud: TOKEN_URL,
+      iat: now,
+      exp: now + 3600,
+    },
+    sa.private_key,
+    { algorithm: 'RS256' }
+  );
+
+  const res = await fetch(TOKEN_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+      assertion,
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Не удалось получить access token Google Wallet: ${res.status}`);
+  }
+
+  const data = await res.json();
+  return data.access_token;
+}
+
+/**
+ * Обновляет баланс бонусов на уже выданной карте лояльности в Google Wallet
+ * (PATCH объекта через Wallet Objects API), чтобы клиент видел актуальное
+ * число, а не то, что было на момент добавления карты. Вызывается после
+ * каждого изменения User.bonuses — начисление, списание, ручная
+ * корректировка. Никогда не бросает исключение наружу: если карта ещё не
+ * была добавлена клиентом (404 — объект не существует в Google) или сервис
+ * временно недоступен, это не должно ломать саму операцию с бонусами,
+ * которая уже сохранена в БД к моменту вызова.
+ */
+export async function syncWalletBalance({ userId, bonuses }) {
+  try {
+    const issuerId = process.env.GOOGLE_WALLET_ISSUER_ID ?? '3388000000023112880';
+    const objectId  = `${issuerId}.sb_${userId}`;
+
+    const accessToken = await getWalletAccessToken();
+
+    await fetch(`${WALLET_OBJECTS_API}/loyaltyObject/${objectId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({
+        loyaltyPoints: {
+          label: 'Бонусы',
+          balance: { string: String(bonuses) },
+        },
+      }),
+    });
+    // Ответ намеренно не проверяем на ok — 404 (карта ещё не добавлена)
+    // и любые другие ошибки здесь не критичны, см. комментарий к функции.
+  } catch (err) {
+    console.error('syncWalletBalance: не удалось обновить карту Google Wallet:', err.message);
+  }
 }
