@@ -54,20 +54,18 @@ export async function POST(request) {
 
   await dbConnect();
 
+  // Отметка "событие обработано" пишется той же транзакцией, что и само
+  // начисление — иначе при сбое транзакции (например, временная проблема
+  // с БД) отметка всё равно фиксируется, и повторная доставка того же
+  // вебхука от CRM больше никогда не начислит бонус по этому заказу.
+  // См. баг 2026-08-01: транзакции падали из-за отсутствия replica set на
+  // проде, из-за чего "обработано" записывалось, а начисления не было.
   const eventKey = `${orderNumber}:issued`;
-  try {
-    await ProcessedCrmBonusEvent.create({ eventKey });
-  } catch (err) {
-    if (err.code === 11000) {
-      return NextResponse.json({ ok: true, skipped: true });
-    }
-    throw err;
-  }
-
   const session = await mongoose.startSession();
   let result;
   try {
     session.startTransaction();
+    await ProcessedCrmBonusEvent.create([{ eventKey }], { session });
     result = await awardCrmRepairBonus({
       phone: clientPhone,
       finalCost,
@@ -77,6 +75,9 @@ export async function POST(request) {
     await session.commitTransaction();
   } catch (err) {
     await session.abortTransaction();
+    if (err.code === 11000) {
+      return NextResponse.json({ ok: true, skipped: true });
+    }
     console.error('CRM bonus webhook processing error:', err);
     return NextResponse.json({ error: 'Внутренняя ошибка' }, { status: 500 });
   } finally {
