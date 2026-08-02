@@ -12,8 +12,7 @@ export default function CookieConsent() {
 
   useEffect(() => {
     if (!isLoading && !consent?.date) {
-      const timer = setTimeout(() => setIsVisible(true), 1000);
-      return () => clearTimeout(timer);
+      setIsVisible(true);
     }
   }, [isLoading, consent]);
 
