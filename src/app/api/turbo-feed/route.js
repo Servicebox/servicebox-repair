@@ -108,7 +108,7 @@ const buildNewsItem = (news, baseUrl) => {
   const bodyHtml =
     buildContentBlocksHtml(news.contentBlocks) || `<p>${escapeHtml(news.excerpt || '')}</p>`;
   const coverHtml = news.featuredImage
-    ? `<figure><img src="${encodeUrlForXml(news.featuredImage)}" /></figure>`
+    ? `<figure><img src="${encodeUrlForXml(news.featuredImage)}" alt="${escapeXml(news.title)}" /></figure>`
     : '';
   const contentHtml = `<header>${coverHtml}<h1>${escapeHtml(news.title)}</h1></header>${bodyHtml}`;
   const pubDate = new Date(news.publishedAt || news.createdAt || Date.now()).toUTCString();
