@@ -85,9 +85,9 @@
 
 .cookieText {
   color: var(--color-text-muted);
-  line-height: 1.6;
+  line-height: 1.45;
   margin-bottom: 1.5rem;
-  font-size: 0.95rem;
+  font-size: 0.875rem;
 }
 
 .cookieBriefInfo {
