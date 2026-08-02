@@ -1,6 +1,6 @@
 // src/app/news/[slug]/page.js
 import { notFound } from 'next/navigation';
-import NewsDetail from '@/components/NewsDetail/NewsDetail';
+import NewsDetailClient from './NewsDetailClient';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
@@ -116,5 +116,50 @@ export default async function NewsDetailPage({ params }) {
     notFound();
   }
 
-  return <NewsDetail newsSlug={slug} />;
+  // Рендерится на сервере — раньше контент статьи и NewsArticle JSON-LD
+  // грузились в document.head через useEffect на клиенте, из-за чего боты,
+  // не выполняющие JS (в первую очередь Яндекс), не видели ни h1, ни текст
+  // статьи, ни структурированные данные. См. технический SEO-аудит
+  // 2026-08-02 — тот же класс проблемы, что был найден и исправлен на
+  // страницах услуг.
+  const response = await fetch(`${BASE_URL}/api/news/slug/${slug}`, {
+    next: { revalidate: 3600 },
+  });
+
+  if (!response.ok) {
+    notFound();
+  }
+
+  const { data: news } = await response.json();
+
+  const textContent = news.contentBlocks
+    ?.filter(b => b.type === 'text')
+    .map(b => b.content)
+    .join(' ') || '';
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: news.title,
+    description: news.excerpt,
+    image: news.featuredImage ? [news.featuredImage] : undefined,
+    datePublished: news.publishedAt || news.createdAt,
+    dateModified: news.updatedAt,
+    author: { '@type': 'Organization', name: news.author || 'ServiceBox', url: BASE_URL },
+    publisher: { '@id': `${BASE_URL}#business` },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE_URL}/news/${slug}` },
+    articleBody: textContent.substring(0, 5000),
+    wordCount: textContent.split(/\s+/).filter(Boolean).length,
+    inLanguage: 'ru-RU',
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <NewsDetailClient news={news} />
+    </>
+  );
 }
