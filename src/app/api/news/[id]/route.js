@@ -4,6 +4,11 @@ import dbConnect from '@/lib/db';
 import News from '@/models/News';
 import { isValidObjectId } from '@/lib/slugify';
 
+// См. src/app/api/news/route.js — тот же баг со статическим кэшированием
+// GET-хендлера; здесь особенно заметен в админке при повторном открытии
+// только что отредактированной новости.
+export const dynamic = 'force-dynamic';
+
 // GET /api/news/[id] — получение новости по ID
 export async function GET(request, { params }) {
   try {

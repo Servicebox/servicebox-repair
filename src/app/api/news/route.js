@@ -3,6 +3,14 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import News from '@/models/News';
 
+// Без этого Next.js помечает GET-хендлер статическим (searchParams читаются
+// через new URL(request.url), а не request.nextUrl, что не триггерит
+// автодетект динамического рендеринга) и отдаёт ответ с
+// Cache-Control: s-maxage=10 — список новостей на главной и на /news
+// после редактирования в админке до 40 секунд показывал старые данные
+// (например, старое фото). См. баг 2026-08-02.
+export const dynamic = 'force-dynamic';
+
 // GET /api/news — список новостей
 export async function GET(request) {
   try {
