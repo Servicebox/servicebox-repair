@@ -29,7 +29,8 @@ export default function AddNewsPage() {
       if (data.success) {
         router.push('/admin-panel/listnews');
       } else {
-        alert(data.error || 'Ошибка при создании новости');
+        const detail = Array.isArray(data.details) ? data.details.join(', ') : null;
+        alert(detail || data.error || 'Ошибка при создании новости');
       }
     } catch (error) {
       alert('Ошибка при создании новости');

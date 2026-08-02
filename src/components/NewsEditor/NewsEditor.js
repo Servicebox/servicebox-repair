@@ -403,14 +403,14 @@ export default function NewsEditor({ onSave, saving, initialData }) {
       <div className={styles.metaSection}>
         <h3>SEO настройки</h3>
         <div className={styles.formGroup}>
-          <label className={styles.label}>Meta Title</label>
-          <input type="text" value={formData.metaTitle}
+          <label className={styles.label}>Meta Title ({formData.metaTitle.length}/70)</label>
+          <input type="text" value={formData.metaTitle} maxLength={70}
             onChange={(e) => setFormData(prev => ({ ...prev, metaTitle: e.target.value }))}
             className={styles.metaInput} />
         </div>
         <div className={styles.formGroup}>
-          <label className={styles.label}>Meta Description</label>
-          <textarea value={formData.metaDescription}
+          <label className={styles.label}>Meta Description ({formData.metaDescription.length}/160)</label>
+          <textarea value={formData.metaDescription} maxLength={160}
             onChange={(e) => setFormData(prev => ({ ...prev, metaDescription: e.target.value }))}
             rows={3} className={styles.metaTextarea} />
         </div>

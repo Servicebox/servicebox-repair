@@ -63,16 +63,17 @@ export default function EditNewsPage() {
         body: JSON.stringify(newsData)
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
       const data = await response.json();
 
       if (data.success) {
         router.push('/admin-panel/listnews');
       } else {
-        throw new Error(data.error || 'Ошибка при обновлении новости');
+        // Раньше !response.ok бросал общую "HTTP error! status: 400" ДО
+        // чтения тела ответа — конкретная причина (например, превышение
+        // длины metaDescription) терялась, и пользователь видел
+        // нечитаемое сообщение вместо настоящей ошибки валидации.
+        const detail = Array.isArray(data.details) ? data.details.join(', ') : null;
+        throw new Error(detail || data.error || 'Ошибка при обновлении новости');
       }
     } catch (error) {
       console.error('Error updating news:', error);
