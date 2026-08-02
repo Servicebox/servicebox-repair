@@ -72,6 +72,21 @@ const nextConfig = {
         destination: '/',
         permanent: true,
       },
+      {
+        // /shop — мёртвая заглушка, замененная каталогом /parts
+        source: '/shop',
+        destination: '/parts',
+        permanent: true,
+      },
+      {
+        // /shop/[productSlug] — старая карточка товара без своих meta-тегов
+        // (наследовала общий title/description от /shop/layout.js на все
+        // товары разом — источник дублей в SEO-аудите). Актуальная карточка
+        // товара с уникальными meta-тегами — /product/[slug].
+        source: '/shop/:slug',
+        destination: '/product/:slug',
+        permanent: true,
+      },
       // Редиректы со старых кириллических slug'ов услуг на новые латинские
       // (миграция см. src/data/slug-migration-plan.json и scripts/migrate-service-slugs.mjs)
       // Next.js матчит source по RAW (percent-encoded) пути запроса, поэтому кодируем явно;
