@@ -1,9 +1,8 @@
 'use client';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { trackProductClick } from '@/lib/metrika';
-import { ShopContext } from '@/components/ShopContext/ShopContext';
+import { trackProductClick, trackAddToCart } from '@/lib/metrika';
 import styles from './Item.module.css';
 
 const PLACEHOLDER = "data:image/svg+xml;utf8,<svg width='400' height='400' viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'><rect fill='%23F1F1F1' width='400' height='400'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='32' fill='%23b3b3b3'>Нет фото</text></svg>";
@@ -28,10 +27,8 @@ function CheckIcon() {
 }
 
 const Item = ({ slug, name, images, new_price, old_price, description, quantity, category, subcategory }) => {
-  const { addToCart } = useContext(ShopContext);
   const [imageError, setImageError] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
-  const [adding, setAdding] = useState(false);
   const [added, setAdded] = useState(false);
 
   const getImageSrc = () => {
@@ -74,16 +71,21 @@ const Item = ({ slug, name, images, new_price, old_price, description, quantity,
   const hasDiscount = old_price > 0 && new_price < old_price;
   const discount = hasDiscount ? Math.round((1 - new_price / old_price) * 100) : 0;
 
-  const handleAddToCart = async () => {
-    if (adding) return;
-    setAdding(true);
-    try {
-      await addToCart(slug);
-      setAdded(true);
-      setTimeout(() => setAdded(false), 1500);
-    } finally {
-      setAdding(false);
-    }
+  // Корзина хранится в localStorage под ключом 'cart' — тот же формат
+  // { slug: количество }, что используют CartItems.js, CheckoutForm.js и
+  // ProductDisplay.js. Раньше кнопка использовала ShopContext.addToCart
+  // (серверная корзина через /api/cart/add), которая никак не связана с
+  // localStorage-корзиной, откуда реально читают /cart и /checkout — из-за
+  // этого добавленный на /parts товар не появлялся на странице корзины.
+  const handleAddToCart = () => {
+    const savedCart = localStorage.getItem('cart');
+    const cart = savedCart ? JSON.parse(savedCart) : {};
+    cart[slug] = (cart[slug] || 0) + 1;
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    trackAddToCart({ slug, name, new_price });
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
   };
 
   return (
@@ -123,7 +125,6 @@ const Item = ({ slug, name, images, new_price, old_price, description, quantity,
           <button
             type="button"
             onClick={handleAddToCart}
-            disabled={adding}
             className={`${styles.addToCartBtn} ${added ? styles.addToCartBtnAdded : ''}`}
             aria-label="Добавить в корзину"
             title="Добавить в корзину"
