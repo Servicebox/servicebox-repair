@@ -6,6 +6,7 @@ import { queryProducts } from '@/lib/parts/queryProducts';
 import ProductGrid from './ProductGrid';
 import Pagination from './Pagination';
 import PartsFilters from './PartsFilters';
+import CategoryTree from './CategoryTree';
 
 export const dynamic = 'force-dynamic';
 
@@ -41,36 +42,42 @@ export default async function PartsRootPage({ searchParams }) {
       <h1 className="text-2xl sm:text-3xl font-bold mb-2">Каталог запчастей</h1>
       <p className="text-muted mb-6">Выберите категорию или воспользуйтесь поиском</p>
 
-      <PartsFilters
-        basePath="/parts"
-        initialSort={sp.sort}
-        initialMinPrice={sp.minPrice}
-        initialMaxPrice={sp.maxPrice}
-        initialSearch={sp.q}
-      />
+      <div className="flex flex-col lg:flex-row gap-6">
+        <CategoryTree tree={tree} activeCategoryId={null} />
 
-      {isSearching ? (
-        <>
-          <p className="text-sm text-muted mb-4">Найдено товаров: {result.total}</p>
-          <ProductGrid items={result.items} />
-          <Pagination page={result.page} pages={result.pages} basePath="/parts" searchParams={sp} />
-        </>
-      ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {tree.map((category) => (
-            <Link
-              key={category._id}
-              href={`/parts/${category.slug}`}
-              className="block p-4 border rounded-xl hover:border-primary hover:shadow-md transition-all text-center"
-            >
-              <div className="font-medium">{category.name}</div>
-              {category.children.length > 0 && (
-                <div className="text-xs text-muted mt-1">{category.children.length} подкатегорий</div>
-              )}
-            </Link>
-          ))}
+        <div className="flex-1 min-w-0">
+          <PartsFilters
+            basePath="/parts"
+            initialSort={sp.sort}
+            initialMinPrice={sp.minPrice}
+            initialMaxPrice={sp.maxPrice}
+            initialSearch={sp.q}
+          />
+
+          {isSearching ? (
+            <>
+              <p className="text-sm text-muted mb-4">Найдено товаров: {result.total}</p>
+              <ProductGrid items={result.items} />
+              <Pagination page={result.page} pages={result.pages} basePath="/parts" searchParams={sp} />
+            </>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+              {tree.map((category) => (
+                <Link
+                  key={category._id}
+                  href={`/parts/${category.slug}`}
+                  className="group block p-4 bg-surface border border-border rounded-xl shadow-sm hover:shadow-md hover:border-primary hover:-translate-y-0.5 transition-all duration-200 text-center"
+                >
+                  <div className="font-medium text-text group-hover:text-primary transition-colors duration-200">{category.name}</div>
+                  {category.children.length > 0 && (
+                    <div className="text-xs text-muted mt-1">{category.children.length} подкатегорий</div>
+                  )}
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }
