@@ -32,7 +32,7 @@ const ContentBlockRenderer = ({ blocks, onImageClick }) => {
             return block.media ? (
               <figure key={index} className={styles.videoBlock}>
                 <div className={styles.videoContainer}>
-                  <video controls playsInline preload="metadata" className={styles.contentVideo}
+                  <video controls playsInline preload="metadata" poster={block.thumbnail} className={styles.contentVideo}
                     style={{ width: '100%', maxHeight: '500px', borderRadius: '12px', background: '#000' }}>
                     <source src={block.media} type={block.mediaType || 'video/mp4'} />
                     Ваш браузер не поддерживает воспроизведение видео.

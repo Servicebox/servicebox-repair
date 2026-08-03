@@ -137,13 +137,46 @@ export default async function NewsDetailPage({ params }) {
     .map(b => b.content)
     .join(' ') || '';
 
+  const toAbsoluteUrl = (url) => (url?.startsWith('http') ? url : `${BASE_URL}${url}`);
+  const uploadDate = news.publishedAt || news.createdAt;
+
+  // VideoObject для каждого видео в статье — без этого Google/Яндекс не
+  // понимают, что на странице есть видео, и не показывают его в
+  // видео-поиске отдельно, хотя само видео обычному посетителю видно и
+  // прекрасно проигрывается. См. технический SEO-аудит 2026-08-02.
+  const videoObjects = (news.contentBlocks || [])
+    .map((block) => {
+      if (block.type === 'video' && block.media) {
+        return {
+          '@type': 'VideoObject',
+          name: block.description || news.title,
+          description: block.description || news.excerpt || news.title,
+          thumbnailUrl: toAbsoluteUrl(block.thumbnail || news.featuredImage),
+          uploadDate,
+          contentUrl: toAbsoluteUrl(block.media),
+        };
+      }
+      if (block.type === 'youtube' && block.videoUrl) {
+        return {
+          '@type': 'VideoObject',
+          name: block.description || news.title,
+          description: block.description || news.excerpt || news.title,
+          thumbnailUrl: `https://img.youtube.com/vi/${block.videoUrl}/hqdefault.jpg`,
+          uploadDate,
+          embedUrl: `https://www.youtube.com/embed/${block.videoUrl}`,
+        };
+      }
+      return null;
+    })
+    .filter(Boolean);
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',
     headline: news.title,
     description: news.excerpt,
     image: news.featuredImage ? [news.featuredImage] : undefined,
-    datePublished: news.publishedAt || news.createdAt,
+    datePublished: uploadDate,
     dateModified: news.updatedAt,
     author: { '@type': 'Organization', name: news.author || 'ServiceBox', url: BASE_URL },
     publisher: { '@id': `${BASE_URL}#business` },
@@ -151,6 +184,7 @@ export default async function NewsDetailPage({ params }) {
     articleBody: textContent.substring(0, 5000),
     wordCount: textContent.split(/\s+/).filter(Boolean).length,
     inLanguage: 'ru-RU',
+    ...(videoObjects.length > 0 ? { video: videoObjects } : {}),
   };
 
   return (
