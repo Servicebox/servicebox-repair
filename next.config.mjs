@@ -73,6 +73,21 @@ const nextConfig = {
         permanent: true,
       },
       {
+        // /service/page.js — весь файл закомментирован (JSX-комментарий на
+        // верхнем уровне модуля), нет default export → 500 на проде.
+        // Реальная страница услуг — /services (обнаружено при разборе SEO-аудита).
+        source: '/service',
+        destination: '/services',
+        permanent: true,
+      },
+      {
+        // /useprofile/page.js — пустой файл (0 байт), нет default export → 500.
+        // Ничего в кодовой базе на него не ссылается; реальный ЛК — /profile.
+        source: '/useprofile',
+        destination: '/profile',
+        permanent: true,
+      },
+      {
         // /shop — мёртвая заглушка, замененная каталогом /parts
         source: '/shop',
         destination: '/parts',
