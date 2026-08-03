@@ -64,12 +64,12 @@ function CategoryNode({ node, depth, activeCategoryId, expandedIds, onToggle }) 
 
   return (
     <li>
-      <div className="flex items-center group">
+      <div className="flex items-start group">
         {hasChildren ? (
           <button
             type="button"
             onClick={() => onToggle(String(node._id))}
-            className="w-6 h-6 flex items-center justify-center text-muted shrink-0 rounded bg-transparent border-0 p-0 hover:bg-primaryBg hover:text-primary transition-colors duration-150 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+            className="w-6 h-6 mt-0.5 flex items-center justify-center text-muted shrink-0 rounded bg-transparent border-0 p-0 hover:bg-primaryBg hover:text-primary transition-colors duration-150 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
             aria-label={expanded ? 'Свернуть' : 'Развернуть'}
             aria-expanded={expanded}
           >
@@ -80,12 +80,11 @@ function CategoryNode({ node, depth, activeCategoryId, expandedIds, onToggle }) 
         )}
         <Link
           href={`/parts/${node.slug}`}
-          className={`flex-1 py-1.5 px-2 text-sm rounded-md transition-colors duration-150 truncate ${
+          className={`flex-1 py-1.5 px-2 text-sm rounded-md transition-colors duration-150 leading-snug break-words ${
             isActive
               ? 'bg-primaryBg text-primary font-semibold border-l-2 border-primary -ml-0.5 pl-[7px]'
               : 'text-text hover:bg-surface hover:text-primary'
           }`}
-          title={node.name}
         >
           {node.name}
         </Link>
