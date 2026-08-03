@@ -5,6 +5,7 @@ import Order from '@/models/Order';
 import Product from '@/models/Product';
 import ProductReservation from '@/models/ProductReservation';
 import dbConnect from '@/lib/db';
+import { fetchCrm } from '@/lib/crmClient';
 
 // app/api/orders/route.js - исправленная POST функция
 export async function POST(request) {
@@ -69,6 +70,38 @@ export async function POST(request) {
     });
 
     console.log('✅ Order created:', order._id);
+
+    // Дублируем заказ в CRM — best-effort, тот же паттерн, что и для записей
+    // на услуги (src/app/api/bookings/route.js), чтобы сотрудники видели
+    // заказы товаров рядом с заявками на ремонт и получали уведомление в
+    // CRM так же, как при новом сообщении в чате. Не блокирует ответ клиенту
+    // и не должно ронять заказ, если CRM недоступна.
+    try {
+      const productsList = orderData.products
+        .map((item) => `• ${item.name} — ${item.quantity} шт. × ${item.price}₽ = ${item.totalPrice}₽`)
+        .join('\n');
+      const crmRes = await fetchCrm('/api/v1/orders', {
+        method: 'POST',
+        body: JSON.stringify({
+          clientName: orderData.customerInfo?.username || 'Не указано',
+          clientPhone: orderData.customerInfo?.phone || undefined,
+          clientEmail: orderData.customerInfo?.email || undefined,
+          deviceType: 'Заказ товаров с сайта',
+          defectDescription:
+            `Заказ №${order.orderNumber}\n${productsList}\n` +
+            `Сумма: ${orderData.pricing?.totalAmount}₽\n` +
+            `Доставка: ${orderData.shippingMethod || 'pickup'}\n` +
+            `Оплата: ${orderData.paymentMethod || 'cash'}` +
+            (orderData.customerNotes ? `\nКомментарий: ${orderData.customerNotes}` : ''),
+          source: 'сайт (заказ товаров)',
+        }),
+      });
+      if (crmRes && !crmRes.ok) {
+        console.error('[orders] CRM ответил ошибкой:', crmRes.status, await crmRes.text().catch(() => ''));
+      }
+    } catch (crmError) {
+      console.error('❌ Ошибка отправки заказа в CRM:', crmError);
+    }
 
     // Очищаем резервирования после создания заказа
     console.log('🗑️ Clearing reservations...');
