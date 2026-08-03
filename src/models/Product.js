@@ -63,6 +63,27 @@ const ProductSchema = new mongoose.Schema({
     default: ''
   },
 
+  // Поля интеграции с поставщиком OPTFM — см.
+  // docs/superpowers/specs/2026-08-03-optfm-supplier-integration-design.md.
+  // Заполняются только у товаров, синхронизированных из внешнего каталога;
+  // у товаров, введённых вручную через админку, остаются undefined.
+  categoryId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'OptfmCategory',
+  },
+
+  supplierSource: {
+    type: String,
+  },
+
+  supplierProductId: {
+    type: String,
+  },
+
+  supplierPriceRaw: {
+    type: Number,
+  },
+
   // Цены
   old_price: {
     type: Number,
@@ -249,6 +270,12 @@ ProductSchema.index({ category: 1, isActive: 1, ymlExport: 1 });
 ProductSchema.index({ brand: 1 });
 ProductSchema.index({ quantity: 1 });
 ProductSchema.index({ ymlExport: 1, isActive: 1 });
+// Уникален только среди товаров поставщика (partial) — у ручных товаров
+// supplierProductId не задан, они под это ограничение не попадают.
+ProductSchema.index(
+  { supplierProductId: 1 },
+  { unique: true, partialFilterExpression: { supplierProductId: { $exists: true } } }
+);
 
 // Валидация перед сохранением
 ProductSchema.pre('save', function (next) {
