@@ -127,7 +127,7 @@ const nextConfig = {
               "default-src 'self'",
               // 'unsafe-inline' нужен для GTM inline-скрипта и JSON-LD в layout.js
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pay.yandex.ru https://www.googletagmanager.com https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.com https://mc.webvisor.org https://yastatic.net",
-              "frame-src 'self' https://pay.yandex.ru https://www.googletagmanager.com https://yandex.ru",
+              "frame-src 'self' https://pay.yandex.ru https://www.googletagmanager.com https://yandex.ru https://mc.yandex.ru https://mc.yandex.com",
               "img-src 'self' data: blob: https:",
               "connect-src 'self' https://pay.yandex.ru https://sandbox.pay.yandex.ru https://servicebox35.ru https://www.googletagmanager.com https://*.googletagmanager.com https://mc.yandex.ru wss://mc.yandex.ru https://yastatic.net https://yandex.ru https://*.google-analytics.com https://*.analytics.google.com",
               "style-src 'self' 'unsafe-inline'",
