@@ -69,7 +69,7 @@ function CategoryNode({ node, depth, activeCategoryId, expandedIds, onToggle }) 
           <button
             type="button"
             onClick={() => onToggle(String(node._id))}
-            className="w-6 h-6 flex items-center justify-center text-muted shrink-0 rounded hover:bg-primaryBg hover:text-primary transition-colors duration-150 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+            className="w-6 h-6 flex items-center justify-center text-muted shrink-0 rounded bg-transparent border-0 p-0 hover:bg-primaryBg hover:text-primary transition-colors duration-150 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
             aria-label={expanded ? 'Свернуть' : 'Развернуть'}
             aria-expanded={expanded}
           >
@@ -187,7 +187,7 @@ export default function CategoryTree({ tree, activeCategoryId }) {
             <button
               type="button"
               onClick={() => setMobileOpen(false)}
-              className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-surface transition-colors duration-150 cursor-pointer"
+              className="w-9 h-9 flex items-center justify-center rounded-full bg-transparent border-0 p-0 text-text hover:bg-surface transition-colors duration-150 cursor-pointer"
               aria-label="Закрыть"
             >
               <CloseIcon />
