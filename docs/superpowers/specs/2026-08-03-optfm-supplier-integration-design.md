@@ -16,14 +16,16 @@
 
 ## Архитектура
 
-### Новая модель `Category`
+### Новая модель `OptfmCategory`
+
+**Обнаружено на этапе реализации (2026-08-03):** в проекте уже есть своя модель `Category` (`src/models/Category.js`) — плоская, категория со встроенным массивом подкатегорий, реально используется в ручном добавлении/редактировании товаров (`src/app/api/addproduct`, `src/app/api/updateproduct`). Это другая, несовместимая структура. Новая модель дерева поставщика называется `OptfmCategory`, чтобы не конфликтовать.
 
 Дерево `parent/children`, по образцу уже существующей модели `Service` в этом проекте:
 
 ```js
 {
   name: String,
-  parentId: ObjectId (ref Category, null для корня),
+  parentId: ObjectId (ref OptfmCategory, null для корня),
   depthLevel: Number,
   supplierSectionId: String (unique, id раздела у поставщика — ключ для upsert),
   sort: Number,
@@ -37,7 +39,7 @@
 
 ```js
 {
-  categoryId: ObjectId (ref Category, необязательное — только у товаров поставщика),
+  categoryId: ObjectId (ref OptfmCategory, необязательное — только у товаров поставщика),
   supplierSource: String (например 'optfm', необязательное),
   supplierProductId: String (id товара у поставщика, unique среди документов с этим полем — партиальный индекс),
   supplierPriceRaw: Number (закупочная цена "Оптовая" до наценки — нужна, чтобы пересчитать new_price при изменении % наценки без повторного похода к API),

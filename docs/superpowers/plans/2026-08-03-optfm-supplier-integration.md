@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Ежедневно синхронизировать каталог поставщика OPTFM (Fashion Mobile) — категории, товары, цены с наценкой, фото — в существующие модели `Product`/новую `Category`, чтобы товары продавались на сайте как обычные.
+**Goal:** Ежедневно синхронизировать каталог поставщика OPTFM (Fashion Mobile) — категории, товары, цены с наценкой, фото — в существующие модели `Product`/новую `OptfmCategory`, чтобы товары продавались на сайте как обычные.
 
 **Architecture:** Библиотека синхронизации в `src/lib/optfm/` (используется и Next.js API-роутами, и отдельным cron-скриптом — поэтому внутри себя все файлы этой библиотеки импортируют модели/утилиты **относительными путями с явным расширением `.js`**, а не через алиас `@/...`: алиас резолвится только webpack’ом внутри Next.js, а cron-скрипт запускается напрямую через `node`, где алиасов нет). Категории — дерево `parent/children` по образцу уже существующей модели `Service`. Синхронизация идемпотентна (upsert по id поставщика), фото кэшируются локально и не перекачиваются повторно.
 
@@ -19,23 +19,23 @@
 
 ---
 
-### Task 1: Модель `Category` и модель состояния `OptfmSyncState`
+### Task 1: Модель `OptfmCategory` и модель состояния `OptfmSyncState`
 
 **Files:**
-- Create: `src/models/Category.js`
+- Create: `src/models/OptfmCategory.js`
 - Create: `src/models/OptfmSyncState.js`
 
 **Interfaces:**
-- Produces: `Category` (Mongoose-модель) с полями `name`, `parentId`, `depthLevel`, `supplierSectionId` (unique), `sort`, `description`, виртуальным полем `children`.
+- Produces: `OptfmCategory` (Mongoose-модель) с полями `name`, `parentId`, `depthLevel`, `supplierSectionId` (unique), `sort`, `description`, виртуальным полем `children`.
 - Produces: `OptfmSyncState` (Mongoose-модель, одна запись в коллекции) с полями `markupPercent`, `syncInProgress`, `lastSyncStartedAt`, `lastSyncFinishedAt`, `lastSyncError`, `lastSyncStats`.
 
-- [ ] **Step 1: Создать модель Category**
+- [ ] **Step 1: Создать модель OptfmCategory**
 
 ```js
-// src/models/Category.js
+// src/models/OptfmCategory.js
 import mongoose from 'mongoose';
 
-const CategorySchema = new mongoose.Schema({
+const OptfmCategorySchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -43,7 +43,7 @@ const CategorySchema = new mongoose.Schema({
   },
   parentId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Category',
+    ref: 'OptfmCategory',
     default: null,
   },
   depthLevel: {
@@ -70,16 +70,16 @@ const CategorySchema = new mongoose.Schema({
   timestamps: true,
 });
 
-CategorySchema.virtual('children', {
-  ref: 'Category',
+OptfmCategorySchema.virtual('children', {
+  ref: 'OptfmCategory',
   localField: '_id',
   foreignField: 'parentId',
 });
 
-CategorySchema.set('toJSON', { virtuals: true });
-CategorySchema.set('toObject', { virtuals: true });
+OptfmCategorySchema.set('toJSON', { virtuals: true });
+OptfmCategorySchema.set('toObject', { virtuals: true });
 
-export default mongoose.models.Category || mongoose.model('Category', CategorySchema);
+export default mongoose.models.OptfmCategory || mongoose.model('OptfmCategory', OptfmCategorySchema);
 ```
 
 - [ ] **Step 2: Создать модель OptfmSyncState**
@@ -118,7 +118,7 @@ export default mongoose.models.OptfmSyncState || mongoose.model('OptfmSyncState'
 - [ ] **Step 3: Проверить синтаксис**
 
 ```bash
-node --check src/models/Category.js
+node --check src/models/OptfmCategory.js
 node --check src/models/OptfmSyncState.js
 ```
 
@@ -127,8 +127,8 @@ Expected: обе команды завершаются без вывода (си
 - [ ] **Step 4: Закоммитить**
 
 ```bash
-git add src/models/Category.js src/models/OptfmSyncState.js
-git commit -m "feat: add Category tree model and OptfmSyncState config model"
+git add src/models/OptfmCategory.js src/models/OptfmSyncState.js
+git commit -m "feat: add OptfmCategory tree model and OptfmSyncState config model"
 ```
 
 ---
@@ -140,7 +140,7 @@ git commit -m "feat: add Category tree model and OptfmSyncState config model"
 
 **Interfaces:**
 - Consumes: ничего нового.
-- Produces: `Product` получает необязательные поля `categoryId` (ref Category), `supplierSource`, `supplierProductId` (partial unique index), `supplierPriceRaw`. Существующие поля не меняются.
+- Produces: `Product` получает необязательные поля `categoryId` (ref OptfmCategory), `supplierSource`, `supplierProductId` (partial unique index), `supplierPriceRaw`. Существующие поля не меняются.
 
 - [ ] **Step 1: Добавить новые поля после `subcategory`**
 
@@ -167,7 +167,7 @@ git commit -m "feat: add Category tree model and OptfmSyncState config model"
   // у товаров, введённых вручную через админку, остаются undefined.
   categoryId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Category',
+    ref: 'OptfmCategory',
   },
 
   supplierSource: {
@@ -502,20 +502,20 @@ git commit -m "feat: add OPTFM sync config and concurrency lock helpers"
 - Create: `src/lib/optfm/syncCategories.js`
 
 **Interfaces:**
-- Consumes: `optfmRequest` (Task 3), `Category` (Task 1).
+- Consumes: `optfmRequest` (Task 3), `OptfmCategory` (Task 1).
 - Produces: `syncCategories(): Promise<{ categoriesUpserted: number }>`.
 
 - [ ] **Step 1: Написать синхронизацию категорий**
 
 ```js
 // src/lib/optfm/syncCategories.js
-import Category from '../../models/Category.js';
+import OptfmCategory from '../../models/OptfmCategory.js';
 import { optfmRequest } from './client.js';
 
 const PAGE_LIMIT = 500;
 
 /**
- * Забирает всё дерево разделов OPTFM и сохраняет в Category.
+ * Забирает всё дерево разделов OPTFM и сохраняет в OptfmCategory.
  * Двухпроходный алгоритм: сначала upsert всех узлов по supplierSectionId
  * (без parentId), затем второй проход простраивает parentId — так связи
  * не зависят от порядка, в котором поставщик вернул секции (родитель
@@ -536,7 +536,7 @@ export async function syncCategories() {
   }
 
   for (const section of allSections) {
-    await Category.updateOne(
+    await OptfmCategory.updateOne(
       { supplierSectionId: String(section.id) },
       {
         $set: {
@@ -552,11 +552,11 @@ export async function syncCategories() {
 
   for (const section of allSections) {
     if (!section.parent_id) {
-      await Category.updateOne({ supplierSectionId: String(section.id) }, { $set: { parentId: null } });
+      await OptfmCategory.updateOne({ supplierSectionId: String(section.id) }, { $set: { parentId: null } });
       continue;
     }
 
-    const parent = await Category.findOne({ supplierSectionId: String(section.parent_id) })
+    const parent = await OptfmCategory.findOne({ supplierSectionId: String(section.parent_id) })
       .select('_id')
       .lean();
 
@@ -567,7 +567,7 @@ export async function syncCategories() {
       continue;
     }
 
-    await Category.updateOne({ supplierSectionId: String(section.id) }, { $set: { parentId: parent._id } });
+    await OptfmCategory.updateOne({ supplierSectionId: String(section.id) }, { $set: { parentId: parent._id } });
   }
 
   return { categoriesUpserted: allSections.length };
@@ -596,10 +596,10 @@ const mongoose = require('mongoose');
   const { syncCategories } = await import('./src/lib/optfm/syncCategories.js');
   const result = await syncCategories();
   console.log('Результат:', result);
-  const Category = mongoose.connection.collection('categories');
-  const total = await Category.countDocuments();
-  const roots = await Category.countDocuments({ parentId: null });
-  const sample = await Category.findOne({ parentId: { \\\$ne: null } });
+  const OptfmCategory = mongoose.connection.collection('optfmcategories');
+  const total = await OptfmCategory.countDocuments();
+  const roots = await OptfmCategory.countDocuments({ parentId: null });
+  const sample = await OptfmCategory.findOne({ parentId: { \\\$ne: null } });
   console.log('Всего категорий:', total, 'корневых:', roots);
   console.log('Пример дочерней:', sample?.name, 'parentId задан:', !!sample?.parentId);
   await mongoose.disconnect();
@@ -613,7 +613,7 @@ Expected: `Результат: { categoriesUpserted: 259 }`, `Всего кат�
 
 ```bash
 git add src/lib/optfm/syncCategories.js
-git commit -m "feat: sync OPTFM category tree into Category model"
+git commit -m "feat: sync OPTFM category tree into OptfmCategory model"
 ```
 
 ---
@@ -722,7 +722,7 @@ git commit -m "feat: add local image caching for OPTFM products"
 - Create: `src/lib/optfm/syncProducts.js`
 
 **Interfaces:**
-- Consumes: `optfmRequest` (Task 3), `getMarkupPercent` (Task 4), `ensureProductImage`/`productImagePublicUrl` (Task 6), `Category` (Task 1), `Product` (Task 2), `generateUniqueSlug` из `src/lib/slugify.js` (существующий).
+- Consumes: `optfmRequest` (Task 3), `getMarkupPercent` (Task 4), `ensureProductImage`/`productImagePublicUrl` (Task 6), `OptfmCategory` (Task 1), `Product` (Task 2), `generateUniqueSlug` из `src/lib/slugify.js` (существующий).
 - Produces: `syncProducts(): Promise<{ productsUpserted: number, productsDeactivated: number, imagesDownloaded: number }>`.
 
 - [ ] **Step 1: Написать синхронизацию товаров**
@@ -730,7 +730,7 @@ git commit -m "feat: add local image caching for OPTFM products"
 ```js
 // src/lib/optfm/syncProducts.js
 import Product from '../../models/Product.js';
-import Category from '../../models/Category.js';
+import OptfmCategory from '../../models/OptfmCategory.js';
 import { generateUniqueSlug } from '../slugify.js';
 import { optfmRequest } from './client.js';
 import { getMarkupPercent } from './config.js';
@@ -758,18 +758,18 @@ function resolveWholesalePrice(prices) {
 
 /**
  * Строит отображаемые category/subcategory (плоские строки) из дерева
- * Category — для обратной совместимости с /parts и YML-фидами, которые
+ * OptfmCategory — для обратной совместимости с /parts и YML-фидами, которые
  * пока читают эти строковые поля, а не дерево напрямую. category — имя
  * корневой категории, subcategory — оставшийся путь до листа.
  */
-async function resolveCategoryDisplayNames(category) {
+async function resolveOptfmCategoryDisplayNames(category) {
   if (!category) return { category: 'Товары поставщика', subcategory: '' };
   if (!category.parentId) return { category: category.name, subcategory: '' };
 
   const chain = [category.name];
   let current = category;
   while (current.parentId) {
-    current = await Category.findById(current.parentId).select('name parentId').lean();
+    current = await OptfmCategory.findById(current.parentId).select('name parentId').lean();
     if (!current) break;
     chain.unshift(current.name);
   }
@@ -801,8 +801,8 @@ export async function syncProducts() {
         continue;
       }
 
-      const category = await Category.findOne({ supplierSectionId: String(item.section_id) }).lean();
-      const { category: categoryName, subcategory } = await resolveCategoryDisplayNames(category);
+      const category = await OptfmCategory.findOne({ supplierSectionId: String(item.section_id) }).lean();
+      const { category: categoryName, subcategory } = await resolveOptfmCategoryDisplayNames(category);
 
       const downloaded = await ensureProductImage(supplierProductId);
       if (downloaded) imagesDownloaded++;
@@ -1375,7 +1375,7 @@ ssh root@185.221.215.248 "cd /var/www/servicebox-repair && git pull origin main 
 ## Самопроверка плана (self-review)
 
 **1. Покрытие спеки:**
-- Модель Category (дерево) — Task 1 ✅
+- Модель OptfmCategory (дерево) — Task 1 ✅
 - Расширение Product — Task 2 ✅
 - Конфиг наценки — Task 1 (модель) + Task 4 (логика) + Task 10 (UI) ✅
 - Клиент API с ретраями/паузами — Task 3 ✅
@@ -1386,12 +1386,12 @@ ssh root@185.221.215.248 "cd /var/www/servicebox-repair && git pull origin main 
 - Кнопка «Синхронизировать сейчас» — Task 9 (роут) + Task 10 (UI) ✅
 - Задел под будущий параметр склада (`extraParams`) — Task 3 ✅
 - Защита от параллельного запуска — Task 4 ✅
-- Обратная совместимость `category`/`subcategory` для `/parts` и фидов — Task 7 (`resolveCategoryDisplayNames`) ✅
+- Обратная совместимость `category`/`subcategory` для `/parts` и фидов — Task 7 (`resolveOptfmCategoryDisplayNames`) ✅
 
 **2. Проверка на плейсхолдеры:** пройдено — везде полный код, конкретные команды и ожидаемый вывод, ни одного "TODO"/"добавить обработку ошибок" без конкретики.
 
 **3. Согласованность типов/имён между задачами:**
-- `Category.supplierSectionId` (Task 1) ↔ используется в Task 5 (`syncCategories`) и Task 7 (`syncProducts`, поиск по `section_id` товара) — совпадает.
+- `OptfmCategory.supplierSectionId` (Task 1) ↔ используется в Task 5 (`syncCategories`) и Task 7 (`syncProducts`, поиск по `section_id` товара) — совпадает.
 - `Product.supplierProductId`/`supplierSource`/`supplierPriceRaw`/`categoryId` (Task 2) ↔ используются в Task 7 без расхождений в названиях.
 - `optfmRequest(method, params, extraParams)` (Task 3) ↔ вызывается одинаково в Task 5/6/7.
 - `getMarkupPercent`/`acquireSyncLock`/`releaseSyncLock`/`getSyncState`/`setMarkupPercent` (Task 4) ↔ имена совпадают во всех местах использования (Task 8, Task 9).
