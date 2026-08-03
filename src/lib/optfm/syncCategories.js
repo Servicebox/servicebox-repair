@@ -1,6 +1,7 @@
 // src/lib/optfm/syncCategories.js
 import OptfmCategory from '../../models/OptfmCategory.js';
 import { optfmRequest } from './client.js';
+import { generateUniqueSlug } from '../slugify.js';
 
 const PAGE_LIMIT = 500;
 
@@ -26,16 +27,27 @@ export async function syncCategories() {
   }
 
   for (const section of allSections) {
+    const existing = await OptfmCategory.findOne({ supplierSectionId: String(section.id) })
+      .select('slug')
+      .lean();
+
+    const update = {
+      name: section.name,
+      depthLevel: Number(section.depth_level),
+      sort: Number(section.sort ?? 0),
+      description: section.description || '',
+    };
+
+    // slug генерируется один раз при первом появлении категории — не
+    // перегенерируем на каждой синхронизации, иначе уже опубликованные
+    // ссылки на категорию будут ломаться при переименовании у поставщика.
+    if (!existing?.slug) {
+      update.slug = await generateUniqueSlug(OptfmCategory, section.name);
+    }
+
     await OptfmCategory.updateOne(
       { supplierSectionId: String(section.id) },
-      {
-        $set: {
-          name: section.name,
-          depthLevel: Number(section.depth_level),
-          sort: Number(section.sort ?? 0),
-          description: section.description || '',
-        },
-      },
+      { $set: update },
       { upsert: true }
     );
   }
