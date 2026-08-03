@@ -337,10 +337,18 @@ export async function optfmRequest(method, params = {}, extraParams = {}) {
     const json = await res.json();
     await sleep(REQUEST_DELAY_MS);
 
-    if (json.status !== 1) {
+    // Реальные ответы API не всегда содержат поле status из документации —
+    // подтверждено вживую 2026-08-03 (успешный catalog.getSectionList
+    // вернул {"response": {...}} без "status" вовсе). Надёжнее проверять
+    // по факту наличия error/response, а не по значению status.
+    if (json.error) {
       throw new Error(
-        `OPTFM API (${method}): ${json.error?.error_msg || 'неизвестная ошибка'} (код ${json.error?.error_code})`
+        `OPTFM API (${method}): ${json.error.error_msg || 'неизвестная ошибка'} (код ${json.error.error_code})`
       );
+    }
+
+    if (!json.response) {
+      throw new Error(`OPTFM API (${method}): неожиданный формат ответа: ${JSON.stringify(json).slice(0, 200)}`);
     }
 
     return { response: json.response };
