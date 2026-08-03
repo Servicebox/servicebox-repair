@@ -105,7 +105,9 @@ export async function syncProducts() {
       const downloaded = await ensureProductImage(supplierProductId);
       if (downloaded) imagesDownloaded++;
 
-      const newPrice = Math.round(wholesalePrice * (1 + markupPercent / 100) * 100) / 100;
+      // Округляем до целого рубля в большую сторону — копейки в ценах
+      // выглядят неаккуратно на витрине (по просьбе Тома, 2026-08-03).
+      const newPrice = Math.ceil(wholesalePrice * (1 + markupPercent / 100));
 
       const brand = detectBrand(item.name);
 
