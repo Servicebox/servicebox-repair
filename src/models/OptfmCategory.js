@@ -24,6 +24,12 @@ const OptfmCategorySchema = new mongoose.Schema({
     unique: true,
     index: true,
   },
+  slug: {
+    type: String,
+    unique: true,
+    sparse: true,
+    lowercase: true,
+  },
   sort: {
     type: Number,
     default: 0,
