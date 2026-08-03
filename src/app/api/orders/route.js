@@ -12,12 +12,14 @@ export async function POST(request) {
   try {
     await dbConnect();
 
+    // Сессия опциональна: у корзины и формы оформления заказа нет требования
+    // входа в аккаунт (localStorage-корзина работает без авторизации, как и
+    // запись на услуги в src/app/api/bookings/route.js), а схема Order.userId
+    // не помечена required — значит гостевые заказы предусмотрены изначально.
+    // Раньше здесь был жёсткий 401 без сессии, из-за чего гость мог заполнить
+    // всю форму оформления и получить отказ только на последнем шаге.
     const session = await getServerSession(request);
     console.log('🔐 Session in order creation:', session);
-
-    if (!session) {
-      return NextResponse.json({ error: 'Неавторизован' }, { status: 401 });
-    }
 
     const orderData = await request.json();
     console.log('📦 Order data received:', orderData);
@@ -63,7 +65,7 @@ export async function POST(request) {
 
     console.log('📝 Creating order...');
     const order = await Order.create({
-      userId: session.userId,
+      ...(session ? { userId: session.userId } : {}),
       ...orderData,
       status: 'pending',
       paymentStatus: orderData.paymentMethod === 'cash' ? 'pending' : 'pending'
@@ -103,17 +105,22 @@ export async function POST(request) {
       console.error('❌ Ошибка отправки заказа в CRM:', crmError);
     }
 
-    // Очищаем резервирования после создания заказа
-    console.log('🗑️ Clearing reservations...');
-    const deletedReservations = await ProductReservation.deleteMany({
-      userId: session.userId,
-      status: 'reserved'
-    });
-    console.log(`✅ Removed ${deletedReservations.deletedCount} reservations`);
+    // Очищаем резервирования после создания заказа (только для авторизованных —
+    // у гостевых заказов резервирований по userId нет)
+    if (session) {
+      console.log('🗑️ Clearing reservations...');
+      const deletedReservations = await ProductReservation.deleteMany({
+        userId: session.userId,
+        status: 'reserved'
+      });
+      console.log(`✅ Removed ${deletedReservations.deletedCount} reservations`);
+    }
 
     return NextResponse.json({
       success: true,
       order,
+      orderId: order._id,
+      orderNumber: order.orderNumber,
       message: 'Заказ успешно создан'
     });
   } catch (error) {
