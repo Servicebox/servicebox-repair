@@ -52,14 +52,24 @@ export default async function PartsCategoryPage({ params, searchParams }) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
-      <nav className="text-sm text-muted mb-4 flex flex-wrap gap-1" aria-label="Хлебные крошки">
-        <Link href="/parts" className="hover:text-primary">Каталог</Link>
-        {breadcrumbs.map((crumb) => (
-          <span key={crumb.slug}>
-            {' / '}
-            <Link href={`/parts/${crumb.slug}`} className="hover:text-primary">{crumb.name}</Link>
-          </span>
-        ))}
+      <nav
+        className="text-sm text-muted mb-4 overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        aria-label="Хлебные крошки"
+      >
+        <Link href="/parts" className="hover:text-primary shrink-0">Каталог</Link>
+        {breadcrumbs.map((crumb, i) => {
+          const isLast = i === breadcrumbs.length - 1;
+          return (
+            <span key={crumb.slug} className="shrink-0">
+              <span className="mx-1.5 text-muted/60">/</span>
+              {isLast ? (
+                <span className="text-text font-medium">{crumb.name}</span>
+              ) : (
+                <Link href={`/parts/${crumb.slug}`} className="hover:text-primary">{crumb.name}</Link>
+              )}
+            </span>
+          );
+        })}
       </nav>
 
       <h1 className="text-2xl sm:text-3xl font-bold mb-6">{category.name}</h1>
