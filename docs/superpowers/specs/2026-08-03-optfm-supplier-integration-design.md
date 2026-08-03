@@ -98,7 +98,7 @@
 
 ## Переменные окружения
 
-```
+```bash
 OPTFM_AUTH_ID=5948
 OPTFM_AUTH_KEY=y7rd32EeTZ2xej1rtsya8vSFiMC7wCdp
 ```
