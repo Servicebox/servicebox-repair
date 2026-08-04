@@ -55,6 +55,9 @@ export const metadata = {
   verification: {
     yandex: '97888825',
     google: '6k281LQ_idKz1FOxlcDm522DmLoGRjR3Pu3_so0dLhs',
+    other: {
+      'zen-verification': 'GZkB7zLOb4yUywviRQMZ7uSkAhSM1LqMTopu0mBFxOU7NqbE5EoDFShPI6Q5yMju',
+    },
   },
   openGraph: {
     title: {
