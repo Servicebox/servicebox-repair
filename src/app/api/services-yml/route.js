@@ -125,7 +125,7 @@ const generateYmlFeed = (services, categories, ratingStats) => {
       }
       xml += `        <currencyId>RUB</currencyId>\n`;
       xml += `        <categoryId>${categoryId}</categoryId>\n`;
-      xml += `        <picture>${encodeUrlForXml(`${baseUrl}/images/Devices.webp`)}</picture>\n`;
+      xml += `        <picture>${encodeUrlForXml(`${baseUrl}/favicon.webp`)}</picture>\n`;
       xml += `        <description>${escapeXml(service.description || service.name)}</description>\n`;
       xml += `        <model>${escapeXml(serviceName)}</model>\n`;
       xml += `        <vendor>ServiceBox35</vendor>\n`;
