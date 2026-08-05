@@ -37,13 +37,18 @@ const getCondition = (product) => {
     return 'new';
 };
 
+const toAbsoluteUrl = (img, baseUrl) => {
+    if (!img) return null;
+    return img.startsWith('http') ? img : `${baseUrl}${img.startsWith('/') ? '' : '/'}${img}`;
+};
+
 const getImageUrl = (product, baseUrl) => {
     // Приоритет: mainImage (если не заглушка), первый из images, затем null
     if (product.mainImage && product.mainImage !== '/images/placeholder.jpg') {
-        return product.mainImage;
+        return toAbsoluteUrl(product.mainImage, baseUrl);
     }
     if (product.images && product.images.length > 0) {
-        return product.images[0];
+        return toAbsoluteUrl(product.images[0], baseUrl);
     }
     return null; // нет изображения – товар будет пропущен
 };
