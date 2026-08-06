@@ -94,6 +94,11 @@ export default function OptfmAdminPage() {
             новых фото: {state.lastSyncStats.imagesDownloaded}
           </p>
         )}
+        {state.lastSyncStats?.incomplete && (
+          <p style={{ color: '#b45309' }}>
+            ⚠️ Прогон остановился раньше конца каталога (обычно из-за сбоя поставщика) — часть товаров могла не обновиться. Деактивация в этом случае пропущена.
+          </p>
+        )}
         {state.lastSyncError && <p style={{ color: '#dc2626' }}>Ошибка: {state.lastSyncError}</p>}
       </div>
 
