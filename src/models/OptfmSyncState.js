@@ -20,6 +20,10 @@ const OptfmSyncStateSchema = new mongoose.Schema({
     productsUpserted: Number,
     productsDeactivated: Number,
     imagesDownloaded: Number,
+    // true, если прогон прервался раньше последней страницы каталога
+    // (обычно из-за WAF поставщика) — деактивация в этом случае
+    // пропускается, см. syncProducts.js
+    incomplete: Boolean,
   },
 }, {
   timestamps: { createdAt: false, updatedAt: true },

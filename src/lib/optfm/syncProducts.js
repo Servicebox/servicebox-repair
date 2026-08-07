@@ -81,13 +81,26 @@ export async function syncProducts() {
   let productsUpserted = 0;
   let imagesDownloaded = 0;
   let page = 1;
+  // Становится true, если прогон прервался раньше последней страницы
+  // (обычно из-за WAF поставщика — см. client.js). В этом случае ниже
+  // отключаем деактивацию: иначе товары с недостигнутых страниц были бы
+  // ошибочно помечены как пропавшие у поставщика, хотя они там есть —
+  // баг воспроизведён 2026-08-06 (см. спеку, раздел про 503).
+  let syncIncomplete = false;
 
-  while (true) {
-    const { response } = await optfmRequest('catalog.getElementList', {
-      limit: PAGE_LIMIT,
-      page,
-      no_image: 1, // изображение получаем отдельно через catalog.getImage
-    });
+  pageLoop: while (true) {
+    let response;
+    try {
+      ({ response } = await optfmRequest('catalog.getElementList', {
+        limit: PAGE_LIMIT,
+        page,
+        no_image: 1, // изображение получаем отдельно через catalog.getImage
+      }));
+    } catch (err) {
+      console.error(`❌ OPTFM: не удалось получить страницу ${page} каталога — останавливаю прогон:`, err.message);
+      syncIncomplete = true;
+      break pageLoop;
+    }
 
     for (const item of response.items) {
       const supplierProductId = String(item.id);
@@ -102,7 +115,17 @@ export async function syncProducts() {
       const category = await OptfmCategory.findOne({ supplierSectionId: String(item.section_id) }).lean();
       const { category: categoryName, subcategory } = await resolveCategoryDisplayNames(category);
 
-      const downloaded = await ensureProductImage(supplierProductId);
+      // Сбой скачивания одной картинки не должен обрывать всю
+      // синхронизацию — раньше исключение из ensureProductImage вылетало
+      // из цикла и убивало все оставшиеся страницы целиком (баг
+      // 2026-08-06: из-за частых 503 у поставщика это происходило почти
+      // на каждом прогоне в случайном месте).
+      let downloaded = false;
+      try {
+        downloaded = await ensureProductImage(supplierProductId);
+      } catch (err) {
+        console.warn(`⚠️  OPTFM: не удалось скачать фото товара ${item.id} — оставляю без нового фото:`, err.message);
+      }
       if (downloaded) imagesDownloaded++;
 
       // Округляем до целого рубля в большую сторону — копейки в ценах
@@ -150,18 +173,29 @@ export async function syncProducts() {
     page++;
   }
 
-  const deactivateResult = await Product.updateMany(
-    {
-      supplierSource: SUPPLIER_SOURCE,
-      supplierProductId: { $nin: seenSupplierIds },
-      isActive: true,
-    },
-    { $set: { isActive: false } }
-  );
+  // Деактивируем "пропавшие у поставщика" товары только после ПОЛНОГО
+  // прохода по каталогу — если прогон прервался раньше последней
+  // страницы, seenSupplierIds заведомо неполный, и деактивация ошибочно
+  // скрыла бы ещё существующие у поставщика товары с недостигнутых страниц.
+  const deactivateResult = syncIncomplete
+    ? { modifiedCount: 0 }
+    : await Product.updateMany(
+        {
+          supplierSource: SUPPLIER_SOURCE,
+          supplierProductId: { $nin: seenSupplierIds },
+          isActive: true,
+        },
+        { $set: { isActive: false } }
+      );
+
+  if (syncIncomplete) {
+    console.warn(`⚠️  OPTFM: прогон завершился не полностью (остановлен на странице ${page}) — деактивация пропущена`);
+  }
 
   return {
     productsUpserted,
     productsDeactivated: deactivateResult.modifiedCount,
     imagesDownloaded,
+    incomplete: syncIncomplete,
   };
 }

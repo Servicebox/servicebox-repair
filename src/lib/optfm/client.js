@@ -1,7 +1,10 @@
 // src/lib/optfm/client.js
 const API_URL = 'https://optfm.ru/api/';
 const REQUEST_DELAY_MS = 400;
-const MAX_ATTEMPTS = 5;
+// Поднято с 5 до 7 после того, как 2026-08-06 подтвердилось, что WAF
+// поставщика банит "часто" — при 5 попытках (макс. ~12с суммарного
+// ожидания) прогон синхронизации регулярно падал на середине каталога.
+const MAX_ATTEMPTS = 7;
 const USER_AGENT =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36';
 
