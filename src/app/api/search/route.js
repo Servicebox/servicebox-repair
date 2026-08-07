@@ -4,8 +4,18 @@ import Product from '@/models/Product';
 import Service from '@/models/Service';
 import News from '@/models/News';
 import Promotion from '@/models/Promotion';
+import DepositoryFile from '@/models/DepositoryFile';
 import { PROBLEMS } from '@/lib/problems-data';
 import { ANSWERS } from '@/lib/ai-answers-data';
+
+// Экранирует спецсимволы regex перед подстановкой пользовательского
+// ввода в new RegExp() — без этого запрос вроде `iPhone (13` (скобка
+// без пары — обычное дело в названиях товаров: "iPhone 13 Pro Max
+// (6.7")") валил весь поиск 500-й ошибкой ("Unterminated group"),
+// баг обнаружен 2026-08-07.
+function escapeRegex(text) {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
 export async function GET(request) {
   try {
@@ -26,7 +36,7 @@ export async function GET(request) {
     }
 
     const allResults = [];
-    const searchRegex = new RegExp(query, 'i'); // case-insensitive
+    const searchRegex = new RegExp(escapeRegex(query), 'i'); // case-insensitive
 
     try {
       // 🔎 Поиск по УСЛУГАМ
@@ -183,6 +193,39 @@ export async function GET(request) {
       });
     } catch (promoError) {
       console.error('❌ Ошибка поиска акций:', promoError.message);
+    }
+
+    try {
+      // 🔎 Поиск по ФАЙЛОТЕКЕ (/depository-public)
+      console.log('🔍 Ищу файлы...');
+      const files = await DepositoryFile.find({
+        isActive: true,
+        $or: [
+          { originalName: searchRegex },
+          { description: searchRegex },
+          { tags: searchRegex }
+        ]
+      })
+        .select('originalName description')
+        .limit(10)
+        .lean();
+
+      console.log(`✅ Найдено файлов: ${files.length}`);
+
+      files.forEach(file => {
+        const score = calculateRelevanceScore(file.originalName, file.description, query);
+        allResults.push({
+          id: file._id.toString(),
+          title: file.originalName,
+          description: file.description || 'Документ из файлотеки',
+          url: `/depository-public`,
+          type: 'article',
+          category: 'Файлотека',
+          score: score + 50
+        });
+      });
+    } catch (fileError) {
+      console.error('❌ Ошибка поиска файлов:', fileError.message);
     }
 
     try {
