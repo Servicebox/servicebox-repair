@@ -38,6 +38,21 @@ async function main() {
 
     await releaseSyncLock({ ...categoriesResult, ...productsResult });
     console.log('🎉 Синхронизация OPTFM завершена успешно');
+
+    // Скрипт — отдельный от Next.js процесс, revalidatePath отсюда не
+    // вызвать напрямую, поэтому дёргаем внутренний роут по HTTP (см.
+    // src/app/api/internal/revalidate-products/route.js).
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
+      const res = await fetch(`${baseUrl}/api/internal/revalidate-products`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${process.env.OPTFM_REVALIDATE_SECRET || ''}` },
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      console.log('🔄 Кэш карточек товаров инвалидирован');
+    } catch (err) {
+      console.warn('⚠️  Не удалось инвалидировать кэш карточек товаров:', err.message);
+    }
   } catch (error) {
     console.error('❌ Синхронизация OPTFM упала:', error);
     await releaseSyncLock(null, error);
