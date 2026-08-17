@@ -3,6 +3,7 @@ import dbConnect from '@/lib/db';
 import Product from '@/models/Product';
 import News from '@/models/News';
 import Service from '@/models/Service';
+import OptfmCategory from '@/models/OptfmCategory';
 import { BASE_URL } from '@/lib/constants';
 import { PROBLEMS } from '@/lib/problems-data';
 import { ANSWERS } from '@/lib/ai-answers-data';
@@ -49,16 +50,22 @@ export default async function sitemap() {
   let dbUrls = [];
   try {
     await dbConnect();
-    const [services, products, news] = await Promise.all([
+    // Лимитов на products/news раньше не было смысла ставить — при 4299
+    // активных товарах .limit(500) исключал из sitemap 88% каталога.
+    // Next.js допускает до 50 000 URL в одном sitemap-файле, здесь и близко
+    // столько нет, поэтому грузим целиком.
+    const [services, products, news, categories] = await Promise.all([
       Service.find({ isActive: { $ne: false }, isCategory: false }, { slug: 1, updatedAt: 1 }).lean(),
-      Product.find({ isActive: true, isDeleted: false }, { slug: 1, updatedAt: 1 }).limit(500).lean(),
-      News.find({ isPublished: true }, { slug: 1, updatedAt: 1, publishedAt: 1 }).limit(200).lean(),
+      Product.find({ isActive: true, isDeleted: false }, { slug: 1, updatedAt: 1 }).lean(),
+      News.find({ isPublished: true }, { slug: 1, updatedAt: 1, publishedAt: 1 }).lean(),
+      OptfmCategory.find({}, { slug: 1 }).lean(),
     ]);
 
     dbUrls = [
       ...services.filter(s => s.slug).map(s => createEntry(`/services/${encodeURIComponent(s.slug)}`, 0.85, 'monthly', s.updatedAt)),
       ...products.filter(p => p.slug).map(p => createEntry(`/product/${encodeURIComponent(p.slug)}`, 0.75, 'weekly', p.updatedAt)),
       ...news.filter(n => n.slug).map(n => createEntry(`/news/${encodeURIComponent(n.slug)}`, 0.7, 'monthly', n.updatedAt || n.publishedAt)),
+      ...categories.filter(c => c.slug).map(c => createEntry(`/parts/${encodeURIComponent(c.slug)}`, 0.8, 'daily')),
     ];
   } catch (error) {
     console.warn('⚠️ [Sitemap] DB fetch skipped:', error.message);
