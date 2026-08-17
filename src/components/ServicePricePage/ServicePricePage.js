@@ -159,17 +159,6 @@ export default function ServicePricePage() {
         show: { opacity: 1, y: 0, transition: { duration: 0.3 } }
     };
 
-    if (loading) {
-        return (
-            <motion.div className={styles.servicePricePage}>
-                <div className={styles.loadingContainer}>
-                    <div className={styles.loadingSpinner}></div>
-                    <p>Загружаем услуги...</p>
-                </div>
-            </motion.div>
-        );
-    }
-
     return (
         <motion.section
             id="services"
@@ -180,8 +169,25 @@ export default function ServicePricePage() {
             aria-label="Список услуг сервисного центра"
         >
             <div className={styles.contentWrapper}>
-                {/* Если открыт калькулятор */}
-                {activeCalculatorDevice ? (
+                {/* Заголовок рендерится всегда, включая состояние загрузки —
+                    иначе первый HTML, который видит поисковый бот, содержит
+                    только спиннер "Загружаем услуги..." без единого H1 */}
+                <header className={styles.animatedTitle}>
+                    <motion.h1 initial={{ y: -15, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 }}>
+                        {currentCategory ? currentCategory.name : 'Услуги по ремонту техники в Вологде'}
+                    </motion.h1>
+                    <motion.p initial={{ y: -15, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.15 }}>
+                        {currentCategory ? currentCategory.description : 'Ноутбуки, видеокарты, телефоны, планшеты, ТВ, приставки, Apple-техника — ремонт с гарантией и честными ценами'}
+                    </motion.p>
+                </header>
+
+                {/* Пока данные грузятся */}
+                {loading ? (
+                    <div className={styles.loadingContainer}>
+                        <div className={styles.loadingSpinner}></div>
+                        <p>Загружаем услуги...</p>
+                    </div>
+                ) : activeCalculatorDevice ? (
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -199,16 +205,6 @@ export default function ServicePricePage() {
                 ) : (
                     // Обычный список услуг
                     <>
-                        {/* Заголовок */}
-                        <header className={styles.animatedTitle}>
-                            <motion.h1 initial={{ y: -15, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 }}>
-                                {currentCategory ? currentCategory.name : 'Услуги по ремонту техники'}
-                            </motion.h1>
-                            <motion.p initial={{ y: -15, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.15 }}>
-                                {currentCategory ? currentCategory.description : 'Ремонтируем любую технику с гарантией качества'}
-                            </motion.p>
-                        </header>
-
                         {/* Крошки и поиск */}
                         <div className={styles.controlsContainer}>
                             <motion.nav className={styles.breadcrumbs} initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }}>
