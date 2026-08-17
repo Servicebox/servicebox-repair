@@ -69,9 +69,16 @@ export async function generateMetadata({ params }) {
     const imageUrl = mainImage.startsWith('http')
       ? mainImage
       : `${BASE_URL}${mainImage}`;
-    const description =
-      product.description?.substring(0, 155) ||
-      `Купить ${product.name} в Вологде — Сервис Бокс. Гарантия качества, быстрая доставка.`;
+    // product.description часто приходит из фида поставщика дословно одинаковым
+    // у разных SKU одной категории (например, у 40+ шлейфов подряд один и тот же
+    // текст «Шлейф изготовлен из компонентов высокого качества...»), поэтому нельзя
+    // отдавать его как есть — получались десятки страниц с идентичным description.
+    // Название товара всегда уникально, поэтому подставляем его первым.
+    const rawDescription = product.description?.replace(/\s*\n\s*/g, '. ').trim();
+    const alreadyStartsWithName = rawDescription?.toLowerCase().startsWith(product.name.toLowerCase());
+    const description = rawDescription
+      ? (alreadyStartsWithName ? rawDescription : `${product.name}. ${rawDescription}`).substring(0, 155)
+      : `Купить ${product.name} в Вологде — Сервис Бокс. Гарантия качества, быстрая доставка.`;
 
     return {
       title: `${product.name} — купить в Вологде | ServiceBox`,
