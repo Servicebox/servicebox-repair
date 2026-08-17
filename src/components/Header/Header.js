@@ -189,6 +189,10 @@ function Header() {
               <button className={styles.headerLoginBtn} onClick={() => setIsLoginOpen(true)} aria-label="Войти в аккаунт">Вход</button>
             )}
 
+            <Link href="/tracking" className={styles.headerNavLink} aria-label="Отследить статус заказа">
+              Отследить заказ
+            </Link>
+
             <Link href="/cart" className={styles.headerCartLink} aria-label="Корзина покупок">
               <FontAwesomeIcon icon={faBasketShopping} />
               {/* Счётчик корзины можно добавить позже, когда подключишь реальную логику */}

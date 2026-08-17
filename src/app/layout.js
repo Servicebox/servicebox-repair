@@ -2,7 +2,7 @@ import './globals.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { Inter, Inter_Tight } from 'next/font/google';
-import Chat from '@/components/Chat/Chat';
+import Script from 'next/script';
 
 const interTight = Inter_Tight({
   subsets: ['latin', 'cyrillic'],
@@ -186,7 +186,11 @@ export default function RootLayout({ children }) {
         </AuthProvider>
 
         <Analytics />
-        <Chat />
+        <Script
+          src="https://service-box-35.ru/widget-loader.js"
+          data-key="wk_live_10fb3bed35b39bd97f13fb21a7e1eadfc9f614f6efef1924"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

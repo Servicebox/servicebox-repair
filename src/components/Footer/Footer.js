@@ -19,6 +19,7 @@ const SERVICES_LINKS = [
 ];
 
 const QUICK_LINKS = [
+  { href: '/tracking', label: 'Отследить заказ' },
   { href: '/#repair-calculator', label: 'Калькулятор цен' },
   { href: '/price', label: 'Прайс-лист' },
   { href: '/brands', label: 'Все бренды' },
@@ -80,6 +81,10 @@ function Footer() {
             <p className={styles.contactItem}>
               <span className={styles.contactIcon}>🕐</span>
               <span>Ежедневно 10:00–20:00</span>
+            </p>
+            <p className={styles.contactItem}>
+              <span className={styles.contactIcon}>💬</span>
+              <span>Онлайн-чат с мастером на сайте</span>
             </p>
           </address>
 

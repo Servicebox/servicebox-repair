@@ -130,7 +130,8 @@ const nextConfig = {
   // *.google-analytics.com. Браузер требует соответствия ОБОИМ заголовкам
   // сразу (пересечение, не замена), так что реально применялась худшая
   // комбинация из двух. Убрано из nginx-конфига — эта версия ниже единственная.
-  // service-box-35.ru (Chatwoot) выпилен — сам Chatwoot удалён из проекта.
+  // service-box-35.ru снова в списке — не старый Chatwoot (тот правда выпилен),
+  // а новый чат-виджет CRM (public/widget-loader.js + iframe /widget/[key]).
   async headers() {
     return [
       {
@@ -141,8 +142,8 @@ const nextConfig = {
             value: [
               "default-src 'self'",
               // 'unsafe-inline' нужен для GTM inline-скрипта и JSON-LD в layout.js
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pay.yandex.ru https://www.googletagmanager.com https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.com https://mc.webvisor.org https://yastatic.net",
-              "frame-src 'self' https://pay.yandex.ru https://www.googletagmanager.com https://yandex.ru https://mc.yandex.ru https://mc.yandex.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pay.yandex.ru https://www.googletagmanager.com https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.com https://mc.webvisor.org https://yastatic.net https://service-box-35.ru",
+              "frame-src 'self' https://pay.yandex.ru https://www.googletagmanager.com https://yandex.ru https://mc.yandex.ru https://mc.yandex.com https://service-box-35.ru",
               "img-src 'self' data: blob: https:",
               "connect-src 'self' https://pay.yandex.ru https://sandbox.pay.yandex.ru https://servicebox35.ru https://www.googletagmanager.com https://*.googletagmanager.com https://mc.yandex.ru wss://mc.yandex.ru https://yastatic.net https://yandex.ru https://*.google-analytics.com https://*.analytics.google.com",
               "style-src 'self' 'unsafe-inline'",
