@@ -823,6 +823,16 @@
   }
 }
 
+/* Поднимаем кнопку чата над липкой мобильной панелью "Позвонить/Цены"
+   (MobileStickyCta, ~54px высотой) — иначе они перекрываются. Идёт после
+   блока @media (max-width: 480px) выше, чтобы победить его bottom:20px
+   на этих же ширинах (более поздний в каскаде при равной специфичности). */
+@media (max-width: 768px) {
+  .chatContainerTg {
+    bottom: calc(70px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
 @media (max-width: 360px) {
   .chatHeader {
     padding: 14px 16px;
