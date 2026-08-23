@@ -68,8 +68,8 @@
   --tracking-tight: -0.03em;
 
   /* Modal design system — cube + header glass */
-  --cube-gradient: linear-gradient(135deg, #2563eb 0%, #7c6bef 50%, #f97316 100%);
-  --cube-halo: radial-gradient(circle, rgba(37, 99, 235, 0.3), transparent 70%);
+  --cube-gradient: linear-gradient(135deg, #002147 0%, #0a3a7a 50%, #f97316 100%);
+  --cube-halo: radial-gradient(circle, rgba(0, 33, 71, 0.35), transparent 70%);
   --color-header-bg: #ffffff;
 }
 
