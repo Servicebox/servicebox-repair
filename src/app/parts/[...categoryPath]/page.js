@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { BASE_URL, BUSINESS } from '@/lib/constants';
 import { resolveCategoryPath } from '@/lib/parts/resolveCategoryPath';
-import { queryProducts } from '@/lib/parts/queryProducts';
+import { queryProducts, getCategoryIdsWithProducts } from '@/lib/parts/queryProducts';
 import { getCategoryTree } from '@/lib/parts/getCategoryTree';
 import ProductGrid from '../ProductGrid';
 import Pagination from '../Pagination';
@@ -22,11 +22,17 @@ export async function generateMetadata({ params }) {
     resolved.category.description ||
     `${resolved.category.name}: каталог с ценами в сервисном центре ServiceBox, Вологда.`;
 
+  // Пустая категория (нет товаров нигде в поддереве) — не отдаём в индекс,
+  // это тонкий контент; страница остаётся доступной для навигации по дереву.
+  const categoryIdsWithProducts = await getCategoryIdsWithProducts();
+  const hasProducts = categoryIdsWithProducts.has(String(resolved.category._id));
+
   return {
     title,
     description,
     alternates: { canonical: `${BASE_URL}/parts/${resolved.category.slug}` },
     openGraph: { title, description, type: 'website', siteName: BUSINESS.shortName },
+    robots: hasProducts ? { index: true, follow: true } : { index: false, follow: true },
   };
 }
 

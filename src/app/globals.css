@@ -415,6 +415,12 @@ img[class*="productImg"] {
   input, textarea, select {
     font-size: 16px !important; /* Prevents iOS zoom on focus */
   }
+
+  /* Место под липкую панель "Позвонить/Цены" (MobileStickyCta), чтобы она
+     не перекрывала подвал сайта при докрутке до конца страницы. */
+  footer {
+    padding-bottom: calc(3.6rem + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 @media (max-width: 480px) {

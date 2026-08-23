@@ -1,5 +1,6 @@
 // app/brands/page.js
 import Link from 'next/link';
+import Image from 'next/image';
 import { BASE_URL, BUSINESS } from '@/lib/constants';
 
 // === БАЗА БРЕНДОВ (должна совпадать с [slug]/page.js) ===
@@ -445,10 +446,12 @@ export default function BrandsPage() {
                 {BRANDS.map((brand) => (
                     <Link key={brand.slug} href={`/brands/${brand.slug}`} className="brand-card">
                         <div className="brand-card-header">
-                            <img
+                            <Image
                                 src={brand.logo}
                                 alt={`Ремонт ${brand.name}`}
                                 className="brand-card-logo"
+                                width={60}
+                                height={60}
                             />
                             <div>
                                 <h3 className="brand-card-name">{brand.name}</h3>

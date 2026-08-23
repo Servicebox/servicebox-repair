@@ -70,6 +70,7 @@
 }
 
 .preview-image {
+  position: relative;
   overflow: hidden;
 }
 
@@ -313,6 +314,7 @@
 }
 
 .thumbnail {
+  position: relative;
   width: 60px;
   height: 60px;
   border-radius: 6px;

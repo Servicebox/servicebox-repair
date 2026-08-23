@@ -4,6 +4,7 @@ import Product from '@/models/Product';
 import News from '@/models/News';
 import Service from '@/models/Service';
 import OptfmCategory from '@/models/OptfmCategory';
+import { getCategoryIdsWithProducts } from '@/lib/parts/queryProducts';
 import { BASE_URL } from '@/lib/constants';
 import { PROBLEMS } from '@/lib/problems-data';
 import { ANSWERS } from '@/lib/ai-answers-data';
@@ -54,18 +55,20 @@ export default async function sitemap() {
     // активных товарах .limit(500) исключал из sitemap 88% каталога.
     // Next.js допускает до 50 000 URL в одном sitemap-файле, здесь и близко
     // столько нет, поэтому грузим целиком.
-    const [services, products, news, categories] = await Promise.all([
+    const [services, products, news, categories, categoryIdsWithProducts] = await Promise.all([
       Service.find({ isActive: { $ne: false }, isCategory: false }, { slug: 1, updatedAt: 1 }).lean(),
       Product.find({ isActive: true, isDeleted: false }, { slug: 1, updatedAt: 1 }).lean(),
       News.find({ isPublished: true }, { slug: 1, updatedAt: 1, publishedAt: 1 }).lean(),
       OptfmCategory.find({}, { slug: 1 }).lean(),
+      getCategoryIdsWithProducts(),
     ]);
 
     dbUrls = [
       ...services.filter(s => s.slug).map(s => createEntry(`/services/${encodeURIComponent(s.slug)}`, 0.85, 'monthly', s.updatedAt)),
       ...products.filter(p => p.slug).map(p => createEntry(`/product/${encodeURIComponent(p.slug)}`, 0.75, 'weekly', p.updatedAt)),
       ...news.filter(n => n.slug).map(n => createEntry(`/news/${encodeURIComponent(n.slug)}`, 0.7, 'monthly', n.updatedAt || n.publishedAt)),
-      ...categories.filter(c => c.slug).map(c => createEntry(`/parts/${encodeURIComponent(c.slug)}`, 0.8, 'daily')),
+      // Пустые категории (нет товаров нигде в поддереве) не индексируем — см. getCategoryIdsWithProducts.
+      ...categories.filter(c => c.slug && categoryIdsWithProducts.has(String(c._id))).map(c => createEntry(`/parts/${encodeURIComponent(c.slug)}`, 0.8, 'daily')),
     ];
   } catch (error) {
     console.warn('⚠️ [Sitemap] DB fetch skipped:', error.message);

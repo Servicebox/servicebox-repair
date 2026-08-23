@@ -20,6 +20,7 @@ const inter = Inter({
 import Header from '../components/Header/Header';
 import BubbleBackground from '../components/BubbleBackground/BubbleBackground';
 import Footer from '../components/Footer/Footer';
+import MobileStickyCta from '../components/MobileStickyCta/MobileStickyCta';
 import CookieConsent from '../components/CookieConsent/CookieConsent';
 import { AuthProvider } from '../components/contexts/AuthContext';
 import ShopContextProvider from '../components/ShopContext/ShopContext';
@@ -179,6 +180,7 @@ export default function RootLayout({ children }) {
                   <main id="main-content">{children}</main>
                 </div>
                 <Footer />
+                <MobileStickyCta />
                 <CookieConsent />
               </div>
             </BreadcrumbProvider>

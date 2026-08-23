@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import './Gallery.css';
 import LikeButton from '@/components/LikeButton/LikeButton';
 
@@ -108,19 +109,20 @@ export default function GalleryClient({ groups }) {
                 <div className="group-preview">
                   {group.images.slice(0, 4).map((image, index) => (
                     <div key={image.id} className={`preview-image preview-${index + 1}`} style={{ zIndex: 4 - index }}>
-                      <img
+                      <Image
                         src={getImageSource(image)}
                         alt={group.description || 'Фото из галереи ServiceBox'}
                         onError={() => handleImageError(image.id)}
                         loading="lazy"
-                        width={400}
-                        height={200}
+                        fill
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                        style={{ objectFit: 'cover' }}
                       />
                     </div>
                   ))}
                   {group.images.length === 0 && (
                     <div className="preview-image preview-1">
-                      <img src={PLACEHOLDER_IMAGE} alt="Нет фото" width={400} height={200} />
+                      <Image src={PLACEHOLDER_IMAGE} alt="Нет фото" fill style={{ objectFit: 'cover' }} unoptimized />
                     </div>
                   )}
                   {group.images.length > 4 && (
@@ -163,11 +165,14 @@ export default function GalleryClient({ groups }) {
             </div>
 
             <div className="modal-image-container">
-              <img
+              <Image
                 src={getImageSource(selectedGroup.images[currentImageIndex])}
                 alt={selectedGroup.description}
                 className="modal-image"
                 onError={() => handleImageError(selectedGroup.images[currentImageIndex].id)}
+                fill
+                sizes="90vw"
+                style={{ objectFit: 'contain' }}
               />
 
               {selectedGroup.images.length > 1 && (
@@ -212,10 +217,13 @@ export default function GalleryClient({ groups }) {
                     className={`thumbnail ${index === currentImageIndex ? 'active' : ''}`}
                     onClick={() => setCurrentImageIndex(index)}
                   >
-                    <img
+                    <Image
                       src={getImageSource(image)}
                       alt={`${index + 1}`}
                       onError={() => handleImageError(image.id)}
+                      fill
+                      sizes="60px"
+                      style={{ objectFit: 'cover' }}
                     />
                   </div>
                 ))}

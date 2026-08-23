@@ -824,5 +824,19 @@
     "isCategory": false,
     "oldSlug": "услуга-стоимость-время-заказать-диагностика",
     "newSlug": "diagnostika-1"
+  },
+  {
+    "id": "69f7a10e7c64cb94df15daa3",
+    "name": "Диагностика ноутбука Acer",
+    "isCategory": false,
+    "oldSlug": "diagnostika-1",
+    "newSlug": "diagnostika-acer"
+  },
+  {
+    "id": "692e1f9a660d4f5272101907",
+    "name": "Замена подсветки на телевизоре 60-74 дюймов",
+    "isCategory": false,
+    "oldSlug": "zamena-podsvetki-na-televizore-60-74-dyuymovzamena-podsvetki-na-televizore-50-59-dyuymov",
+    "newSlug": "zamena-podsvetki-na-televizore-60-74-dyuymov"
   }
 ]

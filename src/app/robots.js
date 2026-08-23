@@ -14,7 +14,8 @@ export default function robots() {
         ],
         disallow: [
           '/admin-panel/', '/private/', '/checkout', '/cart',
-          '/api/admin/', '/api/auth/', '/api/internal/', '/_next/', '/api/trpc/'
+          '/api/admin/', '/api/auth/', '/api/internal/', '/_next/', '/api/trpc/',
+          '/api/yml', '/api/services-yml', '/yml-check', '/services/yml'
         ],
       },
       {

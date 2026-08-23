@@ -53,9 +53,12 @@ export const BUSINESS = {
 
     foundingDate: '2016',
 
+    // Источник — карточка Яндекс.Бизнес (servisboks.clients.site), сверено
+    // вручную 2026-08-23. Растёт органически (было 167 на 2026-08-03), число
+    // не автоматизировано — обновлять при следующей SEO-сверке.
     rating: {
         value: '5.0',
-        count: '150',
+        count: '169',
         bestRating: '5',
         worstRating: '1',
     },

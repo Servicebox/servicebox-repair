@@ -1,6 +1,7 @@
 // app/brands/[slug]/page.js
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { BUSINESS, BASE_URL } from '@/lib/constants';
 import { LOCAL_BUSINESS_SCHEMA, createBreadcrumbList } from '@/lib/seo-helpers';
 // === БАЗА БРЕНДОВ ===
@@ -692,12 +693,12 @@ export default async function BrandPage({ params }) {
         background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
         borderRadius: '16px',
       }}>
-        <img
+        <Image
           src={brand.logo}
           alt={brand.name}
+          width={80}
+          height={80}
           style={{
-            width: '80px',
-            height: '80px',
             objectFit: 'contain',
             background: 'white',
             padding: '0.5rem',
@@ -848,9 +849,7 @@ export default async function BrandPage({ params }) {
               textAlign: 'center',
               transition: 'all 0.2s',
             }}>
-              <img src={b.logo} alt={b.name} style={{
-                width: '40px',
-                height: '40px',
+              <Image src={b.logo} alt={b.name} width={40} height={40} style={{
                 objectFit: 'contain',
                 marginBottom: '0.5rem',
               }} />

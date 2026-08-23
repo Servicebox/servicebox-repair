@@ -75,7 +75,9 @@ export const LOCAL_BUSINESS_SCHEMA = {
     ],
     areaServed: { '@type': 'City', name: BUSINESS.mainAddress.city },
     foundingDate: BUSINESS.foundingDate,
-    sameAs: [BUSINESS.socials.vk],
+    // 2ГИС и Яндекс.Бизнес — реальные площадки, откуда взяты цифры rating
+    // выше (см. constants.js), sameAs подтверждает источник для поисковика.
+    sameAs: [BUSINESS.socials.vk, 'https://2gis.ru/vologda/firm/70000001035400151', 'https://servisboks.clients.site'],
 };
 
 // ✅ Хлебные крошки
