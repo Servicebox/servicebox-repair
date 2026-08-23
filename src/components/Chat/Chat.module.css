@@ -829,7 +829,8 @@
    на этих же ширинах (более поздний в каскаде при равной специфичности). */
 @media (max-width: 768px) {
   .chatContainerTg {
-    bottom: calc(70px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(110px + env(safe-area-inset-bottom, 0px));
+    right: 16px;
   }
 }
 
