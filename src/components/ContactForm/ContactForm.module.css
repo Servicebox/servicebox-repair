@@ -29,7 +29,7 @@
 .textarea:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 33, 71, 0.1);
 }
 
 .submitButton {

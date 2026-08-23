@@ -94,7 +94,7 @@ const Contacts = forwardRef((props, ref) => {
               className={styles.contactCard}
               onClick={() => handlePhoneCall('+7-911-501-88-28')}
             >
-              <div className={styles.contactIcon} style={{ background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)' }}>
+              <div className={styles.contactIcon}>
                 <FontAwesomeIcon icon={faMobilePhone} />
               </div>
               <div className={styles.contactContent}>
@@ -113,7 +113,7 @@ const Contacts = forwardRef((props, ref) => {
               className={styles.contactCard}
               onClick={handleMailTo}
             >
-              <div className={styles.contactIcon} style={{ background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)' }}>
+              <div className={styles.contactIcon}>
                 <FontAwesomeIcon icon={faEnvelope} />
               </div>
               <div className={styles.contactContent}>
@@ -128,7 +128,7 @@ const Contacts = forwardRef((props, ref) => {
 
             {/* Режим работы */}
             <div className={styles.contactCard}>
-              <div className={styles.contactIcon} style={{ background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)' }}>
+              <div className={styles.contactIcon}>
                 <FontAwesomeIcon icon={faClock} />
               </div>
               <div className={styles.contactContent}>

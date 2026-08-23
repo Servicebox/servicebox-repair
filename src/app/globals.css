@@ -92,7 +92,7 @@
   --color-border: #2a2a2a;
   --color-shadow: rgba(0, 0, 0, 0.4);
   --color-header-bg: #141414;
-  --color-primary-bg: rgba(56, 189, 248, 0.12);
+  --color-primary-bg: rgba(91, 132, 221, 0.12);
   --color-success-bg: rgba(127, 238, 100, 0.12);
   --color-danger-bg: rgba(255, 85, 85, 0.12);
   --color-warning-bg: rgba(255, 204, 0, 0.12);
@@ -253,7 +253,7 @@ button {
 }
 
 button:hover:not(:disabled) {
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25), 0 8px 20px -6px rgba(37, 99, 235, 0.45);
+  box-shadow: 0 0 0 3px rgba(0, 33, 71, 0.25), 0 8px 20px -6px rgba(0, 33, 71, 0.45);
   transform: translateY(-1px);
 }
 
@@ -279,7 +279,7 @@ button:disabled {
 }
 
 .btnGhost:hover:not(:disabled) {
-  background: rgba(37, 99, 235, 0.08);
+  background: rgba(0, 33, 71, 0.08);
   transform: translateY(-1px);
 }
 

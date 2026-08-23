@@ -45,7 +45,7 @@
   left: -10%;
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+  background: var(--cube-halo);
   pointer-events: none;
 }
 
@@ -268,7 +268,8 @@
   color: white;
   font-size: 1.5rem;
   flex-shrink: 0;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  background: var(--cube-gradient);
+  box-shadow: 0 8px 20px rgba(0, 33, 71, 0.25);
   transition: transform 0.3s ease;
 }
 
@@ -409,14 +410,14 @@
   width: 60px;
   height: 60px;
   border-radius: 16px;
-  background: linear-gradient(135deg, var(--color-danger) 0%, var(--color-danger) 100%);
+  background: var(--cube-gradient);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 1.5rem;
   flex-shrink: 0;
-  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+  box-shadow: 0 8px 20px rgba(0, 33, 71, 0.25);
 }
 
 .locationTitle {

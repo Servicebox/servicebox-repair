@@ -19,7 +19,7 @@
   right: -5%;
   width: clamp(300px, 50vw, 700px);
   height: clamp(300px, 50vw, 700px);
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.07) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 33, 71, 0.07) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -30,7 +30,7 @@
   left: -5%;
   width: clamp(200px, 40vw, 500px);
   height: clamp(200px, 40vw, 500px);
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.06) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -250,7 +250,7 @@
   font-size: 1.3rem;
   line-height: 1;
   background: var(--cube-gradient);
-  box-shadow: 0 6px 16px -6px rgba(37, 99, 235, 0.5);
+  box-shadow: 0 6px 16px -6px rgba(0, 33, 71, 0.5);
   transition: transform 0.4s var(--ease-out-expo);
 }
 
@@ -352,13 +352,13 @@
 .heroBtn.primary {
   background: var(--color-primary);
   color: var(--color-bg-dark);
-  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 4px 16px rgba(0, 33, 71, 0.35);
 }
 
 .heroBtn.primary:hover {
   background: var(--color-primary);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.45);
+  box-shadow: 0 8px 24px rgba(0, 33, 71, 0.45);
 }
 
 .heroBtn.secondary {
@@ -490,7 +490,7 @@
   box-shadow:
     0 0 0 1px rgba(0, 0, 0, 0.05),
     0 8px 32px var(--color-shadow),
-    0 32px 64px rgba(37, 99, 235, 0.06);
+    0 32px 64px rgba(0, 33, 71, 0.06);
 }
 
 .visualHeader {
@@ -599,7 +599,7 @@
   padding: 0.625rem 1rem;
   background: var(--color-primary);
   border-radius: 100px;
-  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 33, 71, 0.3);
   font-size: 0.8125rem;
   font-weight: 700;
   color: var(--color-bg-dark);
