@@ -90,7 +90,7 @@
 
 .addButton {
   padding: 0.5rem 1rem;
-  background: #3b82f6;
+  background: var(--color-primary);
   color: var(--color-text-inverse);
   border: none;
   border-radius: 6px;
