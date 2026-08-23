@@ -102,7 +102,7 @@ export default function MainBanner({ onSelectDeviceType }) {
           <a href="#reviews" className={styles.heroBadge}>
             <div className={styles.badgeStars}>⭐⭐⭐⭐⭐</div>
             <div className={styles.badgeText}>
-              <strong>5.0</strong> на Яндекс.Картах · <strong>150+</strong> отзывов
+              <strong>{BUSINESS.rating.value}</strong> на Яндекс.Картах · <strong>{BUSINESS.rating.count}+</strong> отзывов
             </div>
           </a>
 
