@@ -138,6 +138,53 @@
   flex-shrink: 0;
 }
 
+/* Отличия от конкурентов (ЛК, смета, бонусы) */
+.diffBand {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+@media (max-width: 720px) {
+  .diffBand {
+    grid-template-columns: 1fr;
+  }
+}
+
+.diffItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  padding: 0.75rem 0.875rem;
+  background: var(--color-primary-bg);
+  border: 1.5px solid var(--color-primary);
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.diffIcon {
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.diffTitle {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+.diffText {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+  margin-top: 0.125rem;
+}
+
 /* CTA buttons */
 .heroCTA {
   display: flex;
@@ -528,4 +575,75 @@
   .visualHeaderBadgeDot {
     animation: none;
   }
+}
+
+/* Контейнер для иконок соцсетей */
+.heroSocials {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.heroSocialBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  font-size: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.heroSocialBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Кликабельный телефон */
+.heroPhoneLink {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 15px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #111;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+/* Промо-блок вашей CRM внутри правой карточки */
+.crmPromo {
+  margin-top: 20px;
+  padding: 15px;
+  background: #f0f7ff;
+  border-radius: 12px;
+  border: 1px solid #e1effe;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.crmPromoIcon {
+  font-size: 24px;
+}
+
+.crmPromoText {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.crmPromoText strong {
+  color: #1d4ed8;
+  margin-bottom: 2px;
+}
+
+.crmPromoText span {
+  font-size: 0.8rem;
+  color: #666;
 }

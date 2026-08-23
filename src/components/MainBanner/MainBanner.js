@@ -15,6 +15,16 @@ const trustPills = [
   'Бесплатная диагностика',
 ];
 
+// Отличия от конкурентов (Pedant, Дителл и т.д. конкурируют ценой — у них
+// нет личного кабинета с отслеживанием и согласованием сметы). Раньше это
+// было спрятано в личном кабинете и не видно до заявки — см. аудит
+// 2026-08-23, раздел "Вынести CRM-отличия на первый экран".
+const differentiators = [
+  { icon: '📦', title: 'Статус ремонта online', text: 'Не звоните узнавать — смотрите этап в личном кабинете', href: '/tracking' },
+  { icon: '✅', title: 'Смета до начала работ', text: 'Согласовываем стоимость заранее — без сюрпризов на выдаче' },
+  { icon: '🎁', title: 'Бонусы в Google Pay', text: 'Кэшбэк с каждого ремонта — на карту в вашем телефоне' },
+];
+
 const services = [
   { icon: '📱', name: 'Смартфоны', href: '/services/phones' },
   { icon: '💻', name: 'Ноутбуки', href: '/services/laptops' },
@@ -123,6 +133,29 @@ export default function MainBanner({ onSelectDeviceType }) {
                 {label}
               </div>
             ))}
+          </div>
+
+          <div className={styles.diffBand} aria-label="Чем мы отличаемся">
+            {differentiators.map((item) => {
+              const content = (
+                <>
+                  <span className={styles.diffIcon} aria-hidden="true">{item.icon}</span>
+                  <span>
+                    <span className={styles.diffTitle}>{item.title}</span>
+                    <span className={styles.diffText}>{item.text}</span>
+                  </span>
+                </>
+              );
+              return item.href ? (
+                <Link key={item.title} href={item.href} className={styles.diffItem}>
+                  {content}
+                </Link>
+              ) : (
+                <div key={item.title} className={styles.diffItem}>
+                  {content}
+                </div>
+              );
+            })}
           </div>
 
           <div className={styles.heroCTA}>
