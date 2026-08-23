@@ -196,7 +196,7 @@
   inset: 0;
   padding: 1.5px;
   border-radius: inherit;
-  background: var(--cube-gradient);
+  background: var(--color-primary-dark);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
@@ -249,7 +249,8 @@
   border-radius: 12px;
   font-size: 1.3rem;
   line-height: 1;
-  background: var(--cube-gradient);
+  background: var(--color-primary-dark);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
   box-shadow: 0 6px 16px -6px rgba(0, 33, 71, 0.5);
   transition: transform 0.4s var(--ease-out-expo);
 }
