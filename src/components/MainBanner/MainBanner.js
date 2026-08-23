@@ -141,7 +141,10 @@ export default function MainBanner({ onSelectDeviceType }) {
                 <>
                   <span className={styles.diffIcon} aria-hidden="true">{item.icon}</span>
                   <span>
-                    <span className={styles.diffTitle}>{item.title}</span>
+                    <span className={styles.diffTitle}>
+                      {item.title}
+                      {item.href && <span className={styles.diffArrow} aria-hidden="true">→</span>}
+                    </span>
                     <span className={styles.diffText}>{item.text}</span>
                   </span>
                 </>
