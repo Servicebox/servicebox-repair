@@ -14,7 +14,9 @@ function MobileStickyCta() {
         <FontAwesomeIcon icon={faPhone} />
         <span>Позвонить</span>
       </a>
-      <Link href="/price" className={styles.priceButton}>
+      {/* /price — прайс-лист донорских плат для ремонта, а не цены на услуги.
+          Услуги + цены на них — /services (см. пункт шапки "Услуги и цены"). */}
+      <Link href="/services" className={styles.priceButton}>
         <FontAwesomeIcon icon={faRubleSign} />
         <span>Цены</span>
       </Link>
