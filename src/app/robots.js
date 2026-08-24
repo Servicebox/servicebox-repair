@@ -29,7 +29,11 @@ export default function robots() {
           '/services/', '/prices', '/contacts', '/about', '/brands/', '/problems/',
           '/gallery/', '/images/', '/photos/', '/og-image.jpg', '/favicon.webp'
         ],
-        disallow: ['/admin-panel/', '/api/admin/', '/private/', '/checkout', '/cart', '/_next/'],
+        disallow: [
+          '/admin-panel/', '/api/admin/', '/private/', '/checkout', '/cart', '/_next/',
+          '/api/auth/', '/api/internal/', '/api/yml', '/api/services-yml',
+          '/yml-check', '/services/yml'
+        ],
       },
     ],
     sitemap: `${BASE_URL}/sitemap.xml`,
