@@ -2,6 +2,7 @@
 export const runtime = 'nodejs';
 import { NextResponse } from 'next/server';
 import { verify } from 'jsonwebtoken';
+import { BASE_URL } from '@/lib/constants';
 
 export function middleware(request) {
   const { pathname } = request.nextUrl;
@@ -23,8 +24,14 @@ export function middleware(request) {
   });
 
   if (hasUnwantedParam) {
-    // 301 редирект (постоянный) - поисковик запомнит чистый URL
-    return NextResponse.redirect(url, 301);
+    // 301 редирект (постоянный) - поисковик запомнит чистый URL.
+    // Строим абсолютный URL от BASE_URL, а не от url.origin (который на
+    // этом кастомном Node-сервере резолвится в localhost:3000, см. коммент
+    // ниже про canonicalUrl) — раньше это молча "чинилось" директивой
+    // proxy_redirect в nginx, переписывающей Location; если её когда-нибудь
+    // уберут/поменяют, реальные посетители по рекламным ссылкам улетят на
+    // localhost.
+    return NextResponse.redirect(new URL(`${url.pathname}${url.search}`, BASE_URL), 301);
   }
 
   // ==========================================================
@@ -94,8 +101,18 @@ export function middleware(request) {
   // 3. SEO: КАНОНИЧЕСКИЕ ЗАГОЛОВКИ (новое!)
   // ==========================================================
   // Говорим поисковикам, что текущий URL - канонический
-  // Это страхует от дублей, даже если что-то пройдёт через middleware
-  const canonicalUrl = `${request.nextUrl.origin}${pathname}`;
+  // Это страхует от дублей, даже если что-то пройдёт через middleware.
+  // ВАЖНО: используем фиксированный BASE_URL, а не request.nextUrl.origin —
+  // на кастомном Node-сервере (src/server.js, http.createServer + Next
+  // request handler, не next start) origin в middleware резолвится в
+  // http://localhost:3000 на каждом запросе, а не только для кэша — nginx
+  // это скрывал только для 3xx-редиректов через свою автоматическую
+  // директиву proxy_redirect (переписывает Location), но не трогает
+  // произвольные заголовки вроде Link. Точный механизм в самом Next.js
+  // не выяснен до конца — фиксированный BASE_URL просто убирает
+  // зависимость от него. См. баг 2026-08-24: canonical отдавался как
+  // https://localhost:3000/.
+  const canonicalUrl = `${BASE_URL}${pathname}`;
   response.headers.set('Link', `<${canonicalUrl}>; rel="canonical"`);
 
   // ==========================================================
