@@ -37,6 +37,11 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev, dir: '.' });
 const handle = app.getRequestHandler();
 const PORT = process.env.PORT || 3000;
+// По умолчанию слушаем только loopback — прод стоит за nginx (proxy_pass
+// http://localhost:3000), прямой доступ к порту 3000 снаружи не нужен и
+// раньше был открыт всему интернету (0.0.0.0), см. аудит безопасности
+// 2026-08-24. HOST=0.0.0.0 можно переопределить явно при необходимости.
+const HOST = process.env.HOST || '127.0.0.1';
 
 // === Опции MongoDB ===
 const mongoOptions = {
@@ -195,13 +200,13 @@ app.prepare().then(async () => {
   process.on('SIGINT', () => gracefulShutdown(server));
 
   // === Запуск ===
-  server.listen(PORT, (err) => {
+  server.listen(PORT, HOST, (err) => {
     if (err) throw err;
     console.log(`
 ╔══════════════════════════════════════════════════════════════╗
 ║  🚀 SERVICEBOX-REPAIR STARTED SUCCESSFULLY                  ║
 ╠══════════════════════════════════════════════════════════════╣
-║  📡 URL:        http://localhost:${PORT}                      ║
+║  📡 URL:        http://${HOST}:${PORT}                      ║
 ║  💚 Health:     http://localhost:${PORT}/health               ║
 ║  🔧 Environment: ${(process.env.NODE_ENV || 'production').padEnd(20)}║
 ║  🗄️  Database:   ${mongoose.connection.readyState === 1 ? 'connected' : 'connecting'}                ║
