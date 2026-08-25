@@ -481,6 +481,11 @@
 @media (max-width: 768px) {
   .headerTopBar { display: none; }
   .headerNav { display: none; }
+  /* Ссылка живёт вне .headerNav (в .headerActions), поэтому не скрывалась
+     вместе с десктопным меню и вызывала горизонтальное переполнение шапки
+     на узких экранах (см. аудит мобильной адаптивности 2026-08-25).
+     Дубль уже есть в BurgerMenu ("Проверить статус ремонта"). */
+  .headerTrackLink { display: none; }
   .headerContainer { height: 60px; padding: 0 15px; gap: 8px; }
   .headerLogo { width: 45px; height: 35px; }
   .headerActions { gap: 8px; }

@@ -189,7 +189,7 @@ function Header() {
               <button className={styles.headerLoginBtn} onClick={() => setIsLoginOpen(true)} aria-label="Войти в аккаунт">Вход</button>
             )}
 
-            <Link href="/tracking" className={styles.headerNavLink} aria-label="Отследить статус заказа">
+            <Link href="/tracking" className={`${styles.headerNavLink} ${styles.headerTrackLink}`} aria-label="Отследить статус заказа">
               Отследить заказ
             </Link>
 
