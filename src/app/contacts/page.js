@@ -2,12 +2,12 @@ import { BUSINESS, BASE_URL } from '@/lib/constants';
 import Script from 'next/script';
 
 export const metadata = {
-    title: 'Контакты ServiceBox в Вологде | Адрес, телефон, график работы',
+    title: 'Контакты СЕРВИС БОКС в Вологде | Адрес, телефон, график работы',
     description: 'Как добраться в сервисный центр: г. Вологда, ул. Северная 7А, ТЦ КИТ. Бесплатная консультация по телефону +7 (911) 501-88-28. Ежедневно 10:00-20:00.',
-    keywords: ['ServiceBox контакты', 'адрес сервис центра Вологда', 'телефон ремонта телефонов', 'график работы ServiceBox', 'где находится сервис центр'],
+    keywords: ['СЕРВИС БОКС контакты', 'адрес сервис центра Вологда', 'телефон ремонта телефонов', 'график работы СЕРВИС БОКС', 'где находится сервис центр'],
     alternates: { canonical: `${BASE_URL}/contacts` },
     openGraph: {
-        title: 'Контакты ServiceBox Вологда',
+        title: 'Контакты СЕРВИС БОКС Вологда',
         description: 'Приезжайте на диагностику или звоните. Работаем без выходных. Вологда, ул. Северная 7А.',
         type: 'website',
         url: `${BASE_URL}/contacts`,
@@ -64,7 +64,7 @@ export default function ContactsPage() {
             <section className="max-w-5xl mx-auto py-12 px-4">
 
                 <header className="text-center mb-12">
-                    <h1 className="text-3xl md:text-4xl font-bold text-[var(--color-primary-dark)] mb-4">Контакты сервисного центра ServiceBox</h1>
+                    <h1 className="text-3xl md:text-4xl font-bold text-[var(--color-primary-dark)] mb-4">Контакты сервисного центра СЕРВИС БОКС</h1>
                     <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                         Приезжайте на бесплатную диагностику или свяжитесь с нами онлайн. Отвечаем в течение 15 минут.
                     </p>
@@ -94,7 +94,7 @@ export default function ContactsPage() {
                             <p className="text-sm text-gray-500">ТЦ «КИТ», 1 этаж, напротив эскалатора (ориентир: магазин Бристоль)</p>
                         </div>
                         <div className="w-full h-[300px] rounded-xl overflow-hidden bg-gray-100 mb-6">
-                            <iframe src={yandexMapUrl} width="100%" height="100%" frameBorder="0" loading="lazy" title="Карта проезда ServiceBox" className="w-full h-full" />
+                            <iframe src={yandexMapUrl} width="100%" height="100%" frameBorder="0" loading="lazy" title="Карта проезда СЕРВИС БОКС" className="w-full h-full" />
                         </div>
                         <a href={yandexProfileUrl} target="_blank" rel="noopener noreferrer" className="block w-full text-center bg-[var(--color-primary-dark)] text-white py-3 rounded-xl font-bold hover:bg-[var(--color-primary-dark)] transition">
                             🗺️ Открыть в Яндекс.Картах

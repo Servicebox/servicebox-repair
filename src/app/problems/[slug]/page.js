@@ -33,16 +33,16 @@ export async function generateMetadata({ params }) {
 
     const BASE_URL = getBaseUrl();
     return {
-        title: `${problem.title} | ServiceBox Вологда`,
+        title: `${problem.title} | СЕРВИС БОКС Вологда`,
         description: problem.shortAnswer,
         alternates: { canonical: `${BASE_URL}/problems/${slug}` },
         authors: [{ name: problem.author, url: `${BASE_URL}/about` }],
-        keywords: `${problem.category.toLowerCase()}, ${problem.title.toLowerCase()}, ServiceBox, ремонт Вологда`,
+        keywords: `${problem.category.toLowerCase()}, ${problem.title.toLowerCase()}, СЕРВИС БОКС, ремонт Вологда`,
         openGraph: {
             title: problem.title,
             description: problem.shortAnswer,
             url: `${BASE_URL}/problems/${slug}`,
-            siteName: 'ServiceBox Вологда',
+            siteName: 'СЕРВИС БОКС Вологда',
             type: 'article',
             locale: 'ru_RU',
         },

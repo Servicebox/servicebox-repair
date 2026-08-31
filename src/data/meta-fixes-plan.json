@@ -1,6 +1,6 @@
 [
-  { "id": "693739139b6f9dd2c1a369a8", "name": "Диагностика (Ремонт ноутбуков)", "action": "set", "metaTitle": "Диагностика ноутбука в Вологде | ServiceBox35" },
-  { "id": "69f7a10e7c64cb94df15daa3", "name": "Диагностика (Ремонт ноутбуков Acer)", "action": "set", "metaTitle": "Диагностика ноутбука Acer в Вологде | ServiceBox35" },
+  { "id": "693739139b6f9dd2c1a369a8", "name": "Диагностика (Ремонт ноутбуков)", "action": "set", "metaTitle": "Диагностика ноутбука в Вологде | СЕРВИС БОКС" },
+  { "id": "69f7a10e7c64cb94df15daa3", "name": "Диагностика (Ремонт ноутбуков Acer)", "action": "set", "metaTitle": "Диагностика ноутбука Acer в Вологде | СЕРВИС БОКС" },
   { "id": "693a9af8bb0889dde8d52673", "name": "Замена аккумулятора на Apple iPhone 11", "action": "clear", "clearMetaTitle": true, "clearMetaDescription": false },
   { "id": "693a9b88bb0889dde8d52686", "name": "Замена аккумулятора на Apple iPhone 11 Pro", "action": "clear", "clearMetaTitle": true, "clearMetaDescription": true },
   { "id": "693a9c5abb0889dde8d526a5", "name": "Замена аккумулятора на Apple iPhone 12", "action": "clear", "clearMetaTitle": true, "clearMetaDescription": true },

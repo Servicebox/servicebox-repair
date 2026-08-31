@@ -75,7 +75,7 @@ export async function GET(request) {
         let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
         xml += '<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">\n';
         xml += '<channel>\n';
-        xml += `<title>ServiceBox35 - Запчасти для ремонта техники</title>\n`;
+        xml += `<title>СЕРВИС БОКС - Запчасти для ремонта техники</title>\n`;
         xml += `<link>${baseUrl}</link>\n`;
         xml += `<description>Оригинальные запчасти и аксессуары для ноутбуков, телефонов, телевизоров и другой электроники</description>\n`;
 
@@ -97,7 +97,7 @@ export async function GET(request) {
 
             const availability = getAvailability(product.quantity);
             const condition = getCondition(product);
-            const brand = product.brand || 'ServiceBox35';
+            const brand = product.brand || 'СЕРВИС БОКС';
             const mpn = product.sku || product.vendorCode || product._id;
             const gtin = product.gtin || '';
 

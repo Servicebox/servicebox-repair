@@ -1,7 +1,7 @@
 // lib/seoConfig.js
 export const SEO_CONFIG = {
   site: {
-    name: 'ServiceBox35',
+    name: 'СЕРВИС БОКС',
     url: 'https://servicebox35.ru',
     city: 'Вологда',
     region: 'Вологдская область',
@@ -10,37 +10,37 @@ export const SEO_CONFIG = {
 
   pages: {
     home: {
-      title: 'Ремонт техники в Вологде | ServiceBox35',
+      title: 'Ремонт техники в Вологде | СЕРВИС БОКС',
       description: 'Профессиональный ремонт электроники, смартфонов, ноутбуков и планшетов в Вологде. Опыт 10+ лет, гарантия на работу, быстрая диагностика.',
       h1: 'Ремонт техники в Вологде - быстро и качественно',
       keywords: ['ремонт техники Вологда', 'ремонт смартфонов', 'ремонт ноутбуков', 'сервис центр'],
     },
 
     services: {
-      title: 'Услуги по ремонту в Вологде | ServiceBox35',
+      title: 'Услуги по ремонту в Вологде | СЕРВИС БОКС',
       description: 'Все виды ремонтных услуг: смартфоны, планшеты, ноутбуки, ПК. Гарантия на работу, оригинальные запчасти.',
       h1: 'Услуги ремонта техники в Вологде',
       keywords: ['услуги ремонта', 'сервис центр Вологда', 'ремонт электроники'],
     },
 
     shop: {
-      title: 'Запчасти и аксессуары в Вологде | ServiceBox35',
+      title: 'Запчасти и аксессуары в Вологде | СЕРВИС БОКС',
       description: 'Оригинальные запчасти и аксессуары для всех брендов. Доставка в Вологде и по России.',
       h1: 'Запчасти и аксессуары для техники в Вологде',
       keywords: ['запчасти', 'аксессуары', 'купить запчасти Вологда'],
     },
 
     about: {
-      title: 'О компании ServiceBox35 | Ремонт в Вологде',
-      description: 'ServiceBox35 - лидер в сфере ремонта техники в Вологде. Мастера с сертификатами, современное оборудование, гарантия качества.',
-      h1: 'О сервис-центре ServiceBox35',
+      title: 'О компании СЕРВИС БОКС | Ремонт в Вологде',
+      description: 'СЕРВИС БОКС - лидер в сфере ремонта техники в Вологде. Мастера с сертификатами, современное оборудование, гарантия качества.',
+      h1: 'О сервис-центре СЕРВИС БОКС',
       keywords: ['о компании', 'сервис центр', 'профессионалы'],
     },
 
     contacts: {
-      title: 'Контакты ServiceBox35 | Ремонт в Вологде',
-      description: 'Наши контакты: адрес, телефон, время работы. Сервис центр ServiceBox35 в центре Вологды.',
-      h1: 'Контакты ServiceBox35 в Вологде',
+      title: 'Контакты СЕРВИС БОКС | Ремонт в Вологде',
+      description: 'Наши контакты: адрес, телефон, время работы. Сервис центр СЕРВИС БОКС в центре Вологды.',
+      h1: 'Контакты СЕРВИС БОКС в Вологде',
       keywords: ['контакты', 'адрес', 'телефон', 'Вологда'],
     }
   }
@@ -50,7 +50,7 @@ export const generateLocalBusinessSchema = (address = '') => {
   return {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    'name': 'ServiceBox35',
+    'name': 'СЕРВИС БОКС',
     'url': process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru',
     'address': {
       '@type': 'PostalAddress',
@@ -71,7 +71,7 @@ export const generateOrganizationSchema = () => {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    'name': 'ServiceBox35',
+    'name': 'СЕРВИС БОКС',
     'url': process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru',
     'logo': `${process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru'}/logo.png`,
     'description': 'Сервис центр ремонта техники в Вологде',
@@ -101,7 +101,7 @@ export const generateServiceSchema = (name, description, price = null) => {
     },
     'provider': {
       '@type': 'LocalBusiness',
-      'name': 'ServiceBox35'
+      'name': 'СЕРВИС БОКС'
     },
     ...(price && { 'offers': { '@type': 'Offer', 'price': price } })
   };

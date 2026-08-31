@@ -12,7 +12,7 @@ function Feed() {
                     <iframe 
                         className={styles.feedMap} 
                         src="https://yandex.ru/maps-reviews-widget/58578899506?comments"
-                        title="Отзывы клиентов Сервис Бокс на Яндекс Картах"
+                        title="Отзывы клиентов СЕРВИС БОКС на Яндекс Картах"
                         loading="lazy"
                     ></iframe>
                     <a 
@@ -21,7 +21,7 @@ function Feed() {
                         rel="noopener noreferrer" 
                         className={styles.feedLink}
                     >
-                        Сервис Бокс на Яндекс Картах
+                        СЕРВИС БОКС на Яндекс Картах
                     </a>
                 </div>
             </div>

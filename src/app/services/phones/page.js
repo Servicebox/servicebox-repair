@@ -3,7 +3,7 @@ import { generateServiceMetadata, generateFAQSchema } from '@/lib/seo-helpers';
 import { BASE_URL } from '@/lib/constants';
 
 export const metadata = generateServiceMetadata({
-    title: 'Ремонт смартфонов в Вологде | iPhone, Samsung, Xiaomi | ServiceBox',
+    title: 'Ремонт смартфонов в Вологде | iPhone, Samsung, Xiaomi | СЕРВИС БОКС',
     description: 'Профессиональный ремонт смартфонов в Вологде. Замена экранов, батарей, разъёмов iPhone, Samsung, Xiaomi. Гарантия до 24 месяцев. Срочный ремонт от 30 минут.',
     path: '/services/phones',
     keywords: ['ремонт смартфонов Вологда', 'ремонт iPhone Вологда', 'замена экрана телефона', 'ремонт Samsung Вологда'],

@@ -76,8 +76,8 @@ const generateYmlFeed = (services, categories, ratingStats) => {
   xml += `<!DOCTYPE yml_catalog SYSTEM "shops.dtd">\n`;
   xml += `<yml_catalog date="${dateStr}">\n`;
   xml += `  <shop>\n`;
-  xml += `    <name>ServiceBox35</name>\n`;
-  xml += `    <company>ServiceBox35</company>\n`;
+  xml += `    <name>СЕРВИС БОКС</name>\n`;
+  xml += `    <company>СЕРВИС БОКС</company>\n`;
   xml += `    <url>${escapeXml(baseUrl)}</url>\n`;
   xml += `    <platform>Next.js</platform>\n`;
   xml += `    <version>1.0</version>\n`;
@@ -110,9 +110,9 @@ const generateYmlFeed = (services, categories, ratingStats) => {
       const rootCategory = findRootCategory(service, categories);
       const categoryId = categories.findIndex(cat => cat._id.toString() === rootCategory._id.toString()) + 1;
 
-      // ✅ Исправлено: в теге name указываем название организации (ServiceBox35)
+      // ✅ Исправлено: в теге name указываем название организации (СЕРВИС БОКС)
       // Название услуги передается в теге model и description
-      const organizationName = 'ServiceBox35';
+      const organizationName = 'СЕРВИС БОКС';
       const serviceName = service.name;
 
       xml += `      <offer id="${escapeXml(serviceId)}" type="vendor.model">\n`;
@@ -128,7 +128,7 @@ const generateYmlFeed = (services, categories, ratingStats) => {
       xml += `        <picture>${encodeUrlForXml(`${baseUrl}/favicon.webp`)}</picture>\n`;
       xml += `        <description>${escapeXml(service.description || service.name)}</description>\n`;
       xml += `        <model>${escapeXml(serviceName)}</model>\n`;
-      xml += `        <vendor>ServiceBox35</vendor>\n`;
+      xml += `        <vendor>СЕРВИС БОКС</vendor>\n`;
       xml += `        <sales_notes>Ремонт в сервисном центре</sales_notes>\n`;
       xml += `        <expiry>P30D</expiry>\n`;
       xml += `        <set-ids>${escapeXml(serviceId)}</set-ids>\n`;
@@ -255,7 +255,7 @@ export async function GET(request) {
 const getEmptyXml = () => `<?xml version="1.0" encoding="UTF-8"?>
 <yml_catalog date="${new Date().toISOString().slice(0, 19).replace('T', ' ')}">
   <shop>
-    <name>ServiceBox35</name>
+    <name>СЕРВИС БОКС</name>
     <url>https://servicebox35.ru</url>
     <currencies><currency id="RUB" rate="1"/></currencies>
     <categories><category id="1">Прочие услуги</category></categories>
@@ -266,7 +266,7 @@ const getEmptyXml = () => `<?xml version="1.0" encoding="UTF-8"?>
 const getErrorXml = () => `<?xml version="1.0" encoding="UTF-8"?>
 <yml_catalog date="${new Date().toISOString().slice(0, 19).replace('T', ' ')}">
   <shop>
-    <name>ServiceBox35</name>
+    <name>СЕРВИС БОКС</name>
     <url>https://servicebox35.ru</url>
     <currencies><currency id="RUB" rate="1"/></currencies>
     <categories><category id="1">Прочие услуги</category></categories>

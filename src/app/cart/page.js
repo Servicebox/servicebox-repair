@@ -1,7 +1,7 @@
 import CartItems from '../../components/CartItems/CartItems';
 
 export const metadata = {
-  title: 'Корзина - ServiceBox35',
+  title: 'Корзина - СЕРВИС БОКС',
   description: 'Ваша корзина покупок',
 };
 

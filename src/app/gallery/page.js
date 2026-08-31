@@ -42,8 +42,8 @@ export default async function GalleryPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Фотогалерея работ ServiceBox',
-    description: 'Фотографии выполненных ремонтов и работ сервисного центра ServiceBox в Вологде.',
+    name: 'Фотогалерея работ СЕРВИС БОКС',
+    description: 'Фотографии выполненных ремонтов и работ сервисного центра СЕРВИС БОКС в Вологде.',
     url: `${BASE_URL}/gallery`,
     mainEntity: {
       '@type': 'ItemList',
@@ -54,8 +54,8 @@ export default async function GalleryPage() {
           item: {
             '@type': 'ImageObject',
             contentUrl: image.filePath?.startsWith('http') ? image.filePath : `${BASE_URL}${image.filePath}`,
-            name: group.description || 'Фото из галереи ServiceBox',
-            description: group.description || 'Фото из галереи ServiceBox',
+            name: group.description || 'Фото из галереи СЕРВИС БОКС',
+            description: group.description || 'Фото из галереи СЕРВИС БОКС',
             uploadDate: image.uploadedAt,
           },
         }))

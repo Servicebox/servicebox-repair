@@ -28,20 +28,20 @@ export function generateWalletJwt({ userId, username, bonuses }) {
   // (с дефисами) — это реальный, но человекочитаемый суффикс класса,
   // ошибочно использовавшийся как issuerId (issuerId и classSuffix были
   // перепутаны местами в конфиге ранее).
-  const issuerId    = process.env.GOOGLE_WALLET_ISSUER_ID ?? '3388000000023112880';
+  const issuerId = process.env.GOOGLE_WALLET_ISSUER_ID ?? '3388000000023112880';
   const classSuffix = process.env.GOOGLE_WALLET_CLASS_ID ?? '9299-5484-6696';
-  const classId     = `${issuerId}.${classSuffix}`;
+  const classId = `${issuerId}.${classSuffix}`;
   // Правильный формат: issuerId.suffix — точка только одна (не classId.suffix)
-  const objectId    = `${issuerId}.sb_${userId}`;
+  const objectId = `${issuerId}.sb_${userId}`;
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://servicebox35.ru';
 
   // Определение класса обязательно включать в JWT — иначе Google не знает о его существовании
   const loyaltyClass = {
     id: classId,
-    issuerName: 'ServiceBox',
+    issuerName: 'СЕРВИС БОКС',
     reviewStatus: 'UNDER_REVIEW',
-    programName: 'Программа лояльности ServiceBox',
+    programName: 'Программа лояльности СЕРВИС БОКС',
     // programLogo — обязательное поле для LoyaltyClass
     programLogo: {
       sourceUri: {
@@ -50,39 +50,39 @@ export function generateWalletJwt({ userId, username, bonuses }) {
       contentDescription: {
         defaultValue: {
           language: 'ru-RU',
-          value: 'Логотип ServiceBox',
+          value: 'Логотип СЕРВИС БОКС',
         },
       },
     },
   };
 
   const loyaltyObject = {
-    id:      objectId,
+    id: objectId,
     classId: classId,
-    state:   'ACTIVE',
+    state: 'ACTIVE',
     loyaltyPoints: {
-      label:   'Бонусы',
+      label: 'Бонусы',
       balance: { string: String(bonuses) },
     },
     textModulesData: [
-      { id: 'welcome', header: 'Добро пожаловать!', body: 'Участник программы лояльности ServiceBox' },
-      { id: 'info',    header: 'Как использовать',  body: 'Называйте имя при визите или предъявите QR-код' },
+      { id: 'welcome', header: 'Добро пожаловать!', body: 'Участник программы лояльности СЕРВИС БОКС' },
+      { id: 'info', header: 'Как использовать', body: 'Называйте имя при визите или предъявите QR-код' },
     ],
     barcode: {
-      type:          'QR_CODE',
-      value:         userId,
-      alternateText: 'ServiceBox ID',
+      type: 'QR_CODE',
+      value: userId,
+      alternateText: 'СЕРВИС БОКС ID',
     },
     heroImage: {
       sourceUri: { uri: `${baseUrl}/images/servicebox.webp` },
       contentDescription: {
         defaultValue: {
           language: 'ru-RU',
-          value: 'ServiceBox',
+          value: 'СЕРВИС БОКС',
         },
       },
     },
-    accountId:   userId,
+    accountId: userId,
     accountName: username,
   };
 
@@ -94,14 +94,14 @@ export function generateWalletJwt({ userId, username, bonuses }) {
     origins: [baseUrl || 'https://servicebox35.ru'],
     payload: {
       loyaltyClasses: [loyaltyClass],
-      loyaltyObjects:  [loyaltyObject],
+      loyaltyObjects: [loyaltyObject],
     },
   };
 
   const token = jwt.sign(payload, sa.private_key, { algorithm: 'RS256' });
 
   return {
-    saveUrl:  `${SAVE_URL_BASE}/${token}`,
+    saveUrl: `${SAVE_URL_BASE}/${token}`,
     objectId,
   };
 }
@@ -158,7 +158,7 @@ async function getWalletAccessToken() {
 export async function syncWalletBalance({ userId, bonuses }) {
   try {
     const issuerId = process.env.GOOGLE_WALLET_ISSUER_ID ?? '3388000000023112880';
-    const objectId  = `${issuerId}.sb_${userId}`;
+    const objectId = `${issuerId}.sb_${userId}`;
 
     const accessToken = await getWalletAccessToken();
 

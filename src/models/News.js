@@ -63,7 +63,7 @@ const NewsSchema = new mongoose.Schema({
   publishedAt: { type: Date },
 
   // === Дополнительно ===
-  author: { type: String, default: 'ServiceBox' },
+  author: { type: String, default: 'СЕРВИС БОКС' },
   allowVideos: { type: Boolean, default: true },
   views: { type: Number, default: 0 },
 
@@ -149,7 +149,7 @@ NewsSchema.pre('save', async function (next) {
 // === Методы экземпляра ===
 NewsSchema.methods.getSeoData = function () {
   return {
-    title: this.metaTitle || `${this.title} | ServiceBox Вологда`,
+    title: this.metaTitle || `${this.title} | СЕРВИС БОКС Вологда`,
     description: this.metaDescription || this.excerpt,
     keywords: this.keywords?.join(', '),
     url: this.fullUrl,
@@ -176,7 +176,7 @@ NewsSchema.methods.getJsonLd = function () {
     dateModified: this.updatedAt?.toISOString(),
     author: {
       '@type': 'Organization',
-      name: this.author || 'ServiceBox',
+      name: this.author || 'СЕРВИС БОКС',
       url: BASE_URL,
     },
     publisher: { '@id': `${BASE_URL}#business` },

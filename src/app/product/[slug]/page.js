@@ -44,7 +44,7 @@ export async function generateMetadata({ params }) {
 
   if (!slug || typeof slug !== 'string' || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) {
     return {
-      title: 'Товар не найден | ServiceBox Вологда',
+      title: 'Товар не найден | СЕРВИС БОКС Вологда',
       robots: { index: false, follow: false },
     };
   }
@@ -59,7 +59,7 @@ export async function generateMetadata({ params }) {
 
     if (!product) {
       return {
-        title: 'Товар не найден | ServiceBox Вологда',
+        title: 'Товар не найден | СЕРВИС БОКС Вологда',
         robots: { index: false, follow: false },
       };
     }
@@ -78,12 +78,12 @@ export async function generateMetadata({ params }) {
     const alreadyStartsWithName = rawDescription?.toLowerCase().startsWith(product.name.toLowerCase());
     const description = rawDescription
       ? (alreadyStartsWithName ? rawDescription : `${product.name}. ${rawDescription}`).substring(0, 155)
-      : `Купить ${product.name} в Вологде — Сервис Бокс. Гарантия качества, быстрая доставка.`;
+      : `Купить ${product.name} в Вологде — СЕРВИС БОКС. Гарантия качества, быстрая доставка.`;
 
     return {
-      title: `${product.name} — купить в Вологде | ServiceBox`,
+      title: `${product.name} — купить в Вологде | СЕРВИС БОКС`,
       description,
-      keywords: `${product.name}, ${product.brand || ''}, ${product.vendor || ''}, купить ${product.name} Вологда, ServiceBox`,
+      keywords: `${product.name}, ${product.brand || ''}, ${product.vendor || ''}, купить ${product.name} Вологда, СЕРВИС БОКС`,
       alternates: {
         canonical: pageUrl,
       },
@@ -91,7 +91,7 @@ export async function generateMetadata({ params }) {
         title: product.name,
         description,
         url: pageUrl,
-        siteName: 'ServiceBox Вологда',
+        siteName: 'СЕРВИС БОКС Вологда',
         type: 'website',
         locale: 'ru_RU',
         images: [
@@ -124,7 +124,7 @@ export async function generateMetadata({ params }) {
   } catch (error) {
     console.error('❌ [generateMetadata] Error:', error.message);
     return {
-      title: 'Ошибка загрузки | ServiceBox Вологда',
+      title: 'Ошибка загрузки | СЕРВИС БОКС Вологда',
       robots: { index: false, follow: false },
     };
   }

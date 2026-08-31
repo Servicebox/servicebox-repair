@@ -12,7 +12,7 @@ const BRANDS = {
     logo: '/images/apple.png.webp',
     shortDescription: 'Профессиональный ремонт техники Apple в Вологде. Оригинальные запчасти, гарантия до 12 месяцев, ремонт от 30 минут.',
     description: `
-      <p><strong>ServiceBox — специализированный сервис по ремонту техники Apple в Вологде.</strong> Ремонтируем все устройства: iPhone (все модели от 6 до 15 Pro Max), iPad (все поколения), MacBook (Air, Pro на Intel и Apple Silicon M1/M2/M3), iMac, Apple Watch, AirPods.</p>
+      <p><strong>СЕРВИС БОКС — специализированный сервис по ремонту техники Apple в Вологде.</strong> Ремонтируем все устройства: iPhone (все модели от 6 до 15 Pro Max), iPad (все поколения), MacBook (Air, Pro на Intel и Apple Silicon M1/M2/M3), iMac, Apple Watch, AirPods.</p>
       
       <h2>💻 Что ремонтируем</h2>
       <table>
@@ -93,7 +93,7 @@ const BRANDS = {
     logo: '/images/samsung.png.webp',
     shortDescription: 'Ремонт смартфонов и планшетов Samsung в Вологде. Galaxy S, A, Note, Tab. Замена экранов AMOLED, батарей. Гарантия до 12 месяцев.',
     description: `
-      <p><strong>Ремонт техники Samsung в ServiceBox — это быстро, качественно и с гарантией.</strong> Работаем со всеми линейками: Galaxy S (S10–S24), Galaxy A, Galaxy Note, Galaxy Tab, Galaxy Watch, Galaxy Buds.</p>
+      <p><strong>Ремонт техники Samsung в СЕРВИС БОКС — это быстро, качественно и с гарантией.</strong> Работаем со всеми линейками: Galaxy S (S10–S24), Galaxy A, Galaxy Note, Galaxy Tab, Galaxy Watch, Galaxy Buds.</p>
       
       <h2>📱 Услуги по ремонту Samsung</h2>
       <table>
@@ -115,7 +115,7 @@ const BRANDS = {
         </tbody>
       </table>
       
-      <h2>⭐ Преимущества ремонта Samsung в ServiceBox</h2>
+      <h2>⭐ Преимущества ремонта Samsung в СЕРВИС БОКС</h2>
       <ul>
         <li><strong>AMOLED-дисплеи</strong> — устанавливаем оригинальные матрицы с идеальной цветопередачей</li>
         <li><strong>Сохраняем влагозащиту IP68</strong> — после ремонта телефон не боится воды</li>
@@ -139,7 +139,7 @@ const BRANDS = {
     logo: '/images/xiaomi.png.webp',
     shortDescription: 'Ремонт Xiaomi, Redmi, Poco в Вологде. Замена экранов, батарей, разъёмов. Доступные цены от 1 500₽, гарантия 6 месяцев.',
     description: `
-      <p><strong>Ремонт Xiaomi в ServiceBox — доступные цены без потери качества.</strong> Ремонтируем все линейки: Redmi Note, Redmi, Poco, Mi, Black Shark.</p>
+      <p><strong>Ремонт Xiaomi в СЕРВИС БОКС — доступные цены без потери качества.</strong> Ремонтируем все линейки: Redmi Note, Redmi, Poco, Mi, Black Shark.</p>
       
       <h2>📱 Цены на ремонт Xiaomi</h2>
       <table>
@@ -416,7 +416,7 @@ export async function generateMetadata({ params }) {
   const pageUrl = `${BASE_URL}/brands/${slug}`;
 
   return {
-    title: `Ремонт ${brand.name} в Вологде | ServiceBox — от 30 минут`,
+    title: `Ремонт ${brand.name} в Вологде | СЕРВИС БОКС — от 30 минут`,
     description: brand.shortDescription,
     keywords: brand.keywords.join(', '),
     alternates: { canonical: pageUrl },
@@ -424,7 +424,7 @@ export async function generateMetadata({ params }) {
       title: `Ремонт ${brand.name} в Вологде`,
       description: brand.shortDescription,
       url: pageUrl,
-      siteName: 'ServiceBox Вологда',
+      siteName: 'СЕРВИС БОКС Вологда',
       type: 'website',
       locale: 'ru_RU',
       images: [{ url: `${BASE_URL}${brand.logo}`, width: 400, height: 400, alt: brand.name }],
@@ -478,7 +478,7 @@ export default async function BrandPage({ params }) {
             name: `Где починить ${brand.name} в Вологде?`,
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'В сервисном центре ServiceBox на ул. Северная, 7А (ТЦ КИТ, 1 этаж). Работаем ежедневно с 10:00 до 20:00.',
+              text: 'В сервисном центре СЕРВИС БОКС на ул. Северная, 7А (ТЦ КИТ, 1 этаж). Работаем ежедневно с 10:00 до 20:00.',
             },
           },
         ],
@@ -868,7 +868,7 @@ export default async function BrandPage({ params }) {
         color: '#64748b',
         fontSize: '0.9rem',
       }}>
-        <p>© {new Date().getFullYear()} ServiceBox Вологда · Ремонт цифровой техники с 2016 года</p>
+        <p>© {new Date().getFullYear()} СЕРВИС БОКС Вологда · Ремонт цифровой техники с 2016 года</p>
         <p>
           <a href="tel:+7-911-501-88-28" style={{ color: 'var(--color-primary-dark)', textDecoration: 'none' }}>+7 (911) 501-88-28</a>
           {' · '}

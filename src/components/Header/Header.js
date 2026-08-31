@@ -113,10 +113,10 @@ function Header() {
       <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
         <div className={styles.headerContainer}>
           {/* Логотип */}
-          <Link href="/" className={styles.headerLogoLink} aria-label="На главную страницу ServiceBox">
-            <img src={headerLogo.src} alt="Логотип ServiceBox" className={styles.headerLogo} width="65" height="45" />
+          <Link href="/" className={styles.headerLogoLink} aria-label="На главную страницу СЕРВИС БОКС">
+            <img src={headerLogo.src} alt="Логотип СЕРВИС БОКС" className={styles.headerLogo} width="65" height="45" />
             <span className={styles.headerLogoText}>
-              <span className={styles.headerLogoMain}>Сервис Бокс</span>
+              <span className={styles.headerLogoMain}>СЕРВИС БОКС</span>
               <span className={styles.headerLogoSub}>Вологда</span>
             </span>
           </Link>

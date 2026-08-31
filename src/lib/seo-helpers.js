@@ -5,7 +5,9 @@ export const LOCAL_BUSINESS_SCHEMA = {
     '@type': ['LocalBusiness', 'ElectronicsStore'],
     '@id': `${BASE_URL}#business`,
     name: BUSINESS.name,
-    alternateName: ['Сервис Бокс', 'СервисБокс Вологда', 'ServiceBox35'],
+    // Латиница оставлена только в alternateName (скрытое поле Schema.org):
+    // помогает находить сайт по запросу «ServiceBox», в видимом тексте её нет.
+    alternateName: ['СЕРВИС БОКС', 'СЕРВИС БОКС Вологда', 'ServiceBox', 'ServiceBox35'],
     url: BASE_URL,
     telephone: [BUSINESS.phones.primary, BUSINESS.phones.secondary],
     email: BUSINESS.email,

@@ -61,7 +61,7 @@ export async function findOrCreateUserByPhone(phone, { session } = {}) {
     const digits = normalizePhoneDigits(phone);
     [user] = await User.create(
       [{
-        username: 'Клиент ServiceBox',
+        username: 'Клиент СЕРВИС БОКС',
         email: `phone${digits}@bonus.crm`,
         phone: digits,
         isPhoneOnlyAccount: true,

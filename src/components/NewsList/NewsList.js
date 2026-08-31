@@ -98,8 +98,9 @@ const NewsList = () => {
   return (
     <section className={styles.container} aria-labelledby="news-heading">
       <header className={styles.header}>
-        <h1 id="news-heading" className={styles.title}>Новости и события</h1>
-        <p className={styles.subtitle}>Будьте в курсе последних событий и акций сервисного центра ServiceBox</p>
+        {/* h2, не h1: единственный h1 страницы /news задаётся на сервере в app/news/page.js */}
+        <h2 id="news-heading" className={styles.title}>Свежие новости и акции</h2>
+        <p className={styles.subtitle}>Будьте в курсе последних событий и акций сервисного центра СЕРВИС БОКС</p>
       </header>
 
       {news.length === 0 && !loading ? (

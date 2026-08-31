@@ -15,8 +15,8 @@ const emptyProduct = {
   description: "",
   category: "",
   subcategory: "",
-  brand: "ServiceBox35",
-  vendor: "ServiceBox35",
+  brand: "СЕРВИС БОКС",
+  vendor: "СЕРВИС БОКС",
   vendorCode: "",
   sku: "",
   gtin: "",
@@ -429,8 +429,8 @@ export default function ListProduct() {
         slug: editingProduct.slug,
         category,
         subcategory,
-        brand: editingProduct.brand?.trim() || 'ServiceBox35',
-        vendor: editingProduct.vendor?.trim() || editingProduct.brand?.trim() || 'ServiceBox35',
+        brand: editingProduct.brand?.trim() || 'СЕРВИС БОКС',
+        vendor: editingProduct.vendor?.trim() || editingProduct.brand?.trim() || 'СЕРВИС БОКС',
         vendorCode: editingProduct.vendorCode?.trim() || '',
         sku: editingProduct.sku?.trim() || editingProduct.vendorCode?.trim() || '',
         gtin: editingProduct.gtin?.trim() || '',
@@ -665,7 +665,7 @@ export default function ListProduct() {
               <label className={styles.formLabel}>Бренд *</label>
               <input
                 name="brand"
-                placeholder="Например: ServiceBox35"
+                placeholder="Например: СЕРВИС БОКС"
                 value={newProduct.brand}
                 onChange={handleNewChange}
                 required

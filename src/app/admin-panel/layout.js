@@ -81,7 +81,7 @@ export default function AdminLayout({ children }) {
       <aside className={sidebarClass} aria-label="Боковое меню">
         <div className={styles.sidebarHeader}>
           <div>
-            <div className={styles.sidebarTitle}>ServiceBox</div>
+            <div className={styles.sidebarTitle}>СЕРВИС БОКС</div>
             <div className={styles.adminWelcome}>Управление</div>
           </div>
           <button className={styles.closeSidebar} onClick={() => setIsSidebarOpen(false)}>×</button>

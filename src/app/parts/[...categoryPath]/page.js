@@ -15,12 +15,12 @@ export const dynamic = 'force-dynamic';
 export async function generateMetadata({ params }) {
   const { categoryPath } = await params;
   const resolved = await resolveCategoryPath(categoryPath);
-  if (!resolved) return { title: 'Категория не найдена | ServiceBox' };
+  if (!resolved) return { title: 'Категория не найдена | СЕРВИС БОКС' };
 
-  const title = `${resolved.category.name} — купить в Вологде | ServiceBox`;
+  const title = `${resolved.category.name} — купить в Вологде | СЕРВИС БОКС`;
   const description =
     resolved.category.description ||
-    `${resolved.category.name}: каталог с ценами в сервисном центре ServiceBox, Вологда.`;
+    `${resolved.category.name}: каталог с ценами в сервисном центре СЕРВИС БОКС, Вологда.`;
 
   // Пустая категория (нет товаров нигде в поддереве) — не отдаём в индекс,
   // это тонкий контент; страница остаётся доступной для навигации по дереву.

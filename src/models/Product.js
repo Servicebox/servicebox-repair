@@ -28,12 +28,12 @@ const ProductSchema = new mongoose.Schema({
   brand: {
     type: String,
     required: true,
-    default: 'ServiceBox35'
+    default: 'СЕРВИС БОКС'
   },
 
   vendor: {
     type: String,
-    default: 'ServiceBox35'
+    default: 'СЕРВИС БОКС'
   },
 
   vendorCode: {
@@ -289,7 +289,7 @@ ProductSchema.pre('save', function (next) {
   }
 
   if (!this.brand || this.brand.trim() === '') {
-    this.brand = 'ServiceBox35';
+    this.brand = 'СЕРВИС БОКС';
   }
 
   if (!this.vendor || this.vendor.trim() === '') {

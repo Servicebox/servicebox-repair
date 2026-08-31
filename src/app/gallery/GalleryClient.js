@@ -111,7 +111,7 @@ export default function GalleryClient({ groups }) {
                     <div key={image.id} className={`preview-image preview-${index + 1}`} style={{ zIndex: 4 - index }}>
                       <Image
                         src={getImageSource(image)}
-                        alt={group.description || 'Фото из галереи ServiceBox'}
+                        alt={group.description || 'Фото из галереи СЕРВИС БОКС'}
                         onError={() => handleImageError(image.id)}
                         loading="lazy"
                         fill

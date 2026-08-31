@@ -297,7 +297,7 @@ export default function ProfilePage() {
               <div className={styles.walletBlock}>
                 <h3 className={styles.walletTitle}>Карта лояльности</h3>
                 <p className={styles.walletDesc}>
-                  Добавьте цифровую карту лояльности ServiceBox в Google Wallet.
+                  Добавьте цифровую карту лояльности СЕРВИС БОКС в Google Wallet.
                 </p>
                 <GoogleWalletButton className={styles.walletBtnWrap} />
               </div>

@@ -21,14 +21,14 @@ const BRANDS = [
 
 // Метаданные страницы
 export const metadata = {
-    title: 'Ремонт техники всех брендов в Вологде | ServiceBox',
+    title: 'Ремонт техники всех брендов в Вологде | СЕРВИС БОКС',
     description: 'Ремонт Apple, Samsung, Xiaomi, Huawei, ASUS, Lenovo, HP, Acer, MSI, Dell, Sony, LG в Вологде. Гарантия до 24 месяцев, срочный ремонт от 30 минут. Бесплатная диагностика.',
     keywords: 'ремонт техники вологда, ремонт apple, ремонт samsung, ремонт xiaomi, сервисный центр всех брендов',
     alternates: {
         canonical: `${BASE_URL}/brands`,
     },
     openGraph: {
-        title: 'Ремонт техники всех брендов в Вологде | ServiceBox',
+        title: 'Ремонт техники всех брендов в Вологде | СЕРВИС БОКС',
         description: 'Apple, Samsung, Xiaomi, Huawei, ASUS, Lenovo, HP и другие. Гарантия до 24 месяцев.',
         url: `${BASE_URL}/brands`,
         siteName: BUSINESS.shortName,
@@ -38,7 +38,7 @@ export const metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Ремонт техники всех брендов в Вологде | ServiceBox',
+        title: 'Ремонт техники всех брендов в Вологде | СЕРВИС БОКС',
         description: 'Apple, Samsung, Xiaomi, Huawei, ASUS, Lenovo, HP и другие. Гарантия до 24 месяцев.',
         images: ['/og-image.jpg'],
     },
@@ -53,7 +53,7 @@ export default function BrandsPage() {
                 '@type': 'CollectionPage',
                 '@id': `${BASE_URL}/brands`,
                 name: 'Ремонт техники всех брендов в Вологде',
-                description: 'Профессиональный ремонт техники Apple, Samsung, Xiaomi, Huawei, ASUS, Lenovo, HP, Acer, MSI, Dell, Sony, LG в сервисном центре ServiceBox.',
+                description: 'Профессиональный ремонт техники Apple, Samsung, Xiaomi, Huawei, ASUS, Lenovo, HP, Acer, MSI, Dell, Sony, LG в сервисном центре СЕРВИС БОКС.',
                 url: `${BASE_URL}/brands`,
                 isPartOf: { '@id': `${BASE_URL}#website` },
                 about: { '@id': `${BASE_URL}#business` },
@@ -408,7 +408,7 @@ export default function BrandsPage() {
             <div className="brands-hero">
                 <h1>🔧 Ремонт техники всех брендов в Вологде</h1>
                 <p>
-                    ServiceBox — специализированный сервисный центр с опытом более 10 лет.
+                    СЕРВИС БОКС — специализированный сервисный центр с опытом более 10 лет.
                     Ремонтируем смартфоны, ноутбуки, планшеты, телевизоры и игровые приставки
                     любых производителей с гарантией до 24 месяцев.
                 </p>
@@ -486,7 +486,7 @@ export default function BrandsPage() {
             </div>
 
             {/* Преимущества */}
-            <h2 className="brands-section-title">⭐ Почему выбирают ServiceBox</h2>
+            <h2 className="brands-section-title">⭐ Почему выбирают СЕРВИС БОКС</h2>
             <div className="brands-advantages">
                 <div className="brands-advantage">
                     <div className="brands-advantage-icon">✅</div>
@@ -568,7 +568,7 @@ export default function BrandsPage() {
                 color: '#64748b',
                 fontSize: '0.9rem',
             }}>
-                <p>© {new Date().getFullYear()} ServiceBox Вологда · Ремонт цифровой техники с 2016 года</p>
+                <p>© {new Date().getFullYear()} СЕРВИС БОКС Вологда · Ремонт цифровой техники с 2016 года</p>
                 <p>
                     <a href="tel:+7-911-501-88-28" style={{ color: 'var(--color-primary-dark)', textDecoration: 'none' }}>+7 (911) 501-88-28</a>
                     {' · '}

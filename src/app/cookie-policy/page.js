@@ -3,7 +3,7 @@ import Link from 'next/link';
 import styles from '@/app/privacy-policy/PrivacyPolicy.module.css';
 
 export const metadata = {
-  title: 'Политика использования файлов Cookie — Сервис Бокс',
+  title: 'Политика использования файлов Cookie — СЕРВИС БОКС',
   description: 'Информация о файлах cookie, используемых на сайте ООО «СЕРВИС БОКС».',
 };
 

@@ -2,7 +2,7 @@ import CategoryTemplate from '@/components/CategoryTemplate/CategoryTemplate';
 import { generateServiceMetadata, generateFAQSchema } from '@/lib/seo-helpers';
 
 export const metadata = generateServiceMetadata({
-    title: 'Ремонт видеокарт в Вологде | NVIDIA, AMD, Intel | ServiceBox',
+    title: 'Ремонт видеокарт в Вологде | NVIDIA, AMD, Intel | СЕРВИС БОКС',
     description: 'Ремонт видеокарт в Вологде: реболл GPU, замена видеочипов, VRAM, цепей питания. NVIDIA RTX 30xx/40xx, AMD Radeon. Гарантия до 12 месяцев.',
     path: '/services/videocards',
     keywords: ['ремонт видеокарт Вологда', 'реболл видеокарты', 'ремонт NVIDIA RTX Вологда', 'ремонт AMD Radeon Вологда'],

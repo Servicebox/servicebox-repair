@@ -19,7 +19,7 @@ export async function generateMetadata({ params }) {
 
     if (!data) {
         return {
-            title: 'Ответ не найден | ServiceBox Вологда',
+            title: 'Ответ не найден | СЕРВИС БОКС Вологда',
             robots: { index: false, follow: false },
         };
     }
@@ -28,16 +28,16 @@ export async function generateMetadata({ params }) {
     const cleanAnswer = stripHtml(data.shortAnswer).slice(0, 155);
 
     return {
-        title: `${data.question} — ответ эксперта | ServiceBox Вологда`,
+        title: `${data.question} — ответ эксперта | СЕРВИС БОКС Вологда`,
         description: cleanAnswer,
-        keywords: `${data.category.toLowerCase()}, ремонт Вологда, ServiceBox, ${data.question.toLowerCase()}`,
+        keywords: `${data.category.toLowerCase()}, ремонт Вологда, СЕРВИС БОКС, ${data.question.toLowerCase()}`,
         alternates: { canonical: pageUrl },
         authors: [{ name: data.author, url: `${BASE_URL}/about` }],
         openGraph: {
             title: data.question,
             description: cleanAnswer,
             url: pageUrl,
-            siteName: 'ServiceBox Вологда',
+            siteName: 'СЕРВИС БОКС Вологда',
             type: 'article',
             locale: 'ru_RU',
             publishedTime: '2024-01-15',
@@ -148,7 +148,7 @@ export default async function AiAnswerPage({ params }) {
                     '@type': 'WebPage',
                     '@id': `${BASE_URL}/ai-answers/${slug}`,
                 },
-                keywords: `${data.category.toLowerCase()}, ремонт Вологда, ServiceBox`,
+                keywords: `${data.category.toLowerCase()}, ремонт Вологда, СЕРВИС БОКС`,
                 articleSection: data.category,
                 inLanguage: 'ru-RU',
             },

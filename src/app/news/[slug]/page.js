@@ -10,7 +10,7 @@ export async function generateMetadata({ params }) {
 
   if (!slug || typeof slug !== 'string') {
     return {
-      title: 'Новость не найдена | ServiceBox',
+      title: 'Новость не найдена | СЕРВИС БОКС',
       robots: { index: false, follow: false }
     };
   }
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }) {
 
     if (!response.ok) {
       return {
-        title: 'Новость не найдена | ServiceBox',
+        title: 'Новость не найдена | СЕРВИС БОКС',
         robots: { index: false, follow: false }
       };
     }
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }) {
     const { data: news } = await response.json();
 
     return {
-      title: news.seo?.title || `${news.title} | ServiceBox Вологда`,
+      title: news.seo?.title || `${news.title} | СЕРВИС БОКС Вологда`,
       description: news.seo?.description || news.excerpt,
       keywords: news.keywords?.join(', '),
       alternates: {
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }) {
         title: news.title,
         description: news.excerpt,
         url: `${BASE_URL}/news/${slug}`,
-        siteName: 'ServiceBox',
+        siteName: 'СЕРВИС БОКС',
         images: news.featuredImage
           ? [{ url: news.featuredImage, width: 1200, height: 630, alt: news.title }]
           : [],
@@ -48,7 +48,7 @@ export async function generateMetadata({ params }) {
         type: 'article',
         publishedTime: news.publishedAt || news.createdAt,
         modifiedTime: news.updatedAt,
-        authors: [news.author || 'ServiceBox'],
+        authors: [news.author || 'СЕРВИС БОКС'],
         tags: news.keywords,
       },
       twitter: {
@@ -73,7 +73,7 @@ export async function generateMetadata({ params }) {
   } catch (error) {
     console.error('Error generating metadata:', error);
     return {
-      title: 'Ошибка загрузки | ServiceBox',
+      title: 'Ошибка загрузки | СЕРВИС БОКС',
       robots: { index: false, follow: false }
     };
   }
@@ -178,7 +178,7 @@ export default async function NewsDetailPage({ params }) {
     image: news.featuredImage ? [news.featuredImage] : undefined,
     datePublished: uploadDate,
     dateModified: news.updatedAt,
-    author: { '@type': 'Organization', name: news.author || 'ServiceBox', url: BASE_URL },
+    author: { '@type': 'Organization', name: news.author || 'СЕРВИС БОКС', url: BASE_URL },
     publisher: { '@id': `${BASE_URL}#business` },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE_URL}/news/${slug}` },
     articleBody: textContent.substring(0, 5000),

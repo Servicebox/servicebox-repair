@@ -44,8 +44,8 @@ export async function GET() {
 <!DOCTYPE yml_catalog SYSTEM "shops.dtd">
 <yml_catalog date="${now.toISOString().slice(0, 19)}+03:00">
   <shop>
-    <name>ServiceBox35</name>
-    <company>ServiceBox35</company>
+    <name>СЕРВИС БОКС</name>
+    <company>СЕРВИС БОКС</company>
     <url>${baseUrl}</url>
     <platform>Next.js</platform>
     <currencies>
@@ -88,7 +88,7 @@ export async function GET() {
 
       xml += `
         <name>${escapeXml(product.name)}</name>
-        <vendor>${escapeXml(product.vendor || product.brand || 'ServiceBox35')}</vendor>
+        <vendor>${escapeXml(product.vendor || product.brand || 'СЕРВИС БОКС')}</vendor>
         <vendorCode>${escapeXml(product.vendorCode || product.sku || '')}</vendorCode>
         <description>${escapeXml(product.description || product.name)}</description>`;
 
@@ -131,8 +131,8 @@ export async function GET() {
     const fallbackXml = `<?xml version="1.0" encoding="UTF-8"?>
 <yml_catalog date="${new Date().toISOString().slice(0, 19)}+03:00">
   <shop>
-    <name>ServiceBox35</name>
-    <company>ServiceBox35</company>
+    <name>СЕРВИС БОКС</name>
+    <company>СЕРВИС БОКС</company>
     <url>https://servicebox35.ru</url>
     <offers/>
   </shop>

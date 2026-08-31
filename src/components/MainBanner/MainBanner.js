@@ -88,7 +88,7 @@ export default function MainBanner({ onSelectDeviceType }) {
       itemType="https://schema.org/Service"
       suppressHydrationWarning
     >
-      <meta itemProp="name" content="ServiceBox — ремонт техники в Вологде" />
+      <meta itemProp="name" content="СЕРВИС БОКС — ремонт техники в Вологде" />
       <meta itemProp="description" content="Профессиональный ремонт iPhone, MacBook, ноутбуков и другой техники в Вологде. Бесплатная диагностика, гарантия до 24 месяцев." />
       <meta itemProp="telephone" content={BUSINESS.phones.primary} />
       <div itemProp="areaServed" itemScope itemType="https://schema.org/City">
@@ -117,7 +117,7 @@ export default function MainBanner({ onSelectDeviceType }) {
           </a>
 
           <h1 className={styles.heroTitle}>
-            Починим вашу технику<br />
+            Ремонт техники в Вологде<br />
             <span className={styles.titleAccent}>быстро и надёжно</span>
           </h1>
 

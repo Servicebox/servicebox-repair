@@ -10,7 +10,7 @@ export async function GET() {
       {
         '@type': 'Service',
         serviceType: 'Экстренная помощь и инструкции при поломках электроники',
-        name: 'ServiceBox - Первая помощь технике',
+        name: 'СЕРВИС БОКС - Первая помощь технике',
         provider: { '@id': `${BASE_URL}#business` },
         areaServed: { '@type': 'City', name: 'Вологда' },
         contactPoint: {
@@ -28,7 +28,7 @@ export async function GET() {
             { '@type': 'HowToStep', position: 2, text: 'Отключите от зарядки и извлеките SIM-карту.' },
             { '@type': 'HowToStep', position: 3, text: 'НЕ сушите феном, на батарее и не кладите в рис (это миф).' },
             { '@type': 'HowToStep', position: 4, text: 'Аккуратно промокните влагу салфеткой.' },
-            { '@type': 'HowToStep', position: 5, text: 'Принесите в ServiceBox (Северная 7А) в течение 24 часов для ультразвуковой чистки.' }
+            { '@type': 'HowToStep', position: 5, text: 'Принесите в СЕРВИС БОКС (Северная 7А) в течение 24 часов для ультразвуковой чистки.' }
           ]
         }
       }

@@ -2,7 +2,7 @@ import CategoryTemplate from '@/components/CategoryTemplate/CategoryTemplate';
 import { generateServiceMetadata, generateFAQSchema } from '@/lib/seo-helpers';
 
 export const metadata = generateServiceMetadata({
-    title: 'Ремонт ноутбуков в Вологде | MacBook, ASUS, Lenovo | ServiceBox',
+    title: 'Ремонт ноутбуков в Вологде | MacBook, ASUS, Lenovo | СЕРВИС БОКС',
     description: 'Ремонт ноутбуков в Вологде: MacBook, ASUS, Lenovo, HP, Dell. Замена матриц, клавиатур, ремонт материнских плат. BGA-пайка. Гарантия до 24 месяцев.',
     path: '/services/laptops',
     keywords: ['ремонт ноутбуков Вологда', 'ремонт MacBook Вологда', 'замена матрицы ноутбука', 'чистка ноутбука Вологда'],

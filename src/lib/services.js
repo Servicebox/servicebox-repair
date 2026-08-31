@@ -30,7 +30,7 @@ export async function getServiceMetadata(slug) {
   }
   
   return {
-    title: service.metaTitle || `${service.name} в Вологде | ServiceBox`,
+    title: service.metaTitle || `${service.name} в Вологде | СЕРВИС БОКС`,
     description: service.metaDescription || service.description,
     keywords: [
       ...(service.keywords || []),

@@ -2,7 +2,7 @@ import CategoryTemplate from '@/components/CategoryTemplate/CategoryTemplate';
 import { generateServiceMetadata, generateFAQSchema } from '@/lib/seo-helpers';
 
 export const metadata = generateServiceMetadata({
-    title: 'Ремонт игровых приставок в Вологде | PlayStation, Xbox, Switch | ServiceBox',
+    title: 'Ремонт игровых приставок в Вологде | PlayStation, Xbox, Switch | СЕРВИС БОКС',
     description: 'Ремонт PlayStation 4/5, Xbox One/Series, Nintendo Switch в Вологде. Чистка, замена термопасты, ремонт HDMI, приводов. Гарантия до 6 месяцев.',
     path: '/services/consoles',
     keywords: ['ремонт PlayStation Вологда', 'ремонт Xbox Вологда', 'ремонт Nintendo Switch', 'чистка приставки Вологда'],

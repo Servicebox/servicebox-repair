@@ -4,11 +4,11 @@ import SearchResults from '@/components/Search/SearchResults';
 import SearchHeader from '@/components/Search/SearchResultItem';
 
 export const metadata = {
-  title: 'Поиск по сайту ServiceBox',
+  title: 'Поиск по сайту СЕРВИС БОКС',
   description: 'Найдите услуги, товары, новости и информацию о ремонте техники в Вологде',
   keywords: ['поиск', 'ремонт техники', 'запчасти', 'услуги', 'Вологда'],
   openGraph: {
-    title: 'Поиск по сайту ServiceBox',
+    title: 'Поиск по сайту СЕРВИС БОКС',
     description: 'Найдите нужную информацию о ремонте техники в Вологде',
     type: 'website',
   },

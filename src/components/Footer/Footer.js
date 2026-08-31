@@ -94,7 +94,7 @@ function Footer() {
               className={styles.socialLink}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="ВКонтакте ServiceBox"
+              aria-label="ВКонтакте СЕРВИС БОКС"
             >
               ВКонтакте
             </a>
@@ -129,7 +129,7 @@ function Footer() {
 
       <div className={styles.footerBottom}>
         <p className={styles.footerAuthor}>
-          © {new Date().getFullYear()} ServiceBox Вологда · Ремонт цифровой техники с 2016 года
+          © {new Date().getFullYear()} СЕРВИС БОКС Вологда · Ремонт цифровой техники с 2016 года
         </p>
         <p className={styles.footerSeo}>
           Сервисный центр в Вологде · ул. Северная, 7А ·{' '}

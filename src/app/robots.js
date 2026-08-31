@@ -7,9 +7,9 @@ export default function robots() {
       {
         userAgent: '*',
         allow: [
-          '/', '/api/ai/', '/services/', '/prices', '/contacts',
+          '/', '/api/ai/', '/services/', '/price', '/contacts',
           '/news/', '/about', '/parts', '/gallery', '/promotions-page',
-          '/tracking', '/worksteps', '/ai-assistant.json', '/ai-answers/',
+          '/tracking', '/ai-assistant.json', '/ai-answers/',
           '/brands/', '/problems/'
         ],
         disallow: [
@@ -26,7 +26,7 @@ export default function robots() {
         ],
         allow: [
           '/', '/api/ai/', '/ai-assistant.json', '/ai-answers/',
-          '/services/', '/prices', '/contacts', '/about', '/brands/', '/problems/',
+          '/services/', '/price', '/contacts', '/about', '/brands/', '/problems/',
           '/gallery/', '/images/', '/photos/', '/og-image.jpg', '/favicon.webp'
         ],
         disallow: [

@@ -61,7 +61,7 @@ function BurgerMenu() {
           <Image
             className={styles.menuLogo}
             src={logoImage}
-            alt="ServiceBox Logo"
+            alt="СЕРВИС БОКС Logo"
             width={100}
             height={100}
             priority

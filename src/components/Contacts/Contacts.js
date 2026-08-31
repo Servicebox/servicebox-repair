@@ -38,9 +38,10 @@ const Contacts = forwardRef((props, ref) => {
         <div className={styles.hero}>
           <div className={styles.heroContent}>
             <span className={styles.heroBadge}>📍 Сервисный центр в Вологде</span>
-            <h1 className={styles.heroTitle}>
+            {/* h2, не h1: это секция на главной, единственный h1 страницы — в MainBanner */}
+            <h2 className={styles.heroTitle}>
               Свяжитесь с нами <span className={styles.heroAccent}>прямо сейчас</span>
-            </h1>
+            </h2>
             <p className={styles.heroSubtitle}>
               Бесплатная консультация и диагностика. Ответим на все вопросы и рассчитаем стоимость ремонта за 2 минуты.
             </p>
@@ -237,7 +238,7 @@ const Contacts = forwardRef((props, ref) => {
         <div className={styles.seoSection}>
           <h2 className={styles.seoTitle}>Профессиональный ремонт техники в Вологде</h2>
           <p className={styles.seoText}>
-            Сервис Бокс — это современный сервисный центр, специализирующийся
+            СЕРВИС БОКС — это современный сервисный центр, специализирующийся
             на ремонте ноутбуков, смартфонов, планшетов, телевизоров и другой электроники.
             Наши квалифицированные специалисты с многолетним опытом оперативно диагностируют
             и устранят любые неисправности, используя оригинальные комплектующие и современное оборудование.

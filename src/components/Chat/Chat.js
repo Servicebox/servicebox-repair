@@ -255,7 +255,7 @@ export default function Chat() {
               <div className={styles.onlineIndicator}></div>
             </div>
             <div className={styles.headerInfo}>
-              <h3>Поддержка Сервис Бокс</h3>
+              <h3>Поддержка СЕРВИС БОКС</h3>
               <p>Отвечаю быстро,если не ответила в течении 5 минут проверьте чат поздее, отвечу 100% • Онлайн</p>
             </div>
             <button className={styles.chatClose} onClick={toggleChat}>

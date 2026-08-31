@@ -49,7 +49,6 @@ export default function ProductDisplay({ product }) {
   const { setBreadcrumbs, setCurrentPageTitle } = useContext(BreadcrumbContext);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [mounted, setMounted] = useState(false);
 
   // Устанавливаем хлебные крошки в контекст
   useEffect(() => {
@@ -91,14 +90,16 @@ export default function ProductDisplay({ product }) {
   }, [product, setBreadcrumbs, setCurrentPageTitle]);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
     if (product) trackProductView(product);
   }, [product]);
 
-  if (!product || !mounted) {
+  // Раньше здесь был ещё гейт "|| !mounted" — из-за него сервер отдавал
+  // только спиннер "Загрузка товара...", а весь контент (h1, цена, описание,
+  // характеристики) появлялся лишь после гидрации. 4000+ карточек товара
+  // уходили в индекс пустыми. Гейт не нужен: cart стартует пустым и на
+  // сервере, и на клиенте (localStorage читается в useEffect), рассинхрона
+  // разметки нет.
+  if (!product) {
     return (
       <div className={styles.loading}>
         <div className={styles.loadingSpinner}></div>
@@ -184,7 +185,7 @@ export default function ProductDisplay({ product }) {
             <div className={styles.brandInfo}>
               <div className={styles.brand}>
                 <span>Бренд:</span>
-                <span>{product.brand || 'ServiceBox35'}</span>
+                <span>{product.brand || 'СЕРВИС БОКС'}</span>
               </div>
               {product.vendorCode && (
                 <div className={styles.vendorCode}>

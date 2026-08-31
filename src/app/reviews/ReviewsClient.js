@@ -117,7 +117,7 @@ export default function ReviewsClient() {
       <header className={styles.pageHeader}>
         <h1 className={styles.title}>Отзывы клиентов</h1>
         {pagination.total > 0 && (
-          <p className={styles.subtitle}>{pagination.total} отзывов о ServiceBox</p>
+          <p className={styles.subtitle}>{pagination.total} отзывов о СЕРВИС БОКС</p>
         )}
       </header>
 
@@ -134,7 +134,7 @@ export default function ReviewsClient() {
               className={styles.textarea}
               value={text}
               onChange={e => setText(e.target.value)}
-              placeholder="Расскажите о вашем опыте ремонта в ServiceBox…"
+              placeholder="Расскажите о вашем опыте ремонта в СЕРВИС БОКС…"
               minLength={10}
               maxLength={3000}
               rows={5}

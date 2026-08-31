@@ -142,6 +142,6 @@ export function middleware(request) {
 export const config = {
   matcher: [
     '/api/admin/:path*',
-    '/((?!_next/static|_next/image|favicon.ico|manifest.json|sw.js|workbox-.*).*)',
+    '/((?!_next/static|_next/image|favicon.ico|manifest.webmanifest|sw.js|workbox-.*).*)',
   ],
 };

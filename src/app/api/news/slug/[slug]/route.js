@@ -39,7 +39,7 @@ export async function GET(request, { params }) {
         ...news,
         // Добавляем SEO-данные для удобства
         seo: news.getSeoData?.() || {
-          title: news.metaTitle || `${news.title} | ServiceBox Вологда`,
+          title: news.metaTitle || `${news.title} | СЕРВИС БОКС Вологда`,
           description: news.metaDescription || news.excerpt,
           url: `${process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru'}/news/${news.slug}`,
         }

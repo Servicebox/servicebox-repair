@@ -50,8 +50,8 @@ export async function POST(request) {
         // Данные класса (шаблон) – они должны совпадать с тем, что вы создали в консоли
         const loyaltyClass = {
             id: CLASS_ID,
-            issuerName: 'ServiceBox',
-            programName: 'Программа лояльности ServiceBox',
+            issuerName: 'СЕРВИС БОКС',
+            programName: 'Программа лояльности СЕРВИС БОКС',
             issuerId: ISSUER_ID,
             reviewStatus: 'UNDER_REVIEW', // после модерации сменится на APPROVED
             textModulesData: [
@@ -74,7 +74,7 @@ export async function POST(request) {
             textModulesData: [
                 {
                     header: `Приветствуем, клиент ${userId}!`,
-                    body: 'Спасибо, что выбираете ServiceBox',
+                    body: 'Спасибо, что выбираете СЕРВИС БОКС',
                 },
             ],
             barcode: {

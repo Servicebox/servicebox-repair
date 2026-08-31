@@ -44,8 +44,8 @@ export async function GET() {
 <!DOCTYPE yml_catalog SYSTEM "shops.dtd">
 <yml_catalog date="${new Date().toISOString().slice(0, 19).replace('T', ' ')}">
   <shop>
-    <name>ServiceBox35</name>
-    <company>ServiceBox35</company>
+    <name>СЕРВИС БОКС</name>
+    <company>СЕРВИС БОКС</company>
     <url>${escapeXml(baseUrl)}</url>
     <email>508828@bk.ru</email>
     <currencies>
@@ -80,7 +80,7 @@ export async function GET() {
         // Габариты в сантиметрах: Длина/Ширина/Высота
         const dims = product.dimensions || {};
         const lengthCm = Number(dims.length) || 20;
-        const widthCm  = Number(dims.width)  || 20;
+        const widthCm = Number(dims.width) || 20;
         const heightCm = Number(dims.height) || 10;
         const dimensionsStr = `${lengthCm.toFixed(3)}/${widthCm.toFixed(3)}/${heightCm.toFixed(3)}`;
 
@@ -117,7 +117,7 @@ export async function GET() {
 
         xml += `
         <name>${escapeXml(product.name)}</name>
-        <vendor>${escapeXml(product.vendor || product.brand || 'ServiceBox35')}</vendor>
+        <vendor>${escapeXml(product.vendor || product.brand || 'СЕРВИС БОКС')}</vendor>
         <vendorCode>${escapeXml(product.vendorCode || product.sku || product.slug)}</vendorCode>
         <description>${escapeXml(product.description || product.name)}</description>
         <manufacturer_warranty>${product.manufacturer_warranty ? 'true' : 'false'}</manufacturer_warranty>
@@ -127,7 +127,7 @@ export async function GET() {
         <store>${product.store ? 'true' : 'false'}</store>
         <weight>${weightKg.toFixed(3)}</weight>
         <dimensions>${dimensionsStr}</dimensions>
-        <param name="Производитель">${escapeXml(product.brand || product.vendor || 'ServiceBox35')}</param>
+        <param name="Производитель">${escapeXml(product.brand || product.vendor || 'СЕРВИС БОКС')}</param>
         <param name="Артикул">${escapeXml(product.vendorCode || product.sku || product.slug)}</param>
         <param name="Гарантия">12 месяцев</param>`;
 
@@ -178,7 +178,7 @@ export async function GET() {
     const fallbackXml = `<?xml version="1.0" encoding="UTF-8"?>
 <yml_catalog date="${new Date().toISOString().slice(0, 19).replace('T', ' ')}">
   <shop>
-    <name>ServiceBox35</name>
+    <name>СЕРВИС БОКС</name>
     <url>https://servicebox35.ru</url>
     <currencies>
       <currency id="RUR" rate="1"/>

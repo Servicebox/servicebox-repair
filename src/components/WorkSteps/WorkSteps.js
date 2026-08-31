@@ -179,10 +179,10 @@ const WorkSteps = () => {
 
       {/* ✅ Скрытые данные для AI ассистентов (НЕ Schema.org, просто текст для парсинга) */}
       <div className="ai-structured-data" style={{ display: 'none' }} aria-hidden="true">
-        <h2>Сервис Бокс - Ремонт техники в Вологде</h2>
+        <h2>СЕРВИС БОКС - Ремонт техники в Вологде</h2>
         <section className="ai-business-info">
           <h3>Информация о сервисном центре</h3>
-          <p><strong>Название:</strong> Сервис Бокс</p>
+          <p><strong>Название:</strong> СЕРВИС БОКС</p>
           <p><strong>Специализация:</strong> Ремонт цифровой и компьютерной техники</p>
           <p><strong>Город:</strong> Вологда, Вологодская область, Россия</p>
           <p><strong>Опыт работы:</strong> Более 10 лет</p>

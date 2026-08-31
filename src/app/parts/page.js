@@ -11,11 +11,11 @@ import CategoryTree from './CategoryTree';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Каталог запчастей для техники в Вологде | ServiceBox35',
-  description: 'Каталог оригинальных и совместимых запчастей для ноутбуков, телефонов, планшетов, видеокарт и приставок. Наличие и цены в сервисном центре ServiceBox35, Вологда.',
+  title: 'Каталог запчастей для техники в Вологде | СЕРВИС БОКС',
+  description: 'Каталог оригинальных и совместимых запчастей для ноутбуков, телефонов, планшетов, видеокарт и приставок. Наличие и цены в сервисном центре СЕРВИС БОКС, Вологда.',
   alternates: { canonical: `${BASE_URL}/parts` },
   openGraph: {
-    title: 'Каталог запчастей — ServiceBox35',
+    title: 'Каталог запчастей — СЕРВИС БОКС',
     description: 'Оригинальные и совместимые запчасти для ремонта техники в наличии в Вологде.',
     type: 'website',
     siteName: BUSINESS.shortName,

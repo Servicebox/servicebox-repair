@@ -36,8 +36,12 @@ const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 export const metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: `${SEO_DEFAULTS.title} | СЕРВИС БОКС Вологда`,
-    template: `%s | ServiceBox`,
+    // Бренд уже зашит в конце почти каждого title страниц (см. page.js,
+    // services/*, brands/*, parts/* и т.д.). Шаблон "%s | СЕРВИС БОКС"
+    // добавлял второй суффикс → в выдаче было "… | СЕРВИС БОКС | СЕРВИС БОКС".
+    // Шаблон = "%s": страница сама отвечает за бренд в своём title.
+    default: SEO_DEFAULTS.title,
+    template: '%s',
   },
   description: SEO_DEFAULTS.description,
   keywords: SEO_DEFAULTS.keywords,
@@ -62,8 +66,8 @@ export const metadata = {
   },
   openGraph: {
     title: {
-      default: `${SEO_DEFAULTS.title} | ServiceBox Вологда`,
-      template: `%s | ServiceBox`,
+      default: `${SEO_DEFAULTS.title} | СЕРВИС БОКС Вологда`,
+      template: `%s | СЕРВИС БОКС`,
     },
     description: SEO_DEFAULTS.description,
     url: BASE_URL,
@@ -81,7 +85,7 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: { default: SEO_DEFAULTS.title, template: `%s | ServiceBox` },
+    title: { default: SEO_DEFAULTS.title, template: `%s | СЕРВИС БОКС` },
     description: SEO_DEFAULTS.description,
     images: ['/og-image.jpg'],
   },

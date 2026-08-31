@@ -43,7 +43,7 @@ function getMskTime() {
 
 function buildTelegramMessage({ name, email, phone, message }) {
   return [
-    '📩 *Новая заявка с сайта ServiceBox*',
+    '📩 *Новая заявка с сайта СЕРВИС БОКС*',
     '',
     `👤 Имя: ${name}`,
     `📧 Email: ${email}`,

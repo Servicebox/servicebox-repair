@@ -16,17 +16,17 @@ export async function generateMetadata({ params }) {
     );
 
     if (!response.ok) {
-      return { title: 'Услуга не найдена | ServiceBox', description: 'Страница услуги не найдена' };
+      return { title: 'Услуга не найдена | СЕРВИС БОКС', description: 'Страница услуги не найдена' };
     }
 
     const data = await response.json();
     if (!data.success) {
-      return { title: 'Услуга не найдена | ServiceBox', description: 'Страница услуги не найдена' };
+      return { title: 'Услуга не найдена | СЕРВИС БОКС', description: 'Страница услуги не найдена' };
     }
 
     const service = data.data;
     const pageUrl = `${BASE_URL}/services/${slug}`;
-    const title = service.metaTitle || `${service.name} в Вологде | ServiceBox`;
+    const title = service.metaTitle || `${service.name} в Вологде | СЕРВИС БОКС`;
     // service.description часто переиспользуется дословно между похожими услугами
     // (например, один и тот же текст про сроки ремонта — у 20+ моделей iPhone
     // подряд), поэтому нельзя отдавать его как есть: на выходе получались
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }) {
     const description = service.metaDescription ||
       (service.description
         ? `${service.name}. ${service.description}`.slice(0, 160)
-        : `${service.name} в Вологде — ServiceBox. Качественный ремонт, гарантия на работы.`);
+        : `${service.name} в Вологде — СЕРВИС БОКС. Качественный ремонт, гарантия на работы.`);
 
     return {
       title,
@@ -61,7 +61,7 @@ export async function generateMetadata({ params }) {
     };
   } catch {
     return {
-      title: 'Услуги по ремонту техники | ServiceBox',
+      title: 'Услуги по ремонту техники | СЕРВИС БОКС',
       description: 'Профессиональный ремонт любой техники в Вологде',
     };
   }

@@ -145,7 +145,8 @@ export default function PromotionsPage() {
   return (
     <div className={styles.promotionsPage}>
       <header className={styles.promotionsHeader}>
-        <h1 className={styles.animatedTitle}>Актуальные акции</h1>
+        {/* h2, не h1: единственный h1 страницы задаётся на сервере в app/promotions-page/page.js */}
+        <h2 className={styles.animatedTitle}>Актуальные акции</h2>
         <p className={styles.promotionsSubtitle}>
           Специальные предложения и скидки для наших клиентов
         </p>

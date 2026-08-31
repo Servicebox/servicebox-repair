@@ -22,7 +22,7 @@ const NewsJsonLd = ({ news, slug }) => {
     image: news.featuredImage ? [news.featuredImage] : undefined,
     datePublished: news.publishedAt || news.createdAt,
     dateModified: news.updatedAt,
-    author: { '@type': 'Organization', name: news.author || 'ServiceBox', url: API_URL },
+    author: { '@type': 'Organization', name: news.author || 'СЕРВИС БОКС', url: API_URL },
     publisher: { '@id': `${API_URL}#business` },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${API_URL}/news/${slug}` },
     articleBody: textContent.substring(0, 5000),
@@ -115,7 +115,7 @@ export default function NewsDetail({ newsSlug }) {
         if (data.success) {
           setNews(data.data);
           setError(null);
-          if (data.data?.title) document.title = `${data.data.title} | ServiceBox Вологда`;
+          if (data.data?.title) document.title = `${data.data.title} | СЕРВИС БОКС Вологда`;
         } else {
           throw new Error(data.error || 'Новость не найдена');
         }

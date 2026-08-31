@@ -2,7 +2,7 @@ import CategoryTemplate from '@/components/CategoryTemplate/CategoryTemplate';
 import { generateServiceMetadata, generateFAQSchema } from '@/lib/seo-helpers';
 
 export const metadata = generateServiceMetadata({
-    title: 'Ремонт телевизоров в Вологде | LED, OLED, QLED | ServiceBox',
+    title: 'Ремонт телевизоров в Вологде | LED, OLED, QLED | СЕРВИС БОКС',
     description: 'Ремонт телевизоров в Вологде: замена подсветки LED, ремонт OLED и QLED. Samsung, LG, Sony, Philips. Гарантия до 12 месяцев.',
     path: '/services/tv',
     keywords: ['ремонт телевизоров Вологда', 'замена подсветки телевизора', 'ремонт Samsung TV Вологда', 'ремонт LG OLED Вологда'],

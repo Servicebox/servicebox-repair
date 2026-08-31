@@ -182,9 +182,9 @@ serviceSchema.methods.generateUniqueSlug = async function(text) {
 serviceSchema.methods.generateMetaTitle = function() {
   const geo = 'в Вологде';
   if (this.isCategory) {
-    return `${this.name} ${geo} | ServiceBox - ремонт, цены, запись онлайн`;
+    return `${this.name} ${geo} | СЕРВИС БОКС - ремонт, цены, запись онлайн`;
   }
-  return `${this.name} ${geo} - ServiceBox: стоимость, запись на ремонт`;
+  return `${this.name} ${geo} - СЕРВИС БОКС: стоимость, запись на ремонт`;
 };
 
 // Генерация мета-описания

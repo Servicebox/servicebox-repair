@@ -2,7 +2,7 @@ import CategoryTemplate from '@/components/CategoryTemplate/CategoryTemplate';
 import { generateServiceMetadata, generateFAQSchema } from '@/lib/seo-helpers';
 
 export const metadata = generateServiceMetadata({
-    title: 'Ремонт планшетов в Вологде | iPad, Galaxy Tab | ServiceBox',
+    title: 'Ремонт планшетов в Вологде | iPad, Galaxy Tab | СЕРВИС БОКС',
     description: 'Ремонт планшетов в Вологде: iPad, Samsung Galaxy Tab, Xiaomi Pad. Замена дисплеев, стёкол, батарей. Гарантия до 12 месяцев.',
     path: '/services/tablets',
     keywords: ['ремонт планшетов Вологда', 'ремонт iPad Вологда', 'замена стекла планшета', 'ремонт Samsung Galaxy Tab'],
