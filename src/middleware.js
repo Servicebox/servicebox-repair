@@ -88,11 +88,13 @@ export function middleware(request) {
   // /api/news исключён: до 40 секунд (s-maxage + stale-while-revalidate)
   // старые данные из списка новостей отдавались публичным страницам сразу
   // после правки в редакторе (например, замены фото) — см. баг 2026-08-02.
+  // /api/board-photos/*/image сам ставит immutable-кэш на год — не перетираем
   if (
     pathname.startsWith('/api/') &&
     !pathname.includes('/api/auth/') &&
     !pathname.startsWith('/api/admin/') &&
-    !pathname.startsWith('/api/news')
+    !pathname.startsWith('/api/news') &&
+    !pathname.startsWith('/api/board-photos')
   ) {
     response.headers.set('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=30');
   }
