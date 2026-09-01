@@ -11,11 +11,11 @@ import { getServerSession } from '@/lib/session';
 
 export async function requireAdmin(request) {
   const session = await getServerSession(request);
-  if (!session || session.role !== 'admin') {
-    return NextResponse.json(
-      { error: 'Требуются права администратора' },
-      { status: 401 }
-    );
+  if (!session) {
+    return NextResponse.json({ error: 'Требуется вход в аккаунт' }, { status: 401 });
+  }
+  if (session.role !== 'admin') {
+    return NextResponse.json({ error: 'Требуются права администратора' }, { status: 403 });
   }
   return null;
 }

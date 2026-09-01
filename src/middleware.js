@@ -55,7 +55,7 @@ export function middleware(request) {
     }
 
     try {
-      verify(token, process.env.JWT_SECRET);
+      verify(token, process.env.JWT_SECRET, { algorithms: ['HS256'] });
     } catch (e) {
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
     }

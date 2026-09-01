@@ -1,7 +1,8 @@
 // app/api/gallery/route.js (обновленный POST)
 import { NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/authGuard';
-import { writeFile, mkdir } from 'fs/promises';
+import { isValidObjectId } from '@/lib/slugify';
+import { writeFile, mkdir, unlink } from 'fs/promises';
 import path from 'path';
 import sharp from 'sharp';
 import dbConnect from '../../../../lib/db'; // Подключение к БД
@@ -93,6 +94,52 @@ export async function POST(request) {
   }
 }
 
+// PUT - Обновить описание изображения (используется в админке imagelist)
+export async function PUT(request, { params }) {
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
+  try {
+    await dbConnect();
+    const { id } = params;
+
+    if (!isValidObjectId(id)) {
+      return NextResponse.json(
+        { success: false, error: 'Неверный ID изображения' },
+        { status: 400 }
+      );
+    }
+
+    const body = await request.json().catch(() => ({}));
+    if (typeof body.description !== 'string') {
+      return NextResponse.json(
+        { success: false, error: 'Поле description обязательно' },
+        { status: 400 }
+      );
+    }
+
+    const image = await Image.findByIdAndUpdate(
+      id,
+      { description: body.description },
+      { new: true }
+    );
+    if (!image) {
+      return NextResponse.json(
+        { success: false, error: 'Изображение не найдено' },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({ success: true, description: image.description });
+  } catch (error) {
+    console.error('Ошибка обновления изображения:', error);
+    return NextResponse.json(
+      { success: false, error: 'Ошибка обновления' },
+      { status: 500 }
+    );
+  }
+}
+
 // DELETE - Удалить изображение
 export async function DELETE(request, { params }) {
   const denied = await requireAdmin(request);
@@ -102,7 +149,7 @@ export async function DELETE(request, { params }) {
     await dbConnect();
     const { id } = params;
     
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+    if (!isValidObjectId(id)) {
       return NextResponse.json(
         { success: false, error: 'Неверный ID изображения' },
         { status: 400 }

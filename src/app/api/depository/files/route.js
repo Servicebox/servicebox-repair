@@ -41,7 +41,7 @@ export async function GET(request) {
   } catch (error) {
     console.error('Get files error:', error);
     return NextResponse.json(
-      { message: 'Ошибка при получении файлов', error: error.message },
+      { message: 'Ошибка при получении файлов' },
       { status: 500 }
     );
   }
