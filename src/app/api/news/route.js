@@ -1,7 +1,11 @@
 // src/app/api/news/route.js
+export const runtime = 'nodejs';
+
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import News from '@/models/News';
+import { requireAdmin } from '@/lib/authGuard';
+import { pickNewsFields } from '@/lib/newsFields';
 
 // Без этого Next.js помечает GET-хендлер статическим (searchParams читаются
 // через new URL(request.url), а не request.nextUrl, что не триггерит
@@ -58,9 +62,14 @@ export async function GET(request) {
 
 // POST /api/news — создание новости (только админ)
 export async function POST(request) {
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   try {
     await dbConnect();
-    const newsData = await request.json();
+    // Только поля из белого списка — защита от mass-assignment
+    // (views/likesCount/likedBy/временные метки задать нельзя).
+    const newsData = pickNewsFields(await request.json());
 
     // Валидация
     if (!newsData.title?.trim()) {

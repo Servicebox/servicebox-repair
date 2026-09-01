@@ -56,3 +56,6 @@ Thumbs.db
 # in GOOGLE_SERVICE_ACCOUNT_KEY in .env.production on the server)
 servicebox35-e242f-*.json
 *-gserviceaccount-*.json
+
+# Локальный ledger харденинга безопасности — не коммитить
+.superpowers/sec/

@@ -1,7 +1,7 @@
 // middleware.js
 export const runtime = 'nodejs';
 import { NextResponse } from 'next/server';
-import { verify } from 'jsonwebtoken';
+import { verifyToken } from '@/lib/jwt';
 import { BASE_URL } from '@/lib/constants';
 
 export function middleware(request) {
@@ -54,10 +54,15 @@ export function middleware(request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    try {
-      verify(token, process.env.JWT_SECRET, { algorithms: ['HS256'] });
-    } catch (e) {
+    // Первый слой: подпись + роль из claim. Авторитетная проверка роли —
+    // в самих роутах через getServerSession (роль из БД). Здесь — быстрый
+    // отсев: неадмин не должен даже доходить до обработчика /api/admin/*.
+    const decoded = verifyToken(token);
+    if (!decoded) {
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+    }
+    if (decoded.role !== 'admin') {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
   }
 

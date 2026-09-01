@@ -1,8 +1,12 @@
 // src/app/api/news/[id]/route.js
+export const runtime = 'nodejs';
+
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import News from '@/models/News';
 import { isValidObjectId } from '@/lib/slugify';
+import { requireAdmin } from '@/lib/authGuard';
+import { pickNewsFields } from '@/lib/newsFields';
 
 // См. src/app/api/news/route.js — тот же баг со статическим кэшированием
 // GET-хендлера; здесь особенно заметен в админке при повторном открытии
@@ -41,12 +45,16 @@ export async function GET(request, { params }) {
   }
 }
 
-// PUT /api/news/[id] — обновление новости
+// PUT /api/news/[id] — обновление новости (только админ)
 export async function PUT(request, { params }) {
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   try {
     await dbConnect();
     const { id } = await params;
-    const updateData = await request.json();
+    // Только поля из белого списка — защита от mass-assignment.
+    const updateData = pickNewsFields(await request.json());
 
     if (!id || !isValidObjectId(id)) {
       return NextResponse.json(
@@ -112,8 +120,11 @@ export async function PUT(request, { params }) {
   }
 }
 
-// DELETE /api/news/[id] — удаление новости
+// DELETE /api/news/[id] — удаление новости (только админ)
 export async function DELETE(request, { params }) {
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   try {
     await dbConnect();
     const { id } = await params;
