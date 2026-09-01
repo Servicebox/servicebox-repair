@@ -2,13 +2,25 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import DepositoryFile from '@/models/DepositoryFile';
+import { getServerSession } from '@/lib/session';
 import { readFile } from 'fs/promises';
 import path from 'path';
 
 export async function GET(request, { params }) {
   try {
+    // Скачивание — только для авторизованных пользователей.
+    // Список файлов остаётся публичным (нужно для индексации), закрыт
+    // только сам download.
+    const session = await getServerSession(request);
+    if (!session) {
+      return NextResponse.json(
+        { message: 'Войдите или зарегистрируйтесь, чтобы скачивать файлы' },
+        { status: 401 }
+      );
+    }
+
     await dbConnect();
-    
+
     const file = await DepositoryFile.findById(params.id);
 
     if (!file) {

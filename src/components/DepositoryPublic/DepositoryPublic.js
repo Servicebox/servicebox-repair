@@ -1,9 +1,13 @@
 // components/depositoryPublic/page.js
 'use client';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/components/contexts/AuthContext';
 import styles from './DepositoryPublic.module.css';
 
 export default function DepositoryPublic() {
+    const router = useRouter();
+    const { user, loading: authLoading } = useAuth();
     const [files, setFiles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [hovered, setHovered] = useState(null);
@@ -70,7 +74,12 @@ export default function DepositoryPublic() {
     });
 
     const handleDownload = (id, filename) => {
-        // Просто открываем ссылку для скачивания в новом окне
+        // Скачивание только после входа. Сервер тоже отдаёт 401 без сессии —
+        // здесь просто не открываем пустую вкладку с JSON, а ведём на вход.
+        if (!user) {
+            router.push('/loginsignup');
+            return;
+        }
         window.open(`/api/depository/files/${id}/download`, '_blank');
     };
 
@@ -206,7 +215,7 @@ export default function DepositoryPublic() {
                                                     onMouseLeave={() => setHovered(null)}
                                                     onClick={() => handleDownload(file._id, file.originalName)}
                                                 >
-                                                    📥 Скачать
+                                                    {authLoading || user ? '📥 Скачать' : '🔒 Войдите для скачивания'}
                                                 </button>
                                             </td>
                                         </tr>
@@ -262,7 +271,7 @@ export default function DepositoryPublic() {
                                         onMouseEnter={() => setHovered(file._id)}
                                         onMouseLeave={() => setHovered(null)}
                                     >
-                                        📥 Скачать файл
+                                        {authLoading || user ? '📥 Скачать файл' : '🔒 Войдите для скачивания'}
                                     </button>
                                 </div>
                             ))}
