@@ -445,12 +445,12 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
           <h3 className="text-lg font-bold text-text mb-4">Время работы</h3>
           <div className="space-y-2">
             <div className="flex justify-between">
-              <span className="text-muted">Пн-Пт:</span>
-              <span className="font-semibold text-text">10:00-19:00</span>
+              <span className="text-muted">Ежедневно:</span>
+              <span className="font-semibold text-text">10:00–20:00</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted">Сб-Вс:</span>
-              <span className="font-semibold text-text">Выходные</span>
+              <span className="text-muted">Выходные:</span>
+              <span className="font-semibold text-text">без выходных</span>
             </div>
           </div>
           <button

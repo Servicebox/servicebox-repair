@@ -153,7 +153,7 @@ const generateYmlFeed = (services, categories, ratingStats) => {
       xml += `        <param name="Выезд мастера">нет</param>\n`;
       xml += `        <param name="Гарантия на работу">30 дней</param>\n`;
       xml += `        <param name="Оплата">Картой, наличными, онлайн</param>\n`;
-      xml += `        <param name="Время работы">Пн-Пт 10:00-19:00, Сб и Вскр- выходной</param>\n`;
+      xml += `        <param name="Время работы">Ежедневно 10:00-20:00, без выходных</param>\n`;
       xml += `        <param name="Адрес сервисного центра">г. Вологда, ул. Северная, д.7а</param>\n`;
 
       xml += `        <param name="Рейтинг">${ratingStats.rating}</param>\n`;
