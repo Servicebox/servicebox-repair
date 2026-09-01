@@ -1,0 +1,17 @@
+/* src/app/platy/[slug]/boardPhoto.module.css */
+.page { max-width: 900px; margin: 0 auto; padding: 24px 16px 64px; }
+.crumbs { font-size: 14px; color: var(--color-text-muted, #6b7280); margin-bottom: 16px; }
+.crumbs a { color: inherit; text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+.title { font-size: clamp(1.5rem, 1rem + 2vw, 2.25rem); font-weight: 800; margin: 0 0 12px; color: var(--color-primary-dark, #0a1929); }
+.meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 20px; font-size: 14px; }
+.badge { background: #0a1929; color: #fff; padding: 4px 12px; border-radius: 999px; font-weight: 600; }
+.chip { background: #eef2f7; color: #0a1929; padding: 4px 12px; border-radius: 999px; font-weight: 600; }
+.date { color: var(--color-text-muted, #6b7280); }
+.photoWrap { display: block; background: #0d2033; border-radius: 16px; overflow: hidden; border: 1px solid #1e3a5f; }
+.photo { display: block; width: 100%; height: auto; }
+.description { margin: 20px 0; line-height: 1.6; color: var(--color-text, #1f2937); white-space: pre-wrap; }
+.cta { margin-top: 32px; padding: 20px; background: #f5f8fc; border: 1px solid #e2e8f0; border-radius: 16px; }
+.cta p { margin: 0 0 12px; }
+.ctaBtn { display: inline-block; background: #0a1929; color: #fff; padding: 12px 20px; border-radius: 12px; font-weight: 700; text-decoration: none; }
+.ctaBtn:hover { background: #12293f; }
