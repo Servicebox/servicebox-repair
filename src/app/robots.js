@@ -27,7 +27,8 @@ export default function robots() {
         allow: [
           '/', '/api/ai/', '/ai-assistant.json', '/ai-answers/',
           '/services/', '/price', '/contacts', '/about', '/brands/', '/problems/',
-          '/gallery/', '/images/', '/photos/', '/og-image.jpg', '/favicon.webp'
+          '/gallery/', '/images/', '/photos/', '/og-image.jpg', '/favicon.webp',
+          '/platy/', '/api/board-photos/',
         ],
         disallow: [
           '/admin-panel/', '/api/admin/', '/private/', '/checkout', '/cart', '/_next/',

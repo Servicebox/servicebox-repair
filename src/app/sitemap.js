@@ -4,6 +4,7 @@ import Product from '@/models/Product';
 import News from '@/models/News';
 import Service from '@/models/Service';
 import OptfmCategory from '@/models/OptfmCategory';
+import BoardPhoto from '@/models/BoardPhoto';
 import { getCategoryIdsWithProducts } from '@/lib/parts/queryProducts';
 import { BASE_URL } from '@/lib/constants';
 import { PROBLEMS } from '@/lib/problems-data';
@@ -32,6 +33,7 @@ export default async function sitemap() {
     ['/news', 0.8, 'weekly'],
     ['/promotions-page', 0.85, 'weekly'],
     ['/gallery', 0.7, 'monthly'],
+    ['/platy', 0.6, 'monthly'],
     ['/depository-public', 0.6, 'weekly'],
     ['/tracking', 0.7, 'daily'],
     ['/consent', 0.1, 'yearly'],
@@ -55,12 +57,13 @@ export default async function sitemap() {
     // активных товарах .limit(500) исключал из sitemap 88% каталога.
     // Next.js допускает до 50 000 URL в одном sitemap-файле, здесь и близко
     // столько нет, поэтому грузим целиком.
-    const [services, products, news, categories, categoryIdsWithProducts] = await Promise.all([
+    const [services, products, news, categories, categoryIdsWithProducts, boardPhotos] = await Promise.all([
       Service.find({ isActive: { $ne: false }, isCategory: false }, { slug: 1, updatedAt: 1 }).lean(),
       Product.find({ isActive: true, isDeleted: false }, { slug: 1, updatedAt: 1 }).lean(),
       News.find({ isPublished: true }, { slug: 1, updatedAt: 1, publishedAt: 1 }).lean(),
       OptfmCategory.find({}, { slug: 1 }).lean(),
       getCategoryIdsWithProducts(),
+      BoardPhoto.find({ isActive: true }, { slug: 1, updatedAt: 1 }).lean(),
     ]);
 
     dbUrls = [
@@ -69,6 +72,7 @@ export default async function sitemap() {
       ...news.filter(n => n.slug).map(n => createEntry(`/news/${encodeURIComponent(n.slug)}`, 0.7, 'monthly', n.updatedAt || n.publishedAt)),
       // Пустые категории (нет товаров нигде в поддереве) не индексируем — см. getCategoryIdsWithProducts.
       ...categories.filter(c => c.slug && categoryIdsWithProducts.has(String(c._id))).map(c => createEntry(`/parts/${encodeURIComponent(c.slug)}`, 0.8, 'daily')),
+      ...boardPhotos.filter(b => b.slug).map(b => createEntry(`/platy/${encodeURIComponent(b.slug)}`, 0.7, 'monthly', b.updatedAt)),
     ];
   } catch (error) {
     console.warn('⚠️ [Sitemap] DB fetch skipped:', error.message);
