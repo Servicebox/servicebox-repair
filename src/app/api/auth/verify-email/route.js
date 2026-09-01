@@ -16,10 +16,12 @@ export async function GET(request) {
       );
     }
 
-    // Ищем пользователя с этим токеном верификации
+    // Ищем пользователя с этим токеном верификации.
+    // verificationToken / verificationTokenExpires имеют select: false —
+    // запрашиваем явно, иначе проверка срока действия ниже станет no-op.
     const user = await User.findOne({
       verificationToken: token
-    });
+    }).select('+verificationToken +verificationTokenExpires');
 
     if (!user) {
       return NextResponse.redirect(
@@ -41,11 +43,16 @@ export async function GET(request) {
       );
     }
 
-    // Подтверждаем email
-    user.emailVerified = true;
-    user.verificationToken = undefined;
-    user.verificationTokenExpires = undefined;
-    await user.save();
+    // Подтверждаем email. Точечный updateOne, а не user.save() — не
+    // гоняем валидацию всего документа (легаси-профиль, не проходящий
+    // новые ограничения модели, иначе дал бы 500 на верификации).
+    await User.updateOne(
+      { _id: user._id },
+      {
+        $set: { emailVerified: true },
+        $unset: { verificationToken: 1, verificationTokenExpires: 1 },
+      }
+    );
 
     // Перенаправляем на страницу успеха
     return NextResponse.redirect(

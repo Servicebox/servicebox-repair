@@ -97,13 +97,19 @@ export async function PATCH(request, { params }) {
 
     const { newPassword, ...fields } = body;
     const updateSet = { ...fields };
+    const updateOps = { $set: updateSet };
     if (newPassword) {
       updateSet.password = await bcrypt.hash(newPassword, 12);
+      // Сброс пароля админом = отметка времени смены + инкремент версии
+      // токенов: ранее выданные JWT этого пользователя станут недействительны
+      // (проверка версии включается в Phase 3).
+      updateSet.passwordChangedAt = new Date();
+      updateOps.$inc = { tokenVersion: 1 };
     }
 
     const updated = await User.findByIdAndUpdate(
       userId,
-      { $set: updateSet },
+      updateOps,
       { new: true, runValidators: true }
     ).select('-password -verificationToken -resetPasswordToken');
 

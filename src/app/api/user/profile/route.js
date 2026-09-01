@@ -96,8 +96,13 @@ async function handlePasswordChange(request, userId) {
     return NextResponse.json({ error: 'Неверный текущий пароль' }, { status: 400 });
   }
 
+  if (body.newPassword.length > 128) {
+    return NextResponse.json({ error: 'Новый пароль — максимум 128 символов' }, { status: 400 });
+  }
+
   // Хэширование через pre-save hook модели User
   dbUser.password = body.newPassword;
+  dbUser.passwordChangedAt = new Date();
   await dbUser.save();
 
   return NextResponse.json({ message: 'Пароль успешно изменён' });

@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Имя пользователя обязательно'],
     trim: true,
-    minlength: [2, 'Имя должно содержать минимум 2 символа']
+    minlength: [2, 'Имя должно содержать минимум 2 символа'],
+    maxlength: [50, 'Имя не может превышать 50 символов']
   },
   firstName: {
     type: String,
@@ -25,11 +26,20 @@ const userSchema = new mongoose.Schema({
     unique: true,
     lowercase: true,
     trim: true,
-    match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Введите корректный email']
+    maxlength: [254, 'Email не может превышать 254 символа'],
+    // Прежняя маска резала TLD длиннее 3 символов (.info, .name, .online,
+    // .store) и адреса вида user+tag@ — легитимные регистрации падали.
+    // Практичная проверка: непустой local, @, домен с точкой и TLD ≥ 2.
+    match: [/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, 'Введите корректный email']
   },
   password: {
     type: String,
-    minlength: [6, 'Пароль должен содержать минимум 6 символов']
+    // select: false — хэш пароля не должен попадать в обычные выборки
+    // (User.findById без явного .select('+password')). Логин и смена
+    // пароля запрашивают поле явно.
+    select: false,
+    minlength: [6, 'Пароль должен содержать минимум 6 символов'],
+    maxlength: [128, 'Пароль не может превышать 128 символов']
   },
   yandexId: {
     type: String,
@@ -88,10 +98,18 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  verificationToken: String,
-  verificationTokenExpires: Date,
-  resetPasswordToken: String,
-  resetPasswordExpires: Date,
+  // Секретные токены — select: false, чтобы не утекали в ответы API и логи.
+  // Роуты, которым они нужны, запрашивают их явным .select('+поле').
+  verificationToken: { type: String, select: false },
+  verificationTokenExpires: { type: Date, select: false },
+  resetPasswordToken: { type: String, select: false },
+  resetPasswordExpires: { type: Date, select: false },
+  // Момент последней смены пароля — для инвалидации ранее выданных JWT
+  // (используется начиная с Phase 3).
+  passwordChangedAt: { type: Date, select: false },
+  // Версия токенов пользователя. Инкремент = разлогинить все прежние сессии
+  // (смена пароля, ручной сброс). Проверка включается в Phase 3.
+  tokenVersion: { type: Number, default: 0, select: false },
   lastLogin: Date,
   onlineStatus: {
     type: String,
@@ -125,8 +143,11 @@ userSchema.pre('save', async function(next) {
   }
 });
 
-// Метод для сравнения паролей
+// Метод для сравнения паролей.
+// Защита от вызова без .select('+password'): если хэш не загружен —
+// возвращаем false, а не бросаем исключение внутри bcrypt.
 userSchema.methods.comparePassword = async function(candidatePassword) {
+  if (!this.password || !candidatePassword) return false;
   return bcrypt.compare(candidatePassword, this.password);
 };
 

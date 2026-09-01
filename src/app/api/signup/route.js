@@ -72,6 +72,19 @@ export async function POST(request) {
 
   } catch (error) {
     console.error('Signup error:', error);
+    if (error?.name === 'ValidationError') {
+      const first = Object.values(error.errors || {})[0];
+      return NextResponse.json(
+        { message: first?.message || 'Проверьте корректность введённых данных' },
+        { status: 400 }
+      );
+    }
+    if (error?.code === 11000) {
+      return NextResponse.json(
+        { message: 'Пользователь с такими данными уже существует' },
+        { status: 409 }
+      );
+    }
     return NextResponse.json(
       { message: 'Ошибка сервера при регистрации' },
       { status: 500 }

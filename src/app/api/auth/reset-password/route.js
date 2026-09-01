@@ -16,9 +16,9 @@ export async function POST(request) {
       );
     }
 
-    if (password.length < 6) {
+    if (typeof password !== 'string' || password.length < 6 || password.length > 128) {
       return NextResponse.json(
-        { message: 'Пароль должен содержать минимум 6 символов' },
+        { message: 'Пароль должен содержать от 6 до 128 символов' },
         { status: 400 }
       );
     }
@@ -36,11 +36,12 @@ export async function POST(request) {
       );
     }
 
-    // Обновляем пароль
+    // Обновляем пароль (хэшируется в pre('save') модели User)
     user.password = password;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
-    
+    user.passwordChangedAt = new Date();
+
     await user.save();
 
     return NextResponse.json({
