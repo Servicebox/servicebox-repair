@@ -2,7 +2,9 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useAuth } from '@/components/contexts/AuthContext';
+import BoardPhotoGrid from '@/components/BoardPhotos/BoardPhotoGrid';
 import styles from './DepositoryPublic.module.css';
 
 export default function DepositoryPublic() {
@@ -15,6 +17,7 @@ export default function DepositoryPublic() {
     const [width, setWidth] = useState(0);
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
+    const [activeTab, setActiveTab] = useState('files'); // 'files' | 'boards'
 
     useEffect(() => {
         // Устанавливаем ширину только на клиенте
@@ -116,6 +119,29 @@ export default function DepositoryPublic() {
                 </p>
             </div>
 
+            <div className={styles.tabs}>
+                <button
+                    className={`${styles.tabBtn} ${activeTab === 'files' ? styles.tabBtnActive : ''}`}
+                    onClick={() => setActiveTab('files')}
+                >Файлы</button>
+                <button
+                    className={`${styles.tabBtn} ${activeTab === 'boards' ? styles.tabBtnActive : ''}`}
+                    onClick={() => setActiveTab('boards')}
+                >Фото плат</button>
+            </div>
+
+            {activeTab === 'boards' && (
+                <div>
+                    <p className={styles.boardsIntro}>
+                        Фото плат с точками замера сопротивления.{' '}
+                        <Link href="/platy">Открыть весь раздел →</Link>
+                    </p>
+                    <BoardPhotoGrid />
+                </div>
+            )}
+
+            {activeTab === 'files' && (
+            <>
             <div className={styles.filters}>
                 <div className={styles.searchBox}>
                     <input
@@ -278,6 +304,8 @@ export default function DepositoryPublic() {
                         </div>
                     )}
                 </>
+            )}
+            </>
             )}
         </div>
     );
