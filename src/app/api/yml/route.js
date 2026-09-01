@@ -115,9 +115,13 @@ export async function GET() {
           });
         }
 
+        // Бренд/производитель выводим только если он реально известен — своё
+        // название как вендора чужой продукции не подставляем.
+        const vendorName = product.vendor || product.brand || '';
+
         xml += `
-        <name>${escapeXml(product.name)}</name>
-        <vendor>${escapeXml(product.vendor || product.brand || 'СЕРВИС БОКС')}</vendor>
+        <name>${escapeXml(product.name)}</name>${vendorName ? `
+        <vendor>${escapeXml(vendorName)}</vendor>` : ''}
         <vendorCode>${escapeXml(product.vendorCode || product.sku || product.slug)}</vendorCode>
         <description>${escapeXml(product.description || product.name)}</description>
         <manufacturer_warranty>${product.manufacturer_warranty ? 'true' : 'false'}</manufacturer_warranty>
@@ -126,8 +130,8 @@ export async function GET() {
         <pickup>${product.pickup !== false ? 'true' : 'false'}</pickup>
         <store>${product.store ? 'true' : 'false'}</store>
         <weight>${weightKg.toFixed(3)}</weight>
-        <dimensions>${dimensionsStr}</dimensions>
-        <param name="Производитель">${escapeXml(product.brand || product.vendor || 'СЕРВИС БОКС')}</param>
+        <dimensions>${dimensionsStr}</dimensions>${(product.brand || product.vendor) ? `
+        <param name="Производитель">${escapeXml(product.brand || product.vendor)}</param>` : ''}
         <param name="Артикул">${escapeXml(product.vendorCode || product.sku || product.slug)}</param>
         <param name="Гарантия">12 месяцев</param>`;
 

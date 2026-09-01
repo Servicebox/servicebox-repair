@@ -87,8 +87,15 @@ export async function PUT(request, { params }) {
         description: updateData.description || '',
         category: updateData.category || product.category,
         subcategory: updateData.subcategory || product.subcategory,
-        brand: updateData.brand?.trim() || product.brand,
-        vendor: updateData.vendor?.trim() || updateData.brand?.trim() || product.vendor,
+        // Если поле brand/vendor присутствует в запросе — уважаем его значение,
+        // включая пустую строку (админ намеренно стирает ошибочный бренд).
+        // Отсутствует в запросе — оставляем как было. Если стёрли brand, но
+        // vendor в запрос не положили — vendor тоже чистим (иначе в фиде
+        // останется старое собственное название).
+        brand: 'brand' in updateData ? (updateData.brand?.trim() || '') : product.brand,
+        vendor: 'vendor' in updateData
+          ? (updateData.vendor?.trim() || updateData.brand?.trim() || '')
+          : ('brand' in updateData ? (updateData.brand?.trim() || '') : product.vendor),
         vendorCode: updateData.vendorCode?.trim() || product.vendorCode,
         sku: updateData.sku?.trim() || updateData.vendorCode?.trim() || product.sku,
         gtin: updateData.gtin?.trim() || product.gtin,

@@ -97,8 +97,15 @@ export async function GET(request) {
 
             const availability = getAvailability(product.quantity);
             const condition = getCondition(product);
-            const brand = product.brand || 'СЕРВИС БОКС';
-            const mpn = product.sku || product.vendorCode || product._id;
+            // Не подставляем собственное название как бренд чужой продукции.
+            // Нет реального бренда → тег <g:brand> не выводим (см. ниже).
+            const brand = product.brand || '';
+            // Наш sku/vendorCode — это внутренний/поставщицкий код, а не
+            // manufacturer part number. Он имеет смысл для Google только в паре
+            // с брендом; без бренда шлём его как MPN нельзя (риск неверного
+            // сопоставления в Merchant). Поэтому <g:mpn> выводим только когда
+            // бренд известен.
+            const mpn = brand ? (product.sku || product.vendorCode || '') : '';
             const gtin = product.gtin || '';
 
             xml += '<item>\n';
@@ -110,10 +117,19 @@ export async function GET(request) {
             xml += `<g:price>${price}</g:price>\n`;
             xml += `<g:availability>${availability}</g:availability>\n`;
             xml += `<g:condition>${condition}</g:condition>\n`;
-            xml += `<g:brand>${escapeXml(brand)}</g:brand>\n`;
-            xml += `<g:mpn>${escapeXml(mpn)}</g:mpn>\n`;
+            if (brand) {
+                xml += `<g:brand>${escapeXml(brand)}</g:brand>\n`;
+            }
+            if (mpn) {
+                xml += `<g:mpn>${escapeXml(mpn)}</g:mpn>\n`;
+            }
             if (gtin) {
                 xml += `<g:gtin>${escapeXml(gtin)}</g:gtin>\n`;
+            }
+            // mpn выводится только вместе с брендом (см. выше), поэтому !brand
+            // уже покрывает !mpn — проверяем бренд и GTIN.
+            if (!brand && !gtin) {
+                xml += `<g:identifier_exists>no</g:identifier_exists>\n`;
             }
             // ⚠️ sale_price временно отключён, так как страницы товаров не всегда отображают старую цену корректно
             // Если хотите включить – раскомментируйте и убедитесь, что на сайте есть чёткая скидка

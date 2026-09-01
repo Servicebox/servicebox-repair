@@ -43,10 +43,12 @@ export async function GET() {
         validation.score -= 20;
       }
       
+      // Пустой бренд — норма: свою продукцию мы не выпускаем, чужой бренд
+      // без данных не подставляем. Это предупреждение, а не ошибка.
       if (!product.brand || product.brand.trim().length === 0) {
-        validation.errors.push('Бренд не указан');
+        validation.warnings.push('Бренд не указан (товар без бренда)');
         validation.summary.missingBrand++;
-        validation.score -= 20;
+        validation.score -= 3;
       }
       
       if (!product.new_price || product.new_price < 10) {

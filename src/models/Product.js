@@ -24,16 +24,18 @@ const ProductSchema = new mongoose.Schema({
     default: ''
   },
 
-  // Поля для микроразметки и YML
+  // Поля для микроразметки и YML.
+  // НЕ подставляем сюда собственное название как производителя: мы не выпускаем
+  // эту продукцию. Если реальный бренд неизвестен — поле остаётся пустым, а в
+  // фидах/разметке тег бренда просто не выводится.
   brand: {
     type: String,
-    required: true,
-    default: 'СЕРВИС БОКС'
+    trim: true
   },
 
   vendor: {
     type: String,
-    default: 'СЕРВИС БОКС'
+    trim: true
   },
 
   vendorCode: {
@@ -288,11 +290,10 @@ ProductSchema.pre('save', function (next) {
     this.sku = this.vendorCode;
   }
 
-  if (!this.brand || this.brand.trim() === '') {
-    this.brand = 'СЕРВИС БОКС';
-  }
-
-  if (!this.vendor || this.vendor.trim() === '') {
+  // Бренд намеренно НЕ заполняем собственным названием — см. комментарий у поля
+  // brand. Пустой бренд допустим. vendor подтягиваем из brand только если бренд
+  // реально указан.
+  if ((!this.vendor || this.vendor.trim() === '') && this.brand && this.brand.trim() !== '') {
     this.vendor = this.brand;
   }
 

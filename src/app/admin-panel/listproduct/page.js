@@ -15,8 +15,8 @@ const emptyProduct = {
   description: "",
   category: "",
   subcategory: "",
-  brand: "СЕРВИС БОКС",
-  vendor: "СЕРВИС БОКС",
+  brand: "",
+  vendor: "",
   vendorCode: "",
   sku: "",
   gtin: "",
@@ -429,8 +429,8 @@ export default function ListProduct() {
         slug: editingProduct.slug,
         category,
         subcategory,
-        brand: editingProduct.brand?.trim() || 'СЕРВИС БОКС',
-        vendor: editingProduct.vendor?.trim() || editingProduct.brand?.trim() || 'СЕРВИС БОКС',
+        brand: editingProduct.brand?.trim() || '',
+        vendor: editingProduct.vendor?.trim() || editingProduct.brand?.trim() || '',
         vendorCode: editingProduct.vendorCode?.trim() || '',
         sku: editingProduct.sku?.trim() || editingProduct.vendorCode?.trim() || '',
         gtin: editingProduct.gtin?.trim() || '',
@@ -660,18 +660,18 @@ export default function ListProduct() {
               </div>
             )}
 
-            {/* Обязательные поля для микроразметки */}
+            {/* Поля для микроразметки. Бренд НЕ обязателен: если реального
+                производителя нет — оставляем пустым, своё название не пишем. */}
             <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Бренд *</label>
+              <label className={styles.formLabel}>Бренд</label>
               <input
                 name="brand"
-                placeholder="Например: СЕРВИС БОКС"
+                placeholder="Например: Borofone, Walker, Hoco"
                 value={newProduct.brand}
                 onChange={handleNewChange}
-                required
                 className={styles.formInput}
               />
-              <p className={styles.helpText}>Это поле обязательно для микроразметки</p>
+              <p className={styles.helpText}>Реальный производитель. Нет данных — оставьте пустым (не пишите «СЕРВИС БОКС»)</p>
             </div>
 
             <div className={styles.formGroup}>

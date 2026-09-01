@@ -86,9 +86,13 @@ export async function GET() {
         xml += `\n        <picture>${escapeXml(img)}</picture>`;
       });
 
+      // Вендора выводим только при реально известном бренде — не приписываем
+      // себе производство чужой продукции.
+      const vendorName = product.vendor || product.brand || '';
+
       xml += `
-        <name>${escapeXml(product.name)}</name>
-        <vendor>${escapeXml(product.vendor || product.brand || 'СЕРВИС БОКС')}</vendor>
+        <name>${escapeXml(product.name)}</name>${vendorName ? `
+        <vendor>${escapeXml(vendorName)}</vendor>` : ''}
         <vendorCode>${escapeXml(product.vendorCode || product.sku || '')}</vendorCode>
         <description>${escapeXml(product.description || product.name)}</description>`;
 

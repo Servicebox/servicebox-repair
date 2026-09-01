@@ -182,18 +182,22 @@ export default function ProductDisplay({ product }) {
           <div className={styles.infoSection}>
             <h1>{product.name}</h1>
 
-            <div className={styles.brandInfo}>
-              <div className={styles.brand}>
-                <span>Бренд:</span>
-                <span>{product.brand || 'СЕРВИС БОКС'}</span>
+            {(product.brand || product.vendorCode) && (
+              <div className={styles.brandInfo}>
+                {product.brand && (
+                  <div className={styles.brand}>
+                    <span>Бренд:</span>
+                    <span>{product.brand}</span>
+                  </div>
+                )}
+                {product.vendorCode && (
+                  <div className={styles.vendorCode}>
+                    <span>Артикул:</span>
+                    <span>{product.vendorCode}</span>
+                  </div>
+                )}
               </div>
-              {product.vendorCode && (
-                <div className={styles.vendorCode}>
-                  <span>Артикул:</span>
-                  <span>{product.vendorCode}</span>
-                </div>
-              )}
-            </div>
+            )}
 
             <div className={styles.priceSection}>
               <div className={styles.currentPrice}>
