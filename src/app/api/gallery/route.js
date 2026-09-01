@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { requireAdmin } from '@/lib/authGuard';
 import { writeFile, mkdir, unlink } from 'fs/promises';
 import path from 'path';
 import sharp from 'sharp';
@@ -59,6 +60,9 @@ export async function GET(request) {
 
 // DELETE - Удалить несколько изображений
 export async function DELETE(request) {
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   try {
     await dbConnect();
     const { ids } = await request.json();
@@ -88,6 +92,9 @@ export async function DELETE(request) {
 
 // POST - Загрузить новые изображения
 export async function POST(request) {
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   let processedImages = [];
   const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'gallery');
 

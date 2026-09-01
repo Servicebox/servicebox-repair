@@ -1,5 +1,6 @@
 // app/api/gallery/route.js (обновленный POST)
 import { NextResponse } from 'next/server';
+import { requireAdmin } from '@/lib/authGuard';
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
 import sharp from 'sharp';
@@ -8,6 +9,9 @@ import Image from '../../../../models/Image'; // Модель изображен
 
 
 export async function POST(request) {
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   try {
     const formData = await request.formData();
     const files = formData.getAll('images');
@@ -91,6 +95,9 @@ export async function POST(request) {
 
 // DELETE - Удалить изображение
 export async function DELETE(request, { params }) {
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   try {
     await dbConnect();
     const { id } = params;

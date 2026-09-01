@@ -1,5 +1,6 @@
 // app/api/depository/categories/[id]/route.js
 import { NextResponse } from 'next/server';
+import { requireAdmin } from '@/lib/authGuard';
 import dbConnect from '@/lib/db';
 import DepositoryCategory from '@/models/DepositoryCategory';
 import DepositoryFile from '@/models/DepositoryFile';
@@ -29,6 +30,9 @@ export async function GET(request, { params }) {
 }
 
 export async function PUT(request, { params }) {
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   try {
     await dbConnect();
     
@@ -70,6 +74,9 @@ export async function PUT(request, { params }) {
 }
 
 export async function DELETE(request, { params }) {
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   try {
     await dbConnect();
     
