@@ -1,0 +1,11 @@
+/* src/components/depository/BoardPhotoUpload.module.css */
+.form { display: flex; flex-direction: column; gap: 8px; max-width: 520px; }
+.label { font-weight: 600; font-size: 14px; margin-top: 8px; }
+.file { padding: 8px 0; }
+.preview { max-width: 320px; border-radius: 12px; border: 1px solid #e2e8f0; }
+.input { padding: 9px 12px; border: 1px solid #d1d9e6; border-radius: 10px; font-size: 14px; }
+.textarea { padding: 9px 12px; border: 1px solid #d1d9e6; border-radius: 10px; font-size: 14px; resize: vertical; }
+.submit { margin-top: 12px; padding: 11px 20px; background: #0a1929; color: #fff; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
+.submit:disabled { opacity: .6; cursor: default; }
+.ok { color: #067647; }
+.err { color: #b42318; }

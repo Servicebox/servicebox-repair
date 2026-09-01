@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 import DepositoryList from '@/components/depository/DepositoryList';
 import CategoryManager from '@/components/depository/CategoryManager';
 import FileUpload from '@/components/depository/FileUpload';
+import BoardPhotoUpload from '@/components/depository/BoardPhotoUpload';
+import BoardPhotoAdminList from '@/components/depository/BoardPhotoAdminList';
 import styles from './DepositoryPage.module.css';
 
 export default function DepositoryPage() {
@@ -63,6 +65,12 @@ export default function DepositoryPage() {
         >
           Категории
         </button>
+        <button
+          className={`${styles.tab} ${activeTab === 'boards' ? styles.activeTab : ''}`}
+          onClick={() => setActiveTab('boards')}
+        >
+          Платы
+        </button>
       </div>
 
       <div className={styles.content}>
@@ -86,6 +94,14 @@ export default function DepositoryPage() {
             categories={categories}
             onCategoriesUpdated={handleCategoryUpdated}
           />
+        )}
+
+        {activeTab === 'boards' && (
+          <div>
+            <BoardPhotoUpload onUploaded={handleFileUploaded} />
+            <hr style={{ margin: '24px 0' }} />
+            <BoardPhotoAdminList refreshKey={refreshKey} />
+          </div>
         )}
       </div>
     </div>
