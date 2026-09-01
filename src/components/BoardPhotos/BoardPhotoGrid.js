@@ -29,18 +29,21 @@ export default function BoardPhotoGrid() {
         <input
           className={styles.search}
           type="text"
+          aria-label="Поиск по названию платы или чипу"
           placeholder="Поиск по названию платы или чипу…"
           value={q}
           onChange={e => setQ(e.target.value)}
         />
         <div className={styles.chips}>
           <button
+            type="button"
             className={`${styles.chip} ${deviceType === '' ? styles.chipActive : ''}`}
             onClick={() => setDeviceType('')}
           >Все</button>
           {DEVICE_TYPES.filter(t => t !== 'other').map(t => (
             <button
               key={t}
+              type="button"
               className={`${styles.chip} ${deviceType === t ? styles.chipActive : ''}`}
               onClick={() => setDeviceType(t)}
             >{deviceTypeLabel(t)}</button>

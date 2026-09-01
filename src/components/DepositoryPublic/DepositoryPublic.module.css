@@ -26,12 +26,51 @@
 }
 
 /* Переключатель вкладок «Файлы» / «Фото плат» */
-.tabs { display: flex; gap: 8px; margin: 16px 0 20px; border-bottom: 1px solid #e2e8f0; }
-.tabBtn { padding: 10px 18px; border: none; background: none; font-size: 15px; font-weight: 600; color: #6b7280; cursor: pointer; border-bottom: 2px solid transparent; }
-.tabBtn:hover { color: #0a1929; }
-.tabBtnActive { color: #0a1929; border-bottom-color: #0a1929; }
-.boardsIntro { margin: 0 0 16px; color: #6b7280; }
-.boardsIntro a { color: #0a1929; font-weight: 600; }
+.tabs {
+    display: flex;
+    gap: 4px;
+    margin: 20px 0 24px;
+    border-bottom: 1px solid var(--color-border);
+    overflow-x: auto;
+}
+.tabBtn {
+    flex-shrink: 0;
+    padding: 10px 16px;
+    min-height: 44px;
+    border: none;
+    background: none;
+    margin-bottom: -1px;
+    border-bottom: 2px solid transparent;
+    font-family: var(--font-ui, inherit);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+.tabBtn:hover { color: var(--color-text); }
+.tabBtn:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+    border-radius: var(--radius-sm, 0.375rem);
+}
+.tabBtnActive,
+.tabBtnActive:hover {
+    color: var(--color-primary-dark);
+    border-bottom-color: var(--color-primary-dark);
+}
+.boardsIntro {
+    margin: 0 0 20px;
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+}
+.boardsIntro a {
+    color: var(--color-primary-dark);
+    font-weight: 600;
+    text-decoration: none;
+}
+.boardsIntro a:hover { text-decoration: underline; }
 
 .filters {
     display: flex;

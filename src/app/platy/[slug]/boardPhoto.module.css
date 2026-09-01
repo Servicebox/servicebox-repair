@@ -1,17 +1,171 @@
 /* src/app/platy/[slug]/boardPhoto.module.css */
-.page { max-width: 900px; margin: 0 auto; padding: 24px 16px 64px; }
-.crumbs { font-size: 14px; color: var(--color-text-muted, #6b7280); margin-bottom: 16px; }
+
+/* Тёмный технический лук страницы одного фото платы.
+   Рамка снимка — фиксированный тёмно-синий (кадрирует фото платы на синем
+   мате); текстовые поверхности — через токены сайта (с учётом тёмной темы). */
+
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+}
+
+.crumbs {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--color-text-muted, #475569);
+  margin-bottom: 20px;
+}
 .crumbs a { color: inherit; text-decoration: none; }
 .crumbs a:hover { text-decoration: underline; }
-.title { font-size: clamp(1.5rem, 1rem + 2vw, 2.25rem); font-weight: 800; margin: 0 0 12px; color: var(--color-primary-dark, #0a1929); }
-.meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 20px; font-size: 14px; }
-.badge { background: #0a1929; color: #fff; padding: 4px 12px; border-radius: 999px; font-weight: 600; }
-.chip { background: #eef2f7; color: #0a1929; padding: 4px 12px; border-radius: 999px; font-weight: 600; }
-.date { color: var(--color-text-muted, #6b7280); }
-.photoWrap { display: block; background: #0d2033; border-radius: 16px; overflow: hidden; border: 1px solid #1e3a5f; }
-.photo { display: block; width: 100%; height: auto; }
-.description { margin: 20px 0; line-height: 1.6; color: var(--color-text, #1f2937); white-space: pre-wrap; }
-.cta { margin-top: 32px; padding: 20px; background: #f5f8fc; border: 1px solid #e2e8f0; border-radius: 16px; }
-.cta p { margin: 0 0 12px; }
-.ctaBtn { display: inline-block; background: #0a1929; color: #fff; padding: 12px 20px; border-radius: 12px; font-weight: 700; text-decoration: none; }
-.ctaBtn:hover { background: #12293f; }
+.crumbs a:focus-visible {
+  outline: 2px solid var(--color-primary, #002147);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.title {
+  margin: 0 0 14px;
+  font-family: var(--font-display, 'Inter Tight', sans-serif);
+  font-size: clamp(1.6rem, 1.1rem + 2vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--color-primary-dark, #002147);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 24px;
+  font-size: 0.8125rem;
+}
+
+.badge {
+  background: var(--color-primary, #002147);
+  color: var(--color-text-inverse, #fff);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.chip {
+  background: var(--color-bg-elevated, #f8f9fa);
+  color: var(--color-text, #1e293b);
+  border: 1px solid var(--color-border, #e0e0e0);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.date {
+  color: var(--color-text-muted, #475569);
+  font-size: 0.75rem;
+}
+
+.photoWrap {
+  position: relative;
+  display: block;
+  border-radius: var(--radius-lg, 0.75rem);
+  overflow: hidden;
+  border: 1px solid #1e3a5f;
+  background: linear-gradient(180deg, #0d2033, #0a1929);
+  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1)),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.photoWrap:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1)),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.photoWrap:focus-visible {
+  outline: 3px solid var(--color-primary, #002147);
+  outline-offset: 3px;
+}
+.photoWrap::after {
+  content: 'Открыть оригинал';
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 5px 10px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #dbe9fb;
+  background: rgba(10, 25, 41, 0.82);
+  border: 1px solid #1e3a5f;
+  border-radius: 999px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+.photoWrap:hover::after,
+.photoWrap:focus-visible::after { opacity: 1; }
+
+.photo {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.description {
+  margin: 24px 0 0;
+  padding-left: 16px;
+  border-left: 3px solid var(--color-border, #e0e0e0);
+  line-height: 1.7;
+  font-size: 0.95rem;
+  color: var(--color-text, #1e293b);
+  white-space: pre-wrap;
+}
+
+.cta {
+  margin-top: 40px;
+  padding: 24px;
+  background: var(--color-bg-elevated, #f8f9fa);
+  border: 1px solid var(--color-border, #e0e0e0);
+  border-radius: var(--radius-lg, 0.75rem);
+}
+.cta p {
+  margin: 0 0 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--color-text, #1e293b);
+}
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 12px 22px;
+  background: var(--color-primary, #002147);
+  color: var(--color-text-inverse, #fff);
+  border-radius: var(--radius-md, 0.5rem);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+.ctaBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+  filter: brightness(1.15);
+}
+.ctaBtn:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photoWrap, .photoWrap::after, .ctaBtn { transition: none; }
+  .photoWrap:hover, .ctaBtn:hover { transform: none; }
+}

@@ -121,10 +121,12 @@ export default function DepositoryPublic() {
 
             <div className={styles.tabs}>
                 <button
+                    type="button"
                     className={`${styles.tabBtn} ${activeTab === 'files' ? styles.tabBtnActive : ''}`}
                     onClick={() => setActiveTab('files')}
                 >Файлы</button>
                 <button
+                    type="button"
                     className={`${styles.tabBtn} ${activeTab === 'boards' ? styles.tabBtnActive : ''}`}
                     onClick={() => setActiveTab('boards')}
                 >Фото плат</button>
