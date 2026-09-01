@@ -1,0 +1,19 @@
+/* src/components/BoardPhotos/BoardPhotoGrid.module.css */
+.wrap { width: 100%; }
+.filters { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+.search { width: 100%; padding: 10px 14px; border: 1px solid #d1d9e6; border-radius: 12px; font-size: 15px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { padding: 6px 14px; border-radius: 999px; border: 1px solid #d1d9e6; background: #fff; font-size: 14px; cursor: pointer; }
+.chip:hover { border-color: #0a1929; }
+.chipActive { background: #0a1929; color: #fff; border-color: #0a1929; }
+.state { color: #6b7280; padding: 24px 0; }
+.grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+.card { border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; background: #fff; transition: box-shadow .15s, transform .15s; }
+.card:hover { box-shadow: 0 8px 24px rgba(10,25,41,.12); transform: translateY(-2px); }
+.cardLink { display: flex; flex-direction: column; text-decoration: none; color: inherit; height: 100%; }
+.thumbWrap { display: block; background: #0d2033; aspect-ratio: 4 / 3; overflow: hidden; }
+.thumb { width: 100%; height: 100%; object-fit: contain; }
+.cardTitle { padding: 12px 14px 4px; font-weight: 700; font-size: 15px; line-height: 1.35; color: #0a1929; }
+.cardMeta { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 14px 14px; }
+.cardBadge { background: #0a1929; color: #fff; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.cardChip { background: #eef2f7; color: #0a1929; padding: 3px 10px; border-radius: 999px; font-size: 12px; }
