@@ -78,10 +78,9 @@ const CheckoutForm = () => {
         return '';
       }
       case 'email':
-        if (value && value.trim()) {
-          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()))
-            return 'Введите корректный email';
-        }
+        if (!value || !value.trim()) return 'Укажите email';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()))
+          return 'Введите корректный email';
         return '';
       case 'address':
         if (deliveryMethod === 'delivery' && (!value || value.trim().length < 5))
@@ -226,7 +225,7 @@ const CheckoutForm = () => {
       // Информация о клиенте
       customerInfo: {
         username: formData.name.trim() || 'Покупатель',
-        email: formData.email.trim() || 'не_указан@example.com',
+        email: formData.email.trim(),
         phone: formData.phone.trim() || 'не указан'
       },
 
@@ -504,9 +503,10 @@ const CheckoutForm = () => {
           </div>
 
           <div className={styles.formGroup}>
-            <label>Email (для уведомлений)</label>
+            <label>Email</label>
             <input
               type="email"
+              required
               value={formData.email}
               onChange={(e) => handleFieldChange('email', e.target.value)}
               onBlur={() => handleBlur('email')}

@@ -28,6 +28,16 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Корзина пуста' }, { status: 400 });
     }
 
+    // Email обязателен и должен быть валидным: раньше форма подставляла
+    // заглушку «не_указан@example.com», из-за чего в CRM/письмах был
+    // невалидный адрес. Модель Order требует email как present, но формат
+    // не проверяет — проверяем здесь, чтобы мусор нельзя было прислать
+    // в обход формы оформления.
+    const customerEmail = orderData.customerInfo?.email?.trim();
+    if (!customerEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail)) {
+      return NextResponse.json({ error: 'Укажите корректный email' }, { status: 400 });
+    }
+
     // Автоматически генерируем номер заказа, если он не передан
     if (!orderData.orderNumber) {
       const now = new Date();
