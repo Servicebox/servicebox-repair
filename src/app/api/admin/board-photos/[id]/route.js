@@ -44,6 +44,7 @@ export async function PATCH(request, { params }) {
 
   revalidatePath('/platy');
   revalidatePath(`/platy/${doc.slug}`);
+  revalidatePath('/sitemap.xml');
   return NextResponse.json({
     success: true,
     boardPhoto: {
@@ -75,5 +76,6 @@ export async function DELETE(request, { params }) {
 
   revalidatePath('/platy');
   revalidatePath(`/platy/${slug}`);
+  revalidatePath('/sitemap.xml');
   return NextResponse.json({ success: true });
 }

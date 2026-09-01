@@ -99,6 +99,7 @@ export async function POST(request) {
   await writeFile(path.join(BOARD_PHOTOS_DIR, imageName), webp);
 
   revalidatePath('/platy');
+  revalidatePath('/sitemap.xml');
 
   return NextResponse.json({
     success: true,
