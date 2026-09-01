@@ -1,26 +1,43 @@
 // src/components/BoardPhotos/BoardPhotoGrid.js
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { DEVICE_TYPES, deviceTypeLabel } from '@/lib/boardPhotos';
 import styles from './BoardPhotoGrid.module.css';
 
-export default function BoardPhotoGrid() {
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
+export default function BoardPhotoGrid({ initialItems }) {
+  const [items, setItems] = useState(initialItems ?? []);
+  const [loading, setLoading] = useState(!initialItems);
   const [deviceType, setDeviceType] = useState('');
   const [q, setQ] = useState('');
+  const firstRun = useRef(true);
 
   useEffect(() => {
-    const params = new URLSearchParams();
-    if (deviceType) params.set('deviceType', deviceType);
-    if (q.trim()) params.set('q', q.trim());
-    setLoading(true);
-    fetch(`/api/board-photos?${params}`)
-      .then(r => r.ok ? r.json() : { boardPhotos: [] })
-      .then(d => setItems(d.boardPhotos || []))
-      .catch(() => setItems([]))
-      .finally(() => setLoading(false));
+    // FIX 1: на первом прогоне, если серверные данные пришли и фильтры нетронуты,
+    // не делаем повторный запрос — список уже отрисован из RSC.
+    if (firstRun.current) {
+      firstRun.current = false;
+      if (initialItems && deviceType === '' && q.trim() === '') {
+        return;
+      }
+    }
+
+    // FIX 3: дебаунс 300 мс + защита от гонки ответов (ignore-флаг в cleanup).
+    let ignore = false;
+    const t = setTimeout(() => {
+      const params = new URLSearchParams();
+      if (deviceType) params.set('deviceType', deviceType);
+      if (q.trim()) params.set('q', q.trim());
+      setLoading(true);
+      fetch(`/api/board-photos?${params}`)
+        .then(r => r.ok ? r.json() : { boardPhotos: [] })
+        .then(d => { if (!ignore) setItems(d.boardPhotos || []); })
+        .catch(() => { if (!ignore) setItems([]); })
+        .finally(() => { if (!ignore) setLoading(false); });
+    }, 300);
+    return () => { ignore = true; clearTimeout(t); };
+    // initialItems — неизменяемый проп с монтирования, в зависимостях не нужен
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deviceType, q]);
 
   return (

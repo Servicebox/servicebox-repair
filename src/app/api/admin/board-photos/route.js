@@ -22,6 +22,22 @@ async function requireAdmin(request) {
   return session;
 }
 
+// Полный список для админки: без фильтра isActive и с полем isActive в проекции —
+// публичный GET /api/board-photos отдаёт только активные и isActive не возвращает.
+const ADMIN_FIELDS = 'slug title deviceType chip description imageWidth imageHeight isActive createdAt';
+
+export async function GET(request) {
+  if (!(await requireAdmin(request))) {
+    return NextResponse.json({ error: 'Требуются права администратора' }, { status: 401 });
+  }
+
+  await dbConnect();
+  const docs = await BoardPhoto.find({}, ADMIN_FIELDS).sort({ createdAt: -1 }).lean();
+  return NextResponse.json({
+    boardPhotos: docs.map(d => ({ ...d, _id: d._id.toString() })),
+  });
+}
+
 export async function POST(request) {
   if (!(await requireAdmin(request))) {
     return NextResponse.json({ error: 'Требуются права администратора' }, { status: 401 });
@@ -73,13 +89,14 @@ export async function POST(request) {
   const slug = await generateUniqueSlug(BoardPhoto, title);
   const imageName = `${randomUUID()}.webp`;
 
-  await mkdir(BOARD_PHOTOS_DIR, { recursive: true });
-  await writeFile(path.join(BOARD_PHOTOS_DIR, imageName), webp);
-
+  // Сначала создаём документ: если create упадёт — .webp не окажется осиротевшим.
   const doc = await BoardPhoto.create({
     title, slug, deviceType, chip, description,
     imageName, imageWidth: info.width, imageHeight: info.height,
   });
+
+  await mkdir(BOARD_PHOTOS_DIR, { recursive: true });
+  await writeFile(path.join(BOARD_PHOTOS_DIR, imageName), webp);
 
   revalidatePath('/platy');
 

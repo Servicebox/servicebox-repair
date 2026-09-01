@@ -10,7 +10,8 @@ export default function BoardPhotoAdminList({ refreshKey }) {
   const [draft, setDraft] = useState({});
 
   const load = useCallback(() => {
-    fetch('/api/board-photos')
+    // Админский список: видит и неактивные фото, и поле isActive для чекбокса.
+    fetch('/api/admin/board-photos')
       .then(r => r.json())
       .then(d => setItems(d.boardPhotos || []))
       .catch(() => setItems([]));
@@ -20,21 +21,32 @@ export default function BoardPhotoAdminList({ refreshKey }) {
 
   const startEdit = (p) => { setEditId(p._id); setDraft({ ...p }); };
   const save = async () => {
-    const res = await fetch(`/api/admin/board-photos/${editId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: draft.title, slug: draft.slug, deviceType: draft.deviceType,
-        chip: draft.chip, description: draft.description, isActive: draft.isActive,
-      }),
-    });
-    if (res.ok) { setEditId(null); load(); }
-    else alert((await res.json()).error || 'Ошибка');
+    try {
+      const res = await fetch(`/api/admin/board-photos/${editId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: draft.title, slug: draft.slug, deviceType: draft.deviceType,
+          chip: draft.chip, description: draft.description, isActive: draft.isActive,
+        }),
+      });
+      if (res.ok) { setEditId(null); load(); return; }
+      const data = await res.json().catch(() => ({}));
+      alert(data.error || 'Ошибка сохранения');
+    } catch {
+      alert('Сеть недоступна — не удалось сохранить');
+    }
   };
   const remove = async (id) => {
     if (!confirm('Удалить фото платы?')) return;
-    const res = await fetch(`/api/admin/board-photos/${id}`, { method: 'DELETE' });
-    if (res.ok) load(); else alert('Ошибка удаления');
+    try {
+      const res = await fetch(`/api/admin/board-photos/${id}`, { method: 'DELETE' });
+      if (res.ok) { load(); return; }
+      const data = await res.json().catch(() => ({}));
+      alert(data.error || 'Ошибка удаления');
+    } catch {
+      alert('Сеть недоступна — не удалось удалить');
+    }
   };
 
   return (

@@ -5,7 +5,7 @@ import dbConnect from '@/lib/db';
 import BoardPhoto from '@/models/BoardPhoto';
 import { BASE_URL } from '@/lib/constants';
 import { createBreadcrumbList } from '@/lib/seo-helpers';
-import { deviceTypeLabel, deviceTypeServiceUrl, boardPhotoDescription } from '@/lib/boardPhotos';
+import { deviceTypeLabel, deviceTypeServiceUrl, boardPhotoDescription, deviceTypeGenitive } from '@/lib/boardPhotos';
 import styles from './boardPhoto.module.css';
 
 export const dynamic = 'force-static';
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }) {
     title: `${doc.title} — фото платы с замерами | СЕРВИС БОКС`,
     description: desc,
     alternates: { canonical: `${BASE_URL}/platy/${slug}` },
-    keywords: `${doc.title}, ${doc.chip}, замеры платы, сопротивление, распиновка, ремонт ${deviceTypeLabel(doc.deviceType).toLowerCase()} Вологда, СЕРВИС БОКС`,
+    keywords: `${doc.title}, ${doc.chip}, замеры платы, сопротивление, распиновка, ремонт ${deviceTypeGenitive(doc.deviceType)} Вологда, СЕРВИС БОКС`,
     openGraph: {
       title: `${doc.title} — фото платы с замерами`,
       description: desc,

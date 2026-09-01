@@ -48,6 +48,11 @@ const GENITIVE = {
   other: 'техники',
 };
 
+// Родительный падеж типа устройства для SEO-строк: «ремонт видеокарт Вологда»
+export function deviceTypeGenitive(type) {
+  return GENITIVE[type] || 'техники';
+}
+
 export function boardPhotoDescription({ title, chip, description, deviceType }) {
   if (description && description.trim()) {
     const t = description.trim();

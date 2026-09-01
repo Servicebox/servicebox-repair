@@ -1,6 +1,8 @@
 // src/app/platy/page.js
 import BoardPhotoGrid from '@/components/BoardPhotos/BoardPhotoGrid';
 import { BASE_URL } from '@/lib/constants';
+import dbConnect from '@/lib/db';
+import BoardPhoto from '@/models/BoardPhoto';
 import styles from './platy.module.css';
 
 export const dynamic = 'force-static';
@@ -33,7 +35,16 @@ const jsonLd = {
   isPartOf: { '@id': `${BASE_URL}#website` },
 };
 
-export default function PlatyPage() {
+export default async function PlatyPage() {
+  // Список формируется на сервере: RSC читает БД напрямую, поэтому
+  // revalidatePath('/platy') в админ-роутах реально пересобирает эту страницу.
+  await dbConnect();
+  const initial = await BoardPhoto.find(
+    { isActive: true },
+    'slug title deviceType chip imageWidth imageHeight'
+  ).sort({ createdAt: -1 }).lean();
+  const initialItems = initial.map(d => ({ ...d, _id: d._id.toString() }));
+
   return (
     <main className={styles.page}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
@@ -44,7 +55,7 @@ export default function PlatyPage() {
           платы ноутбуков, телефоны. Пополняется мастерами СЕРВИС БОКС.
         </p>
       </header>
-      <BoardPhotoGrid />
+      <BoardPhotoGrid initialItems={initialItems} />
     </main>
   );
 }
