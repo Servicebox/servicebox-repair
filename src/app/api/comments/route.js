@@ -32,7 +32,7 @@ export async function GET(request) {
   try {
     params = listSchema.parse(Object.fromEntries(searchParams));
   } catch (err) {
-    return NextResponse.json({ error: 'Неверные параметры', details: err.errors }, { status: 400 });
+    return NextResponse.json({ error: 'Неверные параметры', details: err.issues }, { status: 400 });
   }
 
   const { targetId, targetType, page, limit } = params;
@@ -82,7 +82,7 @@ export async function POST(request) {
   try {
     body = createSchema.parse(await request.json());
   } catch (err) {
-    return NextResponse.json({ error: 'Неверные данные', details: err.errors }, { status: 400 });
+    return NextResponse.json({ error: 'Неверные данные', details: err.issues }, { status: 400 });
   }
 
   const comment = await Comment.create({

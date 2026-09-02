@@ -98,7 +98,7 @@ export async function POST(request) {
   try {
     body = schema.parse(await request.json());
   } catch (err) {
-    const message = err.errors?.[0]?.message ?? 'Неверные данные';
+    const message = err.issues?.[0]?.message ?? 'Неверные данные';
     return NextResponse.json({ success: false, error: message }, { status: 400 });
   }
 

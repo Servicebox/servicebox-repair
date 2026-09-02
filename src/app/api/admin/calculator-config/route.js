@@ -43,7 +43,7 @@ export async function PUT(request) {
   try {
     body = configSchema.parse(await request.json());
   } catch (err) {
-    return NextResponse.json({ error: 'Неверный формат данных', details: err.errors }, { status: 400 });
+    return NextResponse.json({ error: 'Неверный формат данных', details: err.issues }, { status: 400 });
   }
 
   const config = await CalculatorConfig.findOneAndUpdate(

@@ -41,7 +41,7 @@ export async function POST(request) {
   try {
     body = redeemSchema.parse(await request.json());
   } catch (err) {
-    return NextResponse.json({ error: 'Неверные данные', details: err.errors }, { status: 400 });
+    return NextResponse.json({ error: 'Неверные данные', details: err.issues }, { status: 400 });
   }
 
   let updatedUser;

@@ -99,7 +99,7 @@ export async function POST(request) {
   try {
     body = toggleSchema.parse(await request.json());
   } catch (err) {
-    return NextResponse.json({ error: 'Неверные данные', details: err.errors }, { status: 400 });
+    return NextResponse.json({ error: 'Неверные данные', details: err.issues }, { status: 400 });
   }
 
   const filter = { userId: user.id, itemId: body.itemId, itemType: body.itemType };
@@ -128,7 +128,7 @@ export async function DELETE(request) {
   try {
     body = toggleSchema.parse(await request.json());
   } catch (err) {
-    return NextResponse.json({ error: 'Неверные данные', details: err.errors }, { status: 400 });
+    return NextResponse.json({ error: 'Неверные данные', details: err.issues }, { status: 400 });
   }
 
   const result = await Favorite.deleteOne({ userId: user.id, itemId: body.itemId, itemType: body.itemType });
