@@ -141,15 +141,28 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              // 'unsafe-inline' нужен для GTM inline-скрипта и JSON-LD в layout.js
+              // 'unsafe-inline' нужен для GTM inline-скрипта и JSON-LD в layout.js.
+              // 'unsafe-eval' ПОКА оставлен: Яндекс.Вебвизор и часть тегов GTM
+              // используют eval/new Function; снятие вслепую сломает запись
+              // сессий/аналитику и рискует чекаутом Яндекс.Pay. Убирать —
+              // только после report-only раскатки CSP и ревизии тегов GTM.
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pay.yandex.ru https://www.googletagmanager.com https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.com https://mc.webvisor.org https://yastatic.net https://service-box-35.ru",
               "frame-src 'self' https://pay.yandex.ru https://www.googletagmanager.com https://yandex.ru https://mc.yandex.ru https://mc.yandex.com https://service-box-35.ru",
+              "frame-ancestors 'none'",
               "img-src 'self' data: blob: https:",
               "connect-src 'self' https://pay.yandex.ru https://sandbox.pay.yandex.ru https://servicebox35.ru https://www.googletagmanager.com https://*.googletagmanager.com https://mc.yandex.ru wss://mc.yandex.ru https://yastatic.net https://yandex.ru https://*.google-analytics.com https://*.analytics.google.com",
               "style-src 'self' 'unsafe-inline'",
               "font-src 'self' data:",
               "media-src 'self'",
               "worker-src blob:",
+              "object-src 'none'",
+              "base-uri 'self'",
+              // form-action НЕ ограничиваем: сайт принимает платежи через
+              // Yandex Pay WebSDK, и точный набор доменов, куда SDK может
+              // сделать form-POST (3DS/ACS банка), из кода не виден. Риск
+              // сломать чекаут перевешивает узкую пользу (в коде нет ни
+              // одной внешней <form action>). Ввести — только через
+              // report-only раскатку.
             ].join('; '),
           },
         ],

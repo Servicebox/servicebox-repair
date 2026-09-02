@@ -134,9 +134,20 @@ export function middleware(request) {
   // ==========================================================
   response.headers.set('X-Content-Type-Options', 'nosniff');
   response.headers.set('X-Frame-Options', 'DENY');
-  response.headers.set('X-XSS-Protection', '1; mode=block');
+  // X-XSS-Protection НЕ ставим: заголовок устарел, в старых браузерах его
+  // «фильтр» сам был источником XSS/утечек. Современная защита — CSP.
+  response.headers.set('X-XSS-Protection', '0');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   response.headers.set('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+  // HSTS: 2 года + поддомены. helmet на Express-слое ставит короче (180 дней)
+  // — здесь перекрываем более строгим значением. Без `preload`: включение в
+  // preload-список браузеров необратимо на месяцы и требует аудита всех
+  // поддоменов (webmail, панели и т.п.) на предмет HTTPS — отдельное
+  // операционное решение.
+  response.headers.set(
+    'Strict-Transport-Security',
+    'max-age=63072000; includeSubDomains'
+  );
 
   // Защита от индексации приватных страниц
   if (pathname.startsWith('/dashboard') || pathname.startsWith('/admin')) {

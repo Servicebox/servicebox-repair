@@ -65,11 +65,11 @@ export async function GET(request) {
 
   // CSRF-проверка
   if (!state || !storedState || state !== storedState) {
-    return NextResponse.redirect(`${BASE}/auth/login?error=csrf`);
+    return NextResponse.redirect(`${BASE}/loginsignup?error=csrf`);
   }
 
   if (!code) {
-    return NextResponse.redirect(`${BASE}/auth/login?error=no_code`);
+    return NextResponse.redirect(`${BASE}/loginsignup?error=no_code`);
   }
 
   try {
@@ -78,38 +78,52 @@ export async function GET(request) {
 
     // profile: { id, login, real_name, first_name, last_name, default_email }
     const yandexId = String(profile.id);
-    const email = profile.default_email ?? `${profile.login}@yandex.ru`;
+    // НЕ синтезируем `${login}@yandex.ru`: это непроверённое предположение об
+    // адресе (может пересечься с чужим аккаунтом / «занять» чужой email).
+    // Если Яндекс не отдал default_email — значит в OAuth-приложении не
+    // выдан scope login:email; логиниться в таком виде нельзя.
+    const email = typeof profile.default_email === 'string'
+      ? profile.default_email.toLowerCase().trim()
+      : '';
+    if (!email) {
+      return NextResponse.redirect(`${BASE}/loginsignup?error=no_email`);
+    }
 
     await dbConnect();
 
     // 1. Поиск по yandexId (tokenVersion нужен для tv в токене — select: false)
-    let user = await User.findOne({ yandexId }).select('+tokenVersion');
+    // tokenVersion — select:false, запрашиваем явно; isActive в выборке по
+    // умолчанию (не select:false).
+    let user =
+      (await User.findOne({ yandexId }).select('+tokenVersion')) ||
+      (await User.findOne({ email }).select('+tokenVersion'));
 
-    // 2. Привязка к существующему аккаунту по email. Yandex подтвердил
-    //    владение адресом → помечаем email как подтверждённый.
-    if (!user) {
-      user = await User.findOne({ email: email.toLowerCase() }).select('+tokenVersion');
-      if (user) {
-        user.yandexId = yandexId;
-        user.emailVerified = true;
-        await user.save({ validateModifiedOnly: true });
-      }
+    // Заблокированный аккаунт не должен ни получить сессию, ни быть
+    // тронутым (линковка/lastLogin) через OAuth. Проверяем ДО мутаций.
+    if (user && user.isActive === false) {
+      return NextResponse.redirect(`${BASE}/loginsignup?error=account_disabled`);
     }
 
-    // 3. Создание нового пользователя
-    if (!user) {
+    if (user) {
+      // 2. Привязка к существующему аккаунту. Yandex подтвердил владение
+      //    адресом → помечаем email как подтверждённый.
+      if (user.yandexId !== yandexId || !user.emailVerified) {
+        user.yandexId = yandexId;
+        user.emailVerified = true;
+      }
+      user.lastLogin = new Date();
+      await user.save({ validateModifiedOnly: true });
+    } else {
+      // 3. Создание нового пользователя (новый — всегда isActive: true).
       user = await User.create({
         yandexId,
-        email: email.toLowerCase(),
+        email,
         username: profile.login || profile.real_name || `user_${yandexId.slice(-6)}`,
         firstName: profile.first_name || '',
         lastName: profile.last_name || '',
         emailVerified: true,
         lastLogin: new Date(),
       });
-    } else {
-      user.lastLogin = new Date();
-      await user.save({ validateModifiedOnly: true });
     }
 
     const token = issueJwt(user);
@@ -122,6 +136,6 @@ export async function GET(request) {
     return response;
   } catch (error) {
     console.error('Yandex OAuth callback error:', error);
-    return NextResponse.redirect(`${BASE}/auth/login?error=oauth_failed`);
+    return NextResponse.redirect(`${BASE}/loginsignup?error=oauth_failed`);
   }
 }

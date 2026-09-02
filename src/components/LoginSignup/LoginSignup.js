@@ -127,9 +127,19 @@ function PasswordStrength({ password }) {
 }
 
 // ── Main component ───────────────────────────────────────────────────────────
+// Коды ошибок из OAuth-callback (?error=...) → человеческий текст.
+const OAUTH_ERROR_MESSAGES = {
+  csrf: 'Сессия входа устарела. Попробуйте войти через Яндекс ещё раз.',
+  no_code: 'Яндекс не передал код авторизации. Попробуйте ещё раз.',
+  no_email: 'Не удалось получить email из аккаунта Яндекса. Разрешите доступ к email или войдите по паролю.',
+  account_disabled: 'Аккаунт заблокирован. Обратитесь в поддержку.',
+  oauth_failed: 'Не удалось войти через Яндекс. Попробуйте ещё раз или войдите по паролю.',
+};
+
 function LoginSignupContent({ isOpen, onClose, onLoginSuccess }) {
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
+  const oauthError = searchParams.get('error');
   const router = useRouter();
   const { login } = useAuth();
 
@@ -166,7 +176,16 @@ function LoginSignupContent({ isOpen, onClose, onLoginSuccess }) {
     if (token) {
       setMode("Set New Password");
     }
-  }, [isOpen, token]);
+    if (oauthError) {
+      setMode("Login");
+      const known =
+        Object.prototype.hasOwnProperty.call(OAUTH_ERROR_MESSAGES, oauthError) &&
+        typeof OAUTH_ERROR_MESSAGES[oauthError] === 'string'
+          ? OAUTH_ERROR_MESSAGES[oauthError]
+          : 'Не удалось войти. Попробуйте ещё раз.';
+      setMessage(known);
+    }
+  }, [isOpen, token, oauthError]);
 
   const resetForm = () => {
     setFormData({ username: "", email: "", password: "", phone: "" });

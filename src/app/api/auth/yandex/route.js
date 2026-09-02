@@ -9,6 +9,10 @@ export async function GET() {
     response_type: 'code',
     client_id: process.env.YANDEX_CLIENT_ID,
     redirect_uri: process.env.YANDEX_REDIRECT_URI,
+    // Явно запрашиваем доступ к email — не полагаемся на набор прав по
+    // умолчанию в настройках OAuth-приложения. Без подтверждённого email
+    // callback не пускает (см. yandex/callback: error=no_email).
+    scope: 'login:info login:email',
     state,
   });
 
