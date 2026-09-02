@@ -5,23 +5,36 @@ import dbConnect from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { getServerSession } from '@/lib/session';
 
-// Временное хранилище в памяти (для демо)
+// Временное хранилище в памяти (для демо). Ограничено кольцевым буфером —
+// иначе поток POST-ов (в т.ч. злонамеренный) разрастил бы массив до OOM.
+const MAX_VISITS = 5000;
 const visits = [];
+
+function pushVisit(visit) {
+  visits.push(visit);
+  if (visits.length > MAX_VISITS) {
+    visits.splice(0, visits.length - MAX_VISITS);
+  }
+}
 
 export async function POST(request) {
   try {
     await dbConnect();
-    const body = await request.json();
+    const body = await request.json().catch(() => ({}));
+
+    // Поля клиента режем по длине — иначе 5000 записей × мегабайтные строки
+    // page/referrer всё равно съедят память.
+    const cut = (v, n) => (typeof v === 'string' ? v.slice(0, n) : undefined);
 
     const visit = {
       id: Date.now(),
       userId: null,
-      sessionId: request.cookies.get('sessionId')?.value || 'anonymous',
-      page: body.page,
-      device: body.device || 'desktop',
-      browser: body.browser || 'unknown',
+      sessionId: cut(request.cookies.get('sessionId')?.value, 128) || 'anonymous',
+      page: cut(body.page, 512),
+      device: cut(body.device, 32) || 'desktop',
+      browser: cut(body.browser, 64) || 'unknown',
       timestamp: new Date(),
-      referrer: body.referrer
+      referrer: cut(body.referrer, 512),
     };
 
     // Проверяем, авторизован ли пользователь
@@ -31,7 +44,7 @@ export async function POST(request) {
       if (decoded) visit.userId = decoded.id ?? decoded.userId;
     }
 
-    visits.push(visit);
+    pushVisit(visit);
 
     return NextResponse.json({ success: true, visitId: visit.id });
   } catch (error) {

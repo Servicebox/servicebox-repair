@@ -2,6 +2,7 @@
 export const runtime = 'nodejs';
 import { NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/jwt';
+import { getTokenCookie } from '@/lib/cookies';
 import { BASE_URL } from '@/lib/constants';
 
 export function middleware(request) {
@@ -38,17 +39,7 @@ export function middleware(request) {
   // 1. ПРОВЕРКА АУТЕНТИФИКАЦИИ ДЛЯ АДМИНКИ (ваша существующая логика)
   // ==========================================================
   if (pathname.startsWith('/api/admin/')) {
-    const cookieHeader = request.headers.get('cookie');
-    let token = null;
-
-    if (cookieHeader) {
-      const cookies = {};
-      cookieHeader.split(';').forEach(cookie => {
-        const [name, ...valueParts] = cookie.trim().split('=');
-        cookies[name] = decodeURIComponent(valueParts.join('='));
-      });
-      token = cookies['token'];
-    }
+    const token = getTokenCookie(request);
 
     if (!token) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

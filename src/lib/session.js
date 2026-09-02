@@ -3,20 +3,13 @@ export const runtime = 'nodejs';
 import jwt from 'jsonwebtoken';
 import dbConnect from '@/lib/db';
 import User from '@/models/User'; // ← только User
+import { getTokenCookie } from '@/lib/cookies';
 
 export async function getServerSession(request) {
   try {
     await dbConnect();
-    const cookieHeader = request.headers.get('cookie');
-    if (!cookieHeader) return null;
 
-    const cookies = {};
-    cookieHeader.split(';').forEach(cookie => {
-      const [name, ...valueParts] = cookie.trim().split('=');
-      cookies[name] = decodeURIComponent(valueParts.join('='));
-    });
-
-    const token = cookies['token'];
+    const token = getTokenCookie(request);
     if (!token) return null;
 
     let decoded;
