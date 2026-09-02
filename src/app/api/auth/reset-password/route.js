@@ -6,10 +6,18 @@ import dbConnect from '@/lib/db';
 import User from '@/models/User';
 import { hashToken } from '@/lib/authTokens';
 import { sendPasswordChangedEmail } from '@/lib/email';
+import { consumeRateLimit, rateLimitResponse, getClientIp, rlKey } from '@/lib/rateLimit';
 
 export async function POST(request) {
   try {
     await dbConnect();
+
+    // Ограничиваем перебор токена сброса по IP.
+    const rl = await consumeRateLimit(rlKey('reset-ip', getClientIp(request)), {
+      max: 15,
+      windowMs: 15 * 60 * 1000,
+    });
+    if (rl.limited) return rateLimitResponse(rl.retryAfterMs);
 
     const { token, password } = await request.json();
 

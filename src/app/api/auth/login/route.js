@@ -4,6 +4,16 @@ import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
 import { signToken } from '@/lib/jwt';
+import { consumeRateLimit, resetRateLimit, rateLimitResponse, getClientIp, rlKey } from '@/lib/rateLimit';
+
+// Лимиты входа: по IP — все попытки (щедрый предел, т.к. nginx уже режет
+// /api/auth/login до 2 r/s на реальный IP; здесь — только санитарный потолок,
+// чтобы не пострадали пользователи за общим NAT); по email — только НЕУДАЧНЫЕ
+// (сбрасываются при успешном входе), окно короткое.
+const IP_MAX = 30;
+const IP_WINDOW_MS = 5 * 60 * 1000;
+const EMAIL_FAIL_MAX = 8;
+const EMAIL_FAIL_WINDOW_MS = 15 * 60 * 1000;
 
 // Фиксированный валидный bcrypt-хэш (cost 12) от случайной строки.
 // Используется, когда пользователь не найден: bcrypt.compare всё равно
@@ -22,17 +32,41 @@ export async function POST(request) {
       return NextResponse.json({ message: 'Email и пароль обязательны' }, { status: 400 });
     }
 
+    // Rate-limit ДО любой работы с БД/bcrypt.
+    const ip = getClientIp(request);
+    const ipRl = await consumeRateLimit(rlKey('login-ip', ip), { max: IP_MAX, windowMs: IP_WINDOW_MS });
+    if (ipRl.limited) return rateLimitResponse(ipRl.retryAfterMs);
+
+    const emailFailKey = rlKey('login-fail', email);
+    const emailRl = await consumeRateLimit(emailFailKey, {
+      max: EMAIL_FAIL_MAX,
+      windowMs: EMAIL_FAIL_WINDOW_MS,
+      peek: true,
+    });
+    if (emailRl.limited) {
+      const mins = Math.max(1, Math.ceil(emailRl.retryAfterMs / 60000));
+      return NextResponse.json(
+        {
+          code: 'ACCOUNT_LOCKED',
+          message: `Слишком много неудачных попыток входа. Повторите через ~${mins} мин или воспользуйтесь «Забыли пароль?».`,
+        },
+        { status: 429, headers: { 'Retry-After': String(Math.ceil(emailRl.retryAfterMs / 1000)) } }
+      );
+    }
+
     const user = await User.findOne({ email }).select('+password +tokenVersion');
 
     // Ветка «нет пользователя»: всё равно тратим время на bcrypt и отвечаем
     // тем же 401, что и при неверном пароле — не раскрываем, есть ли аккаунт.
     if (!user || !user.password) {
       await bcrypt.compare(password, DUMMY_HASH);
+      await consumeRateLimit(emailFailKey, { max: EMAIL_FAIL_MAX, windowMs: EMAIL_FAIL_WINDOW_MS });
       return NextResponse.json({ message: 'Неверные учетные данные' }, { status: 401 });
     }
 
     const isPasswordValid = await user.comparePassword(password);
     if (!isPasswordValid) {
+      await consumeRateLimit(emailFailKey, { max: EMAIL_FAIL_MAX, windowMs: EMAIL_FAIL_WINDOW_MS });
       return NextResponse.json({ message: 'Неверные учетные данные' }, { status: 401 });
     }
 
@@ -53,6 +87,9 @@ export async function POST(request) {
         { status: 403 }
       );
     }
+
+    // Успешный вход — снимаем накопленный lockout по email.
+    await resetRateLimit(emailFailKey);
 
     const token = signToken({
       userId: user._id,

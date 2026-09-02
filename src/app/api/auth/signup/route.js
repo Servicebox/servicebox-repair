@@ -6,10 +6,17 @@ import User from '@/models/User';
 import { generateToken, hashToken } from '@/lib/authTokens';
 import { sendVerificationEmail } from '@/lib/email';
 import { phoneMatchRegex } from '@/lib/phone';
+import { consumeRateLimit, rateLimitResponse, getClientIp, rlKey } from '@/lib/rateLimit';
 
 export async function POST(request) {
   try {
     await dbConnect();
+
+    const ipRl = await consumeRateLimit(rlKey('signup-ip', getClientIp(request)), {
+      max: 5,
+      windowMs: 60 * 60 * 1000,
+    });
+    if (ipRl.limited) return rateLimitResponse(ipRl.retryAfterMs);
 
     const { username, email, password, phone } = await request.json();
 

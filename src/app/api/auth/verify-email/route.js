@@ -5,10 +5,24 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
 import { hashToken } from '@/lib/authTokens';
+import { consumeRateLimit, getClientIp, rlKey } from '@/lib/rateLimit';
+
+const ERR_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
 export async function GET(request) {
   try {
     await dbConnect();
+
+    // Ограничиваем перебор токена подтверждения по IP.
+    const rl = await consumeRateLimit(rlKey('verify-ip', getClientIp(request)), {
+      max: 100,
+      windowMs: 15 * 60 * 1000,
+    });
+    if (rl.limited) {
+      return NextResponse.redirect(
+        `${ERR_BASE}/auth/verification-error?message=${encodeURIComponent('Слишком много попыток, повторите позже')}`
+      );
+    }
 
     const { searchParams } = new URL(request.url);
     const token = searchParams.get('token');

@@ -5,6 +5,7 @@ import dbConnect from '@/lib/db';
 import User from '@/models/User';
 import { generateToken, hashToken } from '@/lib/authTokens';
 import { sendVerificationEmail } from '@/lib/email';
+import { consumeRateLimit, getClientIp, rlKey } from '@/lib/rateLimit';
 
 // Повторная отправка письма подтверждения email.
 // Ответ всегда одинаковый (200) — нельзя перебором узнать, какие email
@@ -24,6 +25,19 @@ function ok() {
 export async function POST(request) {
   try {
     await dbConnect();
+
+    // Лимит по IP. Тело ответа то же (не раскрываем ни лимит, ни существование
+    // аккаунта), но добавляем Retry-After — подсказка воспитанным клиентам.
+    const rl = await consumeRateLimit(rlKey('resend-ip', getClientIp(request)), {
+      max: 10,
+      windowMs: 60 * 60 * 1000,
+    });
+    if (rl.limited) {
+      return NextResponse.json(UNIFORM_OK, {
+        headers: { 'Retry-After': String(Math.max(1, Math.ceil(rl.retryAfterMs / 1000))) },
+      });
+    }
+
     const body = await request.json().catch(() => ({}));
     const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
 
