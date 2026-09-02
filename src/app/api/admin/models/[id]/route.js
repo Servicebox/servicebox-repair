@@ -3,7 +3,7 @@ export const runtime = 'nodejs';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import dbConnect from '@/lib/db';
-import { getServerSession } from '@/lib/session';
+import { requireAdminSession as requireAdmin } from '@/lib/authGuard';
 import ModelDoc from '@/models/Model';
 import Service from '@/models/Service';
 
@@ -18,12 +18,6 @@ const updateSchema = z.object({
 });
 
 const isValidObjectId = (id) => /^[0-9a-fA-F]{24}$/.test(id);
-
-async function requireAdmin(request) {
-  const session = await getServerSession(request);
-  if (!session || session.role !== 'admin') return null;
-  return session;
-}
 
 // PUT /api/admin/models/[id] — обновить параметры модели устройства
 export async function PUT(request, { params }) {
@@ -40,7 +34,7 @@ export async function PUT(request, { params }) {
   try {
     body = updateSchema.parse(await request.json());
   } catch (err) {
-    return NextResponse.json({ error: 'Неверный формат данных', details: err.errors }, { status: 400 });
+    return NextResponse.json({ error: 'Неверный формат данных', details: err.issues }, { status: 400 });
   }
 
   await dbConnect();

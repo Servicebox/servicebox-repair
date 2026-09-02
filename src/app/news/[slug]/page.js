@@ -87,7 +87,9 @@ export async function generateStaticParams() {
   }
 
   try {
-    const response = await fetch(`${BASE_URL}/api/news?all=1&fields=slug,isPublished&limit=100`, {
+    // ?all=1 больше не отдаётся анониму (только админ) — да он тут и не нужен:
+    // ниже всё равно фильтруем по isPublished. Запрашиваем только опубликованные.
+    const response = await fetch(`${BASE_URL}/api/news?fields=slug,isPublished&limit=100`, {
       next: { revalidate: 3600 }
     });
 

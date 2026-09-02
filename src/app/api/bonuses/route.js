@@ -4,6 +4,8 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import dbConnect from '@/lib/db';
 import { verifyToken } from '@/lib/auth-helpers';
+import { getServerSession } from '@/lib/session';
+import { assertSameOrigin } from '@/lib/authGuard';
 import User from '@/models/User';
 import BonusTransaction from '@/models/BonusTransaction';
 import { syncWalletBalance } from '@/lib/walletPass';
@@ -50,17 +52,23 @@ export async function GET(request) {
 
 // POST /api/bonuses  — ручное начисление/списание (только Admin)
 export async function POST(request) {
+  const csrf = assertSameOrigin(request);
+  if (csrf) return csrf;
+
   await dbConnect();
 
-  const caller = verifyToken(request);
-  if (!caller) return NextResponse.json({ error: 'Не авторизован' }, { status: 401 });
-  if (caller.role !== 'admin') return NextResponse.json({ error: 'Доступ запрещён' }, { status: 403 });
+  // Роль администратора — строго из БД (getServerSession), не из claim'а
+  // токена: у операции реальная денежная стоимость (баллы уходят в
+  // Google Wallet), нельзя доверять устаревшему/утёкшему admin-токену.
+  const session = await getServerSession(request);
+  if (!session) return NextResponse.json({ error: 'Не авторизован' }, { status: 401 });
+  if (session.role !== 'admin') return NextResponse.json({ error: 'Доступ запрещён' }, { status: 403 });
 
   let body;
   try {
     body = adminAdjustSchema.parse(await request.json());
   } catch (err) {
-    return NextResponse.json({ error: 'Неверные данные', details: err.errors }, { status: 400 });
+    return NextResponse.json({ error: 'Неверные данные', details: err.issues }, { status: 400 });
   }
 
   // Знак дельты: spend всегда уменьшает баланс

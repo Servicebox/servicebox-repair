@@ -1,7 +1,7 @@
 // app/api/users/avatar/upload/route.js
 import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
-import jwt from 'jsonwebtoken';
+import { verifyToken } from '@/lib/jwt';
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
 import { writeFile, mkdir } from 'fs/promises';
@@ -17,10 +17,8 @@ export async function POST(request) {
       return NextResponse.json({ message: 'Не авторизован' }, { status: 401 });
     }
 
-    let decoded;
-    try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET);
-    } catch (error) {
+    const decoded = verifyToken(token);
+    if (!decoded) {
       return NextResponse.json({ message: 'Недействительный токен' }, { status: 401 });
     }
 

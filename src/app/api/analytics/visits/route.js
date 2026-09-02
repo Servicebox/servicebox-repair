@@ -2,7 +2,8 @@
 import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
 import dbConnect from '@/lib/db';
-import jwt from 'jsonwebtoken';
+import { verifyToken } from '@/lib/jwt';
+import { getServerSession } from '@/lib/session';
 
 // Временное хранилище в памяти (для демо)
 const visits = [];
@@ -26,12 +27,8 @@ export async function POST(request) {
     // Проверяем, авторизован ли пользователь
     const token = request.cookies.get('token')?.value;
     if (token) {
-      try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        visit.userId = decoded.id;
-      } catch (err) {
-        // Token invalid, but that's ok for analytics
-      }
+      const decoded = verifyToken(token);
+      if (decoded) visit.userId = decoded.id ?? decoded.userId;
     }
 
     visits.push(visit);
@@ -47,19 +44,12 @@ export async function GET(request) {
   try {
     await dbConnect();
 
-    const token = request.cookies.get('token')?.value;
-    if (!token) {
+    // Роль берём из БД (getServerSession), а не из claim'а токена.
+    const session = await getServerSession(request);
+    if (!session) {
       return NextResponse.json({ message: 'Не авторизован' }, { status: 401 });
     }
-
-    let decoded;
-    try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET);
-    } catch (error) {
-      return NextResponse.json({ message: 'Недействительный токен' }, { status: 401 });
-    }
-
-    if (decoded.role !== 'admin') {
+    if (session.role !== 'admin') {
       return NextResponse.json({ message: 'Доступ запрещен' }, { status: 403 });
     }
 

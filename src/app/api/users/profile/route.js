@@ -1,7 +1,7 @@
 // app/api/users/profile/route.js
 import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
-import jwt from 'jsonwebtoken';
+import { verifyToken } from '@/lib/jwt';
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
 
@@ -14,10 +14,8 @@ export async function GET(request) {
       return NextResponse.json({ message: 'Не авторизован' }, { status: 401 });
     }
 
-    let decoded;
-    try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET);
-    } catch (error) {
+    const decoded = verifyToken(token);
+    if (!decoded) {
       return NextResponse.json({ message: 'Недействительный токен' }, { status: 401 });
     }
 
@@ -42,10 +40,8 @@ export async function PUT(request) {
       return NextResponse.json({ message: 'Не авторизован' }, { status: 401 });
     }
 
-    let decoded;
-    try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET);
-    } catch (error) {
+    const decoded = verifyToken(token);
+    if (!decoded) {
       return NextResponse.json({ message: 'Недействительный токен' }, { status: 401 });
     }
 

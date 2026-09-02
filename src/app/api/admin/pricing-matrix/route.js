@@ -3,15 +3,9 @@ export const runtime = 'nodejs';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import dbConnect from '@/lib/db';
-import { getServerSession } from '@/lib/session';
+import { requireAdminSession as requireAdmin } from '@/lib/authGuard';
 import Service from '@/models/Service';
 import { getPricingMatrixData } from '@/lib/pricing-matrix';
-
-async function requireAdmin(request) {
-  const session = await getServerSession(request);
-  if (!session || session.role !== 'admin') return null;
-  return session;
-}
 
 // GET /api/admin/pricing-matrix?deviceType=phone
 export async function GET(request) {
@@ -52,7 +46,7 @@ export async function PUT(request) {
   try {
     body = saveSchema.parse(await request.json());
   } catch (err) {
-    return NextResponse.json({ error: 'Неверный формат данных', details: err.errors }, { status: 400 });
+    return NextResponse.json({ error: 'Неверный формат данных', details: err.issues }, { status: 400 });
   }
 
   await dbConnect();

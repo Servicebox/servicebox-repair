@@ -4,7 +4,7 @@ export const runtime = 'nodejs';
 import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import dbConnect from '@/lib/db';
-import { verifyToken } from '@/lib/auth-helpers';
+import { requireAdmin } from '@/lib/authGuard';
 import { acquireSyncLock, releaseSyncLock } from '@/lib/optfm/config';
 import { syncCategories } from '@/lib/optfm/syncCategories';
 import { syncProducts } from '@/lib/optfm/syncProducts';
@@ -12,9 +12,8 @@ import { syncProducts } from '@/lib/optfm/syncProducts';
 export async function POST(request) {
   await dbConnect();
 
-  const user = verifyToken(request);
-  if (!user) return NextResponse.json({ error: 'Не авторизован' }, { status: 401 });
-  if (user.role !== 'admin') return NextResponse.json({ error: 'Доступ запрещён' }, { status: 403 });
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
 
   const acquired = await acquireSyncLock();
   if (!acquired) {

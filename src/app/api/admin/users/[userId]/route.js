@@ -4,73 +4,31 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import bcrypt from 'bcryptjs';
 import { getServerSession } from '@/lib/session';
+import { assertSameOrigin } from '@/lib/authGuard';
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
+
+// Разрешённый набор полей задаётся Zod-схемой ниже. Прежний PUT-хендлер
+// делал { $set: <сырое тело запроса> } без белого списка (mass-assignment:
+// админ мог выставить любому пользователю произвольный role/bonuses/
+// emailVerified/tokenVersion и т.п.) и не имел ни одного вызова из
+// фронтенда — удалён. Все изменения пользователя идут через PATCH.
 
 const patchSchema = z.object({
   role: z.enum(['user', 'admin']).optional(),
   isActive: z.boolean().optional(),
-  email: z.string().email('Неверный формат email').optional(),
-  newPassword: z.string().min(8, 'Минимум 8 символов').optional(),
-}).refine(data => Object.keys(data).length > 0, {
+  email: z.string().email('Неверный формат email').max(254).optional(),
+  newPassword: z.string().min(8, 'Минимум 8 символов').max(128).optional(),
+}).strict().refine(data => Object.keys(data).length > 0, {
   message: 'Укажите хотя бы одно поле для обновления'
 });
 
-export async function PUT(request, { params }) {
-  try {
-    const session = await getServerSession(request);
-    
-    if (!session || session.role !== 'admin') {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    await dbConnect();
-
-    const { userId } = params;
-    
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'User ID required' },
-        { status: 400 }
-      );
-    }
-
-    const updateData = await request.json();
-
-    // Обновляем пользователя
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      { $set: updateData },
-      { new: true, runValidators: true }
-    ).select('-password -refreshToken');
-
-    if (!updatedUser) {
-      return NextResponse.json(
-        { error: 'User not found' },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json({
-      message: 'User updated successfully',
-      user: updatedUser
-    });
-
-  } catch (error) {
-    console.error('Update user error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
-  }
-}
-
-// PATCH: только role / isActive / email — с Zod-валидацией
+// PATCH: только role / isActive / email / newPassword — с Zod-валидацией
 export async function PATCH(request, { params }) {
   try {
+    const csrf = assertSameOrigin(request);
+    if (csrf) return csrf;
+
     const session = await getServerSession(request);
     if (!session || session.role !== 'admin') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -87,7 +45,7 @@ export async function PATCH(request, { params }) {
     try {
       body = patchSchema.parse(await request.json());
     } catch (err) {
-      return NextResponse.json({ error: 'Неверные данные', details: err.errors }, { status: 400 });
+      return NextResponse.json({ error: 'Неверные данные', details: err.issues }, { status: 400 });
     }
 
     // Нельзя лишить себя роли admin
@@ -119,6 +77,9 @@ export async function PATCH(request, { params }) {
 
     return NextResponse.json({ message: 'Обновлено', user: updated });
   } catch (error) {
+    if (error?.code === 11000) {
+      return NextResponse.json({ error: 'Пользователь с таким email уже существует' }, { status: 409 });
+    }
     console.error('Admin PATCH user error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
@@ -126,8 +87,11 @@ export async function PATCH(request, { params }) {
 
 export async function DELETE(request, { params }) {
   try {
+    const csrf = assertSameOrigin(request);
+    if (csrf) return csrf;
+
     const session = await getServerSession(request);
-    
+
     if (!session || session.role !== 'admin') {
       return NextResponse.json(
         { error: 'Unauthorized' },
@@ -137,8 +101,8 @@ export async function DELETE(request, { params }) {
 
     await dbConnect();
 
-    const { userId } = params;
-    
+    const { userId } = await params;
+
     if (!userId) {
       return NextResponse.json(
         { error: 'User ID required' },

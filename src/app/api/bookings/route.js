@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Booking from '@/models/Booking';
 import Service from '@/models/Service';
-import { verifyToken } from '@/lib/auth-helpers';
+import { getServerSession } from '@/lib/session';
 import { fetchCrm } from '@/lib/crmClient';
 
 export async function POST(request) {
@@ -116,13 +116,15 @@ export async function GET(request) {
   await dbConnect();
 
   try {
-    const user = verifyToken(request);
-    if (!user) {
+    // Роль из БД: доступ к чужим заявкам (PII клиентов) не должен зависеть
+    // от claim'а токена.
+    const session = await getServerSession(request);
+    if (!session) {
       return NextResponse.json({ success: false, message: 'Не авторизован' }, { status: 401 });
     }
 
     // Admin видит все бронирования, обычный пользователь — только свои
-    const query = user.role === 'admin' ? {} : { userEmail: user.email };
+    const query = session.role === 'admin' ? {} : { userEmail: session.email };
     const bookings = await Booking.find(query).sort({ createdAt: -1 });
 
     return NextResponse.json({

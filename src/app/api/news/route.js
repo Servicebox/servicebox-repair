@@ -5,6 +5,7 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import News from '@/models/News';
 import { requireAdmin } from '@/lib/authGuard';
+import { getServerSession } from '@/lib/session';
 import { pickNewsFields } from '@/lib/newsFields';
 
 // Без этого Next.js помечает GET-хендлер статическим (searchParams читаются
@@ -21,11 +22,19 @@ export async function GET(request) {
     await dbConnect();
     
     const { searchParams } = new URL(request.url);
-    const all = searchParams.get('all') === '1';
+    const wantAll = searchParams.get('all') === '1';
     const fields = searchParams.get('fields')?.split(',') || null;
     const limit = parseInt(searchParams.get('limit')) || 20;
     const page = parseInt(searchParams.get('page')) || 1;
-    
+
+    // ?all=1 (черновики/неопубликованные) — только для админа. Раньше
+    // любой анонимный запрос мог вытащить неопубликованные новости.
+    let all = false;
+    if (wantAll) {
+      const session = await getServerSession(request);
+      all = session?.role === 'admin';
+    }
+
     // Базовый запрос: только опубликованные (если не админ)
     const query = all ? {} : { isPublished: true };
     

@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
-import jwt from 'jsonwebtoken';
+import { verifyToken } from '@/lib/jwt';
 
 export async function GET(request) {
   try {
@@ -20,9 +20,15 @@ export async function GET(request) {
     }
 
     try {
-      // Проверяем токен
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      
+      // Проверяем токен (строго HS256, fail-closed → null)
+      const decoded = verifyToken(token);
+      if (!decoded) {
+        return NextResponse.json(
+          { message: 'Недействительный токен' },
+          { status: 401 }
+        );
+      }
+
       // Находим пользователя
       const user = await User.findById(decoded.userId).select('-password');
 

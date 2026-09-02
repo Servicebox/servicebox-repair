@@ -1,7 +1,7 @@
 // app/api/likes/favorites/route.js
 import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
-import jwt from 'jsonwebtoken';
+import { verifyToken } from '@/lib/jwt';
 import dbConnect from '@/lib/db';
 import Like from '@/models/Like';
 import Product from '@/models/Product';
@@ -18,10 +18,8 @@ export async function GET(request) {
       return NextResponse.json({ message: 'Не авторизован' }, { status: 401 });
     }
 
-    let decoded;
-    try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET);
-    } catch {
+    const decoded = verifyToken(token);
+    if (!decoded) {
       return NextResponse.json({ message: 'Недействительный токен' }, { status: 401 });
     }
 

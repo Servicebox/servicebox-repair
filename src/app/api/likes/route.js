@@ -1,7 +1,7 @@
 // app/api/likes/route.js
 import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
-import jwt from 'jsonwebtoken';
+import { verifyToken } from '@/lib/jwt';
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
 import Like from '@/models/Like';
@@ -30,10 +30,8 @@ export async function GET(request) {
       return NextResponse.json({ liked: false, likesCount });
     }
 
-    let decoded;
-    try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET);
-    } catch {
+    const decoded = verifyToken(token);
+    if (!decoded) {
       return NextResponse.json({ liked: false, likesCount });
     }
 
@@ -65,10 +63,8 @@ export async function POST(request) {
       return NextResponse.json({ message: 'Не авторизован' }, { status: 401 });
     }
 
-    let decoded;
-    try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET);
-    } catch {
+    const decoded = verifyToken(token);
+    if (!decoded) {
       return NextResponse.json({ message: 'Недействительный токен' }, { status: 401 });
     }
 
@@ -159,10 +155,8 @@ export async function DELETE(request) {
       return NextResponse.json({ message: 'Не авторизован' }, { status: 401 });
     }
 
-    let decoded;
-    try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET);
-    } catch {
+    const decoded = verifyToken(token);
+    if (!decoded) {
       return NextResponse.json({ message: 'Недействительный токен' }, { status: 401 });
     }
 

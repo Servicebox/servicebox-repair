@@ -3,21 +3,14 @@ export const runtime = 'nodejs';
 
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
-import { verifyToken } from '@/lib/auth-helpers';
+import { requireAdmin } from '@/lib/authGuard';
 import { getSyncState, setMarkupPercent } from '@/lib/optfm/config';
-
-function requireAdmin(request) {
-  const user = verifyToken(request);
-  if (!user) return { error: NextResponse.json({ error: 'Не авторизован' }, { status: 401 }) };
-  if (user.role !== 'admin') return { error: NextResponse.json({ error: 'Доступ запрещён' }, { status: 403 }) };
-  return { user };
-}
 
 export async function GET(request) {
   await dbConnect();
 
-  const { error } = requireAdmin(request);
-  if (error) return error;
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
 
   const state = await getSyncState();
   return NextResponse.json({
@@ -33,8 +26,8 @@ export async function GET(request) {
 export async function POST(request) {
   await dbConnect();
 
-  const { error } = requireAdmin(request);
-  if (error) return error;
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
 
   const body = await request.json();
   const markupPercent = Number(body.markupPercent);

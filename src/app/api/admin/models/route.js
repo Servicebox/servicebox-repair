@@ -3,7 +3,7 @@ export const runtime = 'nodejs';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import dbConnect from '@/lib/db';
-import { getServerSession } from '@/lib/session';
+import { requireAdminSession as requireAdmin } from '@/lib/authGuard';
 import Brand from '@/models/Brand';
 import ModelDoc from '@/models/Model';
 
@@ -18,12 +18,6 @@ const createSchema = z.object({
   tvType: z.string().trim().optional()
 });
 
-async function requireAdmin(request) {
-  const session = await getServerSession(request);
-  if (!session || session.role !== 'admin') return null;
-  return session;
-}
-
 // POST /api/admin/models — создать модель устройства для бренда
 export async function POST(request) {
   if (!(await requireAdmin(request))) {
@@ -34,7 +28,7 @@ export async function POST(request) {
   try {
     body = createSchema.parse(await request.json());
   } catch (err) {
-    return NextResponse.json({ error: 'Неверный формат данных', details: err.errors }, { status: 400 });
+    return NextResponse.json({ error: 'Неверный формат данных', details: err.issues }, { status: 400 });
   }
 
   await dbConnect();

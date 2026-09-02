@@ -6,16 +6,10 @@ import { unlink } from 'fs/promises';
 import path from 'path';
 import { revalidatePath } from 'next/cache';
 import dbConnect from '@/lib/db';
-import { getServerSession } from '@/lib/session';
+import { requireAdminSession as requireAdmin } from '@/lib/authGuard';
 import { isValidObjectId } from '@/lib/slugify';
 import BoardPhoto from '@/models/BoardPhoto';
 import { BOARD_PHOTOS_DIR, DEVICE_TYPES } from '@/lib/boardPhotos';
-
-async function requireAdmin(request) {
-  const session = await getServerSession(request);
-  if (!session || session.role !== 'admin') return null;
-  return session;
-}
 
 export async function PATCH(request, { params }) {
   if (!(await requireAdmin(request))) {

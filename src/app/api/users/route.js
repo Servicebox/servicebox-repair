@@ -1,6 +1,6 @@
 export const runtime = 'nodejs';
 import { NextResponse } from 'next/server';
-import jwt from 'jsonwebtoken';
+import { getServerSession } from '@/lib/session';
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
 
@@ -8,19 +8,12 @@ export async function GET(request) {
   try {
     await dbConnect();
 
-    const token = request.cookies.get('token')?.value;
-    if (!token) {
+    // Роль администратора проверяется по БД, а не по claim'у токена.
+    const session = await getServerSession(request);
+    if (!session) {
       return NextResponse.json({ message: 'Не авторизован' }, { status: 401 });
     }
-
-    let decoded;
-    try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET);
-    } catch {
-      return NextResponse.json({ message: 'Недействительный токен' }, { status: 401 });
-    }
-
-    if (decoded.role !== 'admin') {
+    if (session.role !== 'admin') {
       return NextResponse.json({ message: 'Доступ запрещен' }, { status: 403 });
     }
 
