@@ -6,13 +6,21 @@
 //
 // Использование (в том числе для ручной проверки):
 //   node scripts/sync-optfm.mjs
+//
+// ВАЖНО: скрипт ОБЯЗАН завершаться (mongoose держит соединение и event loop
+// открытым — без явного disconnect+exit процесс висел бы вечно; так за
+// август накопилось ~44 процесса-зомби). Плюс watchdog на случай, если
+// syncProducts зависнет намертво (WAF поставщика / сеть).
+import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-dotenv.config({ path: new URL('../.env.production', import.meta.url).pathname });
+dotenv.config({ path: new URL('../.env.production', import.meta.url).pathname, quiet: true });
 
 import dbConnect from '../src/lib/db.js';
 import { syncCategories } from '../src/lib/optfm/syncCategories.js';
 import { syncProducts } from '../src/lib/optfm/syncProducts.js';
 import { acquireSyncLock, releaseSyncLock } from '../src/lib/optfm/config.js';
+
+const HARD_TIMEOUT_MS = 2 * 60 * 60 * 1000; // 2 часа
 
 async function main() {
   await dbConnect();
@@ -54,10 +62,48 @@ async function main() {
       console.warn('⚠️  Не удалось инвалидировать кэш карточек товаров:', err.message);
     }
   } catch (error) {
-    console.error('❌ Синхронизация OPTFM упала:', error);
+    console.error('❌ Синхронизация OPTFM упала:', error?.message || error);
     await releaseSyncLock(null, error);
     process.exitCode = 1;
   }
 }
 
-main();
+// Watchdog: если прогон завис — принудительно выходим. Лок останется
+// syncInProgress=true, но acquireSyncLock перехватит его как «зависший»
+// через STALE_LOCK_MS (3ч). Best-effort снимаем флаг перед выходом.
+const watchdog = setTimeout(async () => {
+  console.error('❌ OPTFM sync: превышен таймаут 2ч — принудительный выход');
+  try {
+    await Promise.race([
+      releaseSyncLock(null, new Error('watchdog timeout')),
+      new Promise((r) => setTimeout(r, 10_000)),
+    ]);
+  } catch {}
+  process.exit(1);
+}, HARD_TIMEOUT_MS);
+watchdog.unref();
+
+main()
+  .catch((error) => {
+    console.error('❌ OPTFM sync fatal:', error?.message || error);
+    process.exitCode = 1;
+  })
+  .finally(async () => {
+    // Жёсткий предохранитель: даже если mongoose.disconnect() зависнет
+    // (полуоткрытый сокет к БД) — процесс всё равно выйдет.
+    const hardExit = setTimeout(() => process.exit(process.exitCode || 0), 15_000);
+    hardExit.unref();
+
+    try {
+      await Promise.race([
+        mongoose.disconnect(),
+        new Promise((resolve) => setTimeout(resolve, 10_000)),
+      ]);
+    } catch {
+      /* ignore */
+    }
+
+    clearTimeout(watchdog);
+    clearTimeout(hardExit);
+    process.exit(process.exitCode || 0);
+  });
