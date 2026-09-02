@@ -25,7 +25,7 @@ export const sendVerificationEmail = async (email, token, username) => {
     subject: 'Подтверждение email адреса',
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #333;">Добро пожаловать в наш сервис, ${username}!</h2>
+        <h2 style="color: #333;">Добро пожаловать в наш сервис, ${escapeHtml(username)}!</h2>
         <p>Пожалуйста, подтвердите ваш email адрес, нажав на кнопку ниже:</p>
         <a href="${verificationUrl}" 
            target="_blank"
@@ -60,7 +60,7 @@ export const sendPasswordResetEmail = async (email, token, username) => {
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #333;">Запрос на сброс пароля</h2>
-        <p>Здравствуйте, ${username},</p>
+        <p>Здравствуйте, ${escapeHtml(username)},</p>
         <p>Вы запросили сброс пароля. Нажмите на кнопку ниже для продолжения:</p>
         <a href="${resetUrl}" 
            target="_blank"
@@ -81,6 +81,46 @@ export const sendPasswordResetEmail = async (email, token, username) => {
     console.log('Password reset email sent to:', email);
   } catch (error) {
     console.error('Error sending password reset email:', error);
+    throw error;
+  }
+};
+// Экранирование пользовательского текста, вставляемого в HTML письма.
+function escapeHtml(s) {
+  return String(s ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// Уведомление «пароль изменён». Отправляется после успешной смены/сброса
+// пароля, чтобы владелец аккаунта заметил компрометацию.
+export const sendPasswordChangedEmail = async (email, username) => {
+  const baseUrl = getBaseUrl();
+  const mailOptions = {
+    from: process.env.YANDEX_USER,
+    to: email,
+    subject: 'Пароль вашего аккаунта изменён',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #333;">Пароль изменён</h2>
+        <p>Здравствуйте, ${escapeHtml(username)},</p>
+        <p>Пароль вашего аккаунта на сайте только что был изменён. Все ранее
+           открытые сессии завершены — потребуется войти заново.</p>
+        <p>Если это сделали вы — всё в порядке, ничего делать не нужно.</p>
+        <p><strong>Если это были не вы</strong> — немедленно восстановите доступ
+           через «Забыли пароль?» на странице входа и свяжитесь с нами:
+           <a href="${baseUrl}/contacts">${baseUrl}/contacts</a>.</p>
+      </div>
+    `,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log('Password-changed email sent to:', email);
+  } catch (error) {
+    console.error('Error sending password-changed email:', error);
     throw error;
   }
 };

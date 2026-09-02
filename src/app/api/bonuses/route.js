@@ -26,7 +26,7 @@ const historySchema = z.object({
 export async function GET(request) {
   await dbConnect();
 
-  const user = verifyToken(request);
+  const user = await verifyToken(request);
   if (!user) return NextResponse.json({ error: 'Не авторизован' }, { status: 401 });
 
   const { searchParams } = new URL(request.url);

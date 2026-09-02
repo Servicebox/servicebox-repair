@@ -8,6 +8,7 @@ import { join } from 'path';
 import sharp from 'sharp';
 import dbConnect from '@/lib/db';
 import { verifyToken } from '@/lib/auth-helpers';
+import { sendPasswordChangedEmail } from '@/lib/email';
 import User from '@/models/User';
 
 const passwordSchema = z.object({
@@ -24,7 +25,7 @@ const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
 export async function PATCH(request) {
   await dbConnect();
 
-  const user = verifyToken(request);
+  const user = await verifyToken(request);
   if (!user) {
     return NextResponse.json({ error: 'Не авторизован' }, { status: 401 });
   }
@@ -83,10 +84,10 @@ async function handlePasswordChange(request, userId) {
   try {
     body = passwordSchema.parse(await request.json());
   } catch (err) {
-    return NextResponse.json({ error: 'Неверные данные', details: err.errors }, { status: 400 });
+    return NextResponse.json({ error: 'Неверные данные', details: err.issues }, { status: 400 });
   }
 
-  const dbUser = await User.findById(userId).select('password');
+  const dbUser = await User.findById(userId).select('password email username +tokenVersion');
   if (!dbUser) {
     return NextResponse.json({ error: 'Пользователь не найден' }, { status: 404 });
   }
@@ -103,7 +104,14 @@ async function handlePasswordChange(request, userId) {
   // Хэширование через pre-save hook модели User
   dbUser.password = body.newPassword;
   dbUser.passwordChangedAt = new Date();
-  await dbUser.save();
+  // Инвалидируем все ранее выданные сессии этого пользователя.
+  dbUser.tokenVersion = (dbUser.tokenVersion ?? 0) + 1;
+  await dbUser.save({ validateModifiedOnly: true });
+
+  console.warn('[security] password changed via profile', { userId });
+  sendPasswordChangedEmail(dbUser.email, dbUser.username).catch((e) =>
+    console.error('sendPasswordChangedEmail failed:', e)
+  );
 
   return NextResponse.json({ message: 'Пароль успешно изменён' });
 }

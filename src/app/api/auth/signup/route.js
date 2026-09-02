@@ -1,7 +1,9 @@
+export const runtime = 'nodejs';
+
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
-import crypto from 'crypto';
+import { generateToken, hashToken } from '@/lib/authTokens';
 import { sendVerificationEmail } from '@/lib/email';
 import { phoneMatchRegex } from '@/lib/phone';
 
@@ -36,8 +38,9 @@ export async function POST(request) {
       ? await User.findOne({ phone: phoneMatcher, isPhoneOnlyAccount: true })
       : null;
 
-    // СОЗДАЕМ ТОКЕН НАПРЯМУЮ (без метода модели)
-    const verificationToken = crypto.randomBytes(32).toString('hex');
+    // Сырой токен уходит в письмо, в БД кладём только SHA-256 хеш.
+    const rawVerificationToken = generateToken();
+    const verificationToken = hashToken(rawVerificationToken);
     const verificationTokenExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 часа
 
     let user;
@@ -66,7 +69,7 @@ export async function POST(request) {
 
     // Отправляем email с ссылкой для подтверждения
     try {
-      await sendVerificationEmail(user.email, verificationToken, user.username);
+      await sendVerificationEmail(user.email, rawVerificationToken, user.username);
     } catch (emailError) {
       console.error('Error sending verification email:', emailError);
       // Продолжаем работу даже если email не отправился

@@ -1,9 +1,9 @@
 export const runtime = 'nodejs';
 
 import { NextResponse } from 'next/server';
-import crypto from 'crypto';
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
+import { generateToken, hashToken } from '@/lib/authTokens';
 import { sendVerificationEmail } from '@/lib/email';
 
 // Повторная отправка письма подтверждения email.
@@ -29,11 +29,10 @@ export async function POST(request) {
 
     if (!email || email.length > 254) return ok();
 
-    // verificationToken / verificationTokenExpires — select: false, запрашиваем явно.
-    // Остальные поля (email, emailVerified, isActive, username) в выборке по умолчанию.
-    const user = await User.findOne({ email }).select(
-      '+verificationToken +verificationTokenExpires'
-    );
+    // verificationTokenExpires — select: false, запрашиваем явно (нужен для
+    // кулдауна). verificationToken в БД хранится хешем, «переотправить тот же»
+    // нельзя — сырого значения у нас нет, поэтому всегда генерируем новый.
+    const user = await User.findOne({ email }).select('+verificationTokenExpires');
 
     // Нечего делать: нет аккаунта / уже подтверждён / заблокирован.
     if (!user || user.emailVerified || user.isActive === false) return ok();
@@ -47,24 +46,15 @@ export async function POST(request) {
     // Антифлуд: последнее письмо отправлено меньше 5 минут назад — молчим.
     if (issuedAt && now - issuedAt < RESEND_COOLDOWN_MS) return ok();
 
-    // Если действующий (непросроченный) токен уже есть — переотправляем ЕГО,
-    // а не генерируем новый: спам-запросы не должны инвалидировать ссылку,
-    // которую пользователь уже получил при регистрации.
-    let token = user.verificationToken;
-    if (!token || expiresAt <= now) {
-      token = crypto.randomBytes(32).toString('hex');
-    }
-    // Точечный updateOne, а не user.save() — не гоняем валидацию всего
-    // документа (легаси-профиль под новые ограничения дал бы 500).
-    // verificationTokenExpires служит и меткой «последней отправки» для
-    // кулдауна, поэтому сдвигаем её при любой отправке.
+    // Сырой токен — в письмо, в БД — SHA-256 хеш.
+    const rawToken = generateToken();
     await User.updateOne(
       { _id: user._id },
-      { $set: { verificationToken: token, verificationTokenExpires: new Date(now + TOKEN_TTL_MS) } }
+      { $set: { verificationToken: hashToken(rawToken), verificationTokenExpires: new Date(now + TOKEN_TTL_MS) } }
     );
 
     try {
-      await sendVerificationEmail(user.email, token, user.username);
+      await sendVerificationEmail(user.email, rawToken, user.username);
     } catch (emailError) {
       console.error('Resend verification email error:', emailError);
       // Ответ не меняем — не раскрываем внутренние сбои.

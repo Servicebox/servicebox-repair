@@ -53,7 +53,7 @@ export async function GET(request) {
 export async function POST(request) {
   await dbConnect();
 
-  const user = verifyToken(request);
+  const user = await verifyToken(request);
   if (!user) return NextResponse.json({ error: 'Не авторизован' }, { status: 401 });
 
   let body;

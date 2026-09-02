@@ -76,7 +76,7 @@ function buildDiscountedSplitItems(items, totalKopBeforeDiscount, totalKopAfterD
 export async function POST(request) {
   await dbConnect();
 
-  const user = verifyToken(request);
+  const user = await verifyToken(request);
   if (!user) return NextResponse.json({ error: 'Не авторизован' }, { status: 401 });
 
   const config = await PaymentConfig.findOne({ provider: 'yandex_split' }).lean();

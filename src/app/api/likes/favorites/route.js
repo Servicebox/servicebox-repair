@@ -1,7 +1,7 @@
 // app/api/likes/favorites/route.js
 import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
-import { verifyToken } from '@/lib/jwt';
+import { verifyToken } from '@/lib/auth-helpers';
 import dbConnect from '@/lib/db';
 import Like from '@/models/Like';
 import Product from '@/models/Product';
@@ -13,14 +13,9 @@ export async function GET(request) {
   try {
     await dbConnect();
 
-    const token = request.cookies.get('token')?.value;
-    if (!token) {
+    const auth = await verifyToken(request);
+    if (!auth) {
       return NextResponse.json({ message: 'Не авторизован' }, { status: 401 });
-    }
-
-    const decoded = verifyToken(token);
-    if (!decoded) {
-      return NextResponse.json({ message: 'Недействительный токен' }, { status: 401 });
     }
 
     const { searchParams } = new URL(request.url);
@@ -31,7 +26,7 @@ export async function GET(request) {
 
     // Получаем лайки пользователя
     let query = {
-      userId: new mongoose.Types.ObjectId(decoded.id)
+      userId: new mongoose.Types.ObjectId(auth.id)
     };
 
     if (type && ['Product', 'News', 'Service'].includes(type)) {

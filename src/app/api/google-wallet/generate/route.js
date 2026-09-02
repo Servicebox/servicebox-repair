@@ -9,7 +9,7 @@ import { generateWalletJwt } from '@/lib/walletPass';
 export async function GET(request) {
   await dbConnect();
 
-  const caller = verifyToken(request);
+  const caller = await verifyToken(request);
   if (!caller) return NextResponse.json({ error: 'Не авторизован' }, { status: 401 });
 
   const user = await User.findById(caller.id)

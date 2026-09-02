@@ -1,7 +1,7 @@
 // app/api/users/avatar/upload/route.js
 import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
-import { verifyToken } from '@/lib/jwt';
+import { verifyToken } from '@/lib/auth-helpers';
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
 import { writeFile, mkdir } from 'fs/promises';
@@ -12,21 +12,20 @@ export async function POST(request) {
   try {
     await dbConnect();
 
-    const token = request.cookies.get('token')?.value;
-    if (!token) {
+    const auth = await verifyToken(request);
+    if (!auth) {
       return NextResponse.json({ message: 'Не авторизован' }, { status: 401 });
-    }
-
-    const decoded = verifyToken(token);
-    if (!decoded) {
-      return NextResponse.json({ message: 'Недействительный токен' }, { status: 401 });
     }
 
     const formData = await request.formData();
     const file = formData.get('file');
 
-    if (!file) {
+    if (!file || typeof file === 'string') {
       return NextResponse.json({ message: 'Файл не загружен' }, { status: 400 });
+    }
+
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+      return NextResponse.json({ message: 'Допускаются только JPEG, PNG, WebP' }, { status: 400 });
     }
 
     const bytes = await file.arrayBuffer();
@@ -50,7 +49,7 @@ export async function POST(request) {
     const uploadDir = join(process.cwd(), 'public/uploads/avatars');
     await mkdir(uploadDir, { recursive: true });
 
-    const filename = `${decoded.id}-${Date.now()}.jpg`;
+    const filename = `${auth.id}-${Date.now()}.jpg`;
     const filepath = join(uploadDir, filename);
 
     await writeFile(filepath, optimized);
@@ -59,7 +58,7 @@ export async function POST(request) {
 
     // Обновление пользователя
     const user = await User.findByIdAndUpdate(
-      decoded.id,
+      auth.id,
       { $set: { avatar: avatarUrl } },
       { new: true }
     ).select('-password');

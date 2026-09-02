@@ -1,8 +1,8 @@
 export const runtime = 'nodejs';
 import { NextResponse } from 'next/server';
-import jwt from 'jsonwebtoken';
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
+import { signToken } from '@/lib/jwt';
 
 const YANDEX_TOKEN_URL = 'https://oauth.yandex.ru/token';
 const YANDEX_INFO_URL = 'https://login.yandex.ru/info?format=json';
@@ -35,11 +35,15 @@ async function fetchYandexProfile(accessToken) {
 }
 
 function issueJwt(user) {
-  return jwt.sign(
-    { userId: user._id, email: user.email, role: user.role },
-    process.env.JWT_SECRET,
-    { expiresIn: '7d' }
-  );
+  // tv обязателен: без него getServerSession (сверяет tv с tokenVersion в БД)
+  // навсегда отвергнет токен OAuth-пользователя после первого же bump'а
+  // (logout / правка админом). У OAuth-юзера нет пароля для восстановления.
+  return signToken({
+    userId: user._id,
+    email: user.email,
+    role: user.role,
+    tv: user.tokenVersion ?? 0,
+  });
 }
 
 function setAuthCookie(response, token) {
@@ -78,15 +82,17 @@ export async function GET(request) {
 
     await dbConnect();
 
-    // 1. Поиск по yandexId
-    let user = await User.findOne({ yandexId });
+    // 1. Поиск по yandexId (tokenVersion нужен для tv в токене — select: false)
+    let user = await User.findOne({ yandexId }).select('+tokenVersion');
 
-    // 2. Привязка к существующему аккаунту по email
+    // 2. Привязка к существующему аккаунту по email. Yandex подтвердил
+    //    владение адресом → помечаем email как подтверждённый.
     if (!user) {
-      user = await User.findOne({ email: email.toLowerCase() });
+      user = await User.findOne({ email: email.toLowerCase() }).select('+tokenVersion');
       if (user) {
         user.yandexId = yandexId;
-        await user.save();
+        user.emailVerified = true;
+        await user.save({ validateModifiedOnly: true });
       }
     }
 
@@ -103,7 +109,7 @@ export async function GET(request) {
       });
     } else {
       user.lastLogin = new Date();
-      await user.save();
+      await user.save({ validateModifiedOnly: true });
     }
 
     const token = issueJwt(user);

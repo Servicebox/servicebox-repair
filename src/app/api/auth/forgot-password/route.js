@@ -1,8 +1,10 @@
+export const runtime = 'nodejs';
+
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
 import { sendPasswordResetEmail } from '@/lib/email';
-import crypto from 'crypto';
+import { generateToken, hashToken } from '@/lib/authTokens';
 
 export async function POST(request) {
   try {
@@ -27,14 +29,14 @@ export async function POST(request) {
       });
     }
 
-    // Генерируем токен сброса
-    const resetToken = crypto.randomBytes(32).toString('hex');
+    // Генерируем токен сброса: сырой уходит в письмо, в БД — только SHA-256 хеш
+    const resetToken = generateToken();
     const resetTokenExpiry = Date.now() + 3600000; // 1 час
 
-    // Сохраняем токен в базе
-    user.resetPasswordToken = resetToken;
-    user.resetPasswordExpires = resetTokenExpiry;
-    await user.save();
+    await User.updateOne(
+      { _id: user._id },
+      { $set: { resetPasswordToken: hashToken(resetToken), resetPasswordExpires: resetTokenExpiry } }
+    );
 
     // Отправляем email
     try {

@@ -53,15 +53,32 @@ export async function PATCH(request, { params }) {
       return NextResponse.json({ error: 'Нельзя понизить свою роль' }, { status: 400 });
     }
 
+    // Текущие значения — чтобы не разлогинивать пользователя при «правке
+    // без изменений» (админка шлёт role/isActive всегда).
+    const current = await User.findById(userId).select('role isActive').lean();
+    if (!current) {
+      return NextResponse.json({ error: 'Пользователь не найден' }, { status: 404 });
+    }
+
     const { newPassword, ...fields } = body;
     const updateSet = { ...fields };
     const updateOps = { $set: updateSet };
+
+    // Инвалидируем ранее выданные JWT пользователя (getServerSession
+    // сверяет tv в токене с tokenVersion в БД) при:
+    //  - сбросе пароля админом
+    //  - реальной смене роли (демоут админа обрубает его старые токены)
+    //  - блокировке аккаунта (isActive: true → false)
+    const revokeSessions =
+      Boolean(newPassword) ||
+      (fields.role !== undefined && fields.role !== current.role) ||
+      (fields.isActive === false && current.isActive !== false);
+
     if (newPassword) {
       updateSet.password = await bcrypt.hash(newPassword, 12);
-      // Сброс пароля админом = отметка времени смены + инкремент версии
-      // токенов: ранее выданные JWT этого пользователя станут недействительны
-      // (проверка версии включается в Phase 3).
       updateSet.passwordChangedAt = new Date();
+    }
+    if (revokeSessions) {
       updateOps.$inc = { tokenVersion: 1 };
     }
 

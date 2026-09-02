@@ -31,7 +31,7 @@ const toggleSchema = z.object({
 export async function GET(request) {
   await dbConnect();
 
-  const user = verifyToken(request);
+  const user = await verifyToken(request);
   if (!user) return NextResponse.json({ error: 'Не авторизован' }, { status: 401 });
 
   const { searchParams } = new URL(request.url);
@@ -92,7 +92,7 @@ export async function GET(request) {
 export async function POST(request) {
   await dbConnect();
 
-  const user = verifyToken(request);
+  const user = await verifyToken(request);
   if (!user) return NextResponse.json({ error: 'Не авторизован' }, { status: 401 });
 
   let body;
@@ -121,7 +121,7 @@ export async function POST(request) {
 export async function DELETE(request) {
   await dbConnect();
 
-  const user = verifyToken(request);
+  const user = await verifyToken(request);
   if (!user) return NextResponse.json({ error: 'Не авторизован' }, { status: 401 });
 
   let body;

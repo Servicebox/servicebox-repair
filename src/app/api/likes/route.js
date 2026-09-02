@@ -1,9 +1,8 @@
 // app/api/likes/route.js
 import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
-import { verifyToken } from '@/lib/jwt';
+import { verifyToken } from '@/lib/auth-helpers';
 import dbConnect from '@/lib/db';
-import User from '@/models/User';
 import Like from '@/models/Like';
 import mongoose from 'mongoose';
 
@@ -25,17 +24,12 @@ export async function GET(request) {
       entityType
     });
 
-    const token = request.cookies.get('token')?.value;
-    if (!token) {
+    const auth = await verifyToken(request);
+    if (!auth) {
       return NextResponse.json({ liked: false, likesCount });
     }
 
-    const decoded = verifyToken(token);
-    if (!decoded) {
-      return NextResponse.json({ liked: false, likesCount });
-    }
-
-    const userId = decoded.id ?? decoded.userId;
+    const userId = auth.id;
 
     // Проверяем, есть ли лайк у пользователя
     const userLike = await Like.findOne({
@@ -58,17 +52,12 @@ export async function POST(request) {
   try {
     await dbConnect();
 
-    const token = request.cookies.get('token')?.value;
-    if (!token) {
+    const auth = await verifyToken(request);
+    if (!auth) {
       return NextResponse.json({ message: 'Не авторизован' }, { status: 401 });
     }
 
-    const decoded = verifyToken(token);
-    if (!decoded) {
-      return NextResponse.json({ message: 'Недействительный токен' }, { status: 401 });
-    }
-
-    const userId = decoded.id ?? decoded.userId;
+    const userId = auth.id;
 
     const body = await request.json();
     const { entityId, entityType } = body;
@@ -150,17 +139,12 @@ export async function DELETE(request) {
   try {
     await dbConnect();
 
-    const token = request.cookies.get('token')?.value;
-    if (!token) {
+    const auth = await verifyToken(request);
+    if (!auth) {
       return NextResponse.json({ message: 'Не авторизован' }, { status: 401 });
     }
 
-    const decoded = verifyToken(token);
-    if (!decoded) {
-      return NextResponse.json({ message: 'Недействительный токен' }, { status: 401 });
-    }
-
-    const userId = decoded.id ?? decoded.userId;
+    const userId = auth.id;
 
     const { searchParams } = new URL(request.url);
     const entityId = searchParams.get('entityId');

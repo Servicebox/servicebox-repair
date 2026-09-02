@@ -1,7 +1,10 @@
 // app/api/auth/verify/route.js
+export const runtime = 'nodejs';
+
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
+import { hashToken } from '@/lib/authTokens';
 
 export async function GET(request) {
   try {
@@ -16,12 +19,12 @@ export async function GET(request) {
       );
     }
 
-    // Ищем пользователя с этим токеном верификации.
-    // verificationToken / verificationTokenExpires имеют select: false —
-    // запрашиваем явно, иначе проверка срока действия ниже станет no-op.
+    // В БД лежит SHA-256 хеш токена — ищем по хешу входящего значения.
+    // verificationTokenExpires имеет select: false — запрашиваем явно,
+    // иначе проверка срока действия ниже станет no-op.
     const user = await User.findOne({
-      verificationToken: token
-    }).select('+verificationToken +verificationTokenExpires');
+      verificationToken: hashToken(token)
+    }).select('+verificationTokenExpires');
 
     if (!user) {
       return NextResponse.redirect(
