@@ -13,6 +13,7 @@
     "npm": ">=9.0.0"
   },
   "dependencies": {
+    "@e965/xlsx": "^0.20.3",
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
     "@fortawesome/free-brands-svg-icons": "^7.1.0",
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
@@ -57,7 +58,6 @@
     "socket.io": "^4.0.0",
     "use-debounce": "^10.0.6",
     "uuid": "^13.0.0",
-    "xlsx": "^0.18.5",
     "zod": "^4.4.3"
   },
   "devDependencies": {

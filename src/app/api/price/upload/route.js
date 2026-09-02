@@ -1,8 +1,18 @@
 import { NextResponse } from 'next/server';
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
+import { requireAdmin } from '@/lib/authGuard';
+
+// Прайс со всей номенклатурой весит ~1–3 МБ; 10 МБ — щедрый предел,
+// отсекающий заведомо мусорные и атакующие загрузки до парсинга.
+const MAX_XLSX_BYTES = 10 * 1024 * 1024;
 
 export async function POST(request) {
+    // Загружать прайс может только администратор.
+    // requireAdmin дополнительно проверяет Origin (CSRF).
+    const denied = await requireAdmin(request);
+    if (denied) return denied;
+
     try {
         const formData = await request.formData();
         const file = formData.get('file');
@@ -18,6 +28,17 @@ export async function POST(request) {
 
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
+
+        if (buffer.length > MAX_XLSX_BYTES) {
+            return NextResponse.json({ error: 'Файл слишком большой (максимум 10 МБ)' }, { status: 413 });
+        }
+
+        // .xlsx — это ZIP-контейнер, первые два байта всегда "PK" (0x50 0x4B).
+        // Отсекаем файлы с подделанным расширением ещё до записи на диск,
+        // чтобы парсер прайса не встречал заведомо чужой формат.
+        if (buffer.length < 4 || buffer[0] !== 0x50 || buffer[1] !== 0x4b) {
+            return NextResponse.json({ error: 'Файл не является корректным .xlsx' }, { status: 400 });
+        }
 
         // Сохраняем в папку price-data с именем price.xlsx
         const uploadDir = path.join(process.cwd(), 'public', 'price-data');

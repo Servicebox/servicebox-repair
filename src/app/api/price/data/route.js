@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
-import { read, utils } from 'xlsx';
+import { read, utils } from '@e965/xlsx';
 
 const PRICE_FILE_PATH = path.join(process.cwd(), 'public', 'price-data', 'price.xlsx');
 const PUBLIC_COLUMNS = ['наименование', 'модель', 'ревизия', 'розница', 'описание'];

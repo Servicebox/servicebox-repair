@@ -2,10 +2,15 @@
 import { NextResponse } from 'next/server';
 import { unlink } from 'fs/promises';
 import path from 'path';
+import { requireAdmin } from '@/lib/authGuard';
 
 const PRICE_FILE_PATH = path.join(process.cwd(), 'public', 'price-data', 'price.xlsx');
 
-export async function DELETE() {
+export async function DELETE(request) {
+    // Удалять прайс может только администратор (+ проверка Origin от CSRF).
+    const denied = await requireAdmin(request);
+    if (denied) return denied;
+
     try {
         await unlink(PRICE_FILE_PATH);
         return NextResponse.json({ success: true });

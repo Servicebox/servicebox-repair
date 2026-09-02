@@ -30,8 +30,10 @@ export default function AdminPricePage() {
             if (response.ok) {
                 setMessage({ type: 'success', text: 'Файл успешно загружен!' });
                 e.target.reset();
+            } else if (response.status === 401) {
+                setMessage({ type: 'error', text: 'Сессия истекла. Войдите в аккаунт заново.' });
             } else if (response.status === 403) {
-                setMessage({ type: 'error', text: 'Ошибка доступа. Возможно, сессия истекла.' });
+                setMessage({ type: 'error', text: 'Недостаточно прав: загрузка доступна только администратору.' });
             } else {
                 setMessage({ type: 'error', text: result.error || 'Ошибка загрузки' });
             }
@@ -51,12 +53,16 @@ export default function AdminPricePage() {
                 credentials: 'include', // ← добавляем
             });
 
+            const result = await response.json().catch(() => ({}));
+
             if (response.ok) {
                 setMessage({ type: 'success', text: 'Файл удален' });
+            } else if (response.status === 401) {
+                setMessage({ type: 'error', text: 'Сессия истекла. Войдите в аккаунт заново.' });
             } else if (response.status === 403) {
-                setMessage({ type: 'error', text: 'Ошибка доступа' });
+                setMessage({ type: 'error', text: 'Недостаточно прав: удаление доступно только администратору.' });
             } else {
-                setMessage({ type: 'error', text: 'Ошибка удаления' });
+                setMessage({ type: 'error', text: result.error || 'Ошибка удаления' });
             }
         } catch {
             setMessage({ type: 'error', text: 'Ошибка сети' });
@@ -80,12 +86,12 @@ export default function AdminPricePage() {
                     <form onSubmit={handleUpload} className="space-y-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Файл Excel (.xlsx, .xls)
+                                Файл Excel (.xlsx)
                             </label>
                             <input
                                 type="file"
                                 name="file"
-                                accept=".xlsx,.xls"
+                                accept=".xlsx"
                                 required
                                 className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                             />
