@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server';
 import Promotion from '@/models/Promotion';
 import dbConnect from '@/lib/db';
+import { requireAdmin } from '@/lib/authGuard';
 
 export async function GET() {
   try {
@@ -23,6 +24,10 @@ export async function GET() {
 }
 
 export async function POST(request) {
+  // Создавать акции может только администратор (+ проверка Origin от CSRF).
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   try {
     await dbConnect();
     const body = await request.json();

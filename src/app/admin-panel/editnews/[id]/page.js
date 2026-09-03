@@ -5,7 +5,6 @@ import { useParams, useRouter } from 'next/navigation';
 import NewsEditor from '@/components/NewsEditor/NewsEditor';
 import styles from '../../News.module.css';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
 export default function EditNewsPage() {
   const params = useParams();
@@ -26,7 +25,7 @@ export default function EditNewsPage() {
 
         console.log('Fetching news with ID:', params.id);
 
-        const response = await fetch(`${API_URL}/api/news/${params.id}`);
+        const response = await fetch(`/api/news/${params.id}`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -55,7 +54,7 @@ export default function EditNewsPage() {
     setSaving(true);
 
     try {
-      const response = await fetch(`${API_URL}/api/news/${params.id}`, {
+      const response = await fetch(`/api/news/${params.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

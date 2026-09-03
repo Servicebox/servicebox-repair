@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import NewsEditor from '@/components/NewsEditor/NewsEditor';
 import styles from '../News.module.css';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
 export default function AddNewsPage() {
   const router = useRouter();
@@ -16,7 +15,7 @@ export default function AddNewsPage() {
     setSaving(true);
 
     try {
-      const response = await fetch(`${API_URL}/api/news`, {
+      const response = await fetch(`/api/news`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

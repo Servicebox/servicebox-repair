@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import styles from './PromotionForm.module.css';
 
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
 export default function PromotionForm({ onSave, saving, initialData }) {
   const [formData, setFormData] = useState({
@@ -59,7 +58,7 @@ export default function PromotionForm({ onSave, saving, initialData }) {
       formData.append('files', file); // Изменил на 'files'
       formData.append('category', 'promotions'); // Добавил категорию
 
-      const response = await fetch(`${API_URL}/api/uploads`, {
+      const response = await fetch(`/api/uploads`, {
         method: 'POST',
         body: formData
       });

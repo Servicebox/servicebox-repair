@@ -1,8 +1,13 @@
 import { NextResponse } from 'next/server';
 import Product from '@/models/Product';
 import dbConnect from '@/lib/db';
+import { requireAdmin } from '@/lib/authGuard';
 
 export async function DELETE(request, { params }) {
+  // Удалять товары может только администратор (+ проверка Origin от CSRF).
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   await dbConnect();
   const { slug } = params;
 

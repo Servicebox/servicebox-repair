@@ -3,8 +3,13 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Product from '@/models/Product';
 import Category from '@/models/Category';
+import { requireAdmin } from '@/lib/authGuard';
 
 export async function PUT(request, { params }) {
+  // Редактировать товары может только администратор (+ проверка Origin от CSRF).
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   try {
     await dbConnect();
     const { slug } = params;

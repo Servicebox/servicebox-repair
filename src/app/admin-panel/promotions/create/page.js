@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import PromotionForm from '@/components/PromotionForm/PromotionForm';
 import styles from '../../../admin-panel/News.module.css';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
 export default function CreatePromotionPage() {
   const router = useRouter();
@@ -16,7 +15,7 @@ export default function CreatePromotionPage() {
     setSaving(true);
 
     try {
-      const response = await fetch(`${API_URL}/api/promotions`, {
+      const response = await fetch(`/api/promotions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

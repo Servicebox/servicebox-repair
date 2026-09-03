@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import Service from '@/models/Service';
 import dbConnect from '@/lib/db';
+import { requireAdmin } from '@/lib/authGuard';
 
 export async function GET(request) {
   try {
@@ -37,6 +38,10 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
+  // Управлять каталогом услуг может только администратор (+ проверка Origin от CSRF).
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   try {
     await dbConnect();
     const body = await request.json();

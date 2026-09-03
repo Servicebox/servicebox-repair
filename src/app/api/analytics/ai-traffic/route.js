@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import AiTraffic from '@/models/AiTraffic';
 import crypto from 'crypto';
+import { requireAdmin } from '@/lib/authGuard';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = false;
@@ -13,10 +14,6 @@ const KNOWN_BOTS = [
     'Bytespider', 'ImagesiftBot', 'PerplexityBot', 'ClaudeBot', 'YouBot'
 ];
 
-const checkAuth = (request) => {
-    const cookie = request.headers.get('cookie');
-    return !!cookie && cookie.length > 10;
-};
 
 // POST: Запись визита бота (публичный)
 export async function POST(request) {
@@ -48,13 +45,12 @@ export async function POST(request) {
     }
 }
 
-// GET: Статистика (только админ)
+// GET: Статистика (только администратор)
 export async function GET(request) {
-    try {
-        if (!checkAuth(request)) {
-            return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
-        }
+    const denied = await requireAdmin(request);
+    if (denied) return denied;
 
+    try {
         await dbConnect();
         const { searchParams } = new URL(request.url);
 
@@ -104,13 +100,12 @@ export async function GET(request) {
     }
 }
 
-// DELETE: Очистка старых (только админ)
+// DELETE: Очистка старых записей (только администратор, + проверка Origin от CSRF)
 export async function DELETE(request) {
-    try {
-        if (!checkAuth(request)) {
-            return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
-        }
+    const denied = await requireAdmin(request);
+    if (denied) return denied;
 
+    try {
         await dbConnect();
         const days = parseInt(new URL(request.url).searchParams.get('olderThanDays')) || 90;
         const cutoff = new Date(Date.now() - days * 24 * 60 * 60 * 1000);

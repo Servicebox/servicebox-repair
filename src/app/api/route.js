@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
 import sharp from 'sharp';
+import { requireAdmin } from '@/lib/authGuard';
 
 const CONFIG = {
   maxFileSizes: {
@@ -28,6 +29,10 @@ const CONFIG = {
 };
 
 export async function POST(request) {
+  // Загрузка файлов в public/uploads — только администратор (+ проверка Origin от CSRF).
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   try {
     const formData = await request.formData();
 

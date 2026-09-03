@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import Service from '@/models/Service';
 import dbConnect from '@/lib/db';
 import { generateSlug } from '@/lib/slugify';
+import { requireAdmin } from '@/lib/authGuard';
 
 // ✅ 1. Добавь эту функцию в начало файла (после импортов)
 const isValidObjectId = (id) => {
@@ -43,6 +44,10 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
+  // Управлять каталогом услуг может только администратор (+ проверка Origin от CSRF).
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   try {
     await dbConnect();
     const body = await request.json();

@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import styles from '../News.module.css';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
 export default function NewsAdmin() {
   const [news, setNews] = useState([]);
@@ -20,7 +19,7 @@ export default function NewsAdmin() {
 
   const fetchNews = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/news`);
+      const response = await fetch(`/api/news`);
       const data = await response.json();
 
       if (data.success) {
@@ -39,7 +38,7 @@ export default function NewsAdmin() {
     if (!confirm('Удалить эту новость?')) return;
 
     try {
-      const response = await fetch(`${API_URL}/api/news/${id}`, {
+      const response = await fetch(`/api/news/${id}`, {
         method: 'DELETE'
       });
       const data = await response.json();
@@ -57,7 +56,7 @@ export default function NewsAdmin() {
 
   const togglePublish = async (id, currentStatus) => {
     try {
-      const response = await fetch(`${API_URL}/api/news/${id}`, {
+      const response = await fetch(`/api/news/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

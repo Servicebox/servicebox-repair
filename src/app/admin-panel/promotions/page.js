@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import styles from '../AdminPanel.module.css';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
 export default function PromotionsAdmin() {
   const [promotions, setPromotions] = useState([]);
@@ -20,7 +19,7 @@ export default function PromotionsAdmin() {
 
   const fetchPromotions = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/promotions`);
+      const response = await fetch(`/api/promotions`);
       const data = await response.json();
 
       if (data.success) {
@@ -39,7 +38,7 @@ export default function PromotionsAdmin() {
     if (!confirm('Удалить эту акцию?')) return;
 
     try {
-      const response = await fetch(`${API_URL}/api/promotions/${id}`, {
+      const response = await fetch(`/api/promotions/${id}`, {
         method: 'DELETE'
       });
       const data = await response.json();
@@ -57,7 +56,7 @@ export default function PromotionsAdmin() {
 
   const toggleActive = async (id, currentStatus) => {
     try {
-      const response = await fetch(`${API_URL}/api/promotions/${id}`, {
+      const response = await fetch(`/api/promotions/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

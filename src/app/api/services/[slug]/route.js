@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Service from '@/models/Service';
 import { generateSlug } from '@/lib/slugify';
+import { requireAdmin } from '@/lib/authGuard';
 
 // Вспомогательная функция для проверки валидности ObjectId
 const isValidObjectId = (id) => /^[0-9a-fA-F]{24}$/.test(id);
@@ -99,6 +100,10 @@ export async function GET(request, { params }) {
 }
 
 export async function PUT(request, { params }) {
+  // Редактировать услуги может только администратор (+ проверка Origin от CSRF).
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   try {
     await dbConnect();
     const { slug } = await params;
@@ -189,6 +194,10 @@ export async function PUT(request, { params }) {
 }
 
 export async function DELETE(request, { params }) {
+  // Удалять услуги может только администратор (+ проверка Origin от CSRF).
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   try {
     await dbConnect();
     const { slug } = await params;

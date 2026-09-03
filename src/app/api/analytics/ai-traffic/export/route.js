@@ -2,13 +2,9 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import AiTraffic from '@/models/AiTraffic';
+import { requireAdmin } from '@/lib/authGuard';
 
 export const dynamic = 'force-dynamic';
-
-const checkAuth = (request) => {
-    const cookie = request.headers.get('cookie');
-    return !!cookie && cookie.length > 10;
-};
 
 const escape = (val) => {
     if (val == null) return '""';
@@ -20,11 +16,11 @@ const escape = (val) => {
 };
 
 export async function GET(request) {
-    try {
-        if (!checkAuth(request)) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
+    // Экспорт аналитики доступен только администратору.
+    const denied = await requireAdmin(request);
+    if (denied) return denied;
 
+    try {
         await dbConnect();
         const { searchParams } = new URL(request.url);
 

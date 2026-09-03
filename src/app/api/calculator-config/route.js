@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import CalculatorConfig from '@/models/CalculatorConfig';
+import { requireAdmin } from '@/lib/authGuard';
 
 // GET: Отдаём конфигурацию калькулятору
 export async function GET() {
@@ -16,6 +17,12 @@ export async function GET() {
 
 // POST: Сохраняем изменения из админки
 export async function POST(request) {
+    // Перезаписывать конфиг калькулятора цен может только администратор
+    // (+ проверка Origin от CSRF). Актуальная админка ходит в
+    // /api/admin/calculator-config; этот роут оставлен для совместимости.
+    const denied = await requireAdmin(request);
+    if (denied) return denied;
+
     try {
         await dbConnect();
         const { pricingData } = await request.json();

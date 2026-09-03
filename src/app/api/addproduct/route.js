@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Product from '@/models/Product';
 import Category from '@/models/Category';
+import { requireAdmin } from '@/lib/authGuard';
 
 const generateSlug = (name) => {
   return name
@@ -14,6 +15,10 @@ const generateSlug = (name) => {
 };
 
 export async function POST(request) {
+  // Создавать товары может только администратор (+ проверка Origin от CSRF).
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   try {
     await dbConnect();
     const productData = await request.json();

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import Promotion from '@/models/Promotion';
 import dbConnect from '@/lib/db';
+import { requireAdmin } from '@/lib/authGuard';
 
 export async function GET(request, { params }) {
   try {
@@ -29,6 +30,10 @@ export async function GET(request, { params }) {
 }
 
 export async function PUT(request, { params }) {
+  // Редактировать акции может только администратор (+ проверка Origin от CSRF).
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   try {
     await dbConnect();
     const { id } = await params; // Добавлен await
@@ -63,6 +68,10 @@ export async function PUT(request, { params }) {
 }
 
 export async function DELETE(request, { params }) {
+  // Удалять акции может только администратор (+ проверка Origin от CSRF).
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   try {
     await dbConnect();
     const { id } = await params; // Добавлен await

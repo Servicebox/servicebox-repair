@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './ListProduct.module.css';
 
-const API_URL = 'https://servicebox35.ru';
 
 const emptyProduct = {
   name: "",
@@ -31,7 +30,7 @@ const ListProduct = () => {
 
   // Загрузка категорий
   useEffect(() => {
-    fetch(`${API_URL}/api/categories-with-subcategories`)
+    fetch(`/api/categories-with-subcategories`)
       .then(res => res.json())
       .then(data => setCategories(data))
       .catch(() => setCategories([]));
@@ -74,7 +73,7 @@ const ListProduct = () => {
     try {
       setUploadProgress(30);
 
-      const res = await fetch(`${API_URL}/api/uploads/`, {
+      const res = await fetch(`/api/uploads/`, {
         method: 'POST',
         body: formData
       });
@@ -116,7 +115,7 @@ const ListProduct = () => {
     formData.append('category', 'products');
 
     try {
-      const res = await fetch(`${API_URL}/api/uploads/`, {
+      const res = await fetch(`/api/uploads/`, {
         method: 'POST',
         body: formData
       });
@@ -161,7 +160,7 @@ const ListProduct = () => {
         ? newProduct.subcategory_typed
         : newProduct.subcategory;
 
-      const response = await fetch(`${API_URL}/api/addproduct`, {
+      const response = await fetch(`/api/addproduct`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -197,7 +196,7 @@ const ListProduct = () => {
   // Загрузка списка товаров
   const fetchInfo = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/allproducts`);
+      const response = await fetch(`/api/allproducts`);
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -232,7 +231,7 @@ const ListProduct = () => {
     if (!window.confirm('Удалить этот товар?')) return;
 
     try {
-      const response = await fetch(`${API_URL}/api/removeproduct/${slug}`, {
+      const response = await fetch(`/api/removeproduct/${slug}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
       });
@@ -311,7 +310,7 @@ const ListProduct = () => {
     }
 
     try {
-      const response = await fetch(`${API_URL}/api/updateproduct/${editingProduct.slug}`, {
+      const response = await fetch(`/api/updateproduct/${editingProduct.slug}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

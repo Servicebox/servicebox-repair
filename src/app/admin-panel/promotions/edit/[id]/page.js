@@ -6,7 +6,6 @@ import { useParams, useRouter } from 'next/navigation';
 import PromotionForm from '@/components/PromotionForm/PromotionForm';
 import styles from '../../../../admin-panel/News.module.css';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
 export default function EditPromotionPage() {
   const params = useParams();
@@ -25,7 +24,7 @@ export default function EditPromotionPage() {
           return;
         }
 
-        const response = await fetch(`${API_URL}/api/promotions/${params.id}`);
+        const response = await fetch(`/api/promotions/${params.id}`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -53,7 +52,7 @@ export default function EditPromotionPage() {
     setSaving(true);
 
     try {
-      const response = await fetch(`${API_URL}/api/promotions/${params.id}`, {
+      const response = await fetch(`/api/promotions/${params.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

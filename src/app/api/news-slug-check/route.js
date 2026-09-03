@@ -3,9 +3,14 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import News from '@/models/News';
 import { generateSlug } from '@/lib/slugify';
+import { requireAdmin } from '@/lib/authGuard';
 
-// POST /api/news-slug-check — проверка, свободен ли слаг
+// POST /api/news-slug-check — проверка, свободен ли слаг (инструмент редактора новостей)
 export async function POST(request) {
+  // Только для администратора (+ проверка Origin от CSRF).
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
+
   try {
     await dbConnect();
     const { title, currentSlug, excludeId } = await request.json();

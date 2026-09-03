@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from '../AdminPanel.module.css';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
 // SVG placeholder как data URL
 const PLACEHOLDER_IMAGE =
@@ -62,7 +61,7 @@ export default function ListProduct() {
   useEffect(() => {
     const loadCategories = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/categories-with-subcategories`);
+        const res = await fetch(`/api/categories-with-subcategories`);
         if (res.ok) {
           const data = await res.json();
           setCategories(Array.isArray(data) ? data : []);
@@ -112,7 +111,7 @@ export default function ListProduct() {
 
     try {
       setUploadProgress(30);
-      const res = await fetch(`${API_URL}/api/uploads/`, {
+      const res = await fetch(`/api/uploads/`, {
         method: 'POST',
         body: formData,
       });
@@ -230,7 +229,7 @@ export default function ListProduct() {
         images: newProduct.images.length > 0 ? newProduct.images : [PLACEHOLDER_IMAGE],
       };
 
-      const response = await fetch(`${API_URL}/api/addproduct`, {
+      const response = await fetch(`/api/addproduct`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(productData),
@@ -256,7 +255,7 @@ export default function ListProduct() {
   const fetchInfo = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_URL}/api/allproducts`);
+      const response = await fetch(`/api/allproducts`);
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
 
@@ -290,7 +289,7 @@ export default function ListProduct() {
 
     try {
       const identifier = product.slug || product._id;
-      const response = await fetch(`${API_URL}/api/removeproduct/${identifier}`, {
+      const response = await fetch(`/api/removeproduct/${identifier}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
       });
@@ -360,7 +359,7 @@ export default function ListProduct() {
     formData.append('category', 'products');
 
     try {
-      const res = await fetch(`${API_URL}/api/uploads/`, {
+      const res = await fetch(`/api/uploads/`, {
         method: 'POST',
         body: formData,
       });
@@ -444,7 +443,7 @@ export default function ListProduct() {
         images: editingProduct.images || [],
       };
 
-      const response = await fetch(`${API_URL}/api/updateproduct/${identifier}`, {
+      const response = await fetch(`/api/updateproduct/${identifier}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updateData),
