@@ -142,66 +142,6 @@ export async function GET(request) {
     );
   }
 }
-// PUT - обновление статуса бронирования
-export async function PUT(request, { params }) {
-  await dbConnect();
-
-  try {
-    const { id } = params; // получаем id из параметров пути
-    const { status } = await request.json();
-
-    // Валидация статуса
-    const validStatuses = ['pending', 'confirmed', 'in_progress', 'completed', 'canceled'];
-    if (!validStatuses.includes(status)) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: 'Недопустимый статус'
-        },
-        { status: 400 }
-      );
-    }
-
-    const booking = await Booking.findById(id);
-    if (!booking) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: 'Бронирование не найдено'
-        },
-        { status: 404 }
-      );
-    }
-
-    // Сохраняем предыдущий статус для истории
-    const previousStatus = booking.status;
-
-    // Обновляем статус
-    booking.status = status;
-
-    // Добавляем запись в историю статусов
-    booking.statusHistory.push({
-      status: status,
-      changedAt: new Date(),
-      note: `Статус изменен с "${previousStatus}" на "${status}"`
-    });
-
-    await booking.save();
-
-    console.log(`✅ Статус бронирования ${id} обновлен: ${previousStatus} -> ${status}`);
-
-    return NextResponse.json({
-      success: true,
-      data: booking
-    });
-  } catch (error) {
-    console.error('Update booking error:', error);
-    return NextResponse.json(
-      {
-        success: false,
-        message: error.message
-      },
-      { status: 500 }
-    );
-  }
-}
+// Смена статуса брони — в src/app/api/bookings/[id]/route.js (PUT/PATCH там
+// проверяют вход и владение). Коллекционный роут /api/bookings принимает
+// только GET (список) и POST (создание).

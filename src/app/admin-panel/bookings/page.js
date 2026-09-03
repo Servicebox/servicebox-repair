@@ -42,6 +42,7 @@ export default function BookingsPage() {
     try {
       const response = await fetch(`/api/bookings/${bookingId}`, {
         method: 'PUT',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
