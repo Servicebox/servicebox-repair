@@ -59,3 +59,6 @@ servicebox35-e242f-*.json
 
 # Локальный ledger харденинга безопасности — не коммитить
 .superpowers/sec/
+
+# Устаревшая свалка загрузок — реальное хранилище в <root>/uploads и public/uploads
+src/uploads/
