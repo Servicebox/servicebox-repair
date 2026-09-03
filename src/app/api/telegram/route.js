@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import axios from 'axios';
 import { randomUUID } from 'crypto';
 import { fetchCrm } from '@/lib/crmClient';
+import { getClientIp, rlKey, consumeRateLimit, rateLimitResponse } from '@/lib/rateLimit';
 export const runtime = 'nodejs';
 
 // Используем бота для уведомлений в группу
@@ -9,6 +10,14 @@ const BOT_TOKEN = process.env.NOTIFY_BOT_TOKEN;
 const CHAT_ID = process.env.NOTIFY_CHAT_ID;
 
 export async function POST(request) {
+  // Публичная форма заявки: 10 отправок с IP за 10 минут (защита от флуда
+  // заявками в CRM-инбокс и спама в Telegram; запас на офисный NAT).
+  const rl = await consumeRateLimit(rlKey('lead-form-ip', getClientIp(request)), {
+    max: 10,
+    windowMs: 10 * 60 * 1000,
+  });
+  if (rl.limited) return rateLimitResponse(rl.retryAfterMs);
+
   const { name, phone, description, promotion } = await request.json();
 
   if (!name || !phone) {
@@ -18,6 +27,13 @@ export async function POST(request) {
         error: 'Заполните имя и телефон',
       },
       { status: 400 }
+    );
+  }
+  if (String(name).length > 120 || String(phone).length > 40 ||
+      (description && String(description).length > 3000)) {
+    return NextResponse.json(
+      { success: false, error: 'Слишком длинные данные формы' },
+      { status: 413 }
     );
   }
 

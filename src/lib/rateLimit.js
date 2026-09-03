@@ -134,11 +134,13 @@ export async function resetRateLimit(key) {
   }
 }
 
-/** Единый ответ 429 с Retry-After. */
+/** Единый ответ 429 с Retry-After. Дублируем текст в message и error —
+ *  разные вызывающие фронты читают то одно поле, то другое. */
 export function rateLimitResponse(retryAfterMs) {
   const seconds = Math.max(1, Math.ceil((retryAfterMs || 60_000) / 1000));
+  const text = 'Слишком много попыток. Повторите позже.';
   return NextResponse.json(
-    { message: 'Слишком много попыток. Повторите позже.' },
+    { message: text, error: text, success: false },
     { status: 429, headers: { 'Retry-After': String(seconds) } }
   );
 }

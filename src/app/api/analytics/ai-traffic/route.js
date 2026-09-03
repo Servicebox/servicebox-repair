@@ -4,6 +4,7 @@ import dbConnect from '@/lib/db';
 import AiTraffic from '@/models/AiTraffic';
 import crypto from 'crypto';
 import { requireAdmin } from '@/lib/authGuard';
+import { getClientIp, rlKey, consumeRateLimit, rateLimitResponse } from '@/lib/rateLimit';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = false;
@@ -15,8 +16,17 @@ const KNOWN_BOTS = [
 ];
 
 
-// POST: Запись визита бота (публичный)
+// POST: Запись визита бота (публичный маячок со страницы)
 export async function POST(request) {
+    // Маячок публичный, но пишет в БД по записи на вызов. 300 записей с IP
+    // за 5 минут — быстрая сессия краулера уложится, а подделке обрубаем
+    // хвост. Аналитика некритична, fail-open при недоступности Mongo.
+    const rl = await consumeRateLimit(rlKey('ai-beacon-ip', getClientIp(request)), {
+        max: 300,
+        windowMs: 5 * 60 * 1000,
+    });
+    if (rl.limited) return rateLimitResponse(rl.retryAfterMs);
+
     try {
         await dbConnect();
         const body = await request.json();
@@ -24,6 +34,12 @@ export async function POST(request) {
         // Базовая валидация
         if (!body?.bot || !body?.page?.startsWith('/')) {
             return NextResponse.json({ success: false, error: 'Invalid data' }, { status: 400 });
+        }
+        // Ограничиваем размер полей — каждый вызов это документ в БД.
+        if (String(body.page).length > 512 ||
+            (body.query && String(body.query).length > 512) ||
+            (body.userAgent && String(body.userAgent).length > 512)) {
+            return NextResponse.json({ success: false, error: 'Field too long' }, { status: 413 });
         }
 
         const entry = await AiTraffic.create({

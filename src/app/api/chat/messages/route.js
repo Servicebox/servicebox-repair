@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { fetchCrm } from '@/lib/crmClient';
+import { getClientIp, rlKey, consumeRateLimit, rateLimitResponse } from '@/lib/rateLimit';
 export const runtime = 'nodejs';
 
 export async function GET(request) {
@@ -36,11 +37,22 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
+  // Анонимный чат-виджет → CRM-инбокс. 60 сообщений с IP за 5 минут
+  // (запас на живую переписку и офисный NAT).
+  const rl = await consumeRateLimit(rlKey('chat-msg-ip', getClientIp(request)), {
+    max: 60,
+    windowMs: 5 * 60 * 1000,
+  });
+  if (rl.limited) return rateLimitResponse(rl.retryAfterMs);
+
   const body = await request.json();
   const { sessionId, text, senderName } = body;
 
   if (!sessionId || !text?.trim()) {
     return NextResponse.json({ error: 'sessionId и text обязательны' }, { status: 400 });
+  }
+  if (String(text).length > 4000 || (senderName && String(senderName).length > 120)) {
+    return NextResponse.json({ error: 'Сообщение слишком длинное' }, { status: 413 });
   }
 
   let crmRes;

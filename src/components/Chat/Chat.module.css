@@ -614,6 +614,18 @@
   border: 1px solid var(--color-border);
 }
 
+/* Ошибка отправки сообщения (напр. слишком часто — 429) */
+.chatSendError {
+  margin: 0 18px 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--color-danger, #b42318);
+  background: var(--color-danger-bg, #fef3f2);
+  border: 1px solid var(--color-danger, #fecdca);
+  border-radius: 8px;
+}
+
 /* Форма ввода */
 .chatInputForm {
   display: flex;

@@ -47,6 +47,7 @@ export default function Chat() {
   const [isEditingName, setIsEditingName] = useState(false);
   const [tempName, setTempName] = useState('');
   const [showNameModal, setShowNameModal] = useState(false);
+  const [sendError, setSendError] = useState('');
 
   const chatEndRef = useRef(null);
   const sndSend = useRef(null);
@@ -121,6 +122,7 @@ export default function Chat() {
     }
 
     const messageText = text.trim();
+    setSendError('');
 
     try {
       // Save to MongoDB
@@ -151,6 +153,13 @@ export default function Chat() {
       setText('');
     } catch (error) {
       console.error('Send error:', error.response?.data || error.message);
+      // Сообщение НЕ отправлено — не очищаем поле, показываем причину,
+      // чтобы пользователь мог повторить (частый случай — 429 rate limit).
+      setSendError(
+        error.response?.status === 429
+          ? 'Слишком много сообщений подряд. Подождите минуту и попробуйте снова.'
+          : 'Не удалось отправить сообщение. Попробуйте ещё раз.'
+      );
     } finally {
       setPending(false);
     }
@@ -362,6 +371,10 @@ export default function Chat() {
             <div ref={chatEndRef} />
           </div>
 
+          {sendError && (
+            <div className={styles.chatSendError} role="alert">{sendError}</div>
+          )}
+
           <form className={styles.chatInputForm} onSubmit={sendMessage}>
             <button
               type="button"
@@ -397,7 +410,7 @@ export default function Chat() {
               className={styles.chatInput}
               placeholder={userName ? 'Ваше сообщение...' : 'Введите имя для начала диалога'}
               value={text}
-              onChange={(e) => setText(e.target.value)}
+              onChange={(e) => { setText(e.target.value); if (sendError) setSendError(''); }}
               rows={1}
               disabled={pending || !userName}
               onKeyDown={(e) => {

@@ -2,6 +2,7 @@ export const runtime = 'nodejs';
 
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
+import { getClientIp, rlKey, consumeRateLimit, rateLimitResponse } from '@/lib/rateLimit';
 
 const schema = z.object({
   name:    z.string().trim().min(2,  'Введите имя (минимум 2 символа)').max(100),
@@ -10,25 +11,10 @@ const schema = z.object({
   message: z.string().trim().max(5000).optional().default(''),
 });
 
-// Rate limit: 3 запроса с одного IP за 10 минут
-const RATE_LIMIT_MAX      = 3;
-const RATE_LIMIT_WINDOW   = 10 * 60 * 1000; // 10 мин в мс
-const rateLimitMap        = new Map(); // ip → { count, resetAt }
-
-function checkRateLimit(ip) {
-  const now   = Date.now();
-  const entry = rateLimitMap.get(ip);
-
-  if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
-    return true;
-  }
-
-  if (entry.count >= RATE_LIMIT_MAX) return false;
-
-  entry.count += 1;
-  return true;
-}
+// Rate limit: 5 заявок с одного IP за 10 минут. Хранилище — Mongo
+// (переживает рестарт, общее для всех инстансов), fail-open при сбое БД.
+const RATE_LIMIT_MAX    = 5;
+const RATE_LIMIT_WINDOW = 10 * 60 * 1000;
 
 function getMskTime() {
   return new Date().toLocaleString('ru-RU', {
@@ -82,17 +68,12 @@ async function sendToTelegram(text) {
 }
 
 export async function POST(request) {
-  const ip =
-    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-    request.headers.get('x-real-ip') ||
-    'unknown';
-
-  if (!checkRateLimit(ip)) {
-    return NextResponse.json(
-      { success: false, error: 'Слишком много запросов. Попробуйте через 10 минут.' },
-      { status: 429 }
-    );
-  }
+  const ip = getClientIp(request);
+  const rl = await consumeRateLimit(rlKey('contact-ip', ip), {
+    max: RATE_LIMIT_MAX,
+    windowMs: RATE_LIMIT_WINDOW,
+  });
+  if (rl.limited) return rateLimitResponse(rl.retryAfterMs);
 
   let body;
   try {
