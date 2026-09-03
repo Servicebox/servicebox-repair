@@ -26,6 +26,58 @@ if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 16) {
 }
 
 // ==========================================
+// 1b. ФИЛЬТР ШУМА В STDERR (только прод)
+// ==========================================
+// Next.js пишет в stderr два безобидных внутренних сообщения на каждый
+// POST с невалидным Next-Action: "Failed to find Server Action ..." и
+// "Server Reference ID did not match ...". Их массово генерируют боты
+// (Next-Action: "x") и браузеры со старым кэшем после редеплоя — за месяц
+// в err-логе накопилось 23k+ таких строк, реальные ошибки в них тонут.
+// Глушим ровно эти два паттерна; всё остальное (в т.ч. наши ❌-логи и
+// стектрейсы) уходит в stderr без изменений. Раз в 5 минут пишем сводку
+// со счётчиком — чтобы устойчивый всплеск после редеплоя (реальная
+// рассинхронизация бандла у живых пользователей) был всё-таки виден.
+// В dev фильтр не ставим — там это сообщение нужно при разработке actions.
+if (process.env.NODE_ENV === 'production') {
+  const NEXT_STDERR_NOISE =
+    /Failed to find Server Action|Server Reference ID did not match the expected format/;
+  const origStderrWrite = process.stderr.write.bind(process.stderr);
+  let noiseDropped = 0;
+  let noiseWindowStart = Date.now();
+  const NOISE_REPORT_MS = 5 * 60 * 1000;
+
+  process.stderr.write = function (chunk, encoding, cb) {
+    try {
+      const s =
+        typeof chunk === 'string'
+          ? chunk
+          : Buffer.isBuffer(chunk)
+            ? chunk.toString('utf8')
+            : '';
+      if (s && NEXT_STDERR_NOISE.test(s)) {
+        noiseDropped += 1;
+        const now = Date.now();
+        if (now - noiseWindowStart >= NOISE_REPORT_MS) {
+          const n = noiseDropped;
+          const mins = Math.round((now - noiseWindowStart) / 60000);
+          noiseDropped = 0;
+          noiseWindowStart = now;
+          origStderrWrite(
+            `[stderr-filter] проглочено ${n} строк "Failed to find Server Action" за ~${mins} мин\n`
+          );
+        }
+        const done = typeof encoding === 'function' ? encoding : cb;
+        if (typeof done === 'function') done();
+        return true;
+      }
+    } catch {
+      /* фильтр не должен ломать логирование — при любой ошибке пишем как обычно */
+    }
+    return origStderrWrite(chunk, encoding, cb);
+  };
+}
+
+// ==========================================
 // 2. ИМПОРТЫ
 // ==========================================
 import { createServer } from 'http';
