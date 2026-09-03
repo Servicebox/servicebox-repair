@@ -19,7 +19,9 @@ export default function NewsAdmin() {
 
   const fetchNews = async () => {
     try {
-      const response = await fetch(`/api/news`);
+      // ?all=1 — админский список видит и черновики (сервер сам проверяет роль
+      // по сессии; не-админу вернутся только опубликованные).
+      const response = await fetch(`/api/news?all=1`, { credentials: 'include' });
       const data = await response.json();
 
       if (data.success) {
