@@ -219,6 +219,13 @@ export default function ProductDisplay({ product }) {
                   </div>
                 )}
               </div>
+
+              {availableStock > 0 && (
+                <p className={styles.stockNote}>
+                  Не весь ассортимент представлен в магазине на ул. Северная.
+                  Доставка со склада — в течение 1–2 часов.
+                </p>
+              )}
             </div>
 
             <div className={styles.quantityControls}>

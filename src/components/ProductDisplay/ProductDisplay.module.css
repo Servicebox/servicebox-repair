@@ -299,6 +299,14 @@
   border-radius: 10px;
 }
 
+/* Пояснение о наличии на точке vs. складе — не весь товар лежит в магазине */
+.stockNote {
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+}
+
 .quantityControls {
   margin-bottom: 25px;
   padding-bottom: 25px;
