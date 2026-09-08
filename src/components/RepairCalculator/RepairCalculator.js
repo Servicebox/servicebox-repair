@@ -1,8 +1,9 @@
 'use client';
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { BUSINESS } from '@/lib/constants';
 import { resolvePrice } from '@/lib/resolve-price';
+import { trackCalcPriceShown, trackCalcCtaClick } from '@/lib/metrika';
 
 // Статичный список категорий устройств калькулятора — те же 6, что и в
 // src/components/Admin/PricingMatrix/PricingMatrix.js. Живых данных на этот
@@ -149,6 +150,24 @@ export default function RepairCalculator({ initialDeviceType = null, initialServ
 
         return { minTotal, maxTotal, details, modelName: model.name };
     }, [model, selectedServices, applicableServices]);
+
+    // Цель Метрики "показ цены" — один раз за сеанс расчёта: срабатывает,
+    // когда цена впервые появилась, и снова только после того, как её
+    // спрятали (сброс / снятие всех услуг).
+    const priceShownRef = useRef(false);
+    useEffect(() => {
+        if (calculatePrice && !priceShownRef.current) {
+            priceShownRef.current = true;
+            trackCalcPriceShown({
+                deviceType,
+                model: calculatePrice.modelName,
+                minTotal: calculatePrice.minTotal,
+                maxTotal: calculatePrice.maxTotal,
+            });
+        } else if (!calculatePrice) {
+            priceShownRef.current = false;
+        }
+    }, [calculatePrice, deviceType]);
 
     return (
         <>
@@ -329,10 +348,10 @@ export default function RepairCalculator({ initialDeviceType = null, initialServ
                                     ⚡ *Цена указана только за работу мастера<br />Стоимость запчастей рассчитывается отдельно
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
-                                    <a href={`tel:${BUSINESS.phones.primary.replace(/-/g, '')}`} className="flex items-center justify-center py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform" style={{ background: 'var(--color-success)', color: 'var(--color-text-inverse)' }}>
+                                    <a href={`tel:${BUSINESS.phones.primary.replace(/-/g, '')}`} onClick={() => trackCalcCtaClick('phone')} className="flex items-center justify-center py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform" style={{ background: 'var(--color-success)', color: 'var(--color-text-inverse)' }}>
                                         📞 {BUSINESS.phonesFormatted.primary}
                                     </a>
-                                    <Link href="/contacts" className="flex items-center justify-center py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform" style={{ background: 'var(--color-bg-dark)', color: 'var(--color-primary-dark)' }}>
+                                    <Link href="/contacts" onClick={() => trackCalcCtaClick('visit')} className="flex items-center justify-center py-4 rounded-xl font-bold text-lg hover:scale-105 transition-transform" style={{ background: 'var(--color-bg-dark)', color: 'var(--color-primary-dark)' }}>
                                         📍 Приехать
                                     </Link>
                                 </div>

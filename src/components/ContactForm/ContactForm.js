@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import FormWrapper from './FormWrapper';
 import styles from './ContactForm.module.css';
+import { trackLead } from '@/lib/metrika';
 
 const FIELDS = {
   name:    { label: 'Имя', min: 2,  msg: 'Введите имя (минимум 2 символа)' },
@@ -56,6 +57,7 @@ export default function ContactForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return; // защита от двойного клика
     setResult(null);
 
     const fieldsToValidate = ['name', 'email', 'phone', 'message'];
@@ -83,6 +85,7 @@ export default function ContactForm() {
       const data = await res.json();
 
       if (res.ok && data.success) {
+        trackLead('ContactForm');
         setResult({ ok: true, message: 'Заявка отправлена! Мы свяжемся с вами в ближайшее время.' });
         setFormData({ name: '', email: '', phone: '', message: '' });
         setTouched({});

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import Modal from "../Modal/Modal";
 import PrivacyCheckbox from "../PrivacyCheckbox/PrivacyCheckbox";
 import styles from "./FormWithoutOverlay.module.css";
+import { trackLead } from "@/lib/metrika";
 
 const FormWithoutOverlay = ({ close, onSave, saving, promotion, submitSuccess }) => {
   const [name, setName] = useState('');
@@ -49,7 +50,8 @@ const FormWithoutOverlay = ({ close, onSave, saving, promotion, submitSuccess })
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    if (isLoading || saving) return; // защита от двойного клика
+
     if (!privacyAgreed) {
       setSubmitError('Необходимо согласие на обработку персональных данных');
       return;
@@ -74,6 +76,7 @@ const FormWithoutOverlay = ({ close, onSave, saving, promotion, submitSuccess })
       const result = await response.json();
       
       if (response.ok && result.success) {
+        trackLead('FormWithoutOverlay');
         onSave && onSave({ name, phone, description, promotion: promotion?.title });
         
         setSuccessSubmit(true);

@@ -83,3 +83,31 @@ export function trackOrderCreated({ orderNumber, totalAmount, products, isPrepai
 export function trackBookingSubmitted(serviceName) {
   reachGoal('booking_submitted', { service: serviceName });
 }
+
+// Заявка через любую форму сайта (форма-оверлей, форма без оверлея, форма
+// контактов). Единая цель lead_form_submitted в кабинете Метрики; source —
+// какая именно форма, для разбивки в отчётах.
+export function trackLead(source) {
+  reachGoal('lead_form_submitted', source ? { source } : undefined);
+}
+
+// Калькулятор ремонта: посетитель дошёл до экрана с итоговой ценой.
+// Ключевое микро-конверсионное событие для сервиса.
+export function trackCalcPriceShown(params) {
+  reachGoal('calc_price_shown', params);
+}
+
+// Калькулятор: клик по кнопке связи на экране цены (kind: 'phone' | 'visit').
+export function trackCalcCtaClick(kind) {
+  reachGoal('calc_cta_click', kind ? { kind } : undefined);
+}
+
+// Онлайн-чат: посетитель открыл виджет.
+export function trackChatOpened() {
+  reachGoal('chat_opened');
+}
+
+// Онлайн-чат: посетитель отправил сообщение.
+export function trackChatMessageSent() {
+  reachGoal('chat_message_sent');
+}

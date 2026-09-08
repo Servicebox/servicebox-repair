@@ -6,6 +6,7 @@ import Image from "next/image";
 import styles from "./Form.module.css";
 import Modal from "../Modal/Modal";
 import PrivacyCheckbox from "../PrivacyCheckbox/PrivacyCheckbox";
+import { trackLead } from "@/lib/metrika";
 const CloseIcon = "/images/closes.svg";
 
 const initialState = { name: "", phone: "", description: "" };
@@ -59,8 +60,9 @@ export default function Form({ onClose }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (isLoading) return; // защита от двойного клика (двойная заявка + двойная цель)
     setTouched({ name: true, phone: true });
-    
+
     if (!privacyAgreed) {
       setSubmitError('Необходимо согласие на обработку персональных данных');
       return;
@@ -81,6 +83,7 @@ export default function Form({ onClose }) {
       });
       const result = await res.json();
       if (result.success) {
+        trackLead('FormOverlay');
         setSuccess(true);
         setTimeout(() => {
           setSuccess(false);

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import axios from 'axios';
 
 import styles from './Chat.module.css';
+import { trackChatOpened, trackChatMessageSent } from '@/lib/metrika';
 
 // Импортируем изображения с корректными путями
 const userIcon = "/images/user.svg";
@@ -151,6 +152,7 @@ export default function Chat() {
 
       setMessages((prev) => [...prev, newMsg]);
       setText('');
+      trackChatMessageSent(); // цель Метрики — сообщение успешно отправлено
     } catch (error) {
       console.error('Send error:', error.response?.data || error.message);
       // Сообщение НЕ отправлено — не очищаем поле, показываем причину,
@@ -203,7 +205,10 @@ export default function Chat() {
     return () => clearInterval(interval);
   }, [open, userName]);
 
-  const toggleChat = () => setOpen((prev) => !prev);
+  const toggleChat = () => {
+    if (!open) trackChatOpened(); // цель Метрики — только при открытии
+    setOpen((prev) => !prev);
+  };
   const closeNameModal = () => {
     setOpen(false);
     setShowNameModal(false);
