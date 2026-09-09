@@ -10,7 +10,7 @@ const METRIKA_ID = process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID;
 // Хит за самую первую загрузку страницы уже отправляет initScript (onload
 // ниже) — пропускаем первый прогон эффекта, иначе первый визит на сайт
 // считается дважды и портит статистику по просмотрам/отказам в Метрике.
-function MetrikaPageTracker() {
+function MetrikaPageTracker({ webvisorAlready }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const isFirstRun = useRef(true);
@@ -25,6 +25,25 @@ function MetrikaPageTracker() {
     window.ym(Number(METRIKA_ID), 'hit', url);
   }, [pathname, searchParams]);
 
+  // Счётчик инициализируется один раз (next/script дедуплицирует по id и
+  // повторно inline-init не выполнит). Поэтому если посетитель дал согласие
+  // на аналитику уже ПОСЛЕ загрузки счётчика — досылаем ym('init') с
+  // webvisor:true по событию cookieConsentChange (его шлёт updateConsent).
+  useEffect(() => {
+    if (webvisorAlready) return;
+    const onConsentChange = (e) => {
+      if (e?.detail?.analytics === true && typeof window !== 'undefined' && window.ym && METRIKA_ID) {
+        window.ym(Number(METRIKA_ID), 'init', {
+          webvisor: true,
+          ecommerce: 'dataLayer',
+          trackHash: true,
+        });
+      }
+    };
+    window.addEventListener('cookieConsentChange', onConsentChange);
+    return () => window.removeEventListener('cookieConsentChange', onConsentChange);
+  }, [webvisorAlready]);
+
   return null;
 }
 
@@ -34,13 +53,17 @@ function MetrikaPageTracker() {
  * Подключается в app/layout.js внутри тега <body>.
  * Рендерится только на клиенте — SSR-безопасен (next/script + 'afterInteractive').
  */
-export default function YandexMetrika() {
+export default function YandexMetrika({ webvisor = false }) {
   if (!METRIKA_ID) {
     if (process.env.NODE_ENV === 'development') {
       console.warn('[YandexMetrika] NEXT_PUBLIC_YANDEX_METRIKA_ID не задан');
     }
     return null;
   }
+
+  // Вебвизор (запись действий пользователя) включаем только при явном
+  // согласии на аналитику — см. components/Analytics/Analytics.js.
+  const webvisorFlag = webvisor === true;
 
   const initScript = `
     (function(m,e,t,r,i,k,a){
@@ -53,7 +76,7 @@ export default function YandexMetrika() {
           clickmap:true,
           trackLinks:true,
           accurateTrackBounce:true,
-          webvisor:true,
+          webvisor:${webvisorFlag},
           ecommerce:'dataLayer',
           trackHash:true,
           ut:'noindex'
@@ -76,7 +99,7 @@ export default function YandexMetrika() {
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{ __html: initScript }}
       />
-      <MetrikaPageTracker />
+      <MetrikaPageTracker webvisorAlready={webvisorFlag} />
       <noscript>
         <div>
           <img

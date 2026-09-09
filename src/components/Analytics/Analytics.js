@@ -4,6 +4,7 @@
 import { useEffect } from 'react';
 import { useCookieConsent } from '../hooks/useCookieConsent';
 import YandexMetrika from '../YandexMetrika/YandexMetrika';
+import VisitBeacon from '../VisitBeacon/VisitBeacon';
 // ⚠️ GTM удалён отсюда — он теперь размещён в layout.js
 
 // Список ИИ-ботов для отслеживания (опционально, для аналитики)
@@ -21,7 +22,7 @@ const AI_BOTS = [
 ];
 
 export default function Analytics() {
-  const { hasConsent } = useCookieConsent();
+  const { consent, hasConsent } = useCookieConsent();
 
   // Инициализация dataLayer для совместимости с тегами в GTM
   useEffect(() => {
@@ -55,10 +56,22 @@ export default function Analytics() {
     }
   }, [hasConsent]);
 
-  // Не загружаем Яндекс.Метрику без согласия пользователя
-  if (!hasConsent('analytics')) {
+  // Явный отказ пользователя («Только необходимые» или выключенный тумблер
+  // аналитики) — не грузим ничего. Признак явного выбора — проставленная
+  // consent.date (по умолчанию, до выбора, она null).
+  const explicitlyDeclined = Boolean(consent && consent.date && consent.analytics === false);
+  if (explicitlyDeclined) {
     return null;
   }
 
-  return <YandexMetrika />;
+  // По умолчанию (посетитель ещё ничего не выбрал) и при согласии — грузим
+  // обезличенную аналитику первой стороны: счётчик Метрики, цели и наш
+  // beacon посещений. Вебвизор (запись действий пользователя) включаем
+  // только при явном согласии на аналитику.
+  return (
+    <>
+      <YandexMetrika webvisor={hasConsent('analytics')} />
+      <VisitBeacon />
+    </>
+  );
 }

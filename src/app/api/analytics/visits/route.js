@@ -1,63 +1,64 @@
 // app/api/analytics/visits/route.js
 import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
+import mongoose from 'mongoose';
 import dbConnect from '@/lib/db';
+import Visit from '@/models/Visit';
 import { verifyToken } from '@/lib/jwt';
 import { getServerSession } from '@/lib/session';
+import { getClientIp, rlKey, consumeRateLimit, rateLimitResponse } from '@/lib/rateLimit';
 
-// Временное хранилище в памяти (для демо). Ограничено кольцевым буфером —
-// иначе поток POST-ов (в т.ч. злонамеренный) разрастил бы массив до OOM.
-const MAX_VISITS = 5000;
-const visits = [];
+const cut = (v, n) => (typeof v === 'string' ? v.slice(0, n) : undefined);
 
-function pushVisit(visit) {
-  visits.push(visit);
-  if (visits.length > MAX_VISITS) {
-    visits.splice(0, visits.length - MAX_VISITS);
-  }
-}
-
+// POST — клиентский beacon на каждый переход по страницам. Публичный,
+// поэтому ограничен по частоте (реальная сессия не превысит) и жёстко
+// режется по длине полей. fail-open при недоступности Mongo.
 export async function POST(request) {
+  const rl = await consumeRateLimit(rlKey('visit-beacon-ip', getClientIp(request)), {
+    max: 150,
+    windowMs: 5 * 60 * 1000,
+  });
+  if (rl.limited) return rateLimitResponse(rl.retryAfterMs);
+
   try {
-    await dbConnect();
     const body = await request.json().catch(() => ({}));
+    const page = cut(body.page, 512);
+    if (!page || !page.startsWith('/')) {
+      return NextResponse.json({ success: false, error: 'bad page' }, { status: 400 });
+    }
 
-    // Поля клиента режем по длине — иначе 5000 записей × мегабайтные строки
-    // page/referrer всё равно съедят память.
-    const cut = (v, n) => (typeof v === 'string' ? v.slice(0, n) : undefined);
+    await dbConnect();
 
-    const visit = {
-      id: Date.now(),
-      userId: null,
-      sessionId: cut(request.cookies.get('sessionId')?.value, 128) || 'anonymous',
-      page: cut(body.page, 512),
+    const doc = {
+      page,
+      referrer: cut(body.referrer, 512),
       device: cut(body.device, 32) || 'desktop',
       browser: cut(body.browser, 64) || 'unknown',
-      timestamp: new Date(),
-      referrer: cut(body.referrer, 512),
+      visitorId: cut(body.visitorId, 64),
+      userId: null,
+      ts: new Date(),
     };
 
-    // Проверяем, авторизован ли пользователь
     const token = request.cookies.get('token')?.value;
     if (token) {
       const decoded = verifyToken(token);
-      if (decoded) visit.userId = decoded.id ?? decoded.userId;
+      const uid = decoded?.userId ?? decoded?.id;
+      if (uid && mongoose.Types.ObjectId.isValid(uid)) doc.userId = uid;
     }
 
-    pushVisit(visit);
-
-    return NextResponse.json({ success: true, visitId: visit.id });
+    await Visit.create(doc);
+    return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Analytics visit error:', error);
+    console.error('Analytics visit error:', error?.message || error);
     return NextResponse.json({ success: false }, { status: 500 });
   }
 }
 
+// GET — сводка для админского дашборда. Роль из БД (getServerSession).
 export async function GET(request) {
   try {
     await dbConnect();
 
-    // Роль берём из БД (getServerSession), а не из claim'а токена.
     const session = await getServerSession(request);
     if (!session) {
       return NextResponse.json({ message: 'Не авторизован' }, { status: 401 });
@@ -67,38 +68,57 @@ export async function GET(request) {
     }
 
     const { searchParams } = new URL(request.url);
-    const days = parseInt(searchParams.get('days')) || 7;
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - days);
+    const days = Math.min(90, Math.max(1, parseInt(searchParams.get('days'), 10) || 7));
+    const startDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
+    const match = { ts: { $gte: startDate } };
 
-    // Фильтруем визиты за период
-    const periodVisits = visits.filter(v => new Date(v.timestamp) > startDate);
+    const [total, uniqAgg, devices, browsers, topPages, byDay] = await Promise.all([
+      Visit.countDocuments(match),
+      // Уникальных считаем двухступенчатым $group→$count: промежуточный
+      // $group стримит по одному документу на каждый id, не собирает
+      // огромный массив в одном документе (иначе при большом числе
+      // visitorId агрегат упирался бы в лимит BSON 16 МБ и весь GET падал).
+      Visit.aggregate([
+        { $match: match },
+        { $group: { _id: { $ifNull: ['$userId', '$visitorId'] } } },
+        { $match: { _id: { $ne: null } } },
+        { $count: 'uniq' },
+      ]),
+      Visit.aggregate([{ $match: match }, { $group: { _id: '$device', c: { $sum: 1 } } }]),
+      Visit.aggregate([{ $match: match }, { $group: { _id: '$browser', c: { $sum: 1 } } }]),
+      Visit.aggregate([
+        { $match: match },
+        { $group: { _id: '$page', c: { $sum: 1 } } },
+        { $sort: { c: -1 } },
+        { $limit: 20 },
+      ]),
+      Visit.aggregate([
+        { $match: match },
+        {
+          $group: {
+            _id: { $dateToString: { format: '%Y-%m-%d', date: '$ts', timezone: 'Europe/Moscow' } },
+            c: { $sum: 1 },
+          },
+        },
+        { $sort: { _id: 1 } },
+      ]),
+    ]);
 
-    // Считаем статистику
+    const toObj = (arr) =>
+      Object.fromEntries(arr.filter((x) => x._id != null && x._id !== '').map((x) => [x._id, x.c]));
+
     const stats = {
-      totalVisits: periodVisits.length,
-      uniqueUsers: new Set(periodVisits.map(v => v.userId || v.sessionId)).size,
-      devices: {},
-      browsers: {},
-      topPages: {},
-      byDay: {}
+      totalVisits: total,
+      uniqueUsers: uniqAgg[0]?.uniq || 0,
+      devices: toObj(devices),
+      browsers: toObj(browsers),
+      topPages: toObj(topPages),
+      byDay: Object.fromEntries(byDay.map((x) => [x._id, x.c])),
     };
-
-    periodVisits.forEach(visit => {
-      // Устройства
-      stats.devices[visit.device] = (stats.devices[visit.device] || 0) + 1;
-      // Браузеры
-      stats.browsers[visit.browser] = (stats.browsers[visit.browser] || 0) + 1;
-      // Популярные страницы
-      stats.topPages[visit.page] = (stats.topPages[visit.page] || 0) + 1;
-      // По дням
-      const day = visit.timestamp.toLocaleDateString('ru-RU');
-      stats.byDay[day] = (stats.byDay[day] || 0) + 1;
-    });
 
     return NextResponse.json({ stats, period: days });
   } catch (error) {
-    console.error('Analytics GET error:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error('Analytics GET error:', error?.message || error);
+    return NextResponse.json({ error: 'Ошибка' }, { status: 500 });
   }
 }

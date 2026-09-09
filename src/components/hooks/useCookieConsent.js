@@ -55,12 +55,17 @@ export function useCookieConsent() {
         detail: consentWithDate
       }));
       
-      // Если аналитика отключена, очищаем соответствующие куки
+      // Если аналитика отключена, очищаем куки Google Analytics и Яндекс.Метрики
       if (!newConsent.analytics) {
-        // Очищаем куки аналитики
-        document.cookie = '_ga=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        document.cookie = '_gid=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        document.cookie = '_ym_uid=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        const expired = 'expires=Thu, 01 Jan 1970 00:00:01 GMT';
+        for (const name of [
+          '_ga', '_gid', '_gat',
+          '_ym_uid', '_ym_d', '_ym_isad', '_ym_visorc', '_ym_hostIndex',
+        ]) {
+          document.cookie = `${name}=; path=/; ${expired};`;
+          // Метрика ставит часть кук на корневой домен — чистим и его.
+          document.cookie = `${name}=; path=/; domain=.${window.location.hostname}; ${expired};`;
+        }
       }
       
       return true;
