@@ -76,9 +76,11 @@ export default function CookieConsent() {
 
         <div className={styles.cookieContent}>
           <p className={styles.cookieText}>
-            Мы используем файлы cookie для обеспечения работы сайта, аналитики
-            и улучшения пользовательского опыта. Вы можете настроить свои
-            предпочтения или принять все.
+            Мы используем необходимые файлы cookie для работы сайта. Аналитика
+            Яндекс.Метрики (с собственными cookie <code>_ym_*</code>)
+            подключается только с вашего согласия. Обезличенный подсчёт
+            посещаемости ведётся без cookie. Вы можете принять всё или
+            оставить только необходимое.
           </p>
 
           {showDetails && (
@@ -121,8 +123,11 @@ export default function CookieConsent() {
                     </label>
                   </div>
                   <p className={styles.typeDescription}>
-                    Помогают анализировать анонимный трафик и улучшать сайт.
-                    Не передают личные данные.
+                    Яндекс.Метрика: анализ посещаемости и источников трафика,
+                    карта кликов, Вебвизор. Ставит cookie <code>_ym_uid</code>,{' '}
+                    <code>_ym_d</code> и др. на срок до 1 года. Данные
+                    обрабатываются в обезличенном виде. Отключены по умолчанию —
+                    подключаются только при вашем согласии.
                   </p>
                 </div>
               </div>
@@ -138,10 +143,19 @@ export default function CookieConsent() {
             >
               {showDetails ? 'Скрыть настройки' : 'Настроить'}
             </button>
+            {showDetails && (
+              <button
+                type="button"
+                className={styles.secondaryButton}
+                onClick={acceptSelected}
+              >
+                Сохранить выбор
+              </button>
+            )}
             <button
               type="button"
               className={styles.secondaryButton}
-              onClick={showDetails ? acceptSelected : acceptNecessary}
+              onClick={acceptNecessary}
             >
               Только необходимые
             </button>

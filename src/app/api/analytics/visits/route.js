@@ -1,10 +1,8 @@
 // app/api/analytics/visits/route.js
 import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
-import mongoose from 'mongoose';
 import dbConnect from '@/lib/db';
 import Visit from '@/models/Visit';
-import { verifyToken } from '@/lib/jwt';
 import { getServerSession } from '@/lib/session';
 import { getClientIp, rlKey, consumeRateLimit, rateLimitResponse } from '@/lib/rateLimit';
 
@@ -29,24 +27,16 @@ export async function POST(request) {
 
     await dbConnect();
 
-    const doc = {
+    // Личность пользователя не записываем даже для авторизованных — счётчик
+    // полностью обезличенный, без привязки истории просмотров к аккаунту.
+    await Visit.create({
       page,
       referrer: cut(body.referrer, 512),
       device: cut(body.device, 32) || 'desktop',
       browser: cut(body.browser, 64) || 'unknown',
       visitorId: cut(body.visitorId, 64),
-      userId: null,
       ts: new Date(),
-    };
-
-    const token = request.cookies.get('token')?.value;
-    if (token) {
-      const decoded = verifyToken(token);
-      const uid = decoded?.userId ?? decoded?.id;
-      if (uid && mongoose.Types.ObjectId.isValid(uid)) doc.userId = uid;
-    }
-
-    await Visit.create(doc);
+    });
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Analytics visit error:', error?.message || error);
@@ -80,8 +70,8 @@ export async function GET(request) {
       // visitorId агрегат упирался бы в лимит BSON 16 МБ и весь GET падал).
       Visit.aggregate([
         { $match: match },
-        { $group: { _id: { $ifNull: ['$userId', '$visitorId'] } } },
-        { $match: { _id: { $ne: null } } },
+        { $match: { visitorId: { $ne: null } } },
+        { $group: { _id: '$visitorId' } },
         { $count: 'uniq' },
       ]),
       Visit.aggregate([{ $match: match }, { $group: { _id: '$device', c: { $sum: 1 } } }]),

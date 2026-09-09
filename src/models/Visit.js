@@ -11,9 +11,9 @@ const VisitSchema = new mongoose.Schema(
     device: { type: String, maxlength: 32, default: 'desktop' },
     browser: { type: String, maxlength: 64, default: 'unknown' },
     // Анонимный id посетителя из localStorage (не кука, не PII) — только для
-    // грубой оценки «уникальных».
+    // грубой оценки «уникальных». Личность пользователя НЕ записываем:
+    // счётчик обезличенный и не привязывает историю просмотров к аккаунту.
     visitorId: { type: String, maxlength: 64 },
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
     ts: { type: Date, default: Date.now },
   },
   { versionKey: false }

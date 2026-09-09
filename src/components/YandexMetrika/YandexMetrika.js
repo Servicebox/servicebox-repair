@@ -10,7 +10,7 @@ const METRIKA_ID = process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID;
 // Хит за самую первую загрузку страницы уже отправляет initScript (onload
 // ниже) — пропускаем первый прогон эффекта, иначе первый визит на сайт
 // считается дважды и портит статистику по просмотрам/отказам в Метрике.
-function MetrikaPageTracker({ webvisorAlready }) {
+function MetrikaPageTracker() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const isFirstRun = useRef(true);
@@ -25,45 +25,24 @@ function MetrikaPageTracker({ webvisorAlready }) {
     window.ym(Number(METRIKA_ID), 'hit', url);
   }, [pathname, searchParams]);
 
-  // Счётчик инициализируется один раз (next/script дедуплицирует по id и
-  // повторно inline-init не выполнит). Поэтому если посетитель дал согласие
-  // на аналитику уже ПОСЛЕ загрузки счётчика — досылаем ym('init') с
-  // webvisor:true по событию cookieConsentChange (его шлёт updateConsent).
-  useEffect(() => {
-    if (webvisorAlready) return;
-    const onConsentChange = (e) => {
-      if (e?.detail?.analytics === true && typeof window !== 'undefined' && window.ym && METRIKA_ID) {
-        window.ym(Number(METRIKA_ID), 'init', {
-          webvisor: true,
-          ecommerce: 'dataLayer',
-          trackHash: true,
-        });
-      }
-    };
-    window.addEventListener('cookieConsentChange', onConsentChange);
-    return () => window.removeEventListener('cookieConsentChange', onConsentChange);
-  }, [webvisorAlready]);
-
   return null;
 }
 
 /**
  * Компонент Яндекс.Метрики для Next.js App Router.
  * Использует переменную NEXT_PUBLIC_YANDEX_METRIKA_ID.
- * Подключается в app/layout.js внутри тега <body>.
- * Рендерится только на клиенте — SSR-безопасен (next/script + 'afterInteractive').
+ * Рендерится в components/Analytics/Analytics.js ТОЛЬКО при явном согласии
+ * пользователя на аналитические cookie (баннер cookie) — поэтому здесь
+ * вебвизор включён безусловно: раз компонент смонтирован, согласие есть.
+ * SSR-безопасен (next/script + 'afterInteractive').
  */
-export default function YandexMetrika({ webvisor = false }) {
+export default function YandexMetrika() {
   if (!METRIKA_ID) {
     if (process.env.NODE_ENV === 'development') {
       console.warn('[YandexMetrika] NEXT_PUBLIC_YANDEX_METRIKA_ID не задан');
     }
     return null;
   }
-
-  // Вебвизор (запись действий пользователя) включаем только при явном
-  // согласии на аналитику — см. components/Analytics/Analytics.js.
-  const webvisorFlag = webvisor === true;
 
   const initScript = `
     (function(m,e,t,r,i,k,a){
@@ -76,7 +55,7 @@ export default function YandexMetrika({ webvisor = false }) {
           clickmap:true,
           trackLinks:true,
           accurateTrackBounce:true,
-          webvisor:${webvisorFlag},
+          webvisor:true,
           ecommerce:'dataLayer',
           trackHash:true,
           ut:'noindex'
@@ -102,7 +81,7 @@ export default function YandexMetrika({ webvisor = false }) {
       {/* useSearchParams внутри MetrikaPageTracker требует Suspense-границу,
           иначе Next.js уводит всю страницу в CSR при пререндере. */}
       <Suspense fallback={null}>
-        <MetrikaPageTracker webvisorAlready={webvisorFlag} />
+        <MetrikaPageTracker />
       </Suspense>
       <noscript>
         <div>
