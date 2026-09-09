@@ -2,7 +2,7 @@
 
 import Script from 'next/script';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, Suspense } from 'react';
 
 const METRIKA_ID = process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID;
 
@@ -99,7 +99,11 @@ export default function YandexMetrika({ webvisor = false }) {
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{ __html: initScript }}
       />
-      <MetrikaPageTracker webvisorAlready={webvisorFlag} />
+      {/* useSearchParams внутри MetrikaPageTracker требует Suspense-границу,
+          иначе Next.js уводит всю страницу в CSR при пререндере. */}
+      <Suspense fallback={null}>
+        <MetrikaPageTracker webvisorAlready={webvisorFlag} />
+      </Suspense>
       <noscript>
         <div>
           <img
