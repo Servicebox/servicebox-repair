@@ -29,7 +29,15 @@ export async function GET() {
     const data = rows.map((row) => {
       const item = {};
       PUBLIC_COLUMNS.forEach((col) => {
-        const value = row[FIELD_BY_COLUMN[col]];
+        const field = FIELD_BY_COLUMN[col];
+        const value = row[field];
+        // retailPrice: 0 — это "цена ещё не проставлена" (см. models/PriceItem.js),
+        // а не реальная нулевая цена — отдаём "—", а не "0", чтобы /price не
+        // показывал ремонт запчасти как бесплатный.
+        if (field === 'retailPrice' && (!value || value === 0)) {
+          item[col] = '';
+          return;
+        }
         item[col] = value !== undefined && value !== null && value !== '' ? value : '';
       });
       return item;

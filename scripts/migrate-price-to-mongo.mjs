@@ -77,8 +77,8 @@ async function main() {
     });
   });
 
-  if (columnIndex.name === undefined || columnIndex.retailPrice === undefined) {
-    console.error('❌ В файле не найдены обязательные колонки: наименование и розница');
+  if (columnIndex.name === undefined) {
+    console.error('❌ В файле не найдена обязательная колонка: наименование');
     process.exit(1);
   }
 
@@ -86,14 +86,20 @@ async function main() {
   let skipped = 0;
   for (const row of rows.slice(1)) {
     const name = String(row[columnIndex.name] ?? '').trim();
-    const retailPrice = toNumberOrNull(row[columnIndex.retailPrice]);
-    // Отрицательную розницу тоже считаем битой строкой — как и в
-    // src/app/api/price/upload/route.js, чтобы миграция и повторные
-    // загрузки того же файла вели себя одинаково.
-    if (!name || retailPrice === null || retailPrice < 0) {
+    // Колонки "розница" в реальном прайсе может не быть вовсе (справочник
+    // запчастей без проставленных цен — дозаполняется через админку), пустая
+    // цена — это 0, а не битая строка. Как и в src/app/api/price/upload/route.js,
+    // чтобы миграция и повторные загрузки того же файла вели себя одинаково.
+    const retailPriceRaw = columnIndex.retailPrice !== undefined ? toNumberOrNull(row[columnIndex.retailPrice]) : null;
+    if (retailPriceRaw !== null && retailPriceRaw < 0) {
       if (row.some((c) => String(c ?? '').trim() !== '')) skipped += 1;
       continue;
     }
+    if (!name) {
+      if (row.some((c) => String(c ?? '').trim() !== '')) skipped += 1;
+      continue;
+    }
+    const retailPrice = retailPriceRaw ?? 0;
     const purchasePriceRaw =
       columnIndex.purchasePrice !== undefined ? toNumberOrNull(row[columnIndex.purchasePrice]) : null;
     items.push({

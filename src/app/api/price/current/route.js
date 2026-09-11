@@ -26,7 +26,9 @@ export async function GET() {
       Наименование: r.name || '',
       Модель: r.model || '',
       Ревизия: r.revision || '',
-      Розница: r.retailPrice ?? '',
+      // 0 = цена ещё не проставлена (см. models/PriceItem.js) — в экспорт
+      // отдаём пусто, а не "0", иначе выглядит как бесплатная запчасть.
+      Розница: r.retailPrice ? r.retailPrice : '',
       Описание: r.description || '',
     }));
 

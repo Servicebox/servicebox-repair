@@ -76,25 +76,30 @@ export async function POST(request) {
       });
     });
 
-    if (columnIndex.name === undefined || columnIndex.retailPrice === undefined) {
-      return NextResponse.json(
-        { error: 'Не найдены обязательные колонки: наименование и розница' },
-        { status: 400 }
-      );
+    if (columnIndex.name === undefined) {
+      return NextResponse.json({ error: 'Не найдена обязательная колонка: наименование' }, { status: 400 });
     }
 
     const items = [];
     let skipped = 0;
     for (const row of rows.slice(1)) {
       const name = String(row[columnIndex.name] ?? '').trim();
-      const retailPrice = toNumberOrNull(row[columnIndex.retailPrice]);
-      // Отрицательную розницу считаем такой же битой строкой, как пустое
-      // имя/цену — иначе она дойдёт до схемы (min:0), провалит валидацию
-      // ВНУТРИ транзакции и откатит загрузку ВСЕГО файла целиком.
-      if (!name || retailPrice === null || retailPrice < 0) {
+      // Колонки "розница" может не быть вовсе (реальный прайс — справочник
+      // запчастей без проставленных цен, дозаполняется потом через админку),
+      // а пустая ячейка ‒ это то же самое, что "цена ещё не известна": 0,
+      // а не повод выбросить строку. Отрицательную розницу по-прежнему
+      // считаем битой строкой — иначе она дойдёт до схемы (min:0), провалит
+      // валидацию ВНУТРИ транзакции и откатит загрузку ВСЕГО файла целиком.
+      const retailPriceRaw = columnIndex.retailPrice !== undefined ? toNumberOrNull(row[columnIndex.retailPrice]) : null;
+      if (retailPriceRaw !== null && retailPriceRaw < 0) {
         if (row.some((c) => String(c ?? '').trim() !== '')) skipped += 1; // непустая, но битая строка
         continue;
       }
+      if (!name) {
+        if (row.some((c) => String(c ?? '').trim() !== '')) skipped += 1;
+        continue;
+      }
+      const retailPrice = retailPriceRaw ?? 0;
       const purchasePriceRaw =
         columnIndex.purchasePrice !== undefined ? toNumberOrNull(row[columnIndex.purchasePrice]) : null;
       items.push({
@@ -141,7 +146,7 @@ export async function POST(request) {
 
     return NextResponse.json({
       success: true,
-      message: `Загружено позиций: ${items.length}${skipped ? `, пропущено (нет названия/цены): ${skipped}` : ''}`,
+      message: `Загружено позиций: ${items.length}${skipped ? `, пропущено (нет названия или отрицательная цена): ${skipped}` : ''}`,
       imported: items.length,
       skipped,
     });

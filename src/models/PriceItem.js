@@ -10,7 +10,10 @@ const PriceItemSchema = new mongoose.Schema(
     // Свободная строка группы техники (Телефоны/Ноутбуки/...) — не жёсткий
     // enum, чтобы не блокировать ввод, пока категорий немного.
     category: { type: String, trim: true, maxlength: 100, default: '' },
-    retailPrice: { type: Number, required: true, min: 0 },
+    // Не required: реальный исходный прайс — это справочник запчастей без
+    // цен (только наименование/модель/ревизия), цены дозаполняются через
+    // админку постепенно. 0 = "цена ещё не проставлена".
+    retailPrice: { type: Number, min: 0, default: 0 },
     // Цена закупки — НИКОГДА не отдаётся в публичные /api/price/data и
     // /api/price/current, только в админских /api/admin/price-items*.
     purchasePrice: { type: Number, min: 0, default: null },
