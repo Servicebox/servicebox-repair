@@ -15,6 +15,7 @@ const DEVICE_TYPES = [
     { key: 'tv', label: 'Телевизор', icon: '📺' },
     { key: 'console', label: 'Игровая приставка', icon: '🎮' },
     { key: 'videocard', label: 'Видеокарта', icon: '🔥' },
+    { key: 'computer', label: 'Компьютер', icon: '🖥️' },
 ];
 
 // Бренд считается "Apple" по имени — в унифицированной модели данных нет

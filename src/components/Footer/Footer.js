@@ -16,6 +16,7 @@ const SERVICES_LINKS = [
   { href: '/services/tv', label: 'Ремонт телевизоров в Вологде' },
   { href: '/services/videocards', label: 'Ремонт видеокарт в Вологде' },
   { href: '/services/consoles', label: 'Ремонт приставок в Вологде' },
+  { href: '/services/computers', label: 'Ремонт компьютеров в Вологде' },
 ];
 
 const QUICK_LINKS = [

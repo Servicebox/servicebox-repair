@@ -9,6 +9,7 @@ const DEVICE_TYPES = [
     { key: 'tv', label: '📺 Телевизор' },
     { key: 'console', label: '🎮 Приставка' },
     { key: 'videocard', label: '🔥 Видеокарта' },
+    { key: 'computer', label: '🖥️ Компьютер' },
 ];
 
 export default function PricingMatrix() {

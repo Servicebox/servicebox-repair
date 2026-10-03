@@ -61,6 +61,15 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        // www-поддомен отдавал 200 вместо редиректа (дубль главного домена для
+        // поисковика — спасал только canonical-тег, без явного 301). Найдено
+        // в SEO-аудите 2026-10-03.
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.servicebox35.ru' }],
+        destination: 'https://servicebox35.ru/:path*',
+        permanent: true,
+      },
+      {
         // /prices/page.js опустел после отката, реальная страница цен — /price
         source: '/prices',
         destination: '/price',

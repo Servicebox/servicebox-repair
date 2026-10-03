@@ -7,7 +7,7 @@ const brandSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  // Совпадает с ключом устройства в pricing-data.js (phone, laptop, tablet, tv, console, videocard)
+  // Совпадает с ключом устройства в pricing-data.js (phone, laptop, tablet, tv, console, videocard, computer)
   deviceType: {
     type: String,
     required: true

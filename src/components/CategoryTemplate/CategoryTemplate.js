@@ -6,11 +6,12 @@ import RepairCalculator from '@/components/RepairCalculator/RepairCalculator';
 
 const RELATED_CATEGORIES = {
     phones: ['laptops', 'tablets', 'consoles'],
-    laptops: ['phones', 'videocards', 'tablets'],
+    laptops: ['computers', 'videocards', 'phones'],
     tablets: ['phones', 'laptops', 'tv'],
     tv: ['consoles', 'tablets', 'phones'],
-    videocards: ['laptops', 'consoles', 'phones'],
+    videocards: ['computers', 'laptops', 'consoles'],
     consoles: ['videocards', 'tv', 'phones'],
+    computers: ['laptops', 'videocards', 'consoles'],
 };
 
 const GEO_ANCHORS = {
@@ -36,6 +37,11 @@ const GEO_ANCHORS = {
         { label: 'Реболл GPU в Вологде — цена', href: '/services/videocards#repair-calculator' },
         { label: 'Ремонт NVIDIA RTX в Вологде', href: '/services/videocards#repair-calculator' },
     ],
+    computers: [
+        { label: 'Ремонт компьютера в Вологде — цена', href: '/services/computers#repair-calculator' },
+        { label: 'Чистка системного блока в Вологде', href: '/services/computers#repair-calculator' },
+        { label: 'Ремонт блока питания ПК в Вологде', href: '/services/computers#repair-calculator' },
+    ],
     consoles: [
         { label: 'Чистка PlayStation 5 в Вологде', href: '/services/consoles#repair-calculator' },
         { label: 'Ремонт Xbox Series X в Вологде', href: '/services/consoles#repair-calculator' },
@@ -48,7 +54,8 @@ const CALCULATOR_KEY_MAP = {
     tablets: 'tablet',
     tv: 'tv',
     videocards: 'videocard',
-    consoles: 'console'
+    consoles: 'console',
+    computers: 'computer'
 };
 const CATEGORIES_DATA = {
     phones: {
@@ -196,6 +203,32 @@ const CATEGORIES_DATA = {
         faq: [
             { q: 'Сколько стоит чистка PS5?', a: '2 200₽. Полная разборка, чистка радиатора и вентилятора, замена термопасты.' },
             { q: 'Ремонтируете ли геймпады DualSense?', a: 'Да, ремонтируем дрифт стиков, кнопки, Bluetooth. Цена от 1 500₽.' },
+        ]
+    },
+    computers: {
+        title: 'Ремонт компьютеров',
+        subtitle: 'в Вологде',
+        description: 'Ремонт настольных компьютеров и системных блоков: диагностика, ремонт блока питания и материнской платы, чистка от пыли, установка SSD и ОЗУ.',
+        icon: '🖥️',
+        popularServices: [
+            { name: 'Чистка системного блока + термопаста', price: 'от 1 800₽', time: '1 час' },
+            { name: 'Диагностика и ремонт блока питания', price: 'от 1 500₽', time: '1-2 дня' },
+            { name: 'Ремонт материнской платы', price: 'от 4 000₽', time: '3-7 дней' },
+            { name: 'Установка SSD / добавление ОЗУ', price: 'от 1 200₽', time: '30 мин' },
+            { name: 'Восстановление после скачка напряжения', price: 'от 3 000₽', time: '2-7 дней' },
+            { name: 'Переустановка Windows и настройка', price: 'уточняется', time: '1 час' },
+        ],
+        advantages: [
+            { icon: '🔧', title: 'Диагностика и BGA-пайка', desc: 'Блок питания, материнская плата' },
+            { icon: '📅', title: 'Работаем без выходных', desc: 'Ежедневно 10:00–20:00' },
+            { icon: '💻', title: 'Удалённая помощь', desc: 'С программными проблемами — без визита' },
+            { icon: '🛡️', title: 'Гарантия до 12 мес', desc: 'На работу и запчасти' },
+        ],
+        faq: [
+            { q: 'Ремонтируете настольные компьютеры и системные блоки?', a: 'Да: чистка, диагностика и ремонт блока питания, ремонт материнской платы, установка SSD и ОЗУ, восстановление после скачков напряжения. Диагностика бесплатна.' },
+            { q: 'Есть ли выезд мастера на дом?', a: 'Выездного ремонта у нас нет — все работы выполняются в сервисном центре по адресу ул. Северная, 7А. Позвоните заранее, чтобы уточнить, как удобнее привезти системный блок: +7 (911) 501-88-28.' },
+            { q: 'Можно ли получить помощь без визита в сервис?', a: 'Да, если проблема программная — не запускается Windows, вирусы, медленная работа, настройка программ — часто помогаем удалённо. Уточните детали по телефону.' },
+            { q: 'В какое время вы работаете?', a: 'Ежедневно, без выходных, с 10:00 до 20:00 — в это же время принимаем звонки.' },
         ]
     }
 };

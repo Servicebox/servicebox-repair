@@ -51,6 +51,14 @@ const categories = [
         color: 'from-pink-500 to-rose-500',
         count: '25+ услуг'
     },
+    {
+        name: 'Компьютеры',
+        icon: '🖥️',
+        slug: 'computers',
+        desc: 'Системный блок, ПК',
+        color: 'from-teal-500 to-cyan-600',
+        count: 'Новое'
+    },
 ];
 
 export default function CategoriesGrid() {

@@ -27,6 +27,16 @@ export default async function sitemap() {
     ['/', 1.0, 'daily'],
     ['/contacts', 0.9, 'monthly'],
     ['/services', 0.95, 'daily'],
+    // Статические страницы категорий (src/app/services/<slug>/page.js) — не
+    // лежат в Service-коллекции (isCategory:false их не подхватывает), из-за
+    // чего отсутствовали в sitemap.xml целиком. Найдено в SEO-аудите 2026-10-03.
+    ['/services/phones', 0.9, 'weekly'],
+    ['/services/laptops', 0.9, 'weekly'],
+    ['/services/tablets', 0.9, 'weekly'],
+    ['/services/tv', 0.9, 'weekly'],
+    ['/services/videocards', 0.9, 'weekly'],
+    ['/services/consoles', 0.9, 'weekly'],
+    ['/services/computers', 0.9, 'weekly'],
     ['/price', 0.9, 'weekly'],
     ['/parts', 0.9, 'daily'],
     ['/about', 0.8, 'monthly'],

@@ -5,6 +5,7 @@ import dbConnect from '@/lib/db';
 import Product from '@/models/Product';
 import ClientProductDisplay from '@/components/ProductDisplay/ProductDisplay';
 import { BASE_URL } from '@/lib/constants';
+import { isNearDuplicateText } from '@/lib/seo-helpers';
 
 // ============================================
 // ⚙️ НАСТРОЙКИ КЭШИРОВАНИЯ И СТАТИЗАЦИИ
@@ -76,8 +77,15 @@ export async function generateMetadata({ params }) {
     // Название товара всегда уникально, поэтому подставляем его первым.
     const rawDescription = product.description?.replace(/\s*\n\s*/g, '. ').trim();
     const alreadyStartsWithName = rawDescription?.toLowerCase().startsWith(product.name.toLowerCase());
+    // Чистый prefix-match выше не ловит переформулировки поставщика —
+    // «Шлейф совместим с iPhone 6 Plus» vs название «Шлейф iPhone 6 Plus»:
+    // разные строки, но одно и то же по смыслу. На прежней логике это давало
+    // тавтологию "Название. Описание" на тысячах карточек (SEO-аудит
+    // 2026-10-03). Если значимые слова описания почти целиком содержатся в
+    // названии (или наоборот), название не дублируем.
+    const isRedundantWithName = rawDescription && isNearDuplicateText(rawDescription, product.name);
     const description = rawDescription
-      ? (alreadyStartsWithName ? rawDescription : `${product.name}. ${rawDescription}`).substring(0, 155)
+      ? ((alreadyStartsWithName || isRedundantWithName) ? rawDescription : `${product.name}. ${rawDescription}`).substring(0, 155)
       : `Купить ${product.name} в Вологде — СЕРВИС БОКС. Гарантия качества, быстрая доставка.`;
 
     return {

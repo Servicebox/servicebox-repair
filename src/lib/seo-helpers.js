@@ -123,6 +123,27 @@ export function stripHtml(html) {
     return html.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
 }
 
+// Нормализует строку для сравнения на почти-дубликат: нижний регистр, без
+// пунктуации, схлопнутые пробелы.
+function normalizeForCompare(str) {
+    return str.toLowerCase().replace(/[^a-zа-яё0-9\s]/gi, ' ').replace(/\s+/g, ' ').trim();
+}
+
+// ✅ Проверяет, пересекаются ли значимые слова (длина > 2) двух строк
+// настолько сильно, что одна — почти пересказ другой (например, «Шлейф
+// совместим с iPhone 6 Plus» и название «Шлейф iPhone 6 Plus» отличаются
+// только служебными словами). Обычный prefix-match такое не ловит и даёт
+// тавтологию вида "Название. Описание" на карточках товаров/услуг, где поля
+// name и description из фида поставщика почти совпадают по смыслу.
+export function isNearDuplicateText(a, b) {
+    if (!a || !b) return false;
+    const wordsA = new Set(normalizeForCompare(a).split(' ').filter(w => w.length > 2));
+    const wordsB = new Set(normalizeForCompare(b).split(' ').filter(w => w.length > 2));
+    if (wordsA.size === 0 || wordsB.size === 0) return false;
+    const intersection = [...wordsA].filter(w => wordsB.has(w)).length;
+    return intersection / Math.min(wordsA.size, wordsB.size) > 0.7;
+}
+
 // ✅ FAQPage schema для Яндекс ИКС / Google Rich Results
 export function generateFAQSchema(items) {
     return {

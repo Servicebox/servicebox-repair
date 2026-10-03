@@ -32,6 +32,7 @@ const services = [
   { icon: '📺', name: 'Телевизоры', href: '/services/tv' },
   { icon: '🎮', name: 'Видеокарты', href: '/services/videocards' },
   { icon: '🕹️', name: 'Приставки', href: '/services/consoles' },
+  { icon: '🖥️', name: 'Компьютеры', href: '/services/computers' },
 ];
 
 const deviceTypePicks = [
@@ -41,6 +42,7 @@ const deviceTypePicks = [
   { key: 'tv', icon: '📺', label: 'Телевизор' },
   { key: 'console', icon: '🎮', label: 'Приставка' },
   { key: 'videocard', icon: '🔥', label: 'Видеокарта' },
+  { key: 'computer', icon: '🖥️', label: 'Компьютер' },
 ];
 
 const stats = [

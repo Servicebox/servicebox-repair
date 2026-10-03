@@ -11,6 +11,7 @@ const CALCULATOR_CATEGORIES = [
   { id: 'calc-tv', name: '📺 Телевизор' },
   { id: 'calc-console', name: '🎮 Игровая приставка' },
   { id: 'calc-videocard', name: '🔥 Видеокарта' },
+  { id: 'calc-computer', name: '🖥️ Компьютер' },
 ];
 
 const ServiceForm = ({ service, onClose, onSuccess }) => {

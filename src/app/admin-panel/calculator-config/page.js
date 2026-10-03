@@ -166,6 +166,7 @@ export default function CalculatorConfigEditor() {
         tv: { label: '📺 Телевизор', color: 'bg-orange-50' },
         console: { label: '🎮 Приставка', color: 'bg-pink-50' },
         videocard: { label: '🔥 Видеокарта', color: 'bg-red-50' },
+        computer: { label: '🖥️ Компьютер', color: 'bg-teal-50' },
     };
 
     const currentData = pricingData[activeTab];

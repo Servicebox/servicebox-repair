@@ -1,5 +1,6 @@
 // models/Service.js
 import mongoose from 'mongoose';
+import { isNearDuplicateText } from '@/lib/seo-helpers';
 
 const serviceSchema = new mongoose.Schema({
   // Основные поля
@@ -196,8 +197,13 @@ serviceSchema.methods.generateMetaDescription = function() {
   // this.description часто дословно совпадает у похожих услуг (одна и та же
   // формулировка про сроки ремонта у десятков моделей телефонов/ноутбуков),
   // поэтому name всегда идёт первым — это единственное гарантированно
-  // уникальное поле в рамках шаблона.
-  const base = this.description ? `${this.name}: ${this.description}` : `${this.name} ${geo}`;
+  // уникальное поле в рамках шаблона. Но если description — просто
+  // переформулировка name (та же тавтология, что нашлась в SEO-аудите
+  // 2026-10-03 на карточках товаров), повторно подставлять name не нужно.
+  const isRedundant = this.description && isNearDuplicateText(this.description, this.name);
+  const base = this.description
+    ? (isRedundant ? this.description : `${this.name}: ${this.description}`)
+    : `${this.name} ${geo}`;
   return `${base}.${this.price ? ` Стоимость ${this.price}.` : ''} Качественный ремонт ${geo}. Гарантия на работы.`;
 };
 serviceSchema.index({ name: 'text', description: 'text', content: 'text' });
