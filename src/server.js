@@ -148,10 +148,23 @@ app.prepare().then(async () => {
   const expressApp = express();
 
   // === СЖАТИЕ (compression) - важно для продакшена ===
+  // frameguard/hsts/referrerPolicy/noSniff/xssFilter выключены: helmet
+  // ставил их своими дефолтами ОДНОВРЕМЕННО с src/middleware.js (которое
+  // явно и осознанно задаёт DENY/2-года-без-preload/'0' и т.п. — см.
+  // комментарии там) и с nginx (add_header в sites-available). Три слоя
+  // заголовков с разными значениями — браузер получал X-Frame-Options:
+  // DENY и SAMEORIGIN одновременно, что по спеке может привести к полному
+  // игнорированию защиты от clickjacking (SEO/security-аудит 2026-10-03).
+  // middleware.js теперь единственный источник для этих заголовков.
   const helmetOptions = {
     contentSecurityPolicy: false,
     crossOriginEmbedderPolicy: false,
     crossOriginResourcePolicy: { policy: "cross-origin" },
+    frameguard: false,
+    hsts: false,
+    referrerPolicy: false,
+    noSniff: false,
+    xssFilter: false,
   };
   const compressionOptions = {
     level: 6,
