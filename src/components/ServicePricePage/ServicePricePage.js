@@ -7,10 +7,15 @@ import styles from './ServicePricePage.module.css';
 import RepairCalculator from '../RepairCalculator/RepairCalculator';
 import BookingForm from "../BookingForm/BookingForm";
 
-export default function ServicePricePage() {
-    const [services, setServices] = useState([]);
-    const [categories, setCategories] = useState([]);
-    const [loading, setLoading] = useState(true);
+export default function ServicePricePage({ initialServices = [] }) {
+    // initialServices приходит с сервера (services/page.js, Service.getTree())
+    // — тот же дерево, что раньше появлялось только после клиентского
+    // fetch('/api/services?tree=true'). Теперь список категорий виден в
+    // исходном HTML сразу, без ожидания JS (SEO-аудит 2026-10-03).
+    const initialCategories = initialServices.filter(s => s.isCategory && !s.parent);
+    const [services, setServices] = useState(initialServices);
+    const [categories, setCategories] = useState(initialCategories);
+    const [loading, setLoading] = useState(initialServices.length === 0);
     const [isBookingFormOpen, setIsBookingFormOpen] = useState(false);
     const [selectedService, setSelectedService] = useState(null);
 
