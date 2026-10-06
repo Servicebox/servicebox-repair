@@ -10,7 +10,7 @@ const Beznal = "/images/Payment methods.svg";
 const Dolyami = '/images/Dolyame.svg';
 
 const SERVICES_LINKS = [
-  { href: '/services/phones', label: 'Ремонт смартфонов в Вологде' },
+  { href: '/services/phones', label: 'Ремонт телефонов в Вологде' },
   { href: '/services/laptops', label: 'Ремонт ноутбуков в Вологде' },
   { href: '/services/tablets', label: 'Ремонт планшетов в Вологде' },
   { href: '/services/tv', label: 'Ремонт телевизоров в Вологде' },

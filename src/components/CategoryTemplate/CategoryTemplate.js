@@ -59,9 +59,9 @@ const CALCULATOR_KEY_MAP = {
 };
 const CATEGORIES_DATA = {
     phones: {
-        title: 'Ремонт смартфонов',
+        title: 'Ремонт телефонов',
         subtitle: 'в Вологде',
-        description: 'Профессиональный ремонт iPhone, Samsung, Xiaomi, Huawei и других смартфонов. Замена экранов, батарей, разъёмов. Гарантия до 24 месяцев.',
+        description: 'Профессиональный ремонт телефонов и смартфонов iPhone, Samsung, Xiaomi, Huawei и других брендов. Замена экранов, батарей, разъёмов. Гарантия до 24 месяцев.',
         icon: '📱',
         popularServices: [
             { name: 'Замена экрана iPhone 13', price: 'от 4 500₽', time: '40 мин' },
