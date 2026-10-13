@@ -137,6 +137,18 @@
   margin-bottom: 1.25rem;
 }
 
+.textBlock a {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  transition: color 0.2s;
+}
+
+.textBlock a:hover {
+  color: var(--color-accent);
+}
+
 /* Изображения внутри контента */
 .imageBlock {
   margin: 2rem 0;
@@ -216,6 +228,104 @@
 .listBlock li {
   margin-bottom: 0.5rem;
   line-height: 1.6;
+}
+
+/* Разметка внутри текстовых блоков (справочники, инструкции с HTML-контентом) */
+.textBlock h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 1.75rem 0 0.75rem;
+  color: var(--color-text);
+}
+
+.textBlock ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.textBlock ol li {
+  margin-bottom: 0.6rem;
+  line-height: 1.6;
+}
+
+.textBlock code {
+  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+  background: var(--color-bg-elevated);
+  padding: 0.15em 0.45em;
+  border-radius: 0.3em;
+  font-size: 0.9em;
+  color: var(--color-primary);
+}
+
+.textBlock blockquote {
+  margin: 1.25rem 0;
+  padding: 1rem 1.25rem;
+  background: var(--color-primary-bg);
+  border-left: 4px solid var(--color-primary);
+  border-radius: 0.5rem;
+  color: var(--color-text);
+}
+
+.textBlock blockquote p {
+  margin: 0 0 0.5rem;
+}
+
+.textBlock blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Таблицы-справочники (коды ошибок и т.п.) */
+.textBlock table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+}
+
+.textBlock th,
+.textBlock td {
+  padding: 0.65rem 0.9rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  vertical-align: top;
+}
+
+.textBlock th {
+  background: var(--color-bg-elevated);
+  font-weight: 700;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.textBlock tbody tr:hover td {
+  background: var(--color-primary-bg);
+}
+
+.textBlock td:first-child {
+  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+  font-weight: 600;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+/* Обёртка для горизонтального скролла широких таблиц на мобильных —
+   класс глобальный, т.к. используется внутри HTML-контента новости,
+   вставляемого через dangerouslySetInnerHTML (не может ссылаться на
+   хэшированные имена CSS-модуля). */
+.textBlock :global(.panic-table-scroll) {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+}
+
+.textBlock :global(.panic-table-scroll) table {
+  margin: 0;
+}
+
+.textBlock :global(.panic-table-scroll) td:last-child {
+  min-width: 220px;
 }
 
 /* Футер (теги, шаринг) */
