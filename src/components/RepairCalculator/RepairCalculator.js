@@ -195,7 +195,14 @@ export default function RepairCalculator({ initialDeviceType = null, initialServ
                     <p className="text-lg" itemProp="description" style={{ color: 'var(--color-text-muted)' }}>
                         Бесплатный онлайн-калькулятор. Точный расчёт с учётом вашей модели за 30 секунд
                     </p>
-                    <p className="text-sm font-semibold mt-2" style={{ color: 'var(--color-warning)' }}>
+                    {/* --color-warning-text вместо --color-warning (#ff8c00)
+                        — контраст 2.3:1 на белом не проходит WCAG AA, нужно
+                        4.5:1 (Lighthouse, 2026-10-23). Отдельный токен (не
+                        трогаем --color-warning — 20+ мест с другим контекстом),
+                        но с значениями по теме: фиксированный хекс вместо
+                        токена регрессировал контраст в тёмной/высококонтрастной
+                        теме (независимый аудит, 2026-10-23). */}
+                    <p className="text-sm font-semibold mt-2" style={{ color: 'var(--color-warning-text)' }}>
                         ⚡ Точная цена после диагностики
                     </p>
                 </header>

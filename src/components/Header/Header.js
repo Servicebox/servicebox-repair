@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useAuth } from '@/components/contexts/AuthContext';
 import headerLogo from "../../../public/favicon.webp";
@@ -114,7 +115,11 @@ function Header() {
         <div className={styles.headerContainer}>
           {/* Логотип */}
           <Link href="/" className={styles.headerLogoLink} aria-label="На главную страницу СЕРВИС БОКС">
-            <img src={headerLogo.src} alt="Логотип СЕРВИС БОКС" className={styles.headerLogo} width="65" height="45" />
+            {/* next/image вместо <img src={headerLogo.src}> — файл 896x896
+                (118 КиБ) отдавался целиком на слот 65x45; Image генерирует
+                реально маленький derivative (Lighthouse, 2026-10-23: ~115
+                КиБ лишних байт). */}
+            <Image src={headerLogo} alt="Логотип СЕРВИС БОКС" className={styles.headerLogo} width={65} height={45} priority />
             <span className={styles.headerLogoText}>
               <span className={styles.headerLogoMain}>СЕРВИС БОКС</span>
               <span className={styles.headerLogoSub}>Вологда</span>

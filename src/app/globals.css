@@ -26,6 +26,11 @@
   --color-success: #28a745;
   --color-danger: #dc3545;
   --color-warning: #ff8c00;
+  /* --color-warning (#ff8c00) на белом — 2.3:1, не проходит WCAG AA для
+     текста (нужно 4.5:1). Токен не трогаем — 20+ мест используют его как
+     бордер/иконку/фон бейджа, не проверенных на контраст. Отдельный токен
+     только для текста предупреждений. */
+  --color-warning-text: #b45309;
 
   /* UI */
   --color-border: #e0e0e0;
@@ -89,6 +94,7 @@
   --color-success: #7fee64;
   --color-danger: #ff5555;
   --color-warning: #ffcc00;
+  --color-warning-text: #ffcc00;
   --color-border: #2a2a2a;
   --color-shadow: rgba(0, 0, 0, 0.4);
   --color-header-bg: #141414;
@@ -114,6 +120,7 @@
   --color-success: #00ff00;
   --color-danger: #ff0000;
   --color-warning: #ffff00;
+  --color-warning-text: #ffff00;
   --color-border: #ffffff;
   --color-shadow: none;
   --color-header-bg: #000000;
