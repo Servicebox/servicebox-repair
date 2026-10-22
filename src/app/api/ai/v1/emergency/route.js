@@ -1,3 +1,5 @@
+import { BUSINESS } from '@/lib/constants';
+
 export const dynamic = 'force-dynamic';
 export const revalidate = 7200;
 
@@ -11,13 +13,34 @@ export async function GET() {
         '@type': 'Service',
         serviceType: 'Экстренная помощь и инструкции при поломках электроники',
         name: 'СЕРВИС БОКС - Первая помощь технике',
-        provider: { '@id': `${BASE_URL}#business` },
-        areaServed: { '@type': 'City', name: 'Вологда' },
-        contactPoint: {
-          '@type': 'ContactPoint',
-          telephone: '+7-911-501-88-28',
-          contactType: 'customer support'
+        // Самодостаточный provider (не только @id) — этот @graph состоит
+        // из одного узла, в нём нет LocalBusiness-ноды с этим @id вообще,
+        // так что ссылка была заведомо пустой для любого потребителя
+        // (Яндекс.Вебмастер, 2026-10-23: telephone/address не определены
+        // для Service). contactPoint перенесён на provider — на самом
+        // Service его не было в спецификации (это свойство Organization/
+        // LocalBusiness/Person), а contactType: 'customer support' нёс
+        // смысл, который жалко терять — независимый аудит, 2026-10-23.
+        provider: {
+          '@type': ['LocalBusiness', 'ElectronicsStore'],
+          '@id': `${BASE_URL}#business`,
+          name: BUSINESS.name,
+          telephone: BUSINESS.phones.primary,
+          contactPoint: {
+            '@type': 'ContactPoint',
+            telephone: BUSINESS.phones.primary,
+            contactType: 'customer support',
+          },
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: BUSINESS.mainAddress.street,
+            addressLocality: BUSINESS.mainAddress.city,
+            addressRegion: BUSINESS.mainAddress.region,
+            postalCode: BUSINESS.mainAddress.postalCode,
+            addressCountry: BUSINESS.mainAddress.country,
+          },
         },
+        areaServed: { '@type': 'City', name: 'Вологда' },
         subjectOf: {
           '@type': 'HowTo',
           name: 'Телефон или ноутбук упал в воду',

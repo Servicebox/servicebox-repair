@@ -447,7 +447,25 @@ export default async function BrandPage({ params }) {
         '@id': `${BASE_URL}/brands/${slug}#service`,
         name: `Ремонт ${brand.name} в Вологде`,
         description: brand.shortDescription,
-        provider: { '@id': `${BASE_URL}#business` },
+        // Самодостаточный provider (не только @id) — та же проблема, что
+        // чинилась на страницах услуг 2026-10-23: @id-ссылка на узел из
+        // ОТДЕЛЬНОГО <script type="application/ld+json"> (layout.js) не
+        // резолвится для большинства потребителей, Яндекс.Вебмастер
+        // продолжал ругаться на этих страницах после первого фикса.
+        provider: {
+          '@type': ['LocalBusiness', 'ElectronicsStore'],
+          '@id': `${BASE_URL}#business`,
+          name: BUSINESS.name,
+          telephone: BUSINESS.phones.primary,
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: BUSINESS.mainAddress.street,
+            addressLocality: BUSINESS.mainAddress.city,
+            addressRegion: BUSINESS.mainAddress.region,
+            postalCode: BUSINESS.mainAddress.postalCode,
+            addressCountry: BUSINESS.mainAddress.country,
+          },
+        },
         areaServed: { '@type': 'City', name: 'Вологда' },
         serviceType: `Ремонт техники ${brand.name}`,
         brand: { '@type': 'Brand', name: brand.name },
