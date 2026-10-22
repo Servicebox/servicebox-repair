@@ -15,7 +15,7 @@ export default function robots() {
         disallow: [
           '/admin-panel/', '/private/', '/checkout', '/cart',
           '/api/admin/', '/api/auth/', '/api/internal/', '/_next/', '/api/trpc/',
-          '/api/yml', '/api/services-yml', '/yml-check', '/services/yml'
+          '/yml-check', '/services/yml'
         ],
       },
       {
@@ -32,7 +32,7 @@ export default function robots() {
         ],
         disallow: [
           '/admin-panel/', '/api/admin/', '/private/', '/checkout', '/cart', '/_next/',
-          '/api/auth/', '/api/internal/', '/api/yml', '/api/services-yml',
+          '/api/auth/', '/api/internal/',
           '/yml-check', '/services/yml'
         ],
       },
