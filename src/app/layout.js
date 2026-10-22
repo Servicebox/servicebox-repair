@@ -117,7 +117,17 @@ const structuredData = {
           '@type': 'EntryPoint',
           urlTemplate: `${BASE_URL}/search?q={search_term_string}`,
         },
-        'query-input': 'required name=search_term_string',
+        // Строковая форма ('required name=search_term_string') валидна по
+        // спецификации schema.org и это ровно то, что показывает Google в
+        // своих примерах Sitelinks Search Box — но Яндекс.Вебмастер на неё
+        // ругается: «поле query-input не определено в спецификации
+        // SearchAction» (2026-10-23). Структурная форма ниже — то же самое
+        // значение, просто не в виде мини-DSL строки.
+        'query-input': {
+          '@type': 'PropertyValueSpecification',
+          valueRequired: true,
+          valueName: 'search_term_string',
+        },
       },
     },
   ],

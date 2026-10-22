@@ -1,6 +1,6 @@
 // app/services/[...slug]/page.js
 import { notFound } from 'next/navigation';
-import { BASE_URL } from '@/lib/constants';
+import { BASE_URL, BUSINESS } from '@/lib/constants';
 import ServiceDetailClient from './ServiceDetailClient';
 
 export const dynamic = 'force-dynamic';
@@ -45,7 +45,36 @@ export default async function ServiceDetailPage({ params }) {
     '@type': 'Service',
     name: service.h1 || service.name,
     description: service.description,
-    provider: { '@id': `${BASE_URL}#business` },
+    // provider раньше был только { '@id': ... } — ссылка на LocalBusiness
+    // из ОТДЕЛЬНОГО <script type="application/ld+json"> в layout.js. @id
+    // резолвится только внутри одного JSON-LD документа/@graph; отдельные
+    // script-теги на странице парсятся независимо почти везде (Яндекс
+    // в том числе), так что для любого потребителя, который не объединяет
+    // несколько script-блоков сам, provider выглядел как пустая ссылка без
+    // telephone/address. Это и давало предупреждения Яндекс.Вебмастера:
+    // «поле address отсутствует или пусто», «необходимо указать telephone»
+    // для структурированных сниппетов Справочника (2026-10-23). Теперь
+    // provider самодостаточен: @id оставлен для потребителей, которые всё
+    // же объединяют граф, плюс продублированы сами поля.
+    provider: {
+      '@type': ['LocalBusiness', 'ElectronicsStore'],
+      '@id': `${BASE_URL}#business`,
+      // BUSINESS.name (не shortName) — тот же @id используется в
+      // LOCAL_BUSINESS_SCHEMA (src/lib/seo-helpers.js) с этим именем;
+      // разные literal name на одном @id — сигнал конфликта сущностей
+      // для потребителей, которые объединяют граф (независимый аудит,
+      // 2026-10-23).
+      name: BUSINESS.name,
+      telephone: BUSINESS.phones.primary,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: BUSINESS.mainAddress.street,
+        addressLocality: BUSINESS.mainAddress.city,
+        addressRegion: BUSINESS.mainAddress.region,
+        postalCode: BUSINESS.mainAddress.postalCode,
+        addressCountry: BUSINESS.mainAddress.country,
+      },
+    },
     areaServed: { '@type': 'City', name: 'Вологда' },
     offers: {
       '@type': 'Offer',
