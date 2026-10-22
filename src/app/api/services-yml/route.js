@@ -200,7 +200,7 @@ export async function GET(request) {
         .lean(),
       Service.find({ isCategory: false })
         .sort({ order: 1, name: 1 })
-        .limit(200)
+        .limit(1000)
         .lean(),
       Review.aggregate([
         { $match: { status: 'approved' } },
