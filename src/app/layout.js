@@ -127,6 +127,24 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ru" suppressHydrationWarning data-scroll-behavior="smooth" className={`${interTight.variable} ${inter.variable}`}>
       <head>
+        {/* Trusted Types: default-политика до любого другого скрипта (пока
+            Content-Security-Policy-Report-Only, см. next.config.mjs — без
+            этой политики сам браузер уже в report-only режиме пишет
+            нарушения в консоль на каждый dangerouslySetInnerHTML/innerHTML
+            чужих скриптов). Политика пропускающая, не санитайзер — наши
+            source рендерят собственный JSON-LD и контент из БД, не чужой
+            пользовательский ввод. */}
+        <script dangerouslySetInnerHTML={{ __html: `(function(){
+    try {
+      if (window.trustedTypes && window.trustedTypes.createPolicy) {
+        window.trustedTypes.createPolicy('default', {
+          createHTML: function(s) { return s; },
+          createScript: function(s) { return s; },
+          createScriptURL: function(s) { return s; },
+        });
+      }
+    } catch(e) {}
+  })();` }} />
         {/* Anti-flash: apply theme before hydration to prevent flicker */}
         <script dangerouslySetInnerHTML={{ __html: `(function(){
     try {
