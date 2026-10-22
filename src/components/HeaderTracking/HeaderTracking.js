@@ -26,16 +26,13 @@ export default function HeaderTracking() {
     setBooking(null);
 
     try {
-      console.log('🔍 Searching for booking with code:', code);
-      
       const response = await fetch(`/api/bookings/track/${encodeURIComponent(code)}`);
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
-      console.log('📥 API Response:', data);
 
       if (data.success && data.booking) {
         setBooking(data.booking);

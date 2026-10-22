@@ -76,12 +76,6 @@ export default function YmlCheckPage() {
         }
       });
       
-      // 5. Проверяем фид с помощью Яндекс.Вебмастера (опционально)
-      if (validationErrors.length === 0) {
-        // Можно отправить фид на проверку
-        console.log('Фид готов для Яндекс.Маркета');
-      }
-      
     } catch (err) {
       setError(err.message);
       console.error('Ошибка проверки фида:', err);

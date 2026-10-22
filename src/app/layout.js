@@ -128,12 +128,15 @@ export default function RootLayout({ children }) {
     <html lang="ru" suppressHydrationWarning data-scroll-behavior="smooth" className={`${interTight.variable} ${inter.variable}`}>
       <head>
         {/* Trusted Types: default-политика до любого другого скрипта (пока
-            Content-Security-Policy-Report-Only, см. next.config.mjs — без
+            Content-Security-Policy-Report-Only, см. middleware.js — без
             этой политики сам браузер уже в report-only режиме пишет
             нарушения в консоль на каждый dangerouslySetInnerHTML/innerHTML
             чужих скриптов). Политика пропускающая, не санитайзер — наши
             source рендерят собственный JSON-LD и контент из БД, не чужой
-            пользовательский ввод. */}
+            пользовательский ввод. Без nonce: прокидывать его сюда через
+            headers() ломает статическую генерацию почти всего сайта — не
+            делаем (см. middleware.js), этот скрипт разрешён унаследованным
+            'unsafe-inline' в основной (enforced) CSP. */}
         <script dangerouslySetInnerHTML={{ __html: `(function(){
     try {
       if (window.trustedTypes && window.trustedTypes.createPolicy) {

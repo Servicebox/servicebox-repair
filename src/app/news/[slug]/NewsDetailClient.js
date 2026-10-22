@@ -4,6 +4,7 @@ import { useState } from 'react';
 import styles from '@/components/NewsDetail/NewsDetail.module.css';
 import LikeButton from '@/components/LikeButton/LikeButton';
 import CommentSection from '@/components/CommentSection/CommentSection';
+import { sanitizeHtml } from '@/lib/sanitize';
 
 const ContentBlockRenderer = ({ blocks, onImageClick }) => {
   if (!Array.isArray(blocks)) return null;
@@ -17,7 +18,7 @@ const ContentBlockRenderer = ({ blocks, onImageClick }) => {
           case 'text':
             return (
               <div key={index} className={styles.textBlock}
-                dangerouslySetInnerHTML={{ __html: block.content?.replace(/\n/g, '<br>') }} />
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(block.content?.replace(/\n/g, '<br>')) }} />
             );
           case 'image':
             return block.media ? (

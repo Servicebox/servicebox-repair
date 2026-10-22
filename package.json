@@ -41,6 +41,7 @@
     "google-auth-library": "^10.6.2",
     "gsap": "^3.13.0",
     "helmet": "^7.0.0",
+    "isomorphic-dompurify": "^3.19.0",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.3",
     "jwt-decode": "^4.0.0",

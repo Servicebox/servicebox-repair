@@ -23,8 +23,6 @@ export default function EditNewsPage() {
           return;
         }
 
-        console.log('Fetching news with ID:', params.id);
-
         const response = await fetch(`/api/news/${params.id}`);
 
         if (!response.ok) {
@@ -34,7 +32,6 @@ export default function EditNewsPage() {
         const data = await response.json();
 
         if (data.success) {
-          console.log('News data loaded:', data.data);
           setNewsItem(data.data);
         } else {
           throw new Error(data.error || 'Новость не найдена');

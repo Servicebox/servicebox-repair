@@ -265,8 +265,6 @@ const CheckoutForm = () => {
       customerNotes: formData.comment || `Способ получения: ${deliveryMethod === 'pickup' ? 'Самовывоз (ул. Северная, 7А, 1 этаж)' : 'Доставка'}`
     };
 
-    console.log('📦 Отправка заказа в API:', JSON.stringify(orderData, null, 2));
-
     try {
       const response = await fetch('/api/orders', {
         method: 'POST',
@@ -277,11 +275,8 @@ const CheckoutForm = () => {
       });
 
       const result = await response.json();
-      console.log('📨 Ответ от API:', result);
 
       if (response.ok && result.success) {
-        console.log('✅ Заказ создан успешно:', result);
-
         trackOrderCreated({
           orderNumber: result.orderNumber,
           totalAmount,

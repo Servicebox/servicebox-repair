@@ -6,6 +6,7 @@ import Image from 'next/image';
 import BookingForm from '@/components/BookingForm/BookingForm';
 import RepairCalculator from '@/components/RepairCalculator/RepairCalculator';
 import { useBreadcrumbs } from '@/hooks/useBreadcrumbs';
+import { sanitizeHtml } from '@/lib/sanitize';
 
 // Дублирует DEVICE_TYPE_ROOT_CANDIDATES из src/lib/pricing-matrix.js (тот модуль —
 // серверный, сюда, в клиентский компонент, не импортируется). Определяет тип
@@ -311,7 +312,7 @@ function CategoryPage({ service, formatPrice }) {
           <div
             className="prose prose-lg max-w-none"
             style={{ color: '#374151' }}
-            dangerouslySetInnerHTML={{ __html: service.content }}
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(service.content) }}
           />
         </div>
       )}
@@ -377,7 +378,7 @@ function ServicePage({ service, activeTab, setActiveTab, handleBookingClick, for
             <div
               className="prose prose-lg max-w-none"
               style={{ color: '#374151' }}
-              dangerouslySetInnerHTML={{ __html: service.content }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(service.content) }}
             />
           </div>
         )}
@@ -492,7 +493,7 @@ function renderTabContent(service, tab) {
             <div
               className="mt-4 prose prose-lg"
               style={{ color: '#374151' }}
-              dangerouslySetInnerHTML={{ __html: service.content }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(service.content) }}
             />
           )}
         </div>

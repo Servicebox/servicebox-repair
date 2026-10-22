@@ -195,13 +195,10 @@ export const ShopContextProvider = (props) => {
 // contexts/ShopContext.js - обновите функцию createOrder
 const createOrder = async (orderData) => {
   try {
-    console.log('🛒 Starting order creation process...');
-    
     // Подготавливаем данные для заказа
     const cartProducts = [];
     let subtotal = 0;
 
-    console.log('📦 Preparing products from cart...');
     // Формируем массив товаров из корзины
     for (const itemSlug in cartItems) {
       if (cartItems[itemSlug] > 0) {
@@ -218,12 +215,9 @@ const createOrder = async (orderData) => {
             totalPrice: itemTotal
           });
           subtotal += itemTotal;
-          console.log(`📋 Added to order: ${product.name}, quantity: ${cartItems[itemSlug]}, price: ${product.new_price}`);
         }
       }
     }
-
-    console.log(`💰 Subtotal: ${subtotal}, Products count: ${cartProducts.length}`);
 
     const orderPayload = {
       products: cartProducts,
@@ -246,14 +240,11 @@ const createOrder = async (orderData) => {
       // orderNumber НЕ передаем - генерируется на сервере
     };
 
-    console.log('📤 Sending order to API...', orderPayload);
     const response = await fetchWithAuth('/api/orders', {
       method: 'POST',
       body: JSON.stringify(orderPayload),
     });
-    
-    console.log('📨 API response status:', response.status);
-    
+
     if (!response.ok) {
       const errorData = await response.json();
       console.error('❌ Order creation failed:', errorData);
@@ -261,15 +252,12 @@ const createOrder = async (orderData) => {
     }
     
     const data = await response.json();
-    console.log('✅ Order creation successful:', data);
-    
+
     if (data.success) {
       // Очищаем корзину после успешного заказа
-      console.log('🔄 Clearing cart...');
       setCartItems(getDefaultCart());
       // Обновляем список заказов
       await fetchUserOrders();
-      console.log('✅ Cart cleared and orders refreshed');
     }
     
     return data;

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import styles from './NewsDetail.module.css';
 import LikeButton from '@/components/LikeButton/LikeButton';
 import CommentSection from '@/components/CommentSection/CommentSection';
+import { sanitizeHtml } from '@/lib/sanitize';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://servicebox35.ru';
 
@@ -45,7 +46,7 @@ const ContentBlockRenderer = ({ blocks, onImageClick }) => {
           case 'text':
             return (
               <div key={index} className={styles.textBlock}
-                dangerouslySetInnerHTML={{ __html: block.content?.replace(/\n/g, '<br>') }} />
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(block.content?.replace(/\n/g, '<br>')) }} />
             );
           case 'image':
             return block.media ? (

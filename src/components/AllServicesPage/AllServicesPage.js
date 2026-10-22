@@ -104,8 +104,7 @@ const AllServicesPage = () => {
         setActiveService(null); // Закрываем детали услуги при открытии формы
     };
 
-    const handleBookingSuccess = (bookingData) => {
-        console.log('Booking created:', bookingData);
+    const handleBookingSuccess = () => {
         setIsBookingFormOpen(false);
         setSelectedService(null);
         // Можно добавить уведомление об успехе

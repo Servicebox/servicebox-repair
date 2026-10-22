@@ -324,21 +324,17 @@ const fetchOrders = async () => {
         setLoading(true);
         setError("");
         
-        console.log('🔄 Загрузка заказов пользователя...');
-        
         const res = await fetch('/api/orders/my-orders', {
             credentials: 'include',
             headers: {
                 'Cache-Control': 'no-cache'
             }
         });
-        
+
         if (res.ok) {
             const data = await res.json();
-            console.log('📦 Данные заказов получены:', data);
-            
+
             if (data.success && Array.isArray(data.orders)) {
-                console.log(`✅ Загружено ${data.orders.length} заказов`);
                 setOrders(data.orders);
             } else {
                 console.warn('❌ Неожиданный формат данных заказов:', data);

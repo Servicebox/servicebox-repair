@@ -21,17 +21,14 @@ export default function PromotionsPage() {
 
   const fetchPromotions = async () => {
     try {
-      console.log('Fetching promotions...');
       const response = await fetch('/api/promotions');
-      console.log('Response status:', response.status);
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const result = await response.json();
-      console.log('API response:', result);
-        
+
       if (result.success) {
         setPromotions(result.data);
       } else {
@@ -80,9 +77,7 @@ export default function PromotionsPage() {
   // Функция обработки сохранения формы
   const handleSave = async (formData) => {
     setSaving(true);
-    console.log('Данные формы для сохранения:', formData);
-    console.log('Выбранная акция:', selectedPromotion);
-    
+
     try {
       // Здесь может быть ваша логика сохранения
       // Например, отправка данных на сервер

@@ -135,6 +135,32 @@ export function middleware(request) {
   // preload-список браузеров необратимо на месяцы и требует аудита всех
   // поддоменов (webmail, панели и т.п.) на предмет HTTPS — отдельное
   // операционное решение.
+  // CSP report-only (ТОЛЬКО здесь — не дублировать в next.config.mjs: раньше
+  // два независимых источника одного и того же заголовка CSP уже
+  // расходились и браузер применял пересечение худших вариантов, см.
+  // комментарий в next.config.mjs). Пока только Trusted Types
+  // (require-trusted-types-for) — default-политика зарегистрирована в
+  // layout.js, пропускающая, не санитайзер.
+  //
+  // script-src на nonce + 'strict-dynamic' НЕ делаем: пробовали 2026-10-23 —
+  // единственный способ прокинуть nonce серверным компонентам в App Router
+  // это headers() в RootLayout, а это снимает ЛЮБУЮ страницу, использующую
+  // этот layout (то есть почти весь сайт), со статической генерации —
+  // независимый аудит подтвердил сборкой: 62 маршрута (включая главную,
+  // /services/*, /price) ушли из ○ (static)/ISR в ƒ (полностью динамические).
+  // Плюс на уже статических/ISR-страницах (product/[slug], news/[slug] и
+  // т.п.) nonce из headers() просто не читается на билде — там он всегда
+  // undefined, и реальный nonce в заголовке ответа не совпадает ни с чем,
+  // то есть включать enforce с таким nonce нельзя, пока не найден способ
+  // не ломать статику (например Partial Prerendering, когда стабилизируется).
+  response.headers.set(
+    'Content-Security-Policy-Report-Only',
+    [
+      "require-trusted-types-for 'script'",
+      'trusted-types default',
+    ].join('; ')
+  );
+
   response.headers.set(
     'Strict-Transport-Security',
     'max-age=63072000; includeSubDomains'

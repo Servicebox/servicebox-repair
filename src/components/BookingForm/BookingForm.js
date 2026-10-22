@@ -64,8 +64,6 @@ const BookingForm = ({ service, onClose, onBookingSuccess }) => {
     setError('');
 
     try {
-      console.log('📤 Отправка данных бронирования для услуги:', service.name);
-
       const bookingData = {
         serviceId: service._id,
         userName: formData.userName.trim(),
@@ -75,8 +73,6 @@ const BookingForm = ({ service, onClose, onBookingSuccess }) => {
         deviceModel: formData.deviceModel.trim(),
         notes: formData.notes.trim()
       };
-
-      console.log('📦 Данные для отправки:', bookingData);
 
       const response = await fetch('/api/bookings', {
         method: 'POST',
@@ -105,8 +101,6 @@ const BookingForm = ({ service, onClose, onBookingSuccess }) => {
         bookingDataResult = result;
       }
 
-      console.log('✅ Бронирование создано успешно:', bookingDataResult);
-
       trackBookingSubmitted(service.name);
 
       // Телеграм уведомление
@@ -123,7 +117,6 @@ const BookingForm = ({ service, onClose, onBookingSuccess }) => {
             promotion: formData.notes
           }),
         });
-        console.log('✅ Уведомление отправлено в Telegram');
       } catch (telegramError) {
         console.warn('⚠️ Ошибка Telegram:', telegramError);
       }
